@@ -20,18 +20,17 @@
             color: #fff;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Align items to the top */
             padding: 20px;
             overflow: auto;
         }
         .container {
             width: 100%;
             max-width: 600px;
-            margin: auto;
+            margin: 20px auto; /* Center container with margin */
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            height: calc(100vh - 40px);
+            align-items: center; /* Align items to the center */
         }
         h1 {
             text-align: center;
@@ -41,8 +40,7 @@
         .projects {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
+            width: 100%; /* Set width to 100% */
         }
         .project {
             background-color: #1e1e1e;
@@ -52,31 +50,19 @@
             padding: 20px;
             transition: transform 0.3s ease;
             display: flex;
-            justify-content: space-between; /* Align title and description on the same line */
-            align-items: center; /* Center items vertically */
+            justify-content: space-between;
+            align-items: center;
         }
         .project:hover {
             transform: translateY(-5px);
         }
         .project h2 {
             font-size: 1.5rem;
-            margin-right: 10px; /* Add space between title and description */
+            margin-right: 10px;
         }
         .project p {
-            margin-bottom: 0; /* Remove bottom margin */
-            flex-shrink: 0; /* Prevent description from shrinking */
-        }
-        .project a {
-            text-decoration: none;
-            color: #007bff;
-            font-weight: bold;
-            transition: color 0.3s ease;
-            text-align: center;
-            display: block;
-            padding: 10px 0;
-        }
-        .project a:hover {
-            color: #00b0ff;
+            margin-bottom: 0;
+            flex-shrink: 0;
         }
     </style>
 </head>

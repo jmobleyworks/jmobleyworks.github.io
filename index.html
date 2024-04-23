@@ -21,16 +21,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            padding: 20px;
+            overflow: auto;
         }
         .container {
             width: 100%;
-            max-width: 1200px;
-            padding: 20px;
+            max-width: 600px; /* Adjusted for optimal width on desktop */
+            margin: auto;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100%;
+            height: calc(100vh - 40px); /* Adjusted for padding */
         }
         h1 {
             text-align: center;
@@ -39,20 +40,15 @@
         }
         .projects {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: stretch;
-            flex: 1;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
         }
         .project {
             background-color: #1e1e1e;
             border: 1px solid #333;
-            margin: 10px;
-            flex-grow: 1;
+            margin: 10px 0;
             border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
             padding: 20px;
             transition: transform 0.3s ease;
         }
@@ -64,7 +60,7 @@
             margin-bottom: 0.5rem;
         }
         .project p {
-            flex-grow: 1;
+            margin-bottom: 1rem;
         }
         .project a {
             text-decoration: none;
@@ -72,19 +68,11 @@
             font-weight: bold;
             transition: color 0.3s ease;
             text-align: center;
-            margin-top: 1rem;
+            display: block; /* Makes the link fill the width of the container */
+            padding: 10px 0; /* Adds padding for better touch target on mobile */
         }
         .project a:hover {
             color: #00b0ff;
-        }
-        @media (max-width: 768px) {
-            .projects {
-                flex-direction: column;
-            }
-            .project {
-                width: 100%;
-                margin: 10px 0;
-            }
         }
     </style>
 </head>

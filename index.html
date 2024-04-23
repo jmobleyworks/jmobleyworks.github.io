@@ -26,12 +26,12 @@
         }
         .container {
             width: 100%;
-            max-width: 600px; /* Adjusted for optimal width on desktop */
+            max-width: 600px;
             margin: auto;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: calc(100vh - 40px); /* Adjusted for padding */
+            height: calc(100vh - 40px);
         }
         h1 {
             text-align: center;
@@ -51,16 +51,20 @@
             border-radius: 8px;
             padding: 20px;
             transition: transform 0.3s ease;
+            display: flex;
+            justify-content: space-between; /* Align title and description on the same line */
+            align-items: center; /* Center items vertically */
         }
         .project:hover {
             transform: translateY(-5px);
         }
         .project h2 {
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            margin-right: 10px; /* Add space between title and description */
         }
         .project p {
-            margin-bottom: 1rem;
+            margin-bottom: 0; /* Remove bottom margin */
+            flex-shrink: 0; /* Prevent description from shrinking */
         }
         .project a {
             text-decoration: none;
@@ -68,8 +72,8 @@
             font-weight: bold;
             transition: color 0.3s ease;
             text-align: center;
-            display: block; /* Makes the link fill the width of the container */
-            padding: 10px 0; /* Adds padding for better touch target on mobile */
+            display: block;
+            padding: 10px 0;
         }
         .project a:hover {
             color: #00b0ff;
@@ -82,27 +86,23 @@
         <div class="projects">
             <!-- Project 1 -->
             <div class="project">
-                <h2>Verdant Vale</h2>
-                <p>A captivating fantasy game project</p>
-                <a href="https://jmobleyworks.github.io/verdant-vale" target="_blank">Explore Verdant Vale</a>
+                <h2>Verdant Vale:</h2>
+                <p>Engaging fantasy game adventure</p>
             </div>
             <!-- Project 2 -->
             <div class="project">
-                <h2>Screenplay Editor</h2>
-                <p>An innovative editor for screenplays</p>
-                <a href="https://jmobleyworks.github.io/screenplay-editor" target="_blank">Try the Screenplay Editor</a>
+                <h2>Screenplay Editor:</h2>
+                <p>Innovative scriptwriting tool suite</p>
             </div>
             <!-- Project 3 -->
             <div class="project">
-                <h2>AI Photobooth</h2>
-                <p>Revolutionary photobooth software with AI features</p>
-                <a href="https://jmobleyworks.github.io/ai-photobooth" target="_blank">Experience the AI Photobooth</a>
+                <h2>AI Photobooth:</h2>
+                <p>Smart photo booth software</p>
             </div>
             <!-- Project 4 -->
             <div class="project">
-                <h2>RPB Time Tracker</h2>
-                <p>Efficient time tracking tool for payroll</p>
-                <a href="https://jmobleyworks.github.io/rpb-time-tracker" target="_blank">Discover RPB Time Tracker</a>
+                <h2>RPB Time Tracker:</h2>
+                <p>Streamlined payroll time management</p>
             </div>
         </div>
     </div>

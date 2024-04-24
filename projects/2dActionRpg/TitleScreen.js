@@ -2,7 +2,7 @@
  var titleScreen = new Image();
 
  // Set the source of the image
- titleScreen.src = '../VerdantVale/Assets/TitleScreen.png';
+ titleScreen.src = 'https://jmobleyworks.github.io/projects/2dActionRpg/Assets/TitleScreen.png';
 
  // Draw the image on the canvas once it's loaded
  titleScreen.onload = function () {

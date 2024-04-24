@@ -1,0 +1,53 @@
+#gameCanvas {
+    border: 0 solid black;
+    background: black;
+}
+
+#startButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    color: white;
+    text-shadow: 0 0 10px white;
+    animation: flash 1s linear infinite;
+}
+
+@keyframes flash {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Style to hide overflow when in fullscreen */
+body:-webkit-full-screen {
+    overflow: hidden;
+}
+
+body:-moz-full-screen {
+    overflow: hidden;
+}
+
+body:-ms-fullscreen {
+    overflow: hidden;
+}
+
+body:fullscreen {
+    overflow: hidden;
+}
+canvas {
+    margin: 0;
+    padding: 0;
+    display: block; /* Prevents default inline alignment */
+}
+
+body {
+    margin: 0;
+}

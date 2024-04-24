@@ -1,1 +1,604 @@
-.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenplay Editor with Storytelling Prompts</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+        }
+
+        .container {
+            width: 60%;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .title-page {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .script {
+            white-space: pre-line;
+            font-size: 12pt;
+            margin-left: 1.5in;
+            margin-right: 1in;
+        }
+
+        .character {
+            text-align: center;
+            text-transform: uppercase;
+            line-height: 0.9; /* Adjust as needed */
+    margin: 0; /* Remove vertical margins */
+        }
+
+        .dialogue {
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            margin-top: 0; /* Remove vertical margins */
+            margin-bottom:0;
+line-height:0.9;
+        }
+
+
+
+        .scene-heading {
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 0.9; /* Adjust as needed */
+    margin: 0; /* Remove vertical margins */
+        }
+
+        .action {
+            line-height: 0.9; /* Adjust as needed */
+    margin: 0; /* Remove vertical margins */ 
+        }
+
+        .transition {
+            text-align: right;
+            text-transform: uppercase;
+            line-height: 0.9; /* Adjust as needed */
+    margin: 0; /* Remove vertical margins */
+        }
+
+
+        button {
+            margin: 10px;
+            padding: 5px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .collapsible-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .collapsible-button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            text-align: left;
+            outline: none;
+            font-size: 18px;
+            border: none;
+        }
+
+        .collapsible-content {
+            display: none;
+            overflow: hidden;
+            background-color: #f1f1f1;
+        }
+
+        .collapsible-button::after {
+            
+            content: ' ▼';
+            font-size: 0.8em;
+        }
+
+        .collapsible-button.active::after {
+            content: ' ▲';
+        }
+
+        .prompt-container {
+            /* Remove fixed positioning to allow for collapsing */
+            position: static;
+            width: 96%;
+            height: auto;
+            top: 0;
+            right: 0;
+            background: #f8f8f8;
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .prompt {
+            margin-bottom: 20px;
+        }
+
+        .prompt label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .prompt textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .prompt-buttons {
+            text-align: right;
+        }
+
+        .prompt-buttons button {
+            padding: 5px 15px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="collapsible-container" style="visibility:hidden;">
+        <button type="button" class="collapsible-button">Storytelling Prompts</button>
+        <div class="collapsible-content">
+            <button id="save-script">Save Script</button>
+            <button id="load-script">Load Script</button>
+            <select id="story-method-select">
+                <option value="">Select a Storytelling Method</option>
+            </select>
+            <div class="prompt-container">
+                <div class="prompt">
+                    <label for="prompt-1">Prompt 1: Introduction</label>
+                    <textarea id="prompt-1"></textarea>
+                </div>
+                <div class="prompt-buttons">
+                    <button id="prev-prompt">Previous</button>
+                    <button id="next-prompt">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="title-page">
+            <h1>Love In Progress</h1>
+            <p>Written by</p>
+            <p>John A. Mobley</p>
+        </div>
+        <div class="script" contenteditable="false">
+            <p class="scene-heading">EXT. DOG PARK - DAY</p>
+<p class="action">The film opens with a close-up of HENRY, a studly black lab, strolling in slow motion, looking actually cool. The park is alive with the sound of BARKING DOGS and the murmur of OWNERS. Cool music plays in the background.</p>
+<p class="transition">CUT TO:</p>
+<p class="scene-heading">EXT. DOG PARK - CONTINUOUS</p>
+<p class="action">Cut to a medium shot, JOHN (turning 40, dreamer) is walking Henry in, sunglasses on, feeling themselves. They both look like they own the place.</p>
+<p class="transition">CUT TO:</p>
+<p class="scene-heading">EXT. DOG PARK - CONTINUOUS</p>
+<p class="action">Cut to what they are looking at, TWO LOVELY LADIES smiling back at first, then bursting out laughing. John checks if his fly is down, then looks down at Henry, who is going to town on his own junk as dogs will sometimes do, embarrassing John.</p>
+<p class="character">JOHN</p>
+<p class="dialogue">(feeling embarrassed) C'mon man!</p>
+<p class="transition">FADE OUT.</p>
+            <p class="scene-heading">INT. THE CARDINAL - WEDDING VENUE - DAY</p>
+<p class="action">The venue is alive with the sound of a STRING QUARTET and the murmur of GUESTS. At the altar, JOHN (turning 40, dreamer) stands, a proud smile on his face as he watches MEGAN (early 20s, the epitome of grace) glide down the aisle in a wedding dress.</p>
+<p class="character">VOICE (V.O.)</p>
+<p class="dialogue">(muffled) Do you...</p>
+<p class="action">The voice grows louder, more insistent.</p>
+<p class="character">VOICE (V.O.)</p>
+<p class="dialogue">(clearer) Do you...</p>
+<p class="transition">CUT TO:</p>
+<p class="scene-heading">INT. THE CARDINAL - MAIN FLOOR - CONTINUOUS</p>
+<p class="action">A GUEST, MR. HARRIS (50s, distinguished), approaches JOHN holding a tray of hors d'oeuvres.</p>
+<p class="character">MR. HARRIS</p>
+<p class="dialogue">(curious) What do you have there?</p>
+<p class="character">JOHN</p>
+<p class="dialogue">Oh, these are... uh, petite gourmet... cheese... delights.</p>
+<p class="character">MR. HARRIS</p>
+<p class="dialogue">(skeptical) Cheese puffs. Just say cheese puffs.</p>
+<p class="action">John nods, embarrassed, and quickly moves away.</p>
+<p class="transition">CUT TO:</p>
+<p class="scene-heading">INT. THE CARDINAL - KITCHEN - CONTINUOUS</p>
+<p class="action">SAM (early 30s, sharp) is prepping another serving tray. JOHN enters, sneaking a peek through the window at MEGAN.</p>
+<p class="character">SAM</p>
+<p class="dialogue">(not looking up) She's a little young for you, don't you think?</p>
+<p class="character">JOHN</p>
+<p class="dialogue">(grinning) Age is just a number, right?</p>
+<p class="character">ANDREA</p>
+<p class="dialogue">Do they like the cheese puffs?</p>
+<p class="character">SAM</p>
+<p class="dialogue">No, but John likes Megan.</p>
+<p class="character">SETH</p>
+<p class="dialogue">He's a guy. Even gay guys like Megan.</p>
+<p class="character">ANDREA</p>
+<p class="dialogue">Hey! You never say gay guys like me!</p>
+<p class="character">SETH</p>
+<p class="dialogue">That's 'cause they love you. You both like BLANK, like, a lot a lot.</p>
+<p class="character">ANDREA</p>
+<p class="dialogue">Don't tell my employees that! What are they going to think?</p>
+<p class="character">SETH</p>
+<p class="dialogue">That you boss them around with a dirty mouth?</p>
+<p class="character">JOHN</p>
+<p class="dialogue">TMI folks. TMI. There's ladies present.</p>
+<p class="action">Everyone chuckles, including SAM, who shakes her head at the banter.</p>
+<p class="transition">FADE OUT.</p>
+<p class="scene-heading">INT. THE CARDINAL - KITCHEN - CONTINUOUS</p>
+<p class="action">The kitchen is bustling with activity. SAM is still prepping the serving tray when ROBERT (mid 30s, desperate soon-to-be dad) bursts in, his eyes wild with urgency.</p>
+<p class="character">ROBERT</p>
+<p class="dialogue">(frantic) I need salty, sweet, savory, and bitter— all at once, plus umami! It's for Courtney.</p>
+<p class="character">SAM</p>
+<p class="dialogue">(raising an eyebrow) That's quite the order. Are we feeding her or conducting a taste experiment?</p>
+<p class="character">JOHN</p>
+<p class="dialogue">(trying to help) How about some olives for salty, chocolate for sweet...</p>
+<p class="character">ANDREA</p>
+<p class="dialogue">(interrupting) ...and for savory, those mini quiches.</p>
+<p class="character">SETH</p>
+<p class="dialogue">(chiming in) Bitter? Uh, toss in some kale chips.</p>
+<p class="character">SAM</p>
+<p class="dialogue">And for umami, a splash of soy sauce on the side?</p>
+<p class="character">ROBERT</p>
+<p class="dialogue">(nodding frantically) Yes, yes, that's perfect! She'll love it. Or hate it. I don't know, but I need it now!</p>
+<p class="action">Everyone springs into action, grabbing the various items and assembling a plate that looks more like a painter's palette than a meal.</p>
+<p class="character">COURTNEY (mid 30s, amused)</p>
+<p class="dialogue">What in the world is that?</p>
+<p class="character">ROBERT</p>
+<p class="dialogue">(beaming) It's everything you wanted, all the flavors of the world!</p>
+<p class="character">COURTNEY</p>
+<p class="dialogue">(laughing) I just wanted a pickle.</p>
+<p class="action">The group erupts in laughter, the tension breaking as they all share a moment of relief and camaraderie.</p>
+<p class="transition">FADE OUT.</p>
+
+        </div>
+    </div>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var storyprompts = {
+                "Hero's Journey": [
+                    {
+                        "title": "The Ordinary World",
+                        "subtitle": "Introduction to the Hero's Normal Life",
+                        "prompt": "Describe your hero's everyday life before the adventure begins."
+                    },
+                    {
+                        "title": "The Call to Adventure",
+                        "subtitle": "Disruption of the Ordinary World",
+                        "prompt": "What disrupts the hero's normal life? What challenge or adventure do they face?"
+                    },
+                    {
+                        "title": "Refusal of the Call",
+                        "subtitle": "Hero's Hesitation or Refusal",
+                        "prompt": "Does your hero hesitate or refuse the call to adventure? Why?"
+                    },
+                    {
+                        "title": "Meeting the Mentor",
+                        "subtitle": "Guidance for the Hero",
+                        "prompt": "Who guides or helps your hero decide to face the challenge?"
+                    },
+                    {
+                        "title": "Crossing the Threshold",
+                        "subtitle": "Commitment to the Adventure",
+                        "prompt": "How does your hero commit to the adventure and enter the new world?"
+                    },
+                    {
+                        "title": "Tests, Allies, Enemies",
+                        "subtitle": "Trials and Challenges",
+                        "prompt": "What trials does your hero face? Who are their friends and foes?"
+                    },
+                    {
+                        "title": "Approach to the Inmost Cave",
+                        "subtitle": "Preparation for the Ultimate Challenge",
+                        "prompt": "What is the ultimate challenge your hero must prepare for?"
+                    },
+                    {
+                        "title": "The Ordeal",
+                        "subtitle": "Hero's Darkest Hour",
+                        "prompt": "Describe the hero's darkest hour. How do they overcome their greatest challenge?"
+                    },
+                    {
+                        "title": "Reward (Seizing the Sword)",
+                        "subtitle": "Gaining the Reward after the Ordeal",
+                        "prompt": "What does the hero gain after surviving death or overcoming their greatest fear?"
+                    },
+                    {
+                        "title": "The Road Back",
+                        "subtitle": "Return to the Ordinary World",
+                        "prompt": "How does the hero return to the ordinary world? What challenges do they face on the way back?"
+                    },
+                    {
+                        "title": "The Resurrection",
+                        "subtitle": "Final Test for the Hero",
+                        "prompt": "How is the hero tested once more on the threshold of home?"
+                    },
+                    {
+                        "title": "Return with the Elixir",
+                        "subtitle": "Bringing Change to the Ordinary World",
+                        "prompt": "What does the hero bring back to the ordinary world? How has the hero changed?"
+                    }
+                ],
+                "Pixar Storytelling": [
+                    {
+                        "title": "Once upon a time there was...",
+                        "subtitle": "Setting the Scene",
+                        "prompt": "Describe the setting and the everyday life of your main character."
+                    },
+                    {
+                        "title": "Every day...",
+                        "subtitle": "Establishing Routine",
+                        "prompt": "What does your main character do every day? What is their routine?"
+                    },
+                    {
+                        "title": "One day...",
+                        "subtitle": "Disrupting the Routine",
+                        "prompt": "What event significantly alters the routine of your main character?"
+                    },
+                    {
+                        "title": "Because of that...",
+                        "subtitle": "Consequences of the Disruption",
+                        "prompt": "How does your character react to this event? What changes occur?"
+                    },
+                    {
+                        "title": "Because of that...",
+                        "subtitle": "Further Consequences and Propelling the Story",
+                        "prompt": "What are the consequences of these changes? How does it propel the story forward?"
+                    },
+                    {
+                        "title": "Until finally...",
+                        "subtitle": "Climax of the Story",
+                        "prompt": "How does the story climax? What is the final challenge or conflict?"
+                    },
+                    {
+                        "title": "And ever since that day...",
+                        "subtitle": "Resolution and Change",
+                        "prompt": "What is the resolution? How does the character's life change after the climax?"
+                    }
+                ],
+                "Three-Act Structure": [
+                    {
+                        "title": "Setup (Act 1)",
+                        "subtitle": "Introduction to the World and Characters",
+                        "prompt": "Introduce the world and characters. What is the inciting incident that disrupts the protagonist's life?"
+                    },
+                    {
+                        "title": "Confrontation (Act 2)",
+                        "subtitle": "Main Conflict and Attempts to Resolve",
+                        "prompt": "What is the main problem or conflict the protagonist faces? How do they try to resolve it?"
+                    },
+                    {
+                        "title": "Resolution (Act 3)",
+                        "subtitle": "Conflict Resolution and Lessons Learned",
+                        "prompt": "How is the conflict resolved? What has the protagonist learned?"
+                    }
+                ],
+                "Freytag’s Pyramid": [
+                    {
+                        "title": "Exposition",
+                        "subtitle": "Establishing the Story's Foundation",
+                        "prompt": "Establish the setting and characters. What is the protagonist's ordinary life like?"
+                    },
+                    {
+                        "title": "Rising Action",
+                        "subtitle": "Building Tension and Stakes",
+                        "prompt": "Introduce a series of events that lead to a climax. What challenges does the protagonist face?"
+                    },
+                    {
+                        "title": "Climax",
+                        "subtitle": "Turning Point and Moment of Greatest Intensity",
+                        "prompt": "What is the turning point or most intense moment of the story?"
+                    },
+                    {
+                        "title": "Falling Action",
+                        "subtitle": "Consequences of the Climax",
+                        "prompt": "How do the events unfold after the climax? What are the consequences?"
+                    },
+                    {
+                        "title": "Denouement",
+                        "subtitle": "Conclusion and New Normal",
+                        "prompt": "How does the story conclude? What is the new normal for the protagonist?"
+                    }
+                ],
+                "In Medias Res": [
+                    {
+                        "title": "The Middle",
+                        "subtitle": "Starting in the Action",
+                        "prompt": "Start your story in the middle of the action. What critical event is happening?"
+                    },
+                    {
+                        "title": "Flashbacks",
+                        "subtitle": "Backstory and Key Elements",
+                        "prompt": "How did the characters get to this point? What are the key backstory elements?"
+                    },
+                    {
+                        "title": "The End",
+                        "subtitle": "Effect on Story's Resolution",
+                        "prompt": "How does starting in the middle affect the story's resolution?"
+                    }
+                ],
+                "Kishōtenketsu": [
+                    {
+                        "title": "Introduction (Ki)",
+                        "subtitle": "Introducing Characters and Setting",
+                        "prompt": "Introduce the characters and setting. What is the daily life of the protagonist?"
+                    },
+                    {
+                        "title": "Development (Shō)",
+                        "subtitle": "Developing the Story with New Elements",
+                        "prompt": "Develop the story by introducing new elements. What unexpected events occur?"
+                    },
+                    {
+                        "title": "Twist (Ten)",
+                        "subtitle": "Story-Changing Twist",
+                        "prompt": "Introduce a twist that changes the story's direction. What is the surprising revelation?"
+                    },
+                    {
+                        "title": "Conclusion (Ketsu)",
+                        "subtitle": "Reconciliation of Story Elements",
+                        "prompt": "How do the story elements reconcile after the twist?"
+                    }
+                ],
+                "Seven-Point Story Structure": [
+                    {
+                        "title": "Hook",
+                        "subtitle": "Immediate Attention Grabber",
+                        "prompt": "What grabs the reader's attention immediately?"
+                    },
+                    {
+                        "title": "Plot Turn 1",
+                        "subtitle": "Change in Protagonist's Situation",
+                        "prompt": "What changes the protagonist's situation?"
+                    },
+                    {
+                        "title": "Pinch Point 1",
+                        "subtitle": "Applying Pressure to the Protagonist",
+                        "prompt": "What pressure is applied to the protagonist?"
+                    },
+                    {
+                        "title": "Midpoint",
+                        "subtitle": "Point of No Return",
+                        "prompt": "What is the point of no return for the protagonist?"
+                    },
+                    {
+                        "title": "Pinch Point 2",
+                        "subtitle": "Increasing the Protagonist's Difficulties",
+                        "prompt": "How is the protagonist's situation worsened?"
+                    },
+                    {
+                        "title": "Plot Turn 2",
+                        "subtitle": "Final Pieces for Achieving the Goal",
+                        "prompt": "How does the protagonist get the final pieces to achieve their goal?"
+                    },
+                    {
+                        "title": "Resolution",
+                        "subtitle": "Achieving the Goal",
+                        "prompt": "How does the protagonist achieve their goal?"
+                    }
+                ]
+            };
+
+
+            // Feature: Local Storage Save and Load
+            const scriptContainer = document.querySelector('.script');
+            const saveButton = document.getElementById('save-script');
+            const loadButton = document.getElementById('load-script');
+
+            saveButton.addEventListener('click', function () {
+                localStorage.setItem('screenplay', scriptContainer.innerHTML);
+                alert('Screenplay saved!');
+            });
+
+            loadButton.addEventListener('click', function () {
+                const savedScript = localStorage.getItem('screenplay');
+                if (savedScript) {
+                    scriptContainer.innerHTML = savedScript;
+                    alert('Screenplay loaded!');
+                } else {
+                    alert('No screenplay found. Please save your screenplay first.');
+                }
+            });
+
+
+            // Function to save the script to local storage
+            function saveScript() {
+                localStorage.setItem('screenplay', scriptContainer.innerHTML);
+                console.log('Screenplay saved!');
+            }
+
+            // Event listener for the save button
+            saveButton.addEventListener('click', saveScript);
+
+            // Auto-save functionality
+            setInterval(saveScript, 30000); // Auto-save every 30 seconds
+
+            // Load the script from local storage when the page loads
+            const savedScript = localStorage.getItem('screenplay');
+            if (savedScript) {
+                scriptContainer.innerHTML = savedScript;
+            }
+
+            // New JavaScript for collapsible prompts
+            var coll = document.querySelector('.collapsible-button');
+            var content = coll.nextElementSibling;
+            // Set the default display to block (expanded)
+            content.style.display = 'none';
+            coll.addEventListener('click', function () {
+                this.classList.toggle('active');
+                if (content.style.display === 'block') {
+                    content.style.display = 'none';
+                } else {
+                    content.style.display = 'block';
+                }
+            });
+            var currentPromptIndex = 0;
+            var currentMethod = '';
+
+            // Function to update the prompt display based on the selected method and prompt index
+            function updatePromptDisplay() {
+                var promptLabel = document.querySelector('.prompt label');
+                var promptTextarea = document.querySelector('.prompt textarea');
+                var prompts = storyprompts[currentMethod];
+                if (prompts && prompts[currentPromptIndex]) {
+                    promptLabel.textContent = prompts[currentPromptIndex].title + ': ' + prompts[currentPromptIndex].subtitle;
+                    promptTextarea.value = prompts[currentPromptIndex].prompt;
+                }
+            }
+
+            // Function to populate the select tag with options
+            function populateStoryMethods() {
+                var select = document.getElementById('story-method-select');
+                for (var method in storyprompts) {
+                    var option = document.createElement('option');
+                    option.value = method;
+                    option.textContent = method;
+                    select.appendChild(option);
+                }
+            }
+
+            // Event listener for the select tag
+            document.getElementById('story-method-select').addEventListener('change', function (event) {
+                currentMethod = event.target.value;
+                currentPromptIndex = 0; // Reset to the first prompt
+                updatePromptDisplay();
+            });
+
+            // Event listeners for the Previous and Next buttons
+            document.getElementById('prev-prompt').addEventListener('click', function () {
+                if (currentPromptIndex > 0) {
+                    currentPromptIndex--;
+                    updatePromptDisplay();
+                }
+            });
+
+            document.getElementById('next-prompt').addEventListener('click', function () {
+                var prompts = storyprompts[currentMethod];
+                if (currentPromptIndex < prompts.length - 1) {
+                    currentPromptIndex++;
+                    updatePromptDisplay();
+                }
+            });
+
+            // Initialize the select tag with storytelling methods
+            populateStoryMethods();
+
+        });
+
+
+
+
+    </script>
+
+</body>
+
+</html>

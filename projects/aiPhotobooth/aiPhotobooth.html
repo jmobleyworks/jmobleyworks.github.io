@@ -1,1 +1,62 @@
-.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Booth App</title>
+<style>
+  body { text-align: center; }
+  #videoElement { width: 70%; margin: 15px; }
+  #capture { margin: 15px; }
+  #photo { width: 70%; margin: 15px; }
+</style>
+</head>
+<body>
+
+<video id="videoElement" autoplay></video>
+<button id="capture">Capture Image</button>
+<canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+<img id="photo" alt="The screen capture will appear in this box.">
+
+<script>
+(function(global) {
+  var videoElement, canvas, context, photoElement;
+
+  function init() {
+    videoElement = document.getElementById('videoElement');
+    canvas = document.getElementById('canvas');
+    context = canvas.getContext('2d');
+    photoElement = document.getElementById('photo');
+    bindCamera();
+  }
+
+  function bindCamera() {
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(function(stream) { videoElement.srcObject = stream; })
+        .catch(function(error) { console.error("Camera Error:", error); });
+    }
+  }
+
+  function captureImage() {
+    context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL('image/png');
+  }
+
+  global.PhotoBooth = {
+    initialize: init,
+    capture: captureImage
+  };
+})(this);
+
+document.addEventListener('DOMContentLoaded', function() {
+  PhotoBooth.initialize();
+  document.getElementById('capture').addEventListener('click', function() {
+    var capturedImage = PhotoBooth.capture();
+    document.getElementById('photo').src = capturedImage;
+  });
+});
+</script>
+
+</body>
+</html>

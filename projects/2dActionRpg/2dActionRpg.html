@@ -1,1 +1,52 @@
-.
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Verdant Vale: The Enchanted Forest</title>
+    <link rel="stylesheet" href="../VerdantVale/Assets/VerdantVale.css">
+</head>
+
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="startButton">START</div>
+    <div id="timeLabel" style="position: absolute; top: 10px; left: 10px; color: white;"></div>
+    <div id="clock" style="position: absolute; top: 30px; left: 10px; color: white;"></div>
+    <div id="spriteLabel" style="position: absolute; top: 30px; left: 100px; color: white;"></div>
+    <div id="scoreLabel" style="position: absolute; top: 50px; left: 10px; color: white;"></div>
+    <script>
+        var canvas = document.getElementById('gameCanvas'); // Get a reference to the canvas
+        var ctx = canvas.getContext('2d');
+        var time = 0; // Define the current time and the speed of the day-night cycle
+        var timeSpeed = 0.001;
+        var playerX; // Declare player variables
+        var playerY;
+        var playerDirection;
+        var playerRadius = 10; // Add player radius
+        var speed = 10; // Add player speed
+        var attackAngle = 0; // Initialize the attack angle
+        var isAttacking = false;
+        var worldSeed;
+        var Maze;
+        var tileSizeX;
+        var tileSizeY;
+        var mazeWidth;
+        var mazeHeight;
+        var playerCollidingWithWall;
+        //Notes: event listener for click on start button in TitleScreen.js calls startGame() in Game.js
+    </script>
+    <script src="Background.js"></script>
+    <script src="Collisions.js"></script>
+    <script src="ColorUtils.js"></script>
+    <script src="Score.js"></script>
+    <script src="DayNightCycle.js"></script>
+    <script src="Enemy.js"></script>
+    <script src="Player.js"></script>
+    <script src="PlayerAttack.js"></script>
+    <script src="Game.js"></script>
+    <script src="TitleScreen.js"></script>
+    <script src="Resize.js"></script>
+    <script src="World.js"></script>
+    <script src="GameSetup.js"></script>
+</body>
+
+</html>

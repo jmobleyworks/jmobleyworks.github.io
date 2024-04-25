@@ -1,1 +1,327 @@
-.
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPB Time Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .event-row input,
+        .event-row select {
+            flex: 1;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .event-row input:last-child,
+        .event-row select:last-child {
+            margin-right: 0;
+        }
+
+        .event-row input[placeholder],
+        .event-row select[placeholder] {
+            font-style: italic;
+        }
+
+        .add-event {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            display: block;
+            width: auto;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .add-event:hover {
+            background-color: #0056b3;
+        }
+
+        .total-line {
+            border-top: 2px solid #000;
+            margin: 20px 0;
+        }
+
+        .total-due {
+            text-align: right;
+            margin: 10px 0;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .email-preview {
+            width: 100%;
+            height: 200px;
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>RPB Time Tracker <select id="Employee">
+                <option selected disabled>Employee</option>
+                <option value="John Mobley">John Mobley</option>
+                <option value="Samantha">Samantha</option>
+                <option value="Sarah Bryant">Sarah Bryant</option>
+                <option value="Teralynn Mikell">Terralynn Mikell</option>
+                <!-- More employees -->
+            </select></h1>
+        <div id="events-container">
+            <!-- Event rows will be added here -->
+        </div>
+        <button class="add-event" onclick="addEvent()">Add Event</button>
+        <div class="total-line"></div>
+        <div class="total-due">Total Due: $<span id="total-due">0.00</span></div>
+        <textarea class="email-preview" id="email-preview" readonly></textarea>
+        <button onclick="sendEmail()">Send Email</button>
+    </div>
+
+    <script>
+        var events = [];
+        var totalDue = 0;
+
+        function addEvent() {
+            var eventRow = document.createElement('div');
+            eventRow.className = 'event-row';
+            eventRow.innerHTML = `
+                <input type="date" placeholder="Date">
+                <select>
+                    <option selected disabled>Venue</option>
+                    <option value="The Cardinal">The Cardinal</option>
+                    <option value="Common House">Common House</option>
+                    <option value="Estate At River Run">Estate At River Run</option>
+                    <option value="Mill At Mattaponni Springs">Mill At Mattaponni Springs</option>
+                    <option value="Mill At Fine Creek">Mill At Fine Creek</option>
+                    <option value="Dover Hall">Dover Hall</option>
+                    <option value="The Boathouse">The Boathouse</option>
+                    <option value="Gallery5">Gallery5</option>
+                    <option value="Estate At River Run">Estate At River Run</option>
+                </select>
+                <input type="datetime-local" placeholder="Start Time">
+                <input type="text" placeholder="Notes">
+                <input type="datetime-local" placeholder="End Time">
+                <select>
+                    <option selected disabled>Rate</option>
+                    <option value="15">Training - $15/hr</option>
+                    <option value="15">BIZ DEV - $15/hr</option>
+                    <option value="20">Digital On Call - $20/hr</option>
+                    <option value="20">Printer Duo - $20/hr</option>
+                    <option value="25">Printer Solo - $25/hr</option>
+                </select>
+                <div class="subtotal">$0.00</div>
+            `;
+            // Attach onchange event to inputs and selects
+            eventRow.querySelectorAll('input, select').forEach(function (input) {
+                input.onchange = update;
+            });
+            document.getElementById('events-container').appendChild(eventRow);
+            events.push(eventRow);
+        }
+
+        function addEventWithData(date, venue, startTime, notes, endTime, rate) {
+            var eventRow = document.createElement('div');
+            eventRow.className = 'event-row';
+            eventRow.innerHTML = `
+                <input type="date" placeholder="Date" value="${date}">
+                <select>
+                    <option selected disabled>Venue</option>
+                    <option value="The Cardinal">The Cardinal</option>
+                    <option value="Common House">Common House</option>
+                    <option value="Estate At River Run">Estate At River Run</option>
+                    <option value="Mill At Mattaponni Springs">Mill At Mattaponni Springs</option>
+                    <option value="Mill At Fine Creek">Mill At Fine Creek</option>
+                    <option value="Dover Hall">Dover Hall</option>
+                    <option value="The Boathouse">The Boathouse</option>
+                    <option value="Gallery5">Gallery5</option>
+                    <option value="Estate At River Run">Estate At River Run</option>
+                </select>
+                <input type="datetime-local" placeholder="Start Time" value="${startTime}">
+                <input type="text" placeholder="Notes" value="${notes}">
+                <input type="datetime-local" placeholder="End Time" value="${endTime}">
+                <select>
+                    <option selected disabled>Rate</option>
+                    <option value="15">Training - $15/hr</option>
+                    <option value="15">BIZ DEV - $15/hr</option>
+                    <option value="20">Digital On Call - $20/hr</option>
+                    <option value="20">Printer Duo - $20/hr</option>
+                    <option value="25">Printer Solo - $25/hr</option>
+                </select>
+                <div class="subtotal">$0.00</div>
+            `;
+            // Set the venue and rate
+            eventRow.querySelector('select:nth-child(2)').value = venue;
+            eventRow.querySelector('select:nth-child(6)').value = rate;
+            // Attach onchange event to inputs and selects
+            eventRow.querySelectorAll('input, select').forEach(function (input) {
+                input.onchange = update;
+            });
+            document.getElementById('events-container').appendChild(eventRow);
+            events.push(eventRow);
+        }
+
+        function update() {
+            updateDailyTotals();
+            updateTotalDue();
+            updateEmailPreview();
+        }
+
+        function calculatePay(startTime, endTime, rate) {
+            var start = new Date(startTime);
+            var end = new Date(endTime);
+            if (isNaN(start) || isNaN(end) || isNaN(rate)) {
+                return '0.00';
+            }
+            var hoursWorked = (end - start) / 1000 / 60 / 60;
+            var pay = hoursWorked * rate;
+            return pay.toFixed(2);
+        }
+
+
+        function calcHours(startTime, endTime) {
+            var start = new Date(startTime);
+            var end = new Date(endTime);
+            var hoursWorked = (end - start) / 1000 / 60 / 60;
+            return hoursWorked.toFixed(2);
+        }
+
+        function updateDailyTotals() {
+            events.forEach(function (eventRow) {
+                var startTime = eventRow.querySelector('input[type="datetime-local"]:nth-child(3)').value;
+                var endTime = eventRow.querySelector('input[type="datetime-local"]:nth-child(5)').value;
+                var rateElement = eventRow.querySelector('select:nth-child(6)');
+                var rate = rateElement.options[rateElement.selectedIndex].value;
+                var subtotalElement = eventRow.querySelector('.subtotal');
+                if (startTime && endTime && rate) {
+                    subtotalElement.textContent = `$${calculatePay(startTime, endTime, rate)}`;
+                } else {
+                    subtotalElement.textContent = '$0.00';
+                }
+            });
+        }
+
+        function diff_hours(dt2, dt1) {
+            var diff = (dt2.getTime() - dt1.getTime()) / 1000;
+            diff /= (60 * 60);
+            return Math.abs(Math.round(diff));
+        }
+
+        function updateTotalDue() {
+            var runningTotal = 0;
+            events.forEach(function (eventRow) {
+                var subtotal = parseFloat(eventRow.querySelector('.subtotal').textContent.replace('$', ''));
+                runningTotal += subtotal;
+            });
+            totalDue = parseFloat(runningTotal.toFixed(2));
+            document.getElementById('total-due').textContent = totalDue;
+
+        }
+
+        function sendEmail() {
+            var result = document.getElementById('email-preview').value;
+            var subject = encodeURIComponent('RPB Hours');
+            var recipient = 'andrea@804photobooth.com';
+            window.location.href = `mailto:${recipient}?subject=${subject}&body=${encodeURIComponent(result)}`;
+        }
+
+        function formatDateTime(datetime) {
+            var options = { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(datetime).toLocaleString('en-US', options);
+        }
+
+        function formatDate(date) {
+            var options = { month: 'numeric', day: 'numeric', year: 'numeric' };
+            var dateString = new Date(date + 'T00:00').toLocaleString('en-US', options);
+            var yearIndex = dateString.lastIndexOf("/") + 1;
+            var lastTwoDigitsOfYear = dateString.substring(yearIndex + 2, yearIndex + 4);
+            return dateString.substring(0, yearIndex) + lastTwoDigitsOfYear;
+        }
+
+        function formatMonthDay(date){
+            var options = { month: 'numeric', day: 'numeric'};
+            return new Date(date).toLocaleString('en-US', options);
+        }
+
+
+
+        function updateEmailPreview() {
+            var emailContent = '';
+            var startDate = events[0].querySelector('input[type="date"]').value;
+            var endDate = events[events.length - 1].querySelector('input[type="date"]').value;
+            emailContent += "RPB Hours For " + document.getElementById("Employee").value + " " + formatMonthDay(startDate) + "-" + formatMonthDay(endDate) + "\n\n";
+            events.forEach(function (eventRow) {
+                var date = formatDate(eventRow.querySelector('input[type="date"]').value);
+                var venue = eventRow.querySelector('select:nth-child(2)').value;
+                var startTime = formatDateTime(eventRow.querySelector('input[type="datetime-local"]:nth-child(3)').value);
+                var notes = eventRow.querySelector('input[type="text"]').value;
+                var endTime = formatDateTime(eventRow.querySelector('input[type="datetime-local"]:nth-child(5)').value);
+                var hoursWorked = calcHours(startTime, endTime);
+                var rate = eventRow.querySelector('select:nth-child(6)').value;
+                var pay = calculatePay(startTime, endTime, rate);
+                emailContent += `Date: ${date} | Venue: ${venue} | Start Time: ${startTime} | Notes: ${notes} | End Time: ${endTime} | Hours Worked: ${hoursWorked} | Rate: $${rate}/hr | Daily Total: $${pay}\n\n`;
+            });
+            emailContent += "Total Due: $" + document.getElementById('total-due').textContent;
+            document.getElementById('email-preview').value = emailContent;
+        }
+
+        function getTotalDue() {
+            console.log('Total Due:', totalDue);
+            return totalDue;
+        }
+        var testing = false;
+        if (!testing) { addEvent(); }
+        else {
+            // Call addEvent with test data when the page loads
+            window.onload = function () {
+                addEvent('2024-04-25', 'The Cardinal', '2024-04-25T09:00', 'Test notes', '2024-04-25T15:00', '15');
+                addEvent('2024-04-26', 'Common House', '2024-04-26T12:30', 'asdfasdf', '2024-04-26T17:00', '15');
+                // Add more test data as needed
+                update();
+            };
+        }
+    </script>
+</body>
+
+</html>

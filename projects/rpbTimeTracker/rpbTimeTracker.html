@@ -6,6 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RPB Time Tracker</title>
     <style>
+        @media (max-width: 600px) {
+            .event-row {
+                flex-direction: column;
+            }
+
+            .event-row input,
+            .event-row select {
+                margin-bottom: 10px;
+            }
+
+            .event-row input:last-child,
+            .event-row select:last-child {
+                margin-right: 0;
+                margin-bottom: 0;
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -279,8 +296,8 @@
             return dateString.substring(0, yearIndex) + lastTwoDigitsOfYear;
         }
 
-        function formatMonthDay(date){
-            var options = { month: 'numeric', day: 'numeric'};
+        function formatMonthDay(date) {
+            var options = { month: 'numeric', day: 'numeric' };
             return new Date(date).toLocaleString('en-US', options);
         }
 

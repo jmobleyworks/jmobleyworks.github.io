@@ -240,9 +240,10 @@
         function calcHours(startTime, endTime) {
             var start = new Date(startTime);
             var end = new Date(endTime);
-            var hoursWorked = (end - start) / 1000 / 60 / 60;
+            var hoursWorked = (end.getTime() - start.getTime()) / 1000 / 60 / 60;
             return hoursWorked.toFixed(2);
         }
+
 
         function updateDailyTotals() {
             events.forEach(function (eventRow) {
@@ -316,8 +317,10 @@
                 var endTime = formatDateTime(eventRow.querySelector('input[type="datetime-local"]:nth-child(5)').value);
                 var hoursWorked = calcHours(startTime, endTime);
                 var rate = eventRow.querySelector('select:nth-child(6)').value;
+                var rateElement = eventRow.querySelector('select:nth-child(6)');
+                var rateText = rateElement.options[rateElement.selectedIndex].textContent;
                 var pay = calculatePay(startTime, endTime, rate);
-                emailContent += `Date: ${date} | Venue: ${venue} | Start Time: ${startTime} | Notes: ${notes} | End Time: ${endTime} | Hours Worked: ${hoursWorked} | Rate: $${rate}/hr | Daily Total: $${pay}\n\n`;
+                emailContent += `Date: ${date} | Venue: ${venue} | Start Time: ${startTime} | Notes: ${notes} | End Time: ${endTime} | Hours Worked: ${hoursWorked} | Rate: ${rateText} | Daily Total: $${pay}\n\n`;
             });
             emailContent += "Total Due: $" + document.getElementById('total-due').textContent;
             document.getElementById('email-preview').value = emailContent;

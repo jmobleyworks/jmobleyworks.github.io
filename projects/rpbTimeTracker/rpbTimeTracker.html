@@ -139,19 +139,46 @@
                 margin-bottom: 10px;
             }
         }
+
+        #Employee {
+            flex: 1;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid var(--input-border-color);
+            border-radius: 4px;
+            background-color: var(--input-background-color);
+            color: var(--input-text-color);
+            max-width: 19%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 
 </head>
 
 <body>
-    <div class="container">         <h1>RPB Time Tracker <select id="Employee" class="event">
+    <div class="container">
+
+        <div class="header">
+            <h1>RPB Time Tracker</h1><span>&nbsp;&nbsp;</span>
+            <p style="font-size: 0.8em; color: #888;">Select an employee, add events, and click "Send Email" when done.
+                If
+                venue does not appear, select "Other: See Notes".</p><span>&nbsp;&nbsp;</span>
+            <select id="Employee" class="Employee">
                 <option selected disabled>Employee</option>
                 <option value="John Mobley">John Mobley</option>
                 <option value="Samantha">Samantha</option>
                 <option value="Sarah Bryant">Sarah Bryant</option>
                 <option value="Teralynn Mikell">Terralynn Mikell</option>
                 <!-- More employees -->
-            </select></h1><p style="font-size: 0.8em; color: #888;">Select an employee, add events, and click "Send Email" when done. If venue does not appear, select "Other: See Notes".</p>
+            </select>
+
+        </div>
+
 
         <div id="events-container">
             <!-- Event rows will be added here -->
@@ -441,6 +468,10 @@
                 update();
             };
         }
+        document.getElementById("Employee").addEventListener("change", function () {
+            update();
+        });
+
 
     </script>
 </body>

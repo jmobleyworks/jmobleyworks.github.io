@@ -144,16 +144,15 @@
 </head>
 
 <body>
-    <div class="container">
-        <h1>RPB Time Tracker <select id="Employee" class="event">
+    <div class="container">         <h1>RPB Time Tracker <select id="Employee" class="event">
                 <option selected disabled>Employee</option>
                 <option value="John Mobley">John Mobley</option>
                 <option value="Samantha">Samantha</option>
                 <option value="Sarah Bryant">Sarah Bryant</option>
                 <option value="Teralynn Mikell">Terralynn Mikell</option>
                 <!-- More employees -->
-            </select></h1>
-        <p style="font-size: 0.8em; color: #888;">Select an employee, add events, and click "Send Email" when done.</p>
+            </select></h1><p style="font-size: 0.8em; color: #888;">Select an employee, add events, and click "Send Email" when done. If venue does not appear, select "Other: See Notes".</p>
+
         <div id="events-container">
             <!-- Event rows will be added here -->
         </div>
@@ -293,6 +292,20 @@
             return hoursWorked.toFixed(2);
         }
 
+        function calculateTotalHours() {
+            var totalHours = 0;
+            events.forEach(function (eventRow) {
+                var startTime = eventRow.querySelector('input[type="datetime-local"]:nth-child(2)').value;
+                var endTime = eventRow.querySelector('input[type="datetime-local"]:nth-child(4)').value;
+                if (startTime && endTime) {
+                    var hoursWorked = calcHours(startTime, endTime);
+                    totalHours += parseFloat(hoursWorked);
+                }
+            });
+            return totalHours;
+        }
+
+
         function calculatePay(startTime, endTime, rate) {
             var start = parseDatetime(startTime);
             var end = parseDatetime(endTime);
@@ -403,8 +416,8 @@
             } catch (error) {
                 console.error(error);
             }
-
-
+            var totalHours = calculateTotalHours();
+            emailContent += "Total Hours Worked: " + totalHours.toFixed(2) + "\n";
             emailContent += "Total Due: $" + document.getElementById('total-due').textContent;
             document.getElementById('email-preview').value = emailContent;
         }

@@ -16,7 +16,7 @@
             --input-border-color: #ddd;
             --input-background-color: #555;
             --input-text-color: #ddd;
-            --event-line-color: #ddd;
+            --event-line-color: rgb(140, 140, 140);
         }
 
         body {
@@ -30,7 +30,7 @@
         .container {
             max-width: 94%;
             margin: 20px auto;
-            padding: 20px;
+            padding: 0px 20px 12px 20px;
             background-color: var(--container-color);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -138,6 +138,16 @@
             .event-row select {
                 margin-bottom: 10px;
             }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            #Employee {
+                width: 100%;
+                /* adjust as needed */
+            }
         }
 
         #Employee {
@@ -148,7 +158,6 @@
             border-radius: 4px;
             background-color: var(--input-background-color);
             color: var(--input-text-color);
-            max-width: 19%;
         }
 
         .header {
@@ -164,10 +173,10 @@
     <div class="container">
 
         <div class="header">
-            <h1>RPB Time Tracker</h1><span>&nbsp;&nbsp;</span>
-            <p style="font-size: 0.8em; color: #888;">Select an employee, add events, and click "Send Email" when done.
+            <h1>RPB Time Tracker</h1>
+            <p style="font-size: 0.8em; color: rgb(187, 187, 187);">&nbsp;&nbsp;Select an employee, add events, and click "Send Email" when done.
                 If
-                venue does not appear, select "Other: See Notes".</p><span>&nbsp;&nbsp;</span>
+                venue does not appear, select "Other: See Notes".&nbsp;&nbsp;</p>
             <select id="Employee" class="Employee">
                 <option selected disabled>Employee</option>
                 <option value="John Mobley">John Mobley</option>
@@ -178,8 +187,7 @@
             </select>
 
         </div>
-
-
+        <div class="total-line"></div>
         <div id="events-container">
             <!-- Event rows will be added here -->
         </div>
@@ -454,7 +462,7 @@
             console.log('Total Due:', totalDue);
             return totalDue;
         }
-        var testing = true;
+        var testing = false;
         if (!testing) {
             addEvent();
         } else {

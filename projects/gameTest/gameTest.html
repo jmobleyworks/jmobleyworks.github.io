@@ -1,1 +1,113 @@
-stuff
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Colony Wars Prototype</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Player ship
+        const shipWidth = 30;
+        const shipHeight = 50;
+        let shipX = canvas.width / 2;
+        let shipY = canvas.height / 2;
+        const shipSpeed = 5;
+
+        // Asteroids
+        const asteroids = [];
+        const asteroidSize = 30;
+        const maxAsteroids = 10;
+
+        // Initialize asteroids
+        for (let i = 0; i < maxAsteroids; i++) {
+            const asteroid = {
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: asteroidSize,
+            };
+            asteroids.push(asteroid);
+        }
+
+        // Input handling
+        const keys = {};
+        window.addEventListener('keydown', (e) => {
+            keys[e.code] = true;
+        });
+        window.addEventListener('keyup', (e) => {
+            keys[e.code] = false;
+        });
+
+        // Game loop
+        function gameLoop() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Move ship
+            if (keys['ArrowUp']) {
+                shipY -= shipSpeed;
+            }
+            if (keys['ArrowDown']) {
+                shipY += shipSpeed;
+            }
+            if (keys['ArrowLeft']) {
+                shipX -= shipSpeed;
+            }
+            if (keys['ArrowRight']) {
+                shipX += shipSpeed;
+            }
+
+            // Wrap ship around canvas edges
+            if (shipX < -shipWidth) {
+                shipX = canvas.width;
+            }
+            if (shipX > canvas.width) {
+                shipX = 0;
+            }
+            if (shipY < -shipHeight) {
+                shipY = canvas.height;
+            }
+            if (shipY > canvas.height) {
+                shipY = 0;
+            }
+
+            // Draw ship
+            ctx.save();
+            ctx.translate(shipX + shipWidth / 2, shipY + shipHeight / 2);
+            ctx.rotate(Math.PI / 2);
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.moveTo(0, -shipHeight / 2);
+            ctx.lineTo(shipWidth / 2, shipHeight / 2);
+            ctx.lineTo(-shipWidth / 2, shipHeight / 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+
+            // Draw asteroids
+            ctx.fillStyle = 'gray';
+            asteroids.forEach((asteroid) => {
+                ctx.beginPath();
+                ctx.arc(asteroid.x, asteroid.y, asteroid.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Request next frame
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Start game loop
+        gameLoop();
+    </script>
+</body>
+</html>

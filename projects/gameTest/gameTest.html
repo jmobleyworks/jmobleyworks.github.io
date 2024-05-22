@@ -29,15 +29,17 @@
         const asteroidSize = 30;
         const maxAsteroids = 10;
 
-        // Initialize asteroids
-        for (let i = 0; i < maxAsteroids; i++) {
-            const asteroid = {
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: asteroidSize,
-            };
-            asteroids.push(asteroid);
-        }
+// Initialize asteroids
+for (let i = 0; i < maxAsteroids; i++) {
+    const asteroid = {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: Math.random() * 2 - 1, // Random velocity between -1 and 1
+        vy: Math.random() * 2 - 1, // Random velocity between -1 and 1
+        radius: asteroidSize,
+    };
+    asteroids.push(asteroid);
+}
 
         // Input handling
         const keys = {};
@@ -81,18 +83,18 @@
                 shipY = 0;
             }
 
-            // Draw ship
-            ctx.save();
-            ctx.translate(shipX + shipWidth / 2, shipY + shipHeight / 2);
-            ctx.rotate(Math.PI / 2);
-            ctx.fillStyle = 'white';
-            ctx.beginPath();
-            ctx.moveTo(0, -shipHeight / 2);
-            ctx.lineTo(shipWidth / 2, shipHeight / 2);
-            ctx.lineTo(-shipWidth / 2, shipHeight / 2);
-            ctx.closePath();
-            ctx.fill();
-            ctx.restore();
+// Draw ship
+ctx.save();
+ctx.translate(shipX + shipWidth / 2, shipY + shipHeight / 2);
+ctx.rotate(Math.PI / 2);
+ctx.fillStyle = 'white';
+ctx.beginPath();
+ctx.moveTo(0, -shipHeight / 2);
+ctx.lineTo(shipWidth / 2, shipHeight / 2);
+ctx.lineTo(-shipWidth / 2, shipHeight / 2);
+ctx.closePath();
+ctx.fill();
+ctx.restore();
 
             // Draw asteroids
             ctx.fillStyle = 'gray';
@@ -101,6 +103,19 @@
                 ctx.arc(asteroid.x, asteroid.y, asteroid.radius, 0, Math.PI * 2);
                 ctx.fill();
             });
+
+            // In the game loop...
+asteroids.forEach((asteroid) => {
+    // Update position
+    asteroid.x += asteroid.vx;
+    asteroid.y += asteroid.vy;
+
+    // Wrap around canvas edges
+    if (asteroid.x < -asteroid.radius) asteroid.x = canvas.width + asteroid.radius;
+    if (asteroid.x > canvas.width + asteroid.radius) asteroid.x = -asteroid.radius;
+    if (asteroid.y < -asteroid.radius) asteroid.y = canvas.height + asteroid.radius;
+    if (asteroid.y > canvas.height + asteroid.radius) asteroid.y = -asteroid.radius;
+});
 
             // Request next frame
             requestAnimationFrame(gameLoop);

@@ -20,10 +20,10 @@
         const ctx = canvas.getContext('2d');
 
         // Player ship
-        const shipWidth = 30;
-        const shipHeight = 50;
-        let shipX = canvas.width / 2;
-        let shipY = canvas.height / 2;
+        let shipWidth = 30;
+        let shipHeight = 50;
+        let shipX = canvas.width / 2 - shipWidth / 2; // Centered X position
+        let shipY = canvas.height / 2 - shipHeight / 2; // Centered Y position
         const shipSpeed = 5;
 
         // Asteroids

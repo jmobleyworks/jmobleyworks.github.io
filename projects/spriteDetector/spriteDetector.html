@@ -1,152 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sprite Detector Prototype</title>
     <style>
-        #canvas {
-            border: 1px solid black;
-        }
+        /* Add your CSS here */
     </style>
 </head>
-
 <body>
-    <h1>Sprite Detector Prototype</h1>
-    <canvas id="canvas" width="400" height="300"></canvas>
+    <img id="forest" src="Forest (1).png">
+    <div id="spritesDetected"></div>
+
     <script>
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
+        // SpriteDetector class
+        class SpriteDetector {
+            constructor(image) {
+                this.image = image;
+                this.sprites = [];
+            }
 
-        // Replace with your actual image data or a function to load it
-        const imageData = {
-            width: 400,
-            height: 300,
-            data: new Uint8ClampedArray(400 * 300 * 4), // Assuming RGBA format
+            detectSprites() {
+                // Implement your bounding box detection logic here
+                // For simplicity, let's assume we found some sprites
+                this.sprites = ['Sprite 1', 'Sprite 2', 'Sprite 3'];
+                return this.sprites;
+            }
+        }
+
+        window.onload = function() {
+            const image = document.getElementById('forest');
+            const spriteDetector = new SpriteDetector(image);
+            const sprites = spriteDetector.detectSprites();
+
+            // Append detected sprites to the HTML document
+            const spritesDetectedDiv = document.getElementById('spritesDetected');
+            sprites.forEach(sprite => {
+                const p = document.createElement('p');
+                p.textContent = sprite;
+                spritesDetectedDiv.appendChild(p);
+            });
         };
-
-        // Color tolerance for background check (adjust as needed)
-        const colorTolerance = 20;
-
-        function getBackgroundColor(imageData) {
-            const colorCounts = {};
-            const data = imageData.data;
-
-            for (let i = 0; i < data.length; i += 4) {
-                const r = data[i];
-                const g = data[i + 1];
-                const b = data[i + 2];
-                const color = `rgb(${r}, ${g}, ${b})`;
-                colorCounts[color] = (colorCounts[color] || 0) + 1;
-            }
-
-            let mostFrequentColor;
-            let maxCount = 0;
-
-            for (const color in colorCounts) {
-                if (colorCounts[color] > maxCount) {
-                    mostFrequentColor = color;
-                    maxCount = colorCounts[color];
-                }
-            }
-
-            return mostFrequentColor;
-        }
-
-        function isNotColor(color1, color2, tolerance) {
-            const r1 = parseInt(color1.substring(4, color1.indexOf(',')));
-            const g1 = parseInt(color1.substring(color1.indexOf(',') + 1, color1.lastIndexOf(',')));
-            const b1 = parseInt(color1.substring(color1.lastIndexOf(',') + 1, color1.indexOf(')')));
-            const r2 = parseInt(color2.substring(4, color2.indexOf(',')));
-            const g2 = parseInt(color2.substring(color2.indexOf(',') + 1, color2.lastIndexOf(',')));
-            const b2 = parseInt(color2.substring(color2.lastIndexOf(',') + 1, color2.indexOf(')')));
-
-            return Math.abs(r1 - r2) + Math.abs(g1 - g2) + Math.abs(b1 - b2) > tolerance;
-        }
-
-        function drawRect(x, y, width, height, color) {
-            ctx.strokeStyle = color;
-            ctx.strokeRect(x, y, width, height);
-        }
-
-        function findSpriteBounds(imageData, x, y, backgroundColor) {
-            const data = imageData.data;
-            const width = imageData.width;
-            const queue = [[x, y]];
-            const visited = new Set();
-            const boundingBox = { left: x, right: x, top: y, bottom: y };
-
-            while (queue.length) {
-                const [currentX, currentY] = queue.shift();
-                const pixelIndex = (currentY * width + currentX) * 4;
-                const color = `rgb(${data[pixelIndex]}, ${data[pixelIndex + 1]}, ${data[pixelIndex + 2]})`;
-
-                if (visited.has(`<span class="math-inline">\{currentX\},</span>{currentY}`) || isNotColor(color, backgroundColor, colorTolerance)) {
-                    continue;
-                }
-
-                visited.add(`<span class="math-inline">\{currentX\},</span>{currentY}`);
-                boundingBox.left = Math.min(boundingBox.left, currentX);
-                boundingBox.right = Math.max(boundingBox.right, currentX + 1);
-                boundingBox.top = Math.min(boundingBox.top, currentY);
-                boundingBox.bottom = Math.max(boundingBox.bottom, currentY + 1);
-
-
-                if (currentX > 0 && !visited.has(`${currentX - 1},${currentY} `)) {
-                    queue.push([currentX - 1, currentY]);
-                }
-                if (currentX < width - 1 && !visited.has(`${currentX + 1},${currentY} `)) {
-                    queue.push([currentX + 1, currentY]);
-                }
-                if (currentY > 0 && !visited.has(`${currentX},${currentY - 1} `)) {
-                    queue.push([currentX, currentY - 1]);
-                }
-                if (currentY < imageData.height - 1 && !visited.has(`${currentX},${currentY + 1} `)) {
-                    queue.push([currentX, currentY + 1]);
-                }
-            }
-
-            return boundingBox;
-        }
-
-        function detectSprites(imageData) {
-            const backgroundColor = getBackgroundColor(imageData);
-            const sprites = [];
-
-            for (let y = 0; y < imageData.height; y++) {
-                for (let x = 0; x < imageData.width; x++) {
-                    const color = `rgb(${imageData.data[y * imageData.width * 4 + x * 4]}, ${imageData.data[y * imageData.width * 4 + x * 4 + 1]}, ${imageData.data[y * imageData.width * 4 + x * 4 + 2]})`;
-
-                    if (isNotColor(color, backgroundColor, colorTolerance)) {
-                        const boundingBox = findSpriteBounds(imageData, x, y, backgroundColor);
-                        sprites.push(boundingBox);
-
-                        // Optional: Draw bounding boxes on canvas for visualization
-                        drawRect(boundingBox.left, boundingBox.top, boundingBox.right - boundingBox.left, boundingBox.bottom - boundingBox.top, 'red');
-                    }
-                }
-            }
-
-            return sprites;
-        }
-
-        // Replace with your logic to load the image data
-        // This example just fills the image data with random colors
-        for (let i = 0; i < imageData.data.length; i += 4) {
-            imageData.data[i] = Math.random() * 255;  // Red
-            imageData.data[i + 1] = Math.random() * 255;  // Green
-            imageData.data[i + 2] = Math.random() * 255;  // Blue
-            imageData.data[i + 3] = 255;  // Alpha (always opaque)
-        }
-
-        const sprites = detectSprites(imageData);
-        console.log("Detected Sprites:", sprites);
-
-        // Draw the image data on the canvas for visualization
-        const image = new ImageData(imageData.data, imageData.width, imageData.height);
-        ctx.putImageData(image, 0, 0);
     </script>
 </body>
-
 </html>

@@ -29,73 +29,28 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const detectedColorDiv = document.getElementById('detectedColor');
-    const numSamples = 10000; // Number of random samples
-
-    function getRandomSample(width, height) {
-      return {
-        x: Math.floor(Math.random() * width),
-        y: Math.floor(Math.random() * height),
-      };
-    }
-
-function estimateBackgroundColor(imageData) {
-  const { width, height } = imageData;
-  const colorMap = {};
-
-  for (let i = 0; i < numSamples; i++) {
-    let blackPixel = true;
-    while (blackPixel) {
-      const { x, y } = getRandomSample(width, height);
-      const index = (y * width + x) * 4;
-      const red = imageData.data[index];
-      const green = imageData.data[index + 1];
-      const blue = imageData.data[index + 2];
-      if (red > 20 && green > 20 && blue > 20) { // Not black within tolerance
-        blackPixel = false;
-        const color = `rgb(${red}, ${green}, ${blue})`;
-        colorMap[color] = (colorMap[color] || 0) + 1;
-      }
-    }
-  }
-
-      // Find the color with the highest count (most frequent)
-      let maxCount = 0;
-      let backgroundColor;
-      for (const color in colorMap) {
-        if (colorMap[color] > maxCount) {
-          maxCount = colorMap[color];
-          backgroundColor = color;
-        }
-      }
-
-      return backgroundColor;
-    }
-
-    function drawBoundingBoxes(imageData, backgroundColor) {
-      const { width, height } = imageData;
-
-      // Use a flood fill algorithm to identify connected regions (potential sprites)
-      // (Implementation of a basic flood fill omitted for brevity)
-
-      // Once you have identified connected regions, draw bounding boxes around them
-      ctx.drawImage(image, 0, 0); // Draw the original image onto the canvas
-      // (Implementation of drawing bounding boxes based on regions omitted for brevity)
-    }
 
     image.onload = function() {
-      // Set the canvas width and height to match the image dimensions
-      canvas.width = image.width;
-      canvas.height = image.height
+      // Get the top-left pixel's color as the background color
+      const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
-      ctx.drawImage(image, 0, 0); // Draw the image onto the canvas (hidden)
-      const imageData = ctx.getImageData(0, 0, image.width, image.height);
-      const backgroundColor = estimateBackgroundColor(imageData);
+      const imageData = ctx.getImageData(0, 0, 1, 1); // Get 1x1 pixel data
+      const red = imageData.data[0];
+      const green = imageData.data[1];
+      const blue = imageData.data[2];
+      const backgroundColor = `rgb(${red}, ${green}, ${blue})`;
 
       // Set the detected color as the background color of the #detectedColor element
       detectedColorDiv.style.backgroundColor = backgroundColor;
 
-      // Implement your flood fill algorithm and bounding box drawing logic here
-      // ... (Replace the commented-out sections with your implementation)
+      // You can remove the rest of the code (commented out below) 
+      // since background detection is simplified
+
+      // /* (Optional) Draw the original image onto the canvas */
+      // ctx.drawImage(image, 0, 0);
+
+      // /* (Optional) Implement your flood fill algorithm and bounding box drawing logic here */
+      // // ... (Replace the commented-out sections with your implementation)
     };
   </script>
 </body>

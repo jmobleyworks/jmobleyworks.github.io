@@ -83,6 +83,10 @@ function estimateBackgroundColor(imageData) {
     }
 
     image.onload = function() {
+      // Set the canvas width and height to match the image dimensions
+      canvas.width = image.width;
+      canvas.height = image.height
+      const ctx = canvas.getContext('2d');
       ctx.drawImage(image, 0, 0); // Draw the image onto the canvas (hidden)
       const imageData = ctx.getImageData(0, 0, image.width, image.height);
       const backgroundColor = estimateBackgroundColor(imageData);

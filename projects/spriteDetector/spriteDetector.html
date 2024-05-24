@@ -38,19 +38,22 @@
       };
     }
 
-    function estimateBackgroundColor(imageData) {
-      const { width, height } = imageData;
-      const colorMap = {};
+function estimateBackgroundColor(imageData) {
+  const { width, height } = imageData;
+  const colorMap = {};
 
-      for (let i = 0; i < numSamples; i++) {
-        const { x, y } = getRandomSample(width, height);
-        const index = (y * width + x) * 4;
-        const red = imageData.data[index];
-        const green = imageData.data[index + 1];
-        const blue = imageData.data[index + 2];
-        const color = `rgb(${red}, ${green}, ${blue})`;
-        colorMap[color] = (colorMap[color] || 0) + 1;
-      }
+  for (let i = 0; i < numSamples; i++) {
+    const { x, y } = getRandomSample(width, height);
+    const index = (y * width + x) * 4;
+    const alpha = imageData.data[index + 3]; // Check alpha channel value
+    if (alpha > 220) { // Adjust threshold as needed
+      const red = imageData.data[index];
+      const green = imageData.data[index + 1];
+      const blue = imageData.data[index + 2];
+      const color = `rgb(${red}, ${green}, ${blue})`;
+      colorMap[color] = (colorMap[color] || 0) + 1;
+    }
+  }
 
       // Find the color with the highest count (most frequent)
       let maxCount = 0;

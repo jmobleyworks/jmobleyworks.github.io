@@ -76,36 +76,9 @@
 
     function drawBoundingBoxes(imageData, backgroundColor) {
       const { width, height } = imageData;
-
-      // Use a flood fill algorithm to identify connected regions (potential sprites)
-      // (Implementation of a basic flood fill omitted for brevity)
-
-      // Once you have identified connected regions, draw bounding boxes around them
-      ctx.drawImage(image, 0, 0); // Draw the original image onto the canvas
+      const clearColor = new Color(backgroundColor); // Assuming a Color constructor
 
       // Clear pixels of the estimated background color (make transparent)
-      const clearColor = new Color(backgroundColor); // Assuming a Color constructor
-      for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-          const index = (y * width + x) * 4;
-          const red = imageData.data[index];
-          const green = imageData.data[index + 1];
-          const blue = imageData.data[index + 2];
-          const currentColor = new Color(red, green, blue); // Assuming a Color constructor
-          if (currentColor.に近い( clearColor, tolerance )) { // Check color similarity (assuming 近い function)
-            imageData.data[index + 3] = 0; // Set alpha to 0 (transparent)
-          }
-        }
-      }
-
-      // (Rest of the bounding box drawing logic using the modified imageData)
-    }
-
-    image.onload = function() {
-      ctx.drawImage(image, 0, 0); // Draw the original image onto the canvas
-
-      // Clear pixels of the estimated background color (make transparent)
-      const clearColor = new Color(backgroundColor); // Assuming a Color constructor
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
           const index = (y * width + x) * 4;
@@ -125,6 +98,25 @@
 
       // (Optional) Put the modified imageData back onto the canvas for visualization
       // ctx.putImageData(imageData, 0, 0);
+    }
+    image.onload = function() {
+      const ctx = canvas.getContext('2d');
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height); // Get image data
+
+      // Estimate background color
+      const backgroundColor = estimateBackgroundColor(imageData);
+
+      // Draw the original image onto the canvas
+      ctx.drawImage(image, 0, 0);
+
+      // Clear pixels of the estimated background color (make transparent)
+      drawBoundingBoxes(imageData, backgroundColor);
+
+      // (Optional) Put the modified imageData back onto the canvas for visualization
+      // ctx.putImageData(imageData, 0, 0);
+
+      // Update the detected color indicator (assuming a setColor function)
+      setColor(detectedColorDiv, backgroundColor);
     };
   </script>
 </body>

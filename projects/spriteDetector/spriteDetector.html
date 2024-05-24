@@ -20,7 +20,7 @@
   </style>
 </head>
 <body>
-  <img id="forest" src="Forest (1).png">
+  <img id="forest" src="Forest (3).png">
   <canvas id="canvas" width="400" height="400"></canvas>
   <p id="detectedColor"></p>
 
@@ -29,7 +29,7 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const detectedColorDiv = document.getElementById('detectedColor');
-    const numSamples = 1000; // Number of random samples
+    const numSamples = 10000; // Number of random samples
 
     function getRandomSample(width, height) {
       return {

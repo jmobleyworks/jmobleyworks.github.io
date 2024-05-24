@@ -38,22 +38,28 @@
       };
     }
 
-function estimateBackgroundColor(imageData) {
-  const { width, height } = imageData;
-  const colorMap = {};
+    function estimateBackgroundColor(imageData) {
+      const { width, height } = imageData;
+      const colorMap = {};
 
-  for (let i = 0; i < numSamples; i++) {
-    const { x, y } = getRandomSample(width, height);
-    const index = (y * width + x) * 4;
-    const alpha = imageData.data[index + 3]; // Check alpha channel value
-    if (alpha > 220) { // Adjust threshold as needed
-      const red = imageData.data[index];
-      const green = imageData.data[index + 1];
-      const blue = imageData.data[index + 2];
-      const color = `rgb(${red}, ${green}, ${blue})`;
-      colorMap[color] = (colorMap[color] || 0) + 1;
-    }
-  }
+      for (let i = 0; i < numSamples; i++) {
+        let blackPixel = true;
+        while (blackPixel) {
+          const { x, y } = getRandomSample(width, height);
+          const index = (y * width + x) * 4;
+          const alpha = imageData.data[index + 3]; // Check alpha channel value
+          if (alpha > 220) { // Adjust threshold as needed (consider transparency)
+            const red = imageData.data[index];
+            const green = imageData.data[index + 1];
+            const blue = imageData.data[index + 2];
+            if (red > 20 && green > 20 && blue > 20) { // Not black within tolerance
+              blackPixel = false;
+              const color = `rgb(${red}, ${green}, ${blue})`;
+              colorMap[color] = (colorMap[color] || 0) + 1;
+            }
+          }
+        }
+      }
 
       // Find the color with the highest count (most frequent)
       let maxCount = 0;
@@ -76,19 +82,49 @@ function estimateBackgroundColor(imageData) {
 
       // Once you have identified connected regions, draw bounding boxes around them
       ctx.drawImage(image, 0, 0); // Draw the original image onto the canvas
-      // (Implementation of drawing bounding boxes based on regions omitted for brevity)
+
+      // Clear pixels of the estimated background color (make transparent)
+      const clearColor = new Color(backgroundColor); // Assuming a Color constructor
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const index = (y * width + x) * 4;
+          const red = imageData.data[index];
+          const green = imageData.data[index + 1];
+          const blue = imageData.data[index + 2];
+          const currentColor = new Color(red, green, blue); // Assuming a Color constructor
+          if (currentColor.に近い( clearColor, tolerance )) { // Check color similarity (assuming 近い function)
+            imageData.data[index + 3] = 0; // Set alpha to 0 (transparent)
+          }
+        }
+      }
+
+      // (Rest of the bounding box drawing logic using the modified imageData)
     }
 
     image.onload = function() {
-      ctx.drawImage(image, 0, 0); // Draw the image onto the canvas (hidden)
-      const imageData = ctx.getImageData(0, 0, image.width, image.height);
-      const backgroundColor = estimateBackgroundColor(imageData);
+      ctx.drawImage(image, 0, 0); // Draw the original image onto the canvas
 
-      // Set the detected color as the background color of the #detectedColor element
-      detectedColorDiv.style.backgroundColor = backgroundColor;
+      // Clear pixels of the estimated background color (make transparent)
+      const clearColor = new Color(backgroundColor); // Assuming a Color constructor
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const index = (y * width + x) * 4;
+          const red = imageData.data[index];
+          const green = imageData.data[index + 1];
+          const blue = imageData.data[index + 2];
+          const currentColor = new Color(red, green, blue); // Assuming a Color constructor
+          if (currentColor.近い(clearColor, tolerance)) { // Check color similarity (assuming 近い function)
+            imageData.data[index + 3] = 0; // Set alpha to 0 (transparent)
+          }
+        }
+      }
 
       // Implement your flood fill algorithm and bounding box drawing logic here
       // ... (Replace the commented-out sections with your implementation)
+      // This logic should use the modified imageData with transparent background pixels
+
+      // (Optional) Put the modified imageData back onto the canvas for visualization
+      // ctx.putImageData(imageData, 0, 0);
     };
   </script>
 </body>

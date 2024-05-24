@@ -1,43 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-        /* Add your CSS here */
-    </style>
+  <style>
+    /* Add your CSS here */
+    #forest {
+      border: 1px solid black; /* Optional styling for the image */
+    }
+    #spritesDetected p {
+      margin: 5px;
+      padding: 5px;
+      border: 1px solid lightgray;
+      border-radius: 5px; /* Optional styling for detected sprites */
+    }
+  </style>
 </head>
 <body>
-    <img id="forest" src="Forest (2).png">
-    <div id="spritesDetected"></div>
+  <img id="forest" src="Forest (2).png">
+  <div id="spritesDetected"></div>
 
-    <script>
-        // SpriteDetector class
-        class SpriteDetector {
-            constructor(image) {
-                this.image = image;
-                this.sprites = [];
-            }
+  <script>
+    // SpriteDetector class
+    class SpriteDetector {
+      constructor(image) {
+        this.image = image;
+        this.sprites = [];
+        this.canvas = document.createElement('canvas');
+        this.canvas.width = image.width;
+        this.canvas.height = image.height;
+        this.ctx = this.canvas.getContext('2d');
+        this.ctx.drawImage(image, 0, 0);
+        this.imageData = this.ctx.getImageData(0, 0, image.width, image.height);
+      }
 
-            detectSprites() {
-                // Implement your bounding box detection logic here
-                // For simplicity, let's assume we found some sprites
-                this.sprites = ['Sprite 1', 'Sprite 2', 'Sprite 3'];
-                return this.sprites;
+      detectSprites() {
+        const { data, width, height } = this.imageData;
+        const threshold = 128; // Adjust threshold value for color difference detection
+
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const index = (y * width + x) * 4;
+            const isNonTransparent = data[index + 3] > 0; // Check for non-transparent pixel
+
+            if (isNonTransparent) {
+              let minX = x, maxX = x, minY = y, maxY = y;
+
+              // Find bounding box edges
+              while (minX > 0 && isNonTransparent && data[(minY * width + minX - 1) * 4 + 3] > 0) minX--;
+              while (maxX < width - 1 && isNonTransparent && data[(minY * width + maxX + 1) * 4 + 3] > 0) maxX++;
+              while (minY > 0 && isNonTransparent && data[(minY - 1) * width + x * 4 + 3] > 0) minY--;
+              while (maxY < height - 1 && isNonTransparent && data[(maxY + 1) * width + x * 4 + 3] > 0) maxY++;
+
+              // Check for minimum size to avoid noise
+              if (maxX - minX + 1 > 4 && maxY - minY + 1 > 4) {
+                this.sprites.push({ name: `Sprite ${this.sprites.length + 1}`, bounds: [minX, minY, maxX, maxY] });
+              }
             }
+          }
         }
 
-        window.onload = function() {
-            const image = document.getElementById('forest');
-            const spriteDetector = new SpriteDetector(image);
-            const sprites = spriteDetector.detectSprites();
+        return this.sprites;
+      }
+    }
 
-            // Append detected sprites to the HTML document
-            const spritesDetectedDiv = document.getElementById('spritesDetected');
-            sprites.forEach(sprite => {
-                const p = document.createElement('p');
-                p.textContent = sprite;
-                spritesDetectedDiv.appendChild(p);
-            });
-        };
-    </script>
+    window.onload = function() {
+      const image = document.getElementById('forest');
+      const spriteDetector = new SpriteDetector(image);
+      const sprites = spriteDetector.detectSprites();
+
+      // Append detected sprites to the HTML document
+      const spritesDetectedDiv = document.getElementById('spritesDetected');
+      sprites.forEach(sprite => {
+        const p = document.createElement('p');
+        p.textContent = `${sprite.name} (X: ${sprite.bounds[0]}, Y: ${sprite.bounds[1]}, W: ${sprite.bounds[2] - sprite.bounds[0] + 1}, H: ${sprite.bounds[3] - sprite.bounds[1] + 1})`;
+        spritesDetectedDiv.appendChild(p);
+      });
+    };
+  </script>
 </body>
 </html>

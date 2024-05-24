@@ -29,21 +29,27 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const detectedColorDiv = document.getElementById('detectedColor');
+    const numSamples = 100; // Number of random samples
 
-    function detectBackgroundColor(imageData) {
-      const { data, width, height } = imageData;
+    function getRandomSample(width, height) {
+      return {
+        x: Math.floor(Math.random() * width),
+        y: Math.floor(Math.random() * height),
+      };
+    }
+
+    function estimateBackgroundColor(imageData) {
+      const { width, height } = imageData;
       const colorMap = {};
 
-      // Build a color map (object) with counts for each unique color
-      for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-          const index = (y * width + x) * 4;
-          const red = data[index];
-          const green = data[index + 1];
-          const blue = data[index + 2];
-          const color = `rgb(${red}, ${green}, ${blue})`;
-          colorMap[color] = (colorMap[color] || 0) + 1;
-        }
+      for (let i = 0; i < numSamples; i++) {
+        const { x, y } = getRandomSample(width, height);
+        const index = (y * width + x) * 4;
+        const red = imageData.data[index];
+        const green = imageData.data[index + 1];
+        const blue = imageData.data[index + 2];
+        const color = `rgb(${red}, ${green}, ${blue})`;
+        colorMap[color] = (colorMap[color] || 0) + 1;
       }
 
       // Find the color with the highest count (most frequent)
@@ -73,7 +79,7 @@
     image.onload = function() {
       ctx.drawImage(image, 0, 0); // Draw the image onto the canvas (hidden)
       const imageData = ctx.getImageData(0, 0, image.width, image.height);
-      const backgroundColor = detectBackgroundColor(imageData);
+      const backgroundColor = estimateBackgroundColor(imageData);
 
       // Set the detected color as the background color of the #detectedColor element
       detectedColorDiv.style.backgroundColor = backgroundColor;

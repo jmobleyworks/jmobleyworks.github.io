@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="spriteExtractor.js"></script>
+</head>
+<body>
+    <img id="forest" src="Designer (40).png" style="display: none;">
+    <canvas id="canvas" style="border: 1px solid black;"></canvas>
+
+    <script>
+        const image = document.getElementById('forest');
+        const canvas = document.getElementById('canvas');
+
+        image.onload = function() {
+            new SpriteExtractor(canvas, image);
+        };
+    </script>
+</body>
+</html>

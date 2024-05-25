@@ -39,8 +39,15 @@
             border: 1px solid #000;
         }
     </style>
+    <script>
+        function outputLiveDemoCode() {
+            const liveDemoContainer = document.getElementById('liveDemo');
+            const liveDemoCode = liveDemoContainer.innerHTML;
+            document.getElementById('liveDemoCode').innerText = liveDemoCode;
+        }
+    </script>
 </head>
-<body>
+<body onload="outputLiveDemoCode()">
     <h1>Introducing Text2Game: Revolutionizing Game Development with AI-Driven Dynamic Assets</h1>
     <p>Welcome to the future of game development! Today, we are excited to introduce <strong>Text2Game</strong>, an innovative engine that transforms text-based inputs into engaging and interactive game worlds. Powered by the latest advancements in AI, including DALL-E 3 for image generation and our custom SpriteExtractor for sprite extraction, Text2Game makes it easier than ever to create dynamic game assets on-the-fly.</p>
 
@@ -75,109 +82,86 @@
     <h4>3. Sprite Extraction</h4>
     <p>The generated image is processed by our SpriteExtractor to isolate the individual sprites, which can then be used in the game.</p>
 
-    <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-    &lt;title&gt;Text2Game Engine Demo&lt;/title&gt;
-    &lt;script type="module" src="path/to/spriteExtractor.js"&gt;&lt;/script&gt;
-    &lt;style&gt;
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        #gameInterface {
-            margin-bottom: 20px;
-        }
-        button {
-            margin: 5px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        #spriteContainer img {
-            margin: 10px;
-            border: 1px solid #000;
-        }
-    &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
-    &lt;h1&gt;Text2Game Engine&lt;/h1&gt;
-    &lt;div id="gameInterface"&gt;
-        &lt;p id="gameText"&gt;You have entered a mystical forest. What do you want to do?&lt;/p&gt;
-        &lt;button id="exploreButton"&gt;Explore the forest&lt;/button&gt;
-        &lt;button id="animalsButton"&gt;Look for animals&lt;/button&gt;
-        &lt;button id="campButton"&gt;Set up camp&lt;/button&gt;
-    &lt;/div&gt;
-    &lt;img id="generatedImage" style="display: none;"&gt;
-    &lt;div id="spriteContainer"&gt;&lt;/div&gt;
+    <div id="liveDemo">
+        <h2>Live Demo</h2>
+        <script type="module">
+            // Live demo code goes here
+            import SpriteExtractor from './spriteExtractor.js';
 
-    &lt;script type="module"&gt;
-        import SpriteExtractor from './spriteExtractor.js';
+            const gameTextElement = document.getElementById('gameText');
+            const exploreButton = document.getElementById('exploreButton');
+            const animalsButton = document.getElementById('animalsButton');
+            const campButton = document.getElementById('campButton');
+            const generatedImage = document.getElementById('generatedImage');
+            const spriteContainer = document.getElementById('spriteContainer');
 
-        const gameTextElement = document.getElementById('gameText');
-        const exploreButton = document.getElementById('exploreButton');
-        const animalsButton = document.getElementById('animalsButton');
-        const campButton = document.getElementById('campButton');
-        const generatedImage = document.getElementById('generatedImage');
-        const spriteContainer = document.getElementById('spriteContainer');
-
-        exploreButton.addEventListener('click', () => {
-            generateAssets("mystical forest");
-        });
-
-        animalsButton.addEventListener('click', () => {
-            generateAssets("forest with various animals");
-        });
-
-        campButton.addEventListener('click', () => {
-            generateAssets("forest campsite");
-        });
-
-        async function generateAssets(prompt) {
-            gameTextElement.textContent = `Generating assets for: ${prompt}`;
-            await fetchGeneratedImage(prompt);
-            processGeneratedImage();
-        }
-
-        async function fetchGeneratedImage(prompt) {
-            // Replace this with actual API call to DALL-E 3
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    generatedImage.src = 'generated_image.png';
-                    resolve();
-                }, 1000);
+            exploreButton.addEventListener('click', () => {
+                generateAssets("mystical forest");
             });
-        }
 
-        function processGeneratedImage() {
-            generatedImage.onload = function() {
-                const options = {
-                    tolerance: 20,
-                    numSamples: 4444,
-                    edgePadding: 10,
-                    debug: true
+            animalsButton.addEventListener('click', () => {
+                generateAssets("forest with various animals");
+            });
+
+            campButton.addEventListener('click', () => {
+                generateAssets("forest campsite");
+            });
+
+            async function generateAssets(prompt) {
+                gameTextElement.textContent = `Generating assets for: ${prompt}`;
+                await fetchGeneratedImage(prompt);
+                processGeneratedImage();
+            }
+
+            async function fetchGeneratedImage(prompt) {
+                // Replace this with actual API call to DALL-E 3
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        generatedImage.src = 'generated_image.png';
+                        resolve();
+                    }, 1000);
+                });
+            }
+
+            function processGeneratedImage() {
+                generatedImage.onload = function() {
+                    const options = {
+                        tolerance: 20,
+                        numSamples: 4444,
+                        edgePadding: 10,
+                        debug: true
+                    };
+                    const spriteExtractor = new SpriteExtractor(generatedImage, options);
+                    const sprites = spriteExtractor.extractSprites();
+                    displaySprites(sprites);
                 };
-                const spriteExtractor = new SpriteExtractor(generatedImage, options);
-                const sprites = spriteExtractor.extractSprites();
-                displaySprites(sprites);
-            };
-        }
+            }
 
-        function displaySprites(sprites) {
-            spriteContainer.innerHTML = '';
-            sprites.forEach((sprite, index) => {
-                const img = document.createElement('img');
-                img.src = sprite;
-                img.alt = `Sprite ${index + 1}`;
-                spriteContainer.appendChild(img);
-            });
-        }
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+            function displaySprites(sprites) {
+                spriteContainer.innerHTML = '';
+                sprites.forEach((sprite, index) => {
+                    const img = document.createElement('img');
+                    img.src = sprite;
+                    img.alt = `Sprite ${index + 1}`;
+                    spriteContainer.appendChild(img);
+                });
+            }
+        </script>
+    </div>
 
     <h2>Conclusion</h2>
     <p>With Text2Game, game development becomes more accessible, efficient, and creative. By harnessing the power of AI-driven dynamic assets, developers can focus on crafting engaging narratives and gameplay experiences without being limited by traditional asset creation processes. Whether you're a seasoned developer or a newcomer to game design, Text2Game empowers you to bring your ideas to life like never before.</p>
 
     <p>Ready to embark on your game development journey with Text2Game? Stay tuned for updates and be part of the revolution!</p>
+
+    <pre><code id="liveDemoCode"></code></pre>
+
+    <script>
+        function outputLiveDemoCode() {
+            const liveDemoContainer = document.getElementById('liveDemo');
+            const liveDemoCode = liveDemoContainer.innerHTML;
+            document.getElementById('liveDemoCode').innerText = liveDemoCode;
+        }
+    </script>
 </body>
 </html>

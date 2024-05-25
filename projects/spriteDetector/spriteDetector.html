@@ -24,13 +24,15 @@
       return data[pixelIndex + 3] > 0;
     }
 
+    let globalVisited = new Set();
+
     function extractSprite(seed) {
       console.log('Starting extractSprite function');
       let spriteData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0;
       let count = 0;
       const stack = [seed];
-      const visited = new Set();
+      const localVisited = new Set();
       const maxIterations = 10000;
 
       console.log('Checking if seed resides within an already extracted sprite');
@@ -46,7 +48,7 @@
         let x = point.x, y = point.y;
         const key = `${x},${y}`;
 
-        if (x < 0 || x >= canvas.width || y < 0 || y >= canvas.height || visited.has(key)) continue;
+        if (x < 0 || x >= canvas.width || y < 0 || y >= canvas.height || localVisited.has(key) || globalVisited.has(key)) continue;
 
         let currentColor = [
           spriteData.data[(y * canvas.width + x) * 4],
@@ -61,7 +63,8 @@
         maxX = Math.max(maxX, x);
         maxY = Math.max(maxY, y);
 
-        visited.add(key);
+        localVisited.add(key);
+        globalVisited.add(key);
 
         stack.push({ x: x + 1, y: y });
         stack.push({ x: x - 1, y: y });
@@ -74,16 +77,21 @@
         console.log('DFS reached maximum iterations, switching to exhaustive search');
         for (let y = 0; y < canvas.height; y++) {
           for (let x = 0; x < canvas.width; x++) {
+            const key = `${x},${y}`;
+            if (globalVisited.has(key)) continue;
+
             let currentColor = [
               spriteData.data[(y * canvas.width + x) * 4],
               spriteData.data[(y * canvas.width + x) * 4 + 1],
               spriteData.data[(y * canvas.width + x) * 4 + 2]
             ];
+
             if (!isBackground(currentColor)) {
               minX = Math.min(minX, x);
               minY = Math.min(minY, y);
               maxX = Math.max(maxX, x);
               maxY = Math.max(maxY, y);
+              globalVisited.add(key);
             }
           }
         }

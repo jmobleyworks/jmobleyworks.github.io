@@ -7,6 +7,8 @@
     var tolerance = 10, numSamples = 444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [], mergedBoxes = [], debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
+    let extractSprite = (seed) => { return ctx.getImageData(seed.x - 5, seed.y - 5, 10, 10); }
+    let drawSprite = (sprite) => { ctx.putImageData(sprite, Math.floor(Math.random() * (canvas.width - sprite.width)), Math.floor(Math.random() * (canvas.height - sprite.height));); }
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;
       canvas.height = image.height;
@@ -15,7 +17,7 @@
       detectedColorDiv.style.backgroundColor = `rgb(${backgroundColor[0]}, ${backgroundColor[1]}, ${backgroundColor[2]})`;
       seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
       if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}
-      seeds.forEach(seed => { });
+      seeds.forEach(seed => {drawSprite(extractSprite(seed));});
     };
     function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
       return Array.from({ length: numSamples })

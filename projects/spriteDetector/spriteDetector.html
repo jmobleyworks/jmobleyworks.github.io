@@ -5,7 +5,6 @@
   <p id="detectedColor" style="font-family: sans-serif; width:50px;height:50px;border:1px solid black;margin:10px;"></p>
   <script>
     var tolerance = 10, numSamples = 44, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [],  mergedBoxes = [], debug = true;
-
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
     let boundingBoxDetection = (seed) => {
@@ -32,9 +31,7 @@
         right: Math.max(box1.right, box2.right)
       };
     };
-
     let mergeOverlappingBoundingBoxes = (boxes) => {
-     
       for (let i = 0; i < boxes.length; i++) {
         const currentBox = boxes[i];
         let merged = false;
@@ -52,8 +49,6 @@
       }
       return mergedBoxes;
     };
-
-
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;
       canvas.height = image.height;
@@ -63,7 +58,6 @@
       if(debug){console.log("isForeground(Red)="+isForeground([255, 0, 0])+" isForeground(backgroundColor)="+isForeground(backgroundColor)+" isBackground(Red)"+isBackground([255, 0, 0])+" isBackground(backgroundColor)="+isBackground(backgroundColor));}
       seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
       if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}
-
       // Efficient bounding box detection and merging
       boundingBoxes = seeds.map(seed => {
         const newBox = boundingBoxDetection(seed);
@@ -78,13 +72,10 @@
         }
         return newBox; // Can be used for debugging purposes (optional)
       });
-
       // Final merged bounding boxes after processing all seeds
       boundingBoxes = mergedBoxes;
-
       if(debug) {ctx.strokeStyle = 'red';boundingBoxes.forEach(box => ctx.strokeRect(box.left, box.top, box.right - box.left, box.bottom - box.top));}
     };
-
     function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
       return Array.from({ length: numSamples })
         .map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) }))

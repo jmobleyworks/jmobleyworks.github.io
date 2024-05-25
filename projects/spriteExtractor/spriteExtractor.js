@@ -1,40 +1,22 @@
-// spriteExtractor.js
-
 class SpriteExtractor {
-    constructor(canvas, image, tolerance = 20, numSamples = 4444, edgePadding = 10, debug = true) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
-        this.image = image;
-        this.tolerance = tolerance;
-        this.numSamples = numSamples;
-        this.edgePadding = edgePadding;
-        this.debug = debug;
+    constructor(options = {}) {
+        this.tolerance = options.tolerance || 20;
+        this.numSamples = options.numSamples || 4444;
+        this.edgePadding = options.edgePadding || 10;
+        this.debug = options.debug || false;
         this.backgroundColor = null;
         this.seeds = [];
         this.extractedSprites = [];
         this.globalVisited = new Set();
-
-        this.init();
     }
 
-    init() {
-        this.canvas.width = this.image.width;
-        this.canvas.height = this.image.height;
-        this.ctx.drawImage(this.image, 0, 0);
+    initializeCanvas(image) {
+        this.canvas = document.createElement('canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.canvas.width = image.width;
+        this.canvas.height = image.height;
+        this.ctx.drawImage(image, 0, 0);
         this.backgroundColor = this.getBackgroundColor();
-        this.seeds = this.getRandomForegroundSeeds();
-
-        if (this.debug) {
-            this.ctx.fillStyle = 'red';
-            this.seeds.forEach(seed => this.ctx.fillRect(seed.x, seed.y, 5, 5));
-        }
-
-        this.seeds.forEach(seed => {
-            const spriteObject = this.extractSprite(seed);
-            if (spriteObject) {
-                this.drawSprite(spriteObject);
-            }
-        });
     }
 
     getBackgroundColor() {
@@ -153,7 +135,7 @@ class SpriteExtractor {
         return spriteObject.sprite.data[pixelIndex + 3] > 0;
     }
 
-    drawSprite(spriteObject) {
+    drawSprite(spriteObject, container) {
         if (spriteObject === null) return;
 
         const { sprite, minX, minY, maxX, maxY } = spriteObject;
@@ -170,16 +152,25 @@ class SpriteExtractor {
         img.src = spriteCanvas.toDataURL();
         img.width = spriteWidth;
         img.height = spriteHeight;
-        document.body.appendChild(img);
+        container.appendChild(img);
+    }
+
+    processImage(image, container) {
+        this.initializeCanvas(image);
+        this.seeds = this.getRandomForegroundSeeds();
+
+        if (this.debug) {
+            this.ctx.fillStyle = 'red';
+            this.seeds.forEach(seed => this.ctx.fillRect(seed.x, seed.y, 5, 5));
+        }
+
+        this.seeds.forEach(seed => {
+            const spriteObject = this.extractSprite(seed);
+            if (spriteObject) {
+                this.drawSprite(spriteObject, container);
+            }
+        });
     }
 }
 
-// Usage example (should be in a separate HTML/JS file):
-/*
-const image = document.getElementById('forest');
-const canvas = document.getElementById('canvas');
-
-image.onload = function() {
-    new SpriteExtractor(canvas, image);
-};
-*/
+export default SpriteExtractor;

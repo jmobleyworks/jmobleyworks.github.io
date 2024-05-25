@@ -2,20 +2,11 @@
 <html>
 <head>
   <style>
-    #forest {
-      display: none; /* Hide the original image */
-    }
-    #canvas {
-      border: 1px solid black;
-    }
+    #forest { display: none; }
+    #canvas { border: 1px solid black; }
     #detectedColor {
       font-family: sans-serif;
-      /* Additional styles for displaying the background color visually */
-      width: 50px;
-      height: 50px;
-      border: 1px solid black;
-      margin: 10px;
-      background-color: #fff; /* Set a default background color */
+      width: 50px; height: 50px; border: 1px solid black; margin: 10px; background-color: #fff;
     }
   </style>
 </head>
@@ -25,25 +16,57 @@
   <p id="detectedColor"></p>
 
   <script>
-    const image = document.getElementById('forest');
-    const canvas = document.getElementById('canvas');
+    const canvas = document.getElementById('canvas'),
+          ctx = canvas.getContext('2d'),
+          image = document.getElementById('forest'),
+          detectedColorDiv = document.getElementById('detectedColor');
+
     canvas.width = image.width;
     canvas.height = image.height;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(image, 0, 0); // Draw the image onto the canvas (hidden)
+    ctx.drawImage(image, 0, 0);
 
-    const detectedColorDiv = document.getElementById('detectedColor');
+    const backgroundRed = 255, // Adjust these values as needed
+          backgroundGreen = 255,
+          backgroundBlue = 255;
+
+    function getRandomBoundingBoxes(numSamples) {
+      const sampleDistribution = new Array(canvas.width).fill(0).map(() => new Array(canvas.height).fill(0));
+      for (let i = 0; i < numSamples; i++) {
+        const x = Math.floor(Math.random() * canvas.width),
+              y = Math.floor(Math.random() * canvas.height),
+              pixelIndex = (y * canvas.width + x) * 4,
+              imageData = ctx.getImageData(x, y, 1, 1).data;
+        if (imageData[0] !== backgroundRed || imageData[1] !== backgroundGreen || imageData[2] !== backgroundBlue) {
+          sampleDistribution[y][x]++;
+        }
+      }
+
+      const threshold = Math.floor(numSamples * 0.01), // Adjust threshold
+            boundingBoxes = [];
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          if (sampleDistribution[y][x] > threshold) {
+            let minX = x, minY = y, maxX = x, maxY = y;
+            while (minX > 0 && sampleDistribution[minY][minX - 1] > threshold) minX--;
+            while (maxX < canvas.width - 1 && sampleDistribution[minY][maxX + 1] > threshold) maxX++;
+            while (minY > 0 && sampleDistribution[minY - 1][x] > threshold) minY--;
+            while (maxY < canvas.height - 1 && sampleDistribution[maxY + 1][x] > threshold) maxY++;
+            boundingBoxes.push({ x: minX, y: minY, width: maxX - minX + 1, height: maxY - minY + 1 });
+          }
+        }
+      }
+
+      return boundingBoxes;
+    }
 
     image.onload = function() {
-      // Get the top-left pixel's color as the background color
-      const imageData = ctx.getImageData(0, 0, 1, 1); // Get 1x1 pixel data
-      const red = imageData.data[0];
-      const green = imageData.data[1];
-      const blue = imageData.data[2];
-      const backgroundColor = `rgb(${red}, ${green}, ${blue})`;
-
-      // Set the detected color as the background color of the #detectedColor element
+      const imageData = ctx.getImageData(0, 0, 1, 1).data;
+      const backgroundColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
       detectedColorDiv.style.backgroundColor = backgroundColor;
+
+      // Use the bounding boxes here (optional)
+      const boxes = getRandomBoundingBoxes(1000); // Adjust numSamples
+      console.log(boxes); // Example usage (replace with your visualization logic)
     };
   </script>
 </body>

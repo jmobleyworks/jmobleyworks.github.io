@@ -9,7 +9,14 @@
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
     //let floodFill = (x, y, oldColor, newColor) => { if (isForeground(ctx.getImageData(x, y, 1, 1).data)) { ctx.fillStyle = newColor; ctx.fillRect(x, y, 1, 1); floodFill(x + 1, y, oldColor, newColor); floodFill(x - 1, y, oldColor, newColor); floodFill(x, y + 1, oldColor, newColor); floodFill(x, y - 1, oldColor, newColor); } }
     //let floodFillStack = (x, y, oldColor, newColor) => {let stack = [];stack.push([x, y]);while (stack.length > 0) {let [x, y] = stack.pop();if (x >= 0 && y >= 0 && x < canvas.width && y < canvas.height) {let pixelColor = ctx.getImageData(x, y, 1, 1).data;if (isForeground(pixelColor)) {ctx.fillStyle = `rgb(${newColor[0]}, ${newColor[1]}, ${newColor[2]})`;ctx.fillRect(x, y, 1, 1);stack.push([x + 1, y]);stack.push([x - 1, y]);stack.push([x, y + 1]);stack.push([x, y - 1]);}}}};
-    let boundingBoxDetection = (seed) => {let [top, bottom, left, right] = [seed.y, seed.y, seed.x, seed.x];while (isForeground(ctx.getImageData(seed.x, --top, 1, 1).data));while (isForeground(ctx.getImageData(seed.x, ++bottom, 1, 1).data));while (isForeground(ctx.getImageData(--left, seed.y, 1, 1).data));while (isForeground(ctx.getImageData(++right, seed.y, 1, 1).data));return { top, bottom, left, right };};
+let boundingBoxDetection = (seed) => {
+  let [top, bottom, left, right] = [seed.y, seed.y, seed.x, seed.x];
+  while (top > 0 && isForeground(ctx.getImageData(seed.x, --top, 1, 1).data));
+  while (bottom < canvas.height && isForeground(ctx.getImageData(seed.x, ++bottom, 1, 1).data));
+  while (left > 0 && isForeground(ctx.getImageData(--left, seed.y, 1, 1).data));
+  while (right < canvas.width && isForeground(ctx.getImageData(++right, seed.y, 1, 1).data));
+  return { top, bottom, left, right };
+};
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;
       canvas.height = image.height;

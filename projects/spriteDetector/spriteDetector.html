@@ -19,8 +19,8 @@
         .map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) }))
         .filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));
     }
-    seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
-    console.log("seeds.length="+seeds.length);
+    //seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
+    //console.log("seeds.length="+seeds.length);
   </script>
 </body>
 </html>

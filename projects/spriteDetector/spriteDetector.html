@@ -7,16 +7,27 @@
     var tolerance = 10, numSamples = 4444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [],  mergedBoxes = [], debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
-    let boundingBoxDetection = (seed) => {
-      let [top, bottom, left, right] = [seed.y, seed.y, seed.x, seed.x];
-      let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-      let getIndex = (x, y) => (y * canvas.width + x) * 4;
-      while (top > 0 && isForeground(imageData.slice(getIndex(seed.x, --top), getIndex(seed.x, top) + 4)));
-      while (bottom < canvas.height && isForeground(imageData.slice(getIndex(seed.x, ++bottom), getIndex(seed.x, bottom) + 4)));
-      while (left > 0 && isForeground(imageData.slice(getIndex(--left, seed.y), getIndex(left, seed.y) + 4)));
-      while (right < canvas.width && isForeground(imageData.slice(getIndex(++right, seed.y), getIndex(right, seed.y) + 4)));
-      return { top, bottom, left, right };
-    };
+let boundingBoxDetection = (seed) => {
+  let [top, bottom, left, right] = [seed.y, seed.y, seed.x, seed.x];
+  let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  let getIndex = (x, y) => (y * canvas.width + x) * 4;
+  while (top > 0 && isForeground(imageData.slice(getIndex(seed.x, --top), getIndex(seed.x, top) + 4)));
+  while (bottom < canvas.height && isForeground(imageData.slice(getIndex(seed.x, ++bottom), getIndex(seed.x, bottom) + 4)));
+  while (left > 0 && isForeground(imageData.slice(getIndex(--left, seed.y), getIndex(left, seed.y) + 4)));
+  while (right < canvas.width && isForeground(imageData.slice(getIndex(++right, seed.y), getIndex(right, seed.y) + 4)));
+  
+  const newBox = { top, bottom, left, right };
+  // Check for overlap with existing boxes before adding
+  const existingOverlap = mergedBoxes.find(box => isOverlap(box, newBox));
+  if (existingOverlap) {
+    // Merge with overlapping box
+    mergedBoxes[mergedBoxes.indexOf(existingOverlap)] = mergeBoundingBoxes(existingOverlap, newBox);
+  } else {
+    // No overlap, add to merged boxes
+    mergedBoxes.push(newBox);
+  }
+};
+
     let isOverlap = (box1, box2) => {
       return !(box2.left > box1.right ||
                box2.right < box1.left ||

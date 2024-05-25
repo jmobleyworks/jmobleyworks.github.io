@@ -1,47 +1,184 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <script type="module" src="spriteExtractor.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducing Text2Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow: auto;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        #gameInterface {
+            margin-bottom: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #spriteContainer img {
+            margin: 10px;
+            border: 1px solid #000;
+        }
+    </style>
 </head>
 <body>
-    <img id="generatedImage" src="generated_image.png" style="display: none;">
-    <div id="spriteContainer"></div>
+    <h1>Introducing Text2Game: Revolutionizing Game Development with AI-Driven Dynamic Assets</h1>
+    <p>Welcome to the future of game development! Today, we are excited to introduce <strong>Text2Game</strong>, an innovative engine that transforms text-based inputs into engaging and interactive game worlds. Powered by the latest advancements in AI, including DALL-E 3 for image generation and our custom SpriteExtractor for sprite extraction, Text2Game makes it easier than ever to create dynamic game assets on-the-fly.</p>
 
-    <script type="module">
+    <h2>What is a Text2Game Engine?</h2>
+    <p>A Text2Game engine is a game development platform that uses natural language inputs to generate game content. Imagine describing a scene or a character in simple text, and having the engine instantly create the corresponding pixel art, animations, and interactive elements. This approach opens up endless possibilities for game developers, allowing for more creativity, faster prototyping, and richer player experiences.</p>
+
+    <h2>Our Approach</h2>
+    <p>At the core of Text2Game is the seamless integration of text-based prompts and AI-generated assets. Here's how it works:</p>
+    <ol>
+        <li><strong>User Input</strong>: Players or developers input text descriptions or select from predefined options.</li>
+        <li><strong>AI Generation</strong>: The engine sends these inputs to DALL-E 3, which generates pixel art images based on the descriptions.</li>
+        <li><strong>Sprite Extraction</strong>: Using our SpriteExtractor class, we process these images to extract usable sprites.</li>
+        <li><strong>Game Integration</strong>: The extracted sprites are integrated into the game world, ready for interaction and further manipulation.</li>
+    </ol>
+    <p>This workflow ensures that game content is always fresh, unique, and tailored to the player's actions and story choices.</p>
+
+    <h2>Demonstration</h2>
+    <p>Let's dive into an example to see Text2Game in action. We'll demonstrate how a simple user input can generate a dynamic game scene.</p>
+
+    <h3>Step-by-Step Example</h3>
+    <h4>1. User Input</h4>
+    <p>The player is presented with a scenario: "You have entered a mystical forest. What do you want to do?"</p>
+    <ul>
+        <li>Explore the forest</li>
+        <li>Look for animals</li>
+        <li>Set up camp</li>
+    </ul>
+
+    <h4>2. Generating Assets with DALL-E 3</h4>
+    <p>Based on the selected option, the engine generates a prompt for DALL-E 3. For instance, if the player chooses to "Look for animals," the prompt might be "a forest with various animals."</p>
+
+    <h4>3. Sprite Extraction</h4>
+    <p>The generated image is processed by our SpriteExtractor to isolate the individual sprites, which can then be used in the game.</p>
+
+    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Text2Game Engine Demo&lt;/title&gt;
+    &lt;script type="module" src="path/to/spriteExtractor.js"&gt;&lt;/script&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #gameInterface {
+            margin-bottom: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #spriteContainer img {
+            margin: 10px;
+            border: 1px solid #000;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Text2Game Engine&lt;/h1&gt;
+    &lt;div id="gameInterface"&gt;
+        &lt;p id="gameText"&gt;You have entered a mystical forest. What do you want to do?&lt;/p&gt;
+        &lt;button id="exploreButton"&gt;Explore the forest&lt;/button&gt;
+        &lt;button id="animalsButton"&gt;Look for animals&lt;/button&gt;
+        &lt;button id="campButton"&gt;Set up camp&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;img id="generatedImage" style="display: none;"&gt;
+    &lt;div id="spriteContainer"&gt;&lt;/div&gt;
+
+    &lt;script type="module"&gt;
         import SpriteExtractor from './spriteExtractor.js';
 
-        const image = document.getElementById('generatedImage');
+        const gameTextElement = document.getElementById('gameText');
+        const exploreButton = document.getElementById('exploreButton');
+        const animalsButton = document.getElementById('animalsButton');
+        const campButton = document.getElementById('campButton');
+        const generatedImage = document.getElementById('generatedImage');
         const spriteContainer = document.getElementById('spriteContainer');
 
-        image.onload = function() {
-            const options = {
-                tolerance: 20,
-                numSamples: 4444,
-                edgePadding: 10,
-                debug: true
-            };
-            const spriteExtractor = new SpriteExtractor(options);
-            spriteExtractor.processImage(image, spriteContainer);
-        };
+        exploreButton.addEventListener('click', () => {
+            generateAssets("mystical forest");
+        });
 
-        // Example function to simulate fetching an image from DALL-E 3 API
+        animalsButton.addEventListener('click', () => {
+            generateAssets("forest with various animals");
+        });
+
+        campButton.addEventListener('click', () => {
+            generateAssets("forest campsite");
+        });
+
+        async function generateAssets(prompt) {
+            gameTextElement.textContent = `Generating assets for: ${prompt}`;
+            await fetchGeneratedImage(prompt);
+            processGeneratedImage();
+        }
+
         async function fetchGeneratedImage(prompt) {
-            // Simulate API call
+            // Replace this with actual API call to DALL-E 3
             return new Promise((resolve) => {
                 setTimeout(() => {
-                    document.getElementById('generatedImage').src = 'generated_image.png';
+                    generatedImage.src = 'generated_image.png';
                     resolve();
                 }, 1000);
             });
         }
 
-        // Simulate game logic
-        async function startGame() {
-            const prompt = "forest with animals";
-            await fetchGeneratedImage(prompt);
+        function processGeneratedImage() {
+            generatedImage.onload = function() {
+                const options = {
+                    tolerance: 20,
+                    numSamples: 4444,
+                    edgePadding: 10,
+                    debug: true
+                };
+                const spriteExtractor = new SpriteExtractor(generatedImage, options);
+                const sprites = spriteExtractor.extractSprites();
+                displaySprites(sprites);
+            };
         }
 
-        startGame();
-    </script>
+        function displaySprites(sprites) {
+            spriteContainer.innerHTML = '';
+            sprites.forEach((sprite, index) => {
+                const img = document.createElement('img');
+                img.src = sprite;
+                img.alt = `Sprite ${index + 1}`;
+                spriteContainer.appendChild(img);
+            });
+        }
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+    <h2>Conclusion</h2>
+    <p>With Text2Game, game development becomes more accessible, efficient, and creative. By harnessing the power of AI-driven dynamic assets, developers can focus on crafting engaging narratives and gameplay experiences without being limited by traditional asset creation processes. Whether you're a seasoned developer or a newcomer to game design, Text2Game empowers you to bring your ideas to life like never before.</p>
+
+    <p>Ready to embark on your game development journey with Text2Game? Stay tuned for updates and be part of the revolution!</p>
 </body>
 </html>

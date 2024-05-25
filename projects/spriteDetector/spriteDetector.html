@@ -16,9 +16,9 @@
     const ctx = canvas.getContext('2d');
     ctx.drawImage(image, 0, 0); // Draw image onto canvas (hidden)
     image.onload = function() {
-      //const [red, green, blue] = ctx.getImageData(0, 0, 1, 1).data; // Destructuring assignment
-      //const backgroundColor = `rgb(${red}, ${green}, ${blue})`;
-      //detectedColorDiv.style.backgroundColor = backgroundColor;
+      const [red, green, blue] = ctx.getImageData(0, 0, 1, 1).data; // Destructuring assignment
+      const backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+      detectedColorDiv.style.backgroundColor = backgroundColor;
     };
   </script>
 </body>

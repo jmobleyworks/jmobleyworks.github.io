@@ -8,7 +8,7 @@
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
     let extractSprite = (seed) => { return ctx.getImageData(seed.x - 5, seed.y - 5, 10, 10); }
-    let drawSprite = (sprite) => { ctx.putImageData(sprite, Math.floor(Math.random() * (canvas.width - sprite.width)), Math.floor(Math.random() * (canvas.height - sprite.height));); }
+    let drawSprite = (sprite) => { ctx.putImageData(sprite, Math.floor(Math.random() * (canvas.width - sprite.width)), Math.floor(Math.random() * (canvas.height - sprite.height))); }
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;
       canvas.height = image.height;

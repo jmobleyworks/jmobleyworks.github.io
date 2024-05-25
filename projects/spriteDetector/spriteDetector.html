@@ -17,10 +17,6 @@
       ctx.drawImage(image, 0, 0); // Draw image onto canvas
       backgroundColor = [ctx.getImageData(0, 0, 1, 1).data[0], ctx.getImageData(0, 0, 1, 1).data[1], ctx.getImageData(0, 0, 1, 1).data[2]];
       detectedColorDiv.style.backgroundColor = `rgb(${backgroundColor[0]}, ${backgroundColor[1]}, ${backgroundColor[2]})`;
-      if (debug) {
-        console.log("isForeground(Red)=" + isForeground([255, 0, 0]) + " isForeground(backgroundColor)=" + isForeground(backgroundColor) +
-
-                          if(debug){console.log("isBackground(Red)"+isBackground([255, 0, 0])+" isBackground(backgroundColor)="+isBackground(backgroundColor));}
       seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
       if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}
 

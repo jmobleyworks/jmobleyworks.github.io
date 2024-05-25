@@ -16,7 +16,7 @@ let boundingBoxDetection = (seed) => {
   while (left > 0 && isForeground(imageData.slice(getIndex(--left, seed.y), getIndex(left, seed.y) + 4)));
   while (right < canvas.width && isForeground(imageData.slice(getIndex(++right, seed.y), getIndex(right, seed.y) + 4)));
 
-  const newBox = { top, bottom, left, right };
+  let newBox = { top, bottom, left, right };
   // Check for overlap with existing boxes before adding
   let i = 0;
   while (i < mergedBoxes.length) {

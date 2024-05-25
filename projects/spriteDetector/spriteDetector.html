@@ -24,7 +24,7 @@
     canvas.width = image.width;
     canvas.height = image.height;
     ctx.drawImage(image, 0, 0);
-
+    ctx.willReadFrequently = true;
     const backgroundRed = 255, // Adjust these values as needed
           backgroundGreen = 255,
           backgroundBlue = 255;

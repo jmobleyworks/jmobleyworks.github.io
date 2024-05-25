@@ -35,15 +35,13 @@ let mergeOverlappingBoundingBoxes = (boxes) => {
   let merged = true;
   while (merged) {
     merged = false;
-    // Sort boxes by left edge
-    boxes.sort((a, b) => a.left - b.left);
-    let mergedBoxes = [boxes[0]];
-    for(let i = 1; i < boxes.length; i++) {
-      let lastBox = mergedBoxes[mergedBoxes.length - 1];
+    let mergedBoxes = [];
+    for(let i = 0; i < boxes.length; i++) {
       let currentBox = boxes[i];
-      if(isOverlap(lastBox, currentBox)) {
-        // If boxes overlap, merge them and replace the last box in mergedBoxes
-        mergedBoxes[mergedBoxes.length - 1] = mergeBoundingBoxes(lastBox, currentBox);
+      let overlapIndex = mergedBoxes.findIndex(mergedBox => isOverlap(mergedBox, currentBox));
+      if(overlapIndex !== -1) {
+        // If boxes overlap, merge them and replace the overlapping box in mergedBoxes
+        mergedBoxes[overlapIndex] = mergeBoundingBoxes(mergedBoxes[overlapIndex], currentBox);
         merged = true;
       } else {
         // If boxes don't overlap, add the current box to mergedBoxes
@@ -54,6 +52,7 @@ let mergeOverlappingBoundingBoxes = (boxes) => {
   }
   return boxes;
 };
+
 
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;

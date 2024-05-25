@@ -56,6 +56,11 @@
         stack.push({ x: x, y: y - 1 });
       }
 
+      if (minX > maxX || minY > maxY) {
+        console.log("Invalid sprite dimensions: ", { minX, minY, maxX, maxY });
+        return null;
+      }
+
       let spriteWidth = maxX - minX + 1;
       let spriteHeight = maxY - minY + 1;
       let sprite = ctx.createImageData(spriteWidth, spriteHeight);
@@ -80,11 +85,16 @@
         }
       }
 
-      extractedSprites.push({ sprite, minX, minY, maxX, maxY });
-      return { sprite, minX, minY, maxX, maxY };
+      const spriteObject = { sprite, minX, minY, maxX, maxY };
+      extractedSprites.push(spriteObject);
+      return spriteObject;
     }
 
     function isPointInSprite(point, spriteObject) {
+      if (!spriteObject || !spriteObject.sprite) {
+        console.log("Invalid sprite object: ", spriteObject);
+        return false;
+      }
       const x = point.x - spriteObject.minX;
       const y = point.y - spriteObject.minY;
       if (x < 0 || y < 0 || x >= spriteObject.sprite.width || y >= spriteObject.sprite.height) {
@@ -127,7 +137,9 @@
       }
       seeds.forEach(seed => {
         const spriteObject = extractSprite(seed);
-        drawSprite(spriteObject);
+        if (spriteObject) {
+          drawSprite(spriteObject);
+        }
       });
     };
 

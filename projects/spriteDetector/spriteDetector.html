@@ -54,11 +54,29 @@ function extractSprite(seed) {
     stack.push({ x: x, y: y + 1 });
     stack.push({ x: x, y: y - 1 });
   }
-  console.log('DFS iterations:', count);
-  if (count >= maxIterations) {
-    console.log('DFS reached maximum iterations, stopping');
-    return null;
-  }
+
+
+console.log('DFS iterations:', count);
+if (count >= maxIterations) {
+    console.log('DFS reached maximum iterations, switching to exhaustive search');
+    for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+            let currentColor = [
+                sprite.data[(y * canvas.width + x) * 4],
+                sprite.data[(y * canvas.width + x) * 4 + 1],
+                sprite.data[(y * canvas.width + x) * 4 + 2]
+            ];
+            if (!isBackground(currentColor)) {
+                spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4] = currentColor[0];
+                spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 1] = currentColor[1];
+                spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 2] = currentColor[2];
+                spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 3] = 255;
+            }
+        }
+    }
+}
+
+    
   console.log('Creating spriteData');
   let spriteData = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
   for (let y = minY; y <= maxY; y++) {

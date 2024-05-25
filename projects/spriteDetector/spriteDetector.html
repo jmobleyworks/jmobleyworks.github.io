@@ -22,7 +22,7 @@ function extractSprite(seed) {
   let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0;
   const stack = [seed];
   const localVisited = new Set();
-  let isCutOff = false; // Flag to indicate if the sprite is cut off along an edge
+  let isCutOff = false;
 
   if (extractedSprites.some(extractedSprite => extractedSprite && isPointInSprite(seed, extractedSprite))) {
     return null;
@@ -49,7 +49,6 @@ function extractSprite(seed) {
     maxY = Math.max(maxY, y);
 
     if (x === 0 || x === canvas.width - 1 || y === 0 || y === canvas.height - 1) {
-      // Check if the sprite touches any edge of the canvas
       isCutOff = true;
     }
 
@@ -62,13 +61,8 @@ function extractSprite(seed) {
     stack.push({ x: x, y: y - 1 });
   }
 
-  if (isCutOff) {
-    console.log("Sprite is cut off along an edge. Skipping...");
-    return null;
-  }
-
-  if (minX > maxX || minY > maxY) {
-    console.log("Invalid sprite dimensions: ", { minX, minY, maxX, maxY });
+  if (isCutOff || minX > maxX || minY > maxY) {
+    console.log("Invalid sprite dimensions or sprite cut off along an edge. Skipping...");
     return null;
   }
 
@@ -100,6 +94,7 @@ function extractSprite(seed) {
   extractedSprites.push(spriteObject);
   return spriteObject;
 }
+
 
 
     function isPointInSprite(point, spriteObject) {

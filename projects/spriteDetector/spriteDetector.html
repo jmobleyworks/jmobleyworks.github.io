@@ -2,6 +2,7 @@
     var tolerance = 10, numSamples = 10, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], extractedSprites = [], appendSpriteSize=300, debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
+    function isPointInSprite(point, sprite) { const x = point.x, y = point.y, width = sprite.width, height = sprite.height, data = sprite.data;  if (x < 0 || y < 0 || x >= width || y >= height) { return false;  } const pixelIndex = (y * width + x) * 4; return data[pixelIndex + 3] > 0; }
 function extractSprite(seed) {
   console.log('Starting extractSprite function');
   // Get the image data from the canvas

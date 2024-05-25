@@ -5,6 +5,7 @@
     
 function extractSprite(seed) {
   console.log('Starting extractSprite function');
+  // Get the image data from the canvas
   let sprite = ctx.getImageData(0, 0, canvas.width, canvas.height),
       minX = seed.x, minY = seed.y, maxX = seed.x, maxY = seed.y;
   let count = 0; // Add a counter
@@ -14,50 +15,59 @@ function extractSprite(seed) {
   // Check if seed resides within an already extracted sprite
   console.log('Checking if seed resides within an already extracted sprite');
   for (const extractedSprite of extractedSprites) {
+    // If the seed is outside the boundaries of the extracted sprite, continue to the next sprite
     if (seed.x >= extractedSprite.width || seed.x < 0 ||
         seed.y >= extractedSprite.height || seed.y < 0) {
       continue; // Seed outside extracted sprite boundaries
     }
+    // Get the color of the seed pixel
     const seedColor = [
       sprite.data[(seed.y * canvas.width + seed.x) * 4],
       sprite.data[(seed.y * canvas.width + seed.x) * 4 + 1],
       sprite.data[(seed.y * canvas.width + seed.x) * 4 + 2]
     ];
+    // If the seed color matches a pixel within an extracted sprite, skip extraction
     if (seedColor[0] === extractedSprite.data[seed.y * extractedSprite.width + seed.x * 4] &&
         seedColor[1] === extractedSprite.data[seed.y * extractedSprite.width + seed.x * 4 + 1] &&
         seedColor[2] === extractedSprite.data[seed.y * extractedSprite.width + seed.x * 4 + 2]) {
-      // Seed color matches a pixel within an extracted sprite, skip extraction
       console.log('Seed color matches a pixel within an extracted sprite, skipping extraction');
       return null;
     }
   }
 
   console.log('Starting DFS');
+  // Start the Depth-First Search (DFS)
   while (stack.length > 0 && count < maxIterations) {
     count++; // Increment the counter on each iteration
     let point = stack.pop();
     let x = point.x, y = point.y;
+    // If the point is outside the canvas, skip to the next point
     if (x < 0 || x >= canvas.width || y < 0 || y >= canvas.height) continue;
+    // Get the color of the current pixel
     let currentColor = [
       sprite.data[(y * canvas.width + x) * 4],
       sprite.data[(y * canvas.width + x) * 4 + 1],
       sprite.data[(y * canvas.width + x) * 4 + 2]
     ];
+    // If the pixel is part of the background, skip to the next pixel
     if (isBackground(currentColor)) continue;
+    // Update the boundaries of the sprite
     minX = Math.min(minX, x);
     minY = Math.min(minY, y);
     maxX = Math.max(maxX, x);
     maxY = Math.max(maxY, y);
-    sprite.data[(y * canvas.width + x) * 4 + 3] = 0; // Mark as visited
+    // Mark the pixel as visited
+    sprite.data[(y * canvas.width + x) * 4 + 3] = 0;
+    // Add the neighboring pixels to the stack
     stack.push({ x: x + 1, y: y });
     stack.push({ x: x - 1, y: y });
     stack.push({ x: x, y: y + 1 });
     stack.push({ x: x, y: y - 1 });
   }
 
-
-console.log('DFS iterations:', count);
-if (count >= maxIterations) {
+  console.log('DFS iterations:', count);
+  // If the DFS reached the maximum number of iterations, switch to exhaustive search
+  if (count >= maxIterations) {
     console.log('DFS reached maximum iterations, switching to exhaustive search');
     for (let y = 0; y < canvas.height; y++) {
         for (let x = 0; x < canvas.width; x++) {
@@ -66,6 +76,7 @@ if (count >= maxIterations) {
                 sprite.data[(y * canvas.width + x) * 4 + 1],
                 sprite.data[(y * canvas.width + x) * 4 + 2]
             ];
+            // If the pixel is not part of the background, add it to the sprite data
             if (!isBackground(currentColor)) {
                 spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4] = currentColor[0];
                 spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 1] = currentColor[1];
@@ -74,10 +85,10 @@ if (count >= maxIterations) {
             }
         }
     }
-}
+  }
 
-    
   console.log('Creating spriteData');
+  // Create the image data for the sprite
   let spriteData = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
   for (let y = minY; y <= maxY; y++) {
     for (let x = minX; x <= maxX; x++) {
@@ -86,6 +97,7 @@ if (count >= maxIterations) {
         sprite.data[(y * canvas.width + x) * 4 + 1],
         sprite.data[(y * canvas.width + x) * 4 + 2]
       ];
+      // If the pixel is not part of the background, add it to the sprite data
       if (!isBackground(currentColor)) {
         spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4] = currentColor[0];
         spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 1] = currentColor[1];
@@ -95,10 +107,13 @@ if (count >= maxIterations) {
     }
   }
   console.log('Pushing spriteData to extractedSprites');
+  // Add the sprite data to the list of extracted sprites
   extractedSprites.push(spriteData);
   console.log('Returning spriteData');
+  // Return the sprite data
   return spriteData;
 }
+
         
 let drawSprite = (sprite) => {if (sprite === null) {console.log('Skipping null sprite');return;} var newCanvas = document.createElement('canvas');newCanvas.width = sprite.width;newCanvas.height = sprite.height;newCanvas.getContext('2d').putImageData(sprite, 0, 0);var img = document.createElement('img');img.src = newCanvas.toDataURL();img.width = appendSpriteSize; img.height = appendSpriteSize; document.body.appendChild(img);}
 document.getElementById('forest').onload = function() {

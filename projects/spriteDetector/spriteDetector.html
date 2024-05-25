@@ -3,9 +3,10 @@
   <img id="forest" src="Forest (2).png" style="display: none;">
   <canvas id="canvas" style="border: 1px solid black;"></canvas>
   <p id="detectedColor" style="font-family: sans-serif; width:50px;height:50px;border:1px solid black;margin:10px;"></p>
-  <script>//numSamples=4444 worked well for Forest (2).png, finding all the small ones. We changed it to 44 to see if we can get our boundingBoxDetection function working
-    var tolerance = 10, numSamples = 44, image = document.getElementById('forest'), canvas = document.getElementById('canvas'),detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [], debug = true; 
-    let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance ||Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
+  <script>
+    var tolerance = 10, numSamples = 44, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [], debug = true;
+
+    let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
     let boundingBoxDetection = (seed) => {
       let [top, bottom, left, right] = [seed.y, seed.y, seed.x, seed.x];
@@ -18,8 +19,8 @@
       return { top, bottom, left, right };
     };
     let isOverlap = (box1, box2) => {
-      return !(box2.left > box1.right || 
-               box2.right < box1.left || 
+      return !(box2.left > box1.right ||
+               box2.right < box1.left ||
                box2.top > box1.bottom ||
                box2.bottom < box1.top);
     };
@@ -31,47 +32,64 @@
         right: Math.max(box1.right, box2.right)
       };
     };
-let mergeOverlappingBoundingBoxes = (boxes) => {
-  let merged = true;
-  while (merged) {
-    merged = false;
-    let mergedBoxes = [];
-    for(let i = 0; i < boxes.length; i++) {
-      let currentBox = boxes[i];
-      let overlapIndex = mergedBoxes.findIndex(mergedBox => isOverlap(mergedBox, currentBox));
-      if(overlapIndex !== -1) {
-        // If boxes overlap, merge them and replace the overlapping box in mergedBoxes
-        mergedBoxes[overlapIndex] = mergeBoundingBoxes(mergedBoxes[overlapIndex], currentBox);
-        merged = true;
-      } else {
-        // If boxes don't overlap, add the current box to mergedBoxes
-        mergedBoxes.push(currentBox);
+
+    let mergeOverlappingBoundingBoxes = (boxes) => {
+      let mergedBoxes = [];
+      for (let i = 0; i < boxes.length; i++) {
+        const currentBox = boxes[i];
+        let merged = false;
+        for (let j = 0; j < mergedBoxes.length; j++) {
+          const mergedBox = mergedBoxes[j];
+          if (isOverlap(currentBox, mergedBox)) {
+            mergedBoxes[j] = mergeBoundingBoxes(mergedBox, currentBox);
+            merged = true;
+            break;
+          }
+        }
+        if (!merged) {
+          mergedBoxes.push(currentBox);
+        }
       }
-    }
-    boxes = mergedBoxes;
-  }
-  return boxes;
-};
+      return mergedBoxes;
+    };
 
 
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;
       canvas.height = image.height;
-      ctx.drawImage(image, 0, 0); // Draw image onto canvas (hidden)
+      ctx.drawImage(image, 0, 0); // Draw image onto canvas
       backgroundColor = [ctx.getImageData(0, 0, 1, 1).data[0], ctx.getImageData(0, 0, 1, 1).data[1], ctx.getImageData(0, 0, 1, 1).data[2]];
       detectedColorDiv.style.backgroundColor = `rgb(${backgroundColor[0]}, ${backgroundColor[1]}, ${backgroundColor[2]})`;
       if(debug){console.log("isForeground(Red)="+isForeground([255, 0, 0])+" isForeground(backgroundColor)="+isForeground(backgroundColor)+" isBackground(Red)"+isBackground([255, 0, 0])+" isBackground(backgroundColor)="+isBackground(backgroundColor));}
       seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
       if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}
-      boundingBoxes = seeds.map(boundingBoxDetection);
-      if(debug) {ctx.strokeStyle = 'red';boundingBoxes.forEach(box => ctx.strokeRect(box.left, box.top, box.right - box.left, box.bottom - box.top));}
-      seeds.forEach(seed => {
-        let newBox = boundingBoxDetection(seed);
-        boundingBoxes.push(newBox);
+
+      // Efficient bounding box detection and merging
+      boundingBoxes = seeds.map(seed => {
+        const newBox = boundingBoxDetection(seed);
+        // Check for overlap with existing boxes before adding
+        const existingOverlap = mergedBoxes.find(box => isOverlap(box, newBox));
+        if (existingOverlap) {
+          // Merge with overlapping box
+          mergedBoxes[mergedBoxes.indexOf(existingOverlap)] = mergeBoundingBoxes(existingOverlap, newBox);
+        } else {
+          // No overlap, add to merged boxes
+          mergedBoxes.push(newBox);
+        }
+        return newBox; // Can be used for debugging purposes (optional)
       });
-      boundingBoxes = mergeOverlappingBoundingBoxes(boundingBoxes);
+
+      // Final merged bounding boxes after processing all seeds
+      boundingBoxes = mergedBoxes;
+
+      if(debug) {ctx.strokeStyle = 'red';boundingBoxes.forEach(box => ctx.strokeRect(box.left, box.top, box.right - box.left, box.bottom - box.top));}
     };
-    function getRandomForegroundSeeds(canvas, isForeground, numSamples) {return Array.from({ length: numSamples }).map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) })).filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));}
+
+    function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
+      return Array.from({ length: numSamples })
+        .map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) }))
+        .filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));
+    }
   </script>
 </body>
 </html>

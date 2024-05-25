@@ -109,57 +109,57 @@ function extractSprite(seed) {
   return sprite;
 }
 
-  let drawSprite = (sprite) => {
-    if (sprite === null) {
-      console.log('Skipping null sprite');
-      return;
-    }
-
-    // Find the dimensions of the actual sprite (excluding background)
-    let spriteWidth = 0, spriteHeight = 0;
-    for (let y = 0; y < sprite.height; y++) {
-      for (let x = 0; x < sprite.width; x++) {
-        const pixelIndex = (y * sprite.width + x) * 4;
-        if (sprite.data[pixelIndex + 3] > 0) {
-          spriteWidth = Math.max(spriteWidth, x + 1);
-          spriteHeight = Math.max(spriteHeight, y + 1);
-        }
-      }
-    }
-
-    // Create a new canvas with the dimensions of the actual sprite
-    const spriteCanvas = document.createElement('canvas');
-    spriteCanvas.width = spriteWidth;
-    spriteCanvas.height = spriteHeight;
-    const spriteCtx = spriteCanvas.getContext('2d');
-
-    // Create a new ImageData object with the dimensions of the actual sprite
-    const spriteImageData = spriteCtx.createImageData(spriteWidth, spriteHeight);
-
-    // Copy the non-background pixels from the original sprite data
-    let spritePixelIndex = 0;
-    for (let y = 0; y < sprite.height; y++) {
-      for (let x = 0; x < sprite.width; x++) {
-        const pixelIndex = (y * sprite.width + x) * 4;
-        if (sprite.data[pixelIndex + 3] > 0) {
-          spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex];
-          spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex + 1];
-          spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex + 2];
-          spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex + 3];
-        }
-      }
-    }
-
-    // Put the sprite image data on the new canvas
-    spriteCtx.putImageData(spriteImageData, 0, 0);
-
-    // Create an image element and append it to the document body
-    const img = document.createElement('img');
-    img.src = spriteCanvas.toDataURL();
-    img.width = appendSpriteSize;
-    img.height = appendSpriteSize;
-    document.body.appendChild(img);
+let drawSprite = (sprite) => {
+  if (sprite === null) {
+    console.log('Skipping null sprite');
+    return;
   }
+
+  // Find the dimensions of the actual sprite (excluding background)
+  let spriteWidth = 0, spriteHeight = 0;
+  for (let y = 0; y < sprite.height; y++) {
+    for (let x = 0; x < sprite.width; x++) {
+      const pixelIndex = (y * sprite.width + x) * 4;
+      if (sprite.data[pixelIndex + 3] > 0) {
+        spriteWidth = Math.max(spriteWidth, x + 1);
+        spriteHeight = Math.max(spriteHeight, y + 1);
+      }
+    }
+  }
+
+  // Create a new canvas with the dimensions of the actual sprite
+  const spriteCanvas = document.createElement('canvas');
+  spriteCanvas.width = spriteWidth;
+  spriteCanvas.height = spriteHeight;
+  const spriteCtx = spriteCanvas.getContext('2d');
+
+  // Create a new ImageData object with the dimensions of the actual sprite
+  const spriteImageData = spriteCtx.createImageData(spriteWidth, spriteHeight);
+
+  // Copy the non-background pixels from the original sprite data
+  let spritePixelIndex = 0;
+  for (let y = 0; y < sprite.height; y++) {
+    for (let x = 0; x < sprite.width; x++) {
+      const pixelIndex = (y * sprite.width + x) * 4;
+      if (sprite.data[pixelIndex + 3] > 0) {
+        spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex];
+        spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex + 1];
+        spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex + 2];
+        spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex + 3];
+      }
+    }
+  }
+
+  // Put the sprite image data on the new canvas
+  spriteCtx.putImageData(spriteImageData, 0, 0);
+
+  // Create an image element and append it to the document body
+  const img = document.createElement('img');
+  img.src = spriteCanvas.toDataURL();
+  img.width = spriteWidth; // Use the actual sprite width
+  img.height = spriteHeight; // Use the actual sprite height
+  document.body.appendChild(img);
+}
   
 document.getElementById('forest').onload = function() {canvas.width = image.width;canvas.height = image.height;ctx.drawImage(image, 0, 0); backgroundColor = [ctx.getImageData(0, 0, 1, 1).data[0], ctx.getImageData(0, 0, 1, 1).data[1], ctx.getImageData(0, 0, 1, 1).data[2]];detectedColorDiv.style.backgroundColor = `rgb(${backgroundColor[0]}, ${backgroundColor[1]}, ${backgroundColor[2]})`;seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}seeds.forEach(seed => {drawSprite(extractSprite(seed));});};
 function getRandomForegroundSeeds(canvas, isForeground, numSamples) {return Array.from({ length: numSamples }).map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) })).filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));}

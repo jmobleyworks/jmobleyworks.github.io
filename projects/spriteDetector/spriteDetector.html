@@ -23,7 +23,6 @@
   <img id="forest" src="Forest (3).png">
   <canvas id="canvas"></canvas>
   <p id="detectedColor"></p>
-
   <script>
     const image = document.getElementById('forest');
     const canvas = document.getElementById('canvas');
@@ -31,20 +30,13 @@
     canvas.height = image.height;
     const ctx = canvas.getContext('2d');
     ctx.drawImage(image, 0, 0); // Draw the image onto the canvas (hidden)
-
     const detectedColorDiv = document.getElementById('detectedColor');
-
-    image.onload = function() {
-      // Get the top-left pixel's color as the background color
       const imageData = ctx.getImageData(0, 0, 1, 1); // Get 1x1 pixel data
       const red = imageData.data[0];
       const green = imageData.data[1];
       const blue = imageData.data[2];
       const backgroundColor = `rgb(${red}, ${green}, ${blue})`;
-
-      // Set the detected color as the background color of the #detectedColor element
       detectedColorDiv.style.backgroundColor = backgroundColor;
-    };
   </script>
 </body>
 </html>

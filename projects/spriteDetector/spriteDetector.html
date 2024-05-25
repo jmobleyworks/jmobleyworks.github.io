@@ -7,6 +7,7 @@
     var tolerance = 10, numSamples = 444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [],  mergedBoxes = [], debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
+    function traceSpriteEdge(s,d=0,x=s.x,y=s.y){const a=[[0,-1],[1,0],[0,1],[-1,0]];return x<0||x>=canvas.width||y<0||y>=canvas.height||isBackground(ctx.getImageData(x,y,1,1).data)?traceSpriteEdge(s,(d+3)%4,x,y):(x===s.x&&y===s.y&&d===0)?{x:s.x,y:s.y,x1:x,y1:y}:traceSpriteEdge(s,d,x+a[d][0],y+a[d][1])}
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;
       canvas.height = image.height;
@@ -16,7 +17,8 @@
       if(debug){console.log("isForeground(Red)="+isForeground([255, 0, 0])+" isForeground(backgroundColor)="+isForeground(backgroundColor)+" isBackground(Red)"+isBackground([255, 0, 0])+" isBackground(backgroundColor)="+isBackground(backgroundColor));}
       seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
       if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}
-     };
+       seeds.forEach(seed => { let edge = traceSpriteEdge(seed); ctx.fillRect(edge.x, edge.y, 1, 1); });
+    };
     function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
       return Array.from({ length: numSamples })
         .map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) }))

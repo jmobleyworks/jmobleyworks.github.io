@@ -81,8 +81,8 @@ function extractSprite(seed) {
   console.log('Returning spriteData');
   return spriteData;
 }
-
-let drawSprite = (sprite) => {var newCanvas = document.createElement('canvas');newCanvas.width = sprite.width;newCanvas.height = sprite.height;newCanvas.getContext('2d').putImageData(sprite, 0, 0);var img = document.createElement('img');img.src = newCanvas.toDataURL();img.width = appendSpriteSize; img.height = appendSpriteSize; document.body.appendChild(img);}
+        
+let drawSprite = (sprite) => {if (sprite === null) {console.log('Skipping null sprite');return;} var newCanvas = document.createElement('canvas');newCanvas.width = sprite.width;newCanvas.height = sprite.height;newCanvas.getContext('2d').putImageData(sprite, 0, 0);var img = document.createElement('img');img.src = newCanvas.toDataURL();img.width = appendSpriteSize; img.height = appendSpriteSize; document.body.appendChild(img);}
 document.getElementById('forest').onload = function() {
   canvas.width = image.width;canvas.height = image.height;ctx.drawImage(image, 0, 0); 
   backgroundColor = [ctx.getImageData(0, 0, 1, 1).data[0], ctx.getImageData(0, 0, 1, 1).data[1], ctx.getImageData(0, 0, 1, 1).data[2]];

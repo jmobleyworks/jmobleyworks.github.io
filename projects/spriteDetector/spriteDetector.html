@@ -7,8 +7,69 @@
     var tolerance = 10, numSamples = 444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [], mergedBoxes = [], debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
-    let extractSprite = (seed) => { return ctx.getImageData(seed.x - 5, seed.y - 5, 10, 10); }
-  let drawSprite = (sprite) => {
+   let extractSprite = (seed) => {
+    let sprite = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let currentX = seed.x;
+    let currentY = seed.y;
+    let minX = currentX;
+    let minY = currentY;
+    let maxX = currentX;
+    let maxY = currentY;
+    let direction = 0; // 0 = right, 1 = down, 2 = left, 3 = up
+
+    while (true) {
+        let currentColor = [
+            sprite.data[(currentY * canvas.width + currentX) * 4],
+            sprite.data[(currentY * canvas.width + currentX) * 4 + 1],
+            sprite.data[(currentY * canvas.width + currentX) * 4 + 2]
+        ];
+
+        if (isBackground(currentColor)) {
+            // Turn 90 degrees
+            direction = (direction + 1) % 4;
+        } else {
+            // Update bounding box
+            minX = Math.min(minX, currentX);
+            minY = Math.min(minY, currentY);
+            maxX = Math.max(maxX, currentX);
+            maxY = Math.max(maxY, currentY);
+
+            // Move forward
+            switch (direction) {
+                case 0: currentX++; break;
+                case 1: currentY++; break;
+                case 2: currentX--; break;
+                case 3: currentY--; break;
+            }
+
+            // Check if we've looped back to the starting point
+            if (currentX === seed.x && currentY === seed.y) {
+                break;
+            }
+        }
+    }
+
+    // Create a new ImageData object with just the sprite data
+    let spriteData = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
+    for (let y = minY; y <= maxY; y++) {
+        for (let x = minX; x <= maxX; x++) {
+            let currentColor = [
+                sprite.data[(y * canvas.width + x) * 4],
+                sprite.data[(y * canvas.width + x) * 4 + 1],
+                sprite.data[(y * canvas.width + x) * 4 + 2]
+            ];
+            if (!isBackground(currentColor)) {
+                spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4] = currentColor[0];
+                spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 1] = currentColor[1];
+                spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 2] = currentColor[2];
+                spriteData.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 3] = 255;
+            }
+        }
+    }
+
+    return spriteData;
+} 
+    let drawSprite = (sprite) => {
       var newCanvas = document.createElement('canvas');
       newCanvas.width = sprite.width;
       newCanvas.height = sprite.height;

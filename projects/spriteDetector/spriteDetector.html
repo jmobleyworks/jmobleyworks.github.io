@@ -4,21 +4,37 @@
   <canvas id="canvas" style="border: 1px solid black;"></canvas>
   <p id="detectedColor" style="font-family: sans-serif; width:50px;height:50px;border:1px solid black;margin:10px;"></p>
   <script>
-    var tolerance = 10, numSamples = 444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [],  mergedBoxes = [], debug = true;
+    var tolerance = 10, numSamples = 444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [], mergedBoxes = [], debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
-    function traceSpriteEdge(s,d=0,x=s.x,y=s.y){const a=[[0,-1],[1,0],[0,1],[-1,0]];return x<0||x>=canvas.width||y<0||y>=canvas.height||isBackground(ctx.getImageData(x,y,1,1).data)?traceSpriteEdge(s,(d+3)%4,x,y):(x===s.x&&y===s.y&&d===0)?{x:s.x,y:s.y,x1:x,y1:y}:traceSpriteEdge(s,d,x+a[d][0],y+a[d][1])}
+    function traceSpriteEdge(s, d = 0, x = s.x, y = s.y) {
+      const a = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+      return x < 0 || x >= canvas.width || y < 0 || y >= canvas.height || isBackground(ctx.getImageData(x, y, 1, 1).data) ? traceSpriteEdge(s, (d + 3) % 4, x, y) : (x === s.x && y === s.y && d === 0) ? { x: s.x, y: s.y, x1: x, y1: y } : traceSpriteEdge(s, d, x + a[d][0], y + a[d][1]);
+    }
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;
       canvas.height = image.height;
       ctx.drawImage(image, 0, 0); // Draw image onto canvas
       backgroundColor = [ctx.getImageData(0, 0, 1, 1).data[0], ctx.getImageData(0, 0, 1, 1).data[1], ctx.getImageData(0, 0, 1, 1).data[2]];
       detectedColorDiv.style.backgroundColor = `rgb(${backgroundColor[0]}, ${backgroundColor[1]}, ${backgroundColor[2]})`;
-      if(debug){console.log("isForeground(Red)="+isForeground([255, 0, 0])+" isForeground(backgroundColor)="+isForeground(backgroundColor)+" isBackground(Red)"+isBackground([255, 0, 0])+" isBackground(backgroundColor)="+isBackground(backgroundColor));}
+      if (debug) {
+        console.log("isForeground(Red)=" + isForeground([255, 0, 0]) + " isForeground(backgroundColor)=" + isForeground(backgroundColor) +
+
+                          if(debug){console.log("isBackground(Red)"+isBackground([255, 0, 0])+" isBackground(backgroundColor)="+isBackground(backgroundColor));}
       seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
       if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}
-       seeds.forEach(seed => { let edge = traceSpriteEdge(seed);ctx.fillStyle = 'red'; ctx.fillRect(edge.x, edge.y, 1, 1); });
+
+      // Draw traced edges for each seed
+      seeds.forEach(seed => {
+        let edge = traceSpriteEdge(seed);
+        ctx.strokeStyle = 'red'; // Set stroke style (color) for the edge
+        ctx.beginPath();
+        ctx.moveTo(edge.x, edge.y); // Starting point
+        ctx.lineTo(edge.x1, edge.y1); // End point
+        ctx.stroke(); // Draw the line segment
+      });
     };
+
     function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
       return Array.from({ length: numSamples })
         .map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) }))

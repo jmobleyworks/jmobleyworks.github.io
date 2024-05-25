@@ -12,9 +12,10 @@
       canvas.height = image.height;
       const ctx = canvas.getContext('2d');
       ctx.drawImage(image, 0, 0); // Draw image onto canvas (hidden)
-      const [red, green, blue] = ctx.getImageData(0, 0, 1, 1).data; // Destructuring assignment
-      const backgroundColor = `rgb(${red}, ${green}, ${blue})`;
-      detectedColorDiv.style.backgroundColor = backgroundColor;
+      //const [red, green, blue] = ctx.getImageData(0, 0, 1, 1).data; // Destructuring assignment
+      //const backgroundColor = `rgb(${red}, ${green}, ${blue})`;
+      //detectedColorDiv.style.backgroundColor = backgroundColor;
+      detectedColorDiv.style.backgroundColor =  `rgb(${ ctx.getImageData(0, 0, 1, 1).data[0]}, ${ ctx.getImageData(0, 0, 1, 1).data[1]}, ${ ctx.getImageData(0, 0, 1, 1).data[3]})`;
     };
   </script>
 </body>

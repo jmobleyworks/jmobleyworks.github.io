@@ -5,6 +5,13 @@
   <p id="detectedColor" style="font-family: sans-serif; width:50px;height:50px;border:1px solid black;margin:10px;"></p>
   <script>
     document.getElementById('forest').onload = function() {
+      const image = document.getElementById('forest');
+      const canvas = document.getElementById('canvas');
+      const detectedColorDiv = document.getElementById('detectedColor');
+      canvas.width = image.width;
+      canvas.height = image.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(image, 0, 0); // Draw image onto canvas (hidden)
       const [r, g, b] = this.getContext('2d').getImageData(0, 0, 1, 1).data;
       document.getElementById('detectedColor').style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
     };

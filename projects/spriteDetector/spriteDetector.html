@@ -116,16 +116,7 @@ let drawSprite = (sprite) => {
   }
 
   // Find the dimensions of the actual sprite (excluding background)
-  let spriteWidth = 0, spriteHeight = 0;
-  for (let y = 0; y < sprite.height; y++) {
-    for (let x = 0; x < sprite.width; x++) {
-      const pixelIndex = (y * sprite.width + x) * 4;
-      if (sprite.data[pixelIndex + 3] > 0) {
-        spriteWidth = Math.max(spriteWidth, x + 1);
-        spriteHeight = Math.max(spriteHeight, y + 1);
-      }
-    }
-  }
+  let spriteWidth = maxX - minX + 1, spriteHeight = maxY - minY + 1;
 
   // Create a new canvas with the dimensions of the actual sprite
   const spriteCanvas = document.createElement('canvas');
@@ -136,16 +127,17 @@ let drawSprite = (sprite) => {
   // Create a new ImageData object with the dimensions of the actual sprite
   const spriteImageData = spriteCtx.createImageData(spriteWidth, spriteHeight);
 
-  // Copy the non-background pixels from the original sprite data
-  let spritePixelIndex = 0;
-  for (let y = 0; y < sprite.height; y++) {
-    for (let x = 0; x < sprite.width; x++) {
+  // Copy the non-background pixels from the original sprite data to the new ImageData
+  for (let y = minY; y <= maxY; y++) {
+    for (let x = minX; x <= maxX; x++) {
       const pixelIndex = (y * sprite.width + x) * 4;
+      const spritePixelIndex = ((y - minY) * spriteWidth + (x - minX)) * 4;
+
       if (sprite.data[pixelIndex + 3] > 0) {
-        spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex];
-        spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex + 1];
-        spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex + 2];
-        spriteImageData.data[spritePixelIndex++] = sprite.data[pixelIndex + 3];
+        spriteImageData.data[spritePixelIndex] = sprite.data[pixelIndex];
+        spriteImageData.data[spritePixelIndex + 1] = sprite.data[pixelIndex + 1];
+        spriteImageData.data[spritePixelIndex + 2] = sprite.data[pixelIndex + 2];
+        spriteImageData.data[spritePixelIndex + 3] = sprite.data[pixelIndex + 3];
       }
     }
   }
@@ -156,8 +148,8 @@ let drawSprite = (sprite) => {
   // Create an image element and append it to the document body
   const img = document.createElement('img');
   img.src = spriteCanvas.toDataURL();
-  img.width = spriteWidth; // Use the actual sprite width
-  img.height = spriteHeight; // Use the actual sprite height
+  img.width = spriteWidth;
+  img.height = spriteHeight;
   document.body.appendChild(img);
 }
   

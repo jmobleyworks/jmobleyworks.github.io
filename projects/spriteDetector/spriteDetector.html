@@ -7,7 +7,15 @@
     var tolerance = 10, numSamples = 444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [], mergedBoxes = [], debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
-   let extractSprite = (seed) => {
+   
+    //
+    let extractedSprites = [];
+
+let extractSprite = (seed) => {
+    if (extractedSprites.some(sprite => isPointInSprite(seed, sprite))) {
+        return null; // Skip this seed if it's in an already extracted sprite
+    }
+
     let sprite = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let currentX = seed.x;
     let currentY = seed.y;
@@ -67,8 +75,26 @@
         }
     }
 
+    extractedSprites.push(spriteData);
     return spriteData;
-} 
+}
+
+function isPointInSprite(point, sprite) {
+    let x = point.x;
+    let y = point.y;
+    let width = sprite.width;
+    let height = sprite.height;
+    let data = sprite.data;
+
+    if (x < 0 || y < 0 || x >= width || y >= height) {
+        return false; // Point is outside the sprite bounds
+    }
+
+    let pixelIndex = (y * width + x) * 4;
+    return data[pixelIndex + 3] > 0; // Check if the alpha value is non-zero
+}
+    //
+    
     let drawSprite = (sprite) => {
       var newCanvas = document.createElement('canvas');
       newCanvas.width = sprite.width;

@@ -26,7 +26,9 @@ let boundingBoxDetection = (seed) => {
     // No overlap, add to merged boxes
     mergedBoxes.push(newBox);
   }
+  return newBox; // Return the new box
 };
+
 
     let isOverlap = (box1, box2) => {
       return !(box2.left > box1.right ||

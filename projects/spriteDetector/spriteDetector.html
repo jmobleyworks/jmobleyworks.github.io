@@ -86,7 +86,7 @@ function extractSprite(seed) {
   }
   console.log('Creating spriteData');
   // Create the image data for the sprite
-  let spriteData = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
+  spriteData = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
   for (let y = minY; y <= maxY; y++) {
     for (let x = minX; x <= maxX; x++) {
       let currentColor = [

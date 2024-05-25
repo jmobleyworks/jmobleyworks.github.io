@@ -17,6 +17,12 @@
       while (right < canvas.width && isForeground(imageData.slice(getIndex(++right, seed.y), getIndex(right, seed.y) + 4)));
       return { top, bottom, left, right };
     };
+    let isOverlap = (box1, box2) => {
+      return !(box2.left > box1.right || 
+               box2.right < box1.left || 
+               box2.top > box1.bottom ||
+               box2.bottom < box1.top);
+    };
     let mergeBoundingBoxes = (box1, box2) => {
       return {
         top: Math.min(box1.top, box2.top),
@@ -53,6 +59,11 @@
       if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}
       boundingBoxes = seeds.map(boundingBoxDetection);
       if(debug) {ctx.strokeStyle = 'red';boundingBoxes.forEach(box => ctx.strokeRect(box.left, box.top, box.right - box.left, box.bottom - box.top));}
+      seeds.forEach(seed => {
+        let newBox = boundingBoxDetection(seed);
+        boundingBoxes.push(newBox);
+      });
+      boundingBoxes = mergeOverlappingBoundingBoxes(boundingBoxes);
     };
     function getRandomForegroundSeeds(canvas, isForeground, numSamples) {return Array.from({ length: numSamples }).map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) })).filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));}
   </script>

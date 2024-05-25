@@ -15,19 +15,25 @@ let boundingBoxDetection = (seed) => {
   while (bottom < canvas.height && isForeground(imageData.slice(getIndex(seed.x, ++bottom), getIndex(seed.x, bottom) + 4)));
   while (left > 0 && isForeground(imageData.slice(getIndex(--left, seed.y), getIndex(left, seed.y) + 4)));
   while (right < canvas.width && isForeground(imageData.slice(getIndex(++right, seed.y), getIndex(right, seed.y) + 4)));
-  
+
   const newBox = { top, bottom, left, right };
   // Check for overlap with existing boxes before adding
-  const existingOverlap = mergedBoxes.find(box => isOverlap(box, newBox));
-  if (existingOverlap) {
-    // Merge with overlapping box
-    mergedBoxes[mergedBoxes.indexOf(existingOverlap)] = mergeBoundingBoxes(existingOverlap, newBox);
-  } else {
-    // No overlap, add to merged boxes
-    mergedBoxes.push(newBox);
+  let i = 0;
+  while (i < mergedBoxes.length) {
+    if (isOverlap(newBox, mergedBoxes[i])) {
+      // Merge with overlapping box and check again from the start
+      mergedBoxes[i] = mergeBoundingBoxes(newBox, mergedBoxes[i]);
+      newBox = mergedBoxes[i];
+      i = 0;
+    } else {
+      i++;
+    }
   }
+  // If no overlap, add to merged boxes
+  mergedBoxes.push(newBox);
   return newBox; // Return the new box
 };
+
 
 
     let isOverlap = (box1, box2) => {

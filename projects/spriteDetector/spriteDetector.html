@@ -17,7 +17,7 @@
 
   <script>
     const canvas = document.getElementById('canvas'),
-          ctx = canvas.getContext('2d'),
+          ctx = canvas.getContext('2d', { willReadFrequently: true }),
           image = document.getElementById('forest'),
           detectedColorDiv = document.getElementById('detectedColor');
 
@@ -67,7 +67,6 @@
 
     image.onload = function() {
       // Set willReadFrequently for potential performance improvement
-      ctx.willReadFrequently = true;
       const sampleLocations = getRandomBoundingBoxes(1000); // Adjust numSamples
       // Optional: Use the bounding boxes here (e.g., draw rectangles)
       console.log(sampleLocations); // Example usage (replace with your visualization logic)

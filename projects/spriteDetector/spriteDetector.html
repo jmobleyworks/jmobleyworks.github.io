@@ -2,7 +2,6 @@
     var tolerance = 10, numSamples = 10, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], extractedSprites = [], appendSpriteSize=300, debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
-    
 function extractSprite(seed) {
   console.log('Starting extractSprite function');
   // Get the image data from the canvas
@@ -11,7 +10,8 @@ function extractSprite(seed) {
   let count = 0; // Add a counter
   const stack = [seed]; // Seed the stack with the starting point
   const maxIterations = 10000; // Set a limit for the maximum number of iterations
-
+  // Define spriteData here
+  let spriteData = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
   // Check if seed resides within an already extracted sprite
   console.log('Checking if seed resides within an already extracted sprite');
   for (const extractedSprite of extractedSprites) {
@@ -34,7 +34,6 @@ function extractSprite(seed) {
       return null;
     }
   }
-
   console.log('Starting DFS');
   // Start the Depth-First Search (DFS)
   while (stack.length > 0 && count < maxIterations) {
@@ -64,7 +63,6 @@ function extractSprite(seed) {
     stack.push({ x: x, y: y + 1 });
     stack.push({ x: x, y: y - 1 });
   }
-
   console.log('DFS iterations:', count);
   // If the DFS reached the maximum number of iterations, switch to exhaustive search
   if (count >= maxIterations) {
@@ -86,7 +84,6 @@ function extractSprite(seed) {
         }
     }
   }
-
   console.log('Creating spriteData');
   // Create the image data for the sprite
   let spriteData = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
@@ -113,7 +110,6 @@ function extractSprite(seed) {
   // Return the sprite data
   return spriteData;
 }
-    
 let drawSprite = (sprite) => {if (sprite === null) {console.log('Skipping null sprite');return;} var newCanvas = document.createElement('canvas');newCanvas.width = sprite.width;newCanvas.height = sprite.height;newCanvas.getContext('2d').putImageData(sprite, 0, 0);var img = document.createElement('img');img.src = newCanvas.toDataURL();img.width = appendSpriteSize; img.height = appendSpriteSize; document.body.appendChild(img);}
 document.getElementById('forest').onload = function() {canvas.width = image.width;canvas.height = image.height;ctx.drawImage(image, 0, 0); backgroundColor = [ctx.getImageData(0, 0, 1, 1).data[0], ctx.getImageData(0, 0, 1, 1).data[1], ctx.getImageData(0, 0, 1, 1).data[2]];detectedColorDiv.style.backgroundColor = `rgb(${backgroundColor[0]}, ${backgroundColor[1]}, ${backgroundColor[2]})`;seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}seeds.forEach(seed => {drawSprite(extractSprite(seed));});};
 function getRandomForegroundSeeds(canvas, isForeground, numSamples) {return Array.from({ length: numSamples }).map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) })).filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));}

@@ -4,58 +4,13 @@
   <canvas id="canvas" style="border: 1px solid black;"></canvas>
   <p id="detectedColor" style="font-family: sans-serif; width:50px;height:50px;border:1px solid black;margin:10px;"></p>
   <script>
-    var tolerance = 10, numSamples = 10, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [], mergedBoxes = [], debug = true;
+    var tolerance = 10, numSamples = 10, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], extractedSprites = [], debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
-    let extractedSprites = [];
     //let extractSprite = (seed) => {}
 function extractSprite(seed) {
-    if (extractedSprites.some(sprite => isPointInSprite(seed, sprite))) {
-        return null; // Skip this seed if it's in an already extracted sprite
-    }
-
     let sprite = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let minX = seed.x, minY = seed.y, maxX = seed.x, maxY = seed.y;
-    let radius = 0;
-
-    while (true) {
-        let foundBackground = false;
-
-        // Sweep outwards in all directions
-        for (let angle = 0; angle < 2 * Math.PI; angle += Math.PI / 180) { // Sweep in 1-degree increments
-            let x = seed.x + Math.round(radius * Math.cos(angle));
-            let y = seed.y + Math.round(radius * Math.sin(angle));
-
-            if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) {
-                continue; // Skip out-of-bounds pixels
-            }
-
-            let currentColor = [
-                sprite.data[(y * canvas.width + x) * 4],
-                sprite.data[(y * canvas.width + x) * 4 + 1],
-                sprite.data[(y * canvas.width + x) * 4 + 2]
-            ];
-
-            if (isBackground(currentColor)) {
-                foundBackground = true;
-                break; // Exit the angle loop if we hit the background
-            }
-
-            // Update bounding box
-            minX = Math.min(minX, x);
-            minY = Math.min(minY, y);
-            maxX = Math.max(maxX, x);
-            maxY = Math.max(maxY, y);
-        }
-
-        if (foundBackground) {
-            break; // Exit the radius loop if we found the background
-        }
-
-        radius++;
-    }
-
-    // Create a new ImageData object with just the sprite data
     let spriteData = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
     for (let y = minY; y <= maxY; y++) {
         for (let x = minX; x <= maxX; x++) {
@@ -72,21 +27,14 @@ function extractSprite(seed) {
             }
         }
     }
-
     extractedSprites.push(spriteData);
     return spriteData;
 }
     //
     let drawSprite = (sprite) => {
-      var newCanvas = document.createElement('canvas');
-      newCanvas.width = sprite.width;
-      newCanvas.height = sprite.height;
-      newCanvas.getContext('2d').putImageData(sprite, 0, 0);
-      var img = document.createElement('img');
-      img.src = newCanvas.toDataURL();
-      img.width = 100;  // Set the width of the image
-      img.height = 100; // Set the height of the image
-      document.body.appendChild(img);
+      var newCanvas = document.createElement('canvas');newCanvas.width = sprite.width;newCanvas.height = sprite.height;
+      newCanvas.getContext('2d').putImageData(sprite, 0, 0);var img = document.createElement('img');img.src = newCanvas.toDataURL();
+      img.width = 300; img.height = 300; document.body.appendChild(img);
     }
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;

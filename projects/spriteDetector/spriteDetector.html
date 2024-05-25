@@ -7,24 +7,29 @@
     var tolerance = 10, numSamples = 10, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], extractedSprites = [], debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
-    //let extractSprite = (seed) => {}
     function extractSprite(seed) {
         let sprite = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0;
-        for (let y = 0; y < canvas.height; y++) {
-            for (let x = 0; x < canvas.width; x++) {
-                let currentColor = [
-                    sprite.data[(y * canvas.width + x) * 4],
-                    sprite.data[(y * canvas.width + x) * 4 + 1],
-                    sprite.data[(y * canvas.width + x) * 4 + 2]
-                ];
-                if (!isBackground(currentColor)) {
-                    minX = Math.min(minX, x);
-                    minY = Math.min(minY, y);
-                    maxX = Math.max(maxX, x);
-                    maxY = Math.max(maxY, y);
-                }
-            }
+        let minX = seed.x, minY = seed.y, maxX = seed.x, maxY = seed.y;
+        let stack = [seed];
+        while(stack.length > 0) {
+            let point = stack.pop();
+            let x = point.x, y = point.y;
+            if(x < 0 || x >= canvas.width || y < 0 || y >= canvas.height) continue;
+            let currentColor = [
+                sprite.data[(y * canvas.width + x) * 4],
+                sprite.data[(y * canvas.width + x) * 4 + 1],
+                sprite.data[(y * canvas.width + x) * 4 + 2]
+            ];
+            if(isBackground(currentColor)) continue;
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+            sprite.data[(y * canvas.width + x) * 4 + 3] = 0; // Mark as visited
+            stack.push({x: x+1, y: y});
+            stack.push({x: x-1, y: y});
+            stack.push({x: x, y: y+1});
+            stack.push({x: x, y: y-1});
         }
         let spriteData = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
         for (let y = minY; y <= maxY; y++) {
@@ -45,7 +50,6 @@
         extractedSprites.push(spriteData);
         return spriteData;
     }
-    //
     let drawSprite = (sprite) => {
       var newCanvas = document.createElement('canvas');newCanvas.width = sprite.width;newCanvas.height = sprite.height;
       newCanvas.getContext('2d').putImageData(sprite, 0, 0);var img = document.createElement('img');img.src = newCanvas.toDataURL();

@@ -5,7 +5,7 @@
   <canvas id="canvas" style="border: 1px solid black;"></canvas>
   <p id="detectedColor" style="font-family: sans-serif; width:50px;height:50px;border:1px solid black;margin:10px;"></p>
   <script>
-    var tolerance = 10, numSamples = 4444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], extractedSprites = [], appendSpriteSize = 300, debug = true;
+    var tolerance = 10, numSamples = 4444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], extractedSprites = [], appendSpriteSize = 300, edgePadding=10, debug = true;
 
     let isForeground = (testColor) => {
       return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance;
@@ -142,7 +142,7 @@ function extractSprite(seed) {
       ctx.drawImage(image, 0, 0);
       backgroundColor = [ctx.getImageData(0, 0, 1, 1).data[0], ctx.getImageData(0, 0, 1, 1).data[1], ctx.getImageData(0, 0, 1, 1).data[2]];
       detectedColorDiv.style.backgroundColor = `rgb(${backgroundColor[0]}, ${backgroundColor[1]}, ${backgroundColor[2]})`;
-      seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
+      seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples, edgePadding);
       if (debug) {
         ctx.fillStyle = 'red';
         seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));
@@ -155,12 +155,12 @@ function extractSprite(seed) {
       });
     };
 
-    function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
-      return Array.from({ length: numSamples }).map(() => ({
-        x: Math.floor(Math.random() * canvas.width),
-        y: Math.floor(Math.random() * canvas.height)
-      })).filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));
-    }
+function getRandomForegroundSeeds(canvas, isForeground, numSamples, edgePadding) {
+  return Array.from({ length: numSamples }).map(() => ({
+    x: Math.floor(Math.random() * (canvas.width - 2 * edgePadding) + edgePadding),
+    y: Math.floor(Math.random() * (canvas.height - 2 * edgePadding) + edgePadding)
+  })).filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));
+}
   </script>
 </body>
 </html>

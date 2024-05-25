@@ -4,21 +4,44 @@
   <canvas id="canvas" style="border: 1px solid black;"></canvas>
   <p id="detectedColor" style="font-family: sans-serif; width:50px;height:50px;border:1px solid black;margin:10px;"></p>
   <script>//numSamples=4444 worked well for Forest (2).png, finding all the small ones. We changed it to 44 to see if we can get our boundingBoxDetection function working
-    var tolerance = 10, numSamples = 4444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'),detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [], debug = true; 
+    var tolerance = 10, numSamples = 44, image = document.getElementById('forest'), canvas = document.getElementById('canvas'),detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [], debug = true; 
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance ||Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
-    //let floodFill = (x, y, oldColor, newColor) => { if (isForeground(ctx.getImageData(x, y, 1, 1).data)) { ctx.fillStyle = newColor; ctx.fillRect(x, y, 1, 1); floodFill(x + 1, y, oldColor, newColor); floodFill(x - 1, y, oldColor, newColor); floodFill(x, y + 1, oldColor, newColor); floodFill(x, y - 1, oldColor, newColor); } }
-    //let floodFillStack = (x, y, oldColor, newColor) => {let stack = [];stack.push([x, y]);while (stack.length > 0) {let [x, y] = stack.pop();if (x >= 0 && y >= 0 && x < canvas.width && y < canvas.height) {let pixelColor = ctx.getImageData(x, y, 1, 1).data;if (isForeground(pixelColor)) {ctx.fillStyle = `rgb(${newColor[0]}, ${newColor[1]}, ${newColor[2]})`;ctx.fillRect(x, y, 1, 1);stack.push([x + 1, y]);stack.push([x - 1, y]);stack.push([x, y + 1]);stack.push([x, y - 1]);}}}};
-let boundingBoxDetection = (seed) => {
-  let [top, bottom, left, right] = [seed.y, seed.y, seed.x, seed.x];
-  let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-  let getIndex = (x, y) => (y * canvas.width + x) * 4;
-  while (top > 0 && isForeground(imageData.slice(getIndex(seed.x, --top), getIndex(seed.x, top) + 4)));
-  while (bottom < canvas.height && isForeground(imageData.slice(getIndex(seed.x, ++bottom), getIndex(seed.x, bottom) + 4)));
-  while (left > 0 && isForeground(imageData.slice(getIndex(--left, seed.y), getIndex(left, seed.y) + 4)));
-  while (right < canvas.width && isForeground(imageData.slice(getIndex(++right, seed.y), getIndex(right, seed.y) + 4)));
-  return { top, bottom, left, right };
-};
+    let boundingBoxDetection = (seed) => {
+      let [top, bottom, left, right] = [seed.y, seed.y, seed.x, seed.x];
+      let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+      let getIndex = (x, y) => (y * canvas.width + x) * 4;
+      while (top > 0 && isForeground(imageData.slice(getIndex(seed.x, --top), getIndex(seed.x, top) + 4)));
+      while (bottom < canvas.height && isForeground(imageData.slice(getIndex(seed.x, ++bottom), getIndex(seed.x, bottom) + 4)));
+      while (left > 0 && isForeground(imageData.slice(getIndex(--left, seed.y), getIndex(left, seed.y) + 4)));
+      while (right < canvas.width && isForeground(imageData.slice(getIndex(++right, seed.y), getIndex(right, seed.y) + 4)));
+      return { top, bottom, left, right };
+    };
+    let mergeBoundingBoxes = (box1, box2) => {
+      return {
+        top: Math.min(box1.top, box2.top),
+        bottom: Math.max(box1.bottom, box2.bottom),
+        left: Math.min(box1.left, box2.left),
+        right: Math.max(box1.right, box2.right)
+      };
+    };
+    let mergeOverlappingBoundingBoxes = (boxes) => {
+      // Sort boxes by left edge
+      boxes.sort((a, b) => a.left - b.left);
+      let mergedBoxes = [boxes[0]];
+      for(let i = 1; i < boxes.length; i++) {
+        let lastBox = mergedBoxes[mergedBoxes.length - 1];
+        let currentBox = boxes[i];
+        if(isOverlap(lastBox, currentBox)) {
+          // If boxes overlap, merge them and replace the last box in mergedBoxes
+          mergedBoxes[mergedBoxes.length - 1] = mergeBoundingBoxes(lastBox, currentBox);
+        } else {
+          // If boxes don't overlap, add the current box to mergedBoxes
+          mergedBoxes.push(currentBox);
+        }
+      }
+      return mergedBoxes;
+    };
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;
       canvas.height = image.height;
@@ -28,15 +51,10 @@ let boundingBoxDetection = (seed) => {
       if(debug){console.log("isForeground(Red)="+isForeground([255, 0, 0])+" isForeground(backgroundColor)="+isForeground(backgroundColor)+" isBackground(Red)"+isBackground([255, 0, 0])+" isBackground(backgroundColor)="+isBackground(backgroundColor));}
       seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
       if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}
-      //seeds.forEach(seed => floodFillStack(seed.x,seed.y, backgroundColor, [255, 0, 0]));
       boundingBoxes = seeds.map(boundingBoxDetection);
       if(debug) {ctx.strokeStyle = 'red';boundingBoxes.forEach(box => ctx.strokeRect(box.left, box.top, box.right - box.left, box.bottom - box.top));}
     };
-    function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
-      return Array.from({ length: numSamples })
-        .map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) }))
-        .filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));
-    }
+    function getRandomForegroundSeeds(canvas, isForeground, numSamples) {return Array.from({ length: numSamples }).map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) })).filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));}
   </script>
 </body>
 </html>

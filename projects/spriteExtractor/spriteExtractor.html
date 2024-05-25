@@ -1,19 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="spriteExtractor.js"></script>
+    <script type="module" src="path/to/spriteExtractor.js"></script>
 </head>
 <body>
-    <img id="forest" src="Designer (40).png" style="display: none;">
-    <canvas id="canvas" style="border: 1px solid black;"></canvas>
+    <img id="generatedImage" src="generated_image.png" style="display: none;">
+    <div id="spriteContainer"></div>
 
-    <script>
-        const image = document.getElementById('forest');
-        const canvas = document.getElementById('canvas');
+    <script type="module">
+        import SpriteExtractor from './spriteExtractor.js';
+
+        const image = document.getElementById('generatedImage');
+        const spriteContainer = document.getElementById('spriteContainer');
 
         image.onload = function() {
-            new SpriteExtractor(canvas, image);
+            const options = {
+                tolerance: 20,
+                numSamples: 4444,
+                edgePadding: 10,
+                debug: true
+            };
+            const spriteExtractor = new SpriteExtractor(options);
+            spriteExtractor.processImage(image, spriteContainer);
         };
+
+        // Example function to simulate fetching an image from DALL-E 3 API
+        async function fetchGeneratedImage(prompt) {
+            // Simulate API call
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    document.getElementById('generatedImage').src = 'generated_image.png';
+                    resolve();
+                }, 1000);
+            });
+        }
+
+        // Simulate game logic
+        async function startGame() {
+            const prompt = "forest with animals";
+            await fetchGeneratedImage(prompt);
+        }
+
+        startGame();
     </script>
 </body>
 </html>

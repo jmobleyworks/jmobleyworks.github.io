@@ -15,35 +15,19 @@
       return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance;
     };
 
-    function isPointInSprite(point, sprite) {
-      const x = point.x, y = point.y, width = sprite.width, height = sprite.height, data = sprite.data;
-      if (x < 0 || y < 0 || x >= width || y >= height) {
-        return false;
-      }
-      const pixelIndex = (y * width + x) * 4;
-      return data[pixelIndex + 3] > 0;
-    }
-
     let globalVisited = new Set();
 
     function extractSprite(seed) {
-      console.log('Starting extractSprite function');
       let spriteData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0;
-      let count = 0;
       const stack = [seed];
       const localVisited = new Set();
-      const maxIterations = 10000;
 
-      console.log('Checking if seed resides within an already extracted sprite');
       if (extractedSprites.some(extractedSprite => isPointInSprite(seed, extractedSprite))) {
-        console.log('Seed color matches a pixel within an extracted sprite, skipping extraction');
         return null;
       }
 
-      console.log('Starting DFS');
-      while (stack.length > 0 && count < maxIterations) {
-        count++;
+      while (stack.length > 0) {
         let point = stack.pop();
         let x = point.x, y = point.y;
         const key = `${x},${y}`;
@@ -72,60 +56,46 @@
         stack.push({ x: x, y: y - 1 });
       }
 
-      console.log('DFS iterations:', count);
-      if (count >= maxIterations) {
-        console.log('DFS reached maximum iterations, switching to exhaustive search');
-        for (let y = 0; y < canvas.height; y++) {
-          for (let x = 0; x < canvas.width; x++) {
-            const key = `${x},${y}`;
-            if (globalVisited.has(key)) continue;
+      let spriteWidth = maxX - minX + 1;
+      let spriteHeight = maxY - minY + 1;
+      let sprite = ctx.createImageData(spriteWidth, spriteHeight);
 
-            let currentColor = [
-              spriteData.data[(y * canvas.width + x) * 4],
-              spriteData.data[(y * canvas.width + x) * 4 + 1],
-              spriteData.data[(y * canvas.width + x) * 4 + 2]
-            ];
-
-            if (!isBackground(currentColor)) {
-              minX = Math.min(minX, x);
-              minY = Math.min(minY, y);
-              maxX = Math.max(maxX, x);
-              maxY = Math.max(maxY, y);
-              globalVisited.add(key);
-            }
-          }
-        }
-      }
-
-      console.log('Creating spriteData');
-      let sprite = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
       for (let y = minY; y <= maxY; y++) {
         for (let x = minX; x <= maxX; x++) {
+          const pixelIndex = (y * canvas.width + x) * 4;
+          const spritePixelIndex = ((y - minY) * spriteWidth + (x - minX)) * 4;
+
           let currentColor = [
-            spriteData.data[(y * canvas.width + x) * 4],
-            spriteData.data[(y * canvas.width + x) * 4 + 1],
-            spriteData.data[(y * canvas.width + x) * 4 + 2]
+            spriteData.data[pixelIndex],
+            spriteData.data[pixelIndex + 1],
+            spriteData.data[pixelIndex + 2]
           ];
+
           if (!isBackground(currentColor)) {
-            sprite.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4] = currentColor[0];
-            sprite.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 1] = currentColor[1];
-            sprite.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 2] = currentColor[2];
-            sprite.data[((y - minY) * (maxX - minX + 1) + (x - minX)) * 4 + 3] = 255;
+            sprite.data[spritePixelIndex] = spriteData.data[pixelIndex];
+            sprite.data[spritePixelIndex + 1] = spriteData.data[pixelIndex + 1];
+            sprite.data[spritePixelIndex + 2] = spriteData.data[pixelIndex + 2];
+            sprite.data[spritePixelIndex + 3] = 255;
           }
         }
       }
 
-      console.log('Pushing spriteData to extractedSprites');
       extractedSprites.push(sprite);
-      console.log('Returning spriteData and boundaries');
       return { sprite, minX, minY, maxX, maxY };
     }
 
-    let drawSprite = (spriteObject) => {
-      if (spriteObject === null) {
-        console.log('Skipping null sprite');
-        return;
+    function isPointInSprite(point, spriteObject) {
+      const x = point.x - spriteObject.minX;
+      const y = point.y - spriteObject.minY;
+      if (x < 0 || y < 0 || x >= spriteObject.sprite.width || y >= spriteObject.sprite.height) {
+        return false;
       }
+      const pixelIndex = (y * spriteObject.sprite.width + x) * 4;
+      return spriteObject.sprite.data[pixelIndex + 3] > 0;
+    }
+
+    function drawSprite(spriteObject) {
+      if (spriteObject === null) return;
 
       const { sprite, minX, minY, maxX, maxY } = spriteObject;
       let spriteWidth = maxX - minX + 1, spriteHeight = maxY - minY + 1;
@@ -135,29 +105,14 @@
       spriteCanvas.height = spriteHeight;
       const spriteCtx = spriteCanvas.getContext('2d');
 
-      const spriteImageData = spriteCtx.createImageData(spriteWidth, spriteHeight);
-      for (let y = minY; y <= maxY; y++) {
-        for (let x = minX; x <= maxX; x++) {
-          const pixelIndex = (y * sprite.width + x) * 4;
-          const spritePixelIndex = ((y - minY) * spriteWidth + (x - minX)) * 4;
-
-          if (sprite.data[pixelIndex + 3] > 0) {
-            spriteImageData.data[spritePixelIndex] = sprite.data[pixelIndex];
-            spriteImageData.data[spritePixelIndex + 1] = sprite.data[pixelIndex + 1];
-            spriteImageData.data[spritePixelIndex + 2] = sprite.data[pixelIndex + 2];
-            spriteImageData.data[spritePixelIndex + 3] = sprite.data[pixelIndex + 3];
-          }
-        }
-      }
-
-      spriteCtx.putImageData(spriteImageData, 0, 0);
+      spriteCtx.putImageData(sprite, 0, 0);
 
       const img = document.createElement('img');
       img.src = spriteCanvas.toDataURL();
       img.width = spriteWidth;
       img.height = spriteHeight;
       document.body.appendChild(img);
-    };
+    }
 
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;
@@ -167,7 +122,6 @@
       detectedColorDiv.style.backgroundColor = `rgb(${backgroundColor[0]}, ${backgroundColor[1]}, ${backgroundColor[2]})`;
       seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
       if (debug) {
-        console.log("seeds.length=" + seeds.length);
         ctx.fillStyle = 'red';
         seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));
       }

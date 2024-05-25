@@ -7,54 +7,52 @@
     var tolerance = 10, numSamples = 1, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], boundingBoxes = [], mergedBoxes = [], debug = true;
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
-   
-    //
     let extractedSprites = [];
-
-let extractSprite = (seed) => {
+    //let extractSprite = (seed) => {}
+function extractSprite(seed) {
     if (extractedSprites.some(sprite => isPointInSprite(seed, sprite))) {
         return null; // Skip this seed if it's in an already extracted sprite
     }
 
     let sprite = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let currentX = seed.x;
-    let currentY = seed.y;
-    let minX = currentX;
-    let minY = currentY;
-    let maxX = currentX;
-    let maxY = currentY;
-    let direction = 0; // 0 = right, 1 = down, 2 = left, 3 = up
+    let minX = seed.x, minY = seed.y, maxX = seed.x, maxY = seed.y;
+    let radius = 0;
 
     while (true) {
-        let currentColor = [
-            sprite.data[(currentY * canvas.width + currentX) * 4],
-            sprite.data[(currentY * canvas.width + currentX) * 4 + 1],
-            sprite.data[(currentY * canvas.width + currentX) * 4 + 2]
-        ];
+        let foundBackground = false;
 
-        if (isBackground(currentColor)) {
-            // Turn 90 degrees
-            direction = (direction + 1) % 4;
-        } else {
+        // Sweep outwards in all directions
+        for (let angle = 0; angle < 2 * Math.PI; angle += Math.PI / 180) { // Sweep in 1-degree increments
+            let x = seed.x + Math.round(radius * Math.cos(angle));
+            let y = seed.y + Math.round(radius * Math.sin(angle));
+
+            if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) {
+                continue; // Skip out-of-bounds pixels
+            }
+
+            let currentColor = [
+                sprite.data[(y * canvas.width + x) * 4],
+                sprite.data[(y * canvas.width + x) * 4 + 1],
+                sprite.data[(y * canvas.width + x) * 4 + 2]
+            ];
+
+            if (isBackground(currentColor)) {
+                foundBackground = true;
+                break; // Exit the angle loop if we hit the background
+            }
+
             // Update bounding box
-            minX = Math.min(minX, currentX);
-            minY = Math.min(minY, currentY);
-            maxX = Math.max(maxX, currentX);
-            maxY = Math.max(maxY, currentY);
-
-            // Move forward
-            switch (direction) {
-                case 0: currentX++; break;
-                case 1: currentY++; break;
-                case 2: currentX--; break;
-                case 3: currentY--; break;
-            }
-
-            // Check if we've looped back to the starting point
-            if (currentX === seed.x && currentY === seed.y) {
-                break;
-            }
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
         }
+
+        if (foundBackground) {
+            break; // Exit the radius loop if we found the background
+        }
+
+        radius++;
     }
 
     // Create a new ImageData object with just the sprite data
@@ -78,23 +76,7 @@ let extractSprite = (seed) => {
     extractedSprites.push(spriteData);
     return spriteData;
 }
-
-function isPointInSprite(point, sprite) {
-    let x = point.x;
-    let y = point.y;
-    let width = sprite.width;
-    let height = sprite.height;
-    let data = sprite.data;
-
-    if (x < 0 || y < 0 || x >= width || y >= height) {
-        return false; // Point is outside the sprite bounds
-    }
-
-    let pixelIndex = (y * width + x) * 4;
-    return data[pixelIndex + 3] > 0; // Check if the alpha value is non-zero
-}
     //
-    
     let drawSprite = (sprite) => {
       var newCanvas = document.createElement('canvas');
       newCanvas.width = sprite.width;

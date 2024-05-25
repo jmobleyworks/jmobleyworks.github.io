@@ -15,14 +15,14 @@
       backgroundColor = [ctx.getImageData(0, 0, 1, 1).data[0], ctx.getImageData(0, 0, 1, 1).data[1], ctx.getImageData(0, 0, 1, 1).data[2]];
       detectedColorDiv.style.backgroundColor = `rgb(${backgroundColor[0]}, ${backgroundColor[1]}, ${backgroundColor[2]})`;
       if(debug){console.log("isForeground(Red)="+isForeground([255, 0, 0])+" isForeground(backgroundColor)="+isForeground(backgroundColor)+" isBackground(Red)"+isBackground([255, 0, 0])+" isBackground(backgroundColor)="+isBackground(backgroundColor));}
+      seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
+      console.log("seeds.length="+seeds.length);
     };
-    //function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
-    //  return Array.from({ length: numSamples })
-    //    .map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) }))
-    //    .filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));
-    //}
-    //seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
-    //console.log("seeds.length="+seeds.length);
+    function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
+      return Array.from({ length: numSamples })
+        .map(() => ({ x: Math.floor(Math.random() * canvas.width), y: Math.floor(Math.random() * canvas.height) }))
+        .filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));
+    }
   </script>
 </body>
 </html>

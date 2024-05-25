@@ -24,20 +24,22 @@
     canvas.width = image.width;
     canvas.height = image.height;
     ctx.drawImage(image, 0, 0);
-    ctx.willReadFrequently = true;
+
     const backgroundRed = 255, // Adjust these values as needed
           backgroundGreen = 255,
           backgroundBlue = 255;
 
     function getRandomBoundingBoxes(numSamples) {
-      const sampleDistribution = new Array(canvas.width).fill(0).map(() => new Array(canvas.height).fill(0));
+      const sampleLocations = [];
       for (let i = 0; i < numSamples; i++) {
-        const x = Math.floor(Math.random() * canvas.width),
-              y = Math.floor(Math.random() * canvas.height),
-              pixelIndex = (y * canvas.width + x) * 4,
-              imageData = ctx.getImageData(x, y, 1, 1).data;
+        const x = Math.floor(Math.random() * canvas.width);
+        const y = Math.floor(Math.random() * canvas.height);
+        const pixelIndex = (y * canvas.width + x) * 4;
+        const imageData = ctx.getImageData(x, y, 1, 1).data;
         if (imageData[0] !== backgroundRed || imageData[1] !== backgroundGreen || imageData[2] !== backgroundBlue) {
-          sampleDistribution[y][x]++;
+          sampleLocations.push({ x, y });
+          ctx.fillStyle = "rgba(255, 0, 0, 0.5)"; // Red with 50% transparency
+          ctx.fillRect(x, y, 2, 2); // Draw a small red square at the sample location
         }
       }
 
@@ -45,6 +47,10 @@
             boundingBoxes = [];
       for (let y = 0; y < canvas.height; y++) {
         for (let x = 0; x < canvas.width; x++) {
+          if (sampleLocations.find(location => location.x === x && location.y === y)) {
+            // Skip already processed samples (optional, for efficiency)
+            continue;
+          }
           if (sampleDistribution[y][x] > threshold) {
             let minX = x, minY = y, maxX = x, maxY = y;
             while (minX > 0 && sampleDistribution[minY][minX - 1] > threshold) minX--;
@@ -60,13 +66,10 @@
     }
 
     image.onload = function() {
-      const imageData = ctx.getImageData(0, 0, 1, 1).data;
-      const backgroundColor = `rgb(${imageData[0]}, ${imageData[1]}, ${imageData[2]})`;
-      detectedColorDiv.style.backgroundColor = backgroundColor;
-
-      // Use the bounding boxes here (optional)
-      const boxes = getRandomBoundingBoxes(1000); // Adjust numSamples
-      console.log(boxes); // Example usage (replace with your visualization logic)
+      ctx.willReadFrequently = true;
+      const sampleLocations = getRandomBoundingBoxes(1000); // Adjust numSamples
+      // Optional: Use the bounding boxes here (e.g., draw rectangles)
+      console.log(sampleLocations); // Example usage (replace with your visualization logic)
     };
   </script>
 </body>

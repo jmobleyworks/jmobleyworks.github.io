@@ -7,7 +7,7 @@
     var tolerance = 10, numSamples = 4444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'),detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], debug = false; 
     let isForeground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance ||Math.abs(testColor[2] - backgroundColor[2]) > tolerance }
     let isBackground = (testColor) => { return Math.abs(testColor[0] - backgroundColor[0]) <= tolerance && Math.abs(testColor[1] - backgroundColor[1]) <= tolerance && Math.abs(testColor[2] - backgroundColor[2]) <= tolerance }
-    //let floodFill = (x, y, oldColor, newColor) => { if (isForeground(ctx.getImageData(x, y, 1, 1).data)) { ctx.fillStyle = newColor; ctx.fillRect(x, y, 1, 1); floodFill(x + 1, y, oldColor, newColor); floodFill(x - 1, y, oldColor, newColor); floodFill(x, y + 1, oldColor, newColor); floodFill(x, y - 1, oldColor, newColor); } }
+    let floodFill = (x, y, oldColor, newColor) => { if (isForeground(ctx.getImageData(x, y, 1, 1).data)) { ctx.fillStyle = newColor; ctx.fillRect(x, y, 1, 1); floodFill(x + 1, y, oldColor, newColor); floodFill(x - 1, y, oldColor, newColor); floodFill(x, y + 1, oldColor, newColor); floodFill(x, y - 1, oldColor, newColor); } }
     document.getElementById('forest').onload = function() {
       canvas.width = image.width;
       canvas.height = image.height;
@@ -17,6 +17,7 @@
       if(debug){console.log("isForeground(Red)="+isForeground([255, 0, 0])+" isForeground(backgroundColor)="+isForeground(backgroundColor)+" isBackground(Red)"+isBackground([255, 0, 0])+" isBackground(backgroundColor)="+isBackground(backgroundColor));}
       seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
       if(debug){console.log("seeds.length="+seeds.length);ctx.fillStyle = 'red';seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));}
+      seeds.forEach(seed => floodFill(seed.x,seed.y, backgroundColor, [255, 0, 0]));
     };
     function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
       return Array.from({ length: numSamples })

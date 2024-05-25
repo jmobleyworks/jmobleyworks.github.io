@@ -9,6 +9,7 @@ function extractSprite(seed) {
       minX = seed.x, minY = seed.y, maxX = seed.x, maxY = seed.y;
   let count = 0; // Add a counter
   const stack = [seed]; // Seed the stack with the starting point
+  const maxIterations = 10000; // Set a limit for the maximum number of iterations
 
   // Check if seed resides within an already extracted sprite
   console.log('Checking if seed resides within an already extracted sprite');
@@ -32,7 +33,7 @@ function extractSprite(seed) {
   }
 
   console.log('Starting DFS');
-  while (stack.length > 0) {
+  while (stack.length > 0 && count < maxIterations) {
     count++; // Increment the counter on each iteration
     let point = stack.pop();
     let x = point.x, y = point.y;
@@ -54,6 +55,10 @@ function extractSprite(seed) {
     stack.push({ x: x, y: y - 1 });
   }
   console.log('DFS iterations:', count);
+  if (count >= maxIterations) {
+    console.log('DFS reached maximum iterations, stopping');
+    return null;
+  }
   console.log('Creating spriteData');
   let spriteData = ctx.createImageData(maxX - minX + 1, maxY - minY + 1);
   for (let y = minY; y <= maxY; y++) {

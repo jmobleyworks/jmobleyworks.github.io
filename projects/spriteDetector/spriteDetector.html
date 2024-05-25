@@ -23,7 +23,7 @@
       const stack = [seed];
       const localVisited = new Set();
 
-      if (extractedSprites.some(extractedSprite => isPointInSprite(seed, extractedSprite))) {
+      if (extractedSprites.some(extractedSprite => extractedSprite && isPointInSprite(seed, extractedSprite))) {
         return null;
       }
 
@@ -80,7 +80,7 @@
         }
       }
 
-      extractedSprites.push(sprite);
+      extractedSprites.push({ sprite, minX, minY, maxX, maxY });
       return { sprite, minX, minY, maxX, maxY };
     }
 

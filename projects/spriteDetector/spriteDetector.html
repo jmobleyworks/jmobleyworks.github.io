@@ -16,9 +16,9 @@
       detectedColorDiv.style.backgroundColor = `rgb(${backgroundColor[0]}, ${backgroundColor[1]}, ${backgroundColor[2]})`;
       if(debug){console.log("isForeground(Red)="+isForeground([255, 0, 0])+" isForeground(backgroundColor)="+isForeground(backgroundColor)+" isBackground(Red)"+isBackground([255, 0, 0])+" isBackground(backgroundColor)="+isBackground(backgroundColor));}
       seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples);
-      console.log("seeds.length="+seeds.length);
+      if(debug){console.log("seeds.length="+seeds.length);}
       ctx.fillStyle = 'red';
-      seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 1, 1));
+      seeds.forEach(seed => ctx.fillRect(seed.x, seed.y, 5, 5));
     };
     function getRandomForegroundSeeds(canvas, isForeground, numSamples) {
       return Array.from({ length: numSamples })

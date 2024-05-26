@@ -10,51 +10,6 @@ class SpriteExtractor {
         this.globalVisited = new Set();
     }
 
-    // spriteExtractor.js
-
-// Extract sprites from the uploaded image
-function extractSpritesFromImage(image) {
-    // Placeholder for sprite extraction logic
-    // Replace with actual implementation
-    const spriteContainer = document.getElementById('spriteContainer');
-    spriteContainer.innerHTML = '<p>Sprites extracted successfully (dummy content).</p>';
-    const extractedSprite = document.createElement('img');
-    extractedSprite.src = image.src;  // Dummy sprite
-    spriteContainer.appendChild(extractedSprite);
-}
-
-// Handle file upload
-function handleFileUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const image = new Image();
-        image.onload = function() {
-            extractSpritesFromImage(image);
-        };
-        image.src = e.target.result;
-        document.getElementById('generatedImage').src = image.src;
-    };
-    reader.readAsDataURL(file);
-}
-
-
-
-// Placeholder function for DALL-E 3 image generation
-function generateImageFromDalle3() {
-    // Replace with actual DALL-E 3 API call and image generation logic
-    const dummyImageUrl = 'https://via.placeholder.com/150';
-    const image = new Image();
-    image.src = dummyImageUrl;
-    image.onload = function() {
-        document.getElementById('generatedImage').src = image.src;
-        extractSpritesFromImage(image);
-    };
-}
-
-
 
 
     initializeCanvas(image) {

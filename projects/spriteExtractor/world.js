@@ -302,7 +302,9 @@ function createWorldSeedForm() {
     targetElement = document.body;
   }
   targetElement.appendChild(form);
+
   Object.keys(gameDesignChoices).forEach(category => {
+    console.log("Creating form group for category:", category);
     const formGroup = document.createElement('div');
     formGroup.classList.add('form-group');
     const label = document.createElement('label');
@@ -310,22 +312,28 @@ function createWorldSeedForm() {
     formGroup.appendChild(label);
     const select = document.createElement('select');
     select.id = category;
+
     if (Array.isArray(gameDesignChoices[category])) {
+      console.log("Adding options for category:", category);
       gameDesignChoices[category].forEach(option => {
         const optionElement = document.createElement('option');
         optionElement.value = option;
         optionElement.innerText = option;
         select.appendChild(optionElement);
+        console.log("  Added option:", option);
       });
     } else {
+      console.log("Creating subcategories for category:", category);
       Object.keys(gameDesignChoices[category]).forEach(subCategory => {
         const optGroup = document.createElement('optgroup');
         optGroup.label = subCategory;
+        console.log("  Adding subcategory:", subCategory);
         gameDesignChoices[category][subCategory].forEach(option => {
           const optionElement = document.createElement('option');
           optionElement.value = option;
           optionElement.innerText = option;
           optGroup.appendChild(optionElement);
+          console.log("    Added option:", option);
         });
         select.appendChild(optGroup);
       });
@@ -336,6 +344,7 @@ function createWorldSeedForm() {
   // Event listener to update the prompts whenever a selection is made
   formContainer.addEventListener('change', updatePrompts);
 }
+
 
 // Function to update the short and detailed prompts based on the selected world seed
 function updatePrompts() {

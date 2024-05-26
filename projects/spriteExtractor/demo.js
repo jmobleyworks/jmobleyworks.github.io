@@ -44,6 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 */
   createWorldSeedForm(); // from world.js
-  //updatePrompts(); // from world.js
+  updatePrompts(); // from world.js
 
 });

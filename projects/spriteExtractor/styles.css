@@ -1,104 +1,70 @@
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4;
 }
 
 header {
-    background: #333;
-    color: #fff;
-    padding: 1em 0;
-    text-align: center;
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
 }
 
 main {
-    padding: 20px;
-    max-width: 900px;
-    margin: auto;
-    background: #fff;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2, h3, h4 {
-    color: #333;
-}
-
-h1 {
-    font-size: 2.5em;
-}
-
-h2 {
-    margin-top: 1em;
-    border-bottom: 2px solid #333;
-    padding-bottom: 0.5em;
-}
-
-h3, h4 {
-    margin-top: 0.5em;
+  color: #333;
 }
 
 p {
-    margin-bottom: 1em;
+  line-height: 1.6;
 }
 
-section#demonstration .step {
-    margin-bottom: 1.5em;
+form {
+  margin-bottom: 20px;
 }
 
-button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-right: 10px;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-button:hover {
-    background: #0056b3;
+input[type="text"], input[type="submit"], button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
 }
 
-img#generatedImage {
-    display: block;
-    margin: 10px 0;
-    max-width: 100%;
+input[type="file"] {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
-pre {
-    background: #f4f4f4;
-    padding: 10px;
-    border: 1px solid #ddd;
-    overflow-x: auto;
+#generatedImage {
+  display: block;
+  max-width: 100%;
+  margin: 10px 0;
 }
 
-#spriteContainer img {
-    width: 50px;
-    height: 50px;
-    margin: 5px;
+#spriteContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-#worldSeedDisplay {
-    padding: 10px;
-    background: #fff;
-    border: 1px solid #ddd;
-    margin: 10px 0;
-}
-
-#worldSeedDisplay .selected {
-    font-weight: bold;
-    color: #007bff;
-}
-
-#worldSeedDisplay .unselected {
-    color: #999;
-}
-
-@media (max-width: 768px) {
-    h1 {
-        font-size: 2em;
-    }
+.sprite {
+  width: 32px;
+  height: 32px;
+  background-size: 160px 32px; /* Adjust based on sprite sheet size */
 }

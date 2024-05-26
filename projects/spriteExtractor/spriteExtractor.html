@@ -40,9 +40,9 @@
     <h4>3. Sprite Extraction</h4>
     <p>The generated image is processed by our SpriteExtractor to isolate the individual sprites, which can then be used in the game.</p>
     
-    <pre><code id="liveDemoCode"></code></pre>
+    <pre><code id="demoCode"></code></pre>
     
-    <div id="liveDemo">
+    <div id="demo">
         <h2>Live Demo</h2>
         <!-- Live demo code goes here -->
     </div>
@@ -52,10 +52,7 @@
 
     <p>Ready to embark on your game development journey with Text2Game? Stay tuned for updates and be part of the revolution!</p>
 
-    
-
-
-    <script type="module" id="demoCode">
+    <script type="module" id="demoScript">
         // Live demo code goes here
         import SpriteExtractor from './spriteExtractor.js';
 
@@ -118,13 +115,16 @@
             });
         }
     </script>
-        <script>
-        function outputLiveDemoCode() {
-            const liveDemoContainer = document.getElementById('liveDemo');
-            const liveDemoCode = liveDemoContainer.innerHTML;
-            document.getElementById('liveDemoCode').innerText = liveDemoCode;
+    <script>
+        function displayDemoCode() {
+            const demo = document.getElementById('demo');
+            const demoCode = document.getElementById('demoCode');
+            const demoScript = document.getElementbyId('demoScript');
+            demo.innerText = document.getElementbyId('demoScript').innerHTML;
+            //const liveDemoCode = liveDemoContainer.innerHTML;
+            //document.getElementById('liveDemoCode').innerText = liveDemoCode;
         }
-        outputLiveDemoCode();
+        displayDemoCode();
     </script>
 </body>
 </html>

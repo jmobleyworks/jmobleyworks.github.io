@@ -314,7 +314,6 @@ function createWorldSeedForm() {
         optionElement.value = option;
         optionElement.innerText = option;
         select.appendChild(optionElement);
-        console.log("  Added option:", option);
       });
     } else {
       Object.keys(gameDesignChoices[category]).forEach(subCategory => {

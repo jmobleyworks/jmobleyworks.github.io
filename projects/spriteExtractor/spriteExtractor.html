@@ -4,41 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introducing Text2Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1, h2 {
-            color: #333;
-        }
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            border: 1px solid #ddd;
-            overflow: auto;
-        }
-        code {
-            background: #f4f4f4;
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-        #gameInterface {
-            margin-bottom: 20px;
-        }
-        button {
-            margin: 5px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        #spriteContainer img {
-            margin: 10px;
-            border: 1px solid #000;
-        }
-    </style>
 </head>
 <body>
     <h1>Introducing Text2Game: Revolutionizing Game Development with AI-Driven Dynamic Assets</h1>
@@ -74,7 +39,9 @@
 
     <h4>3. Sprite Extraction</h4>
     <p>The generated image is processed by our SpriteExtractor to isolate the individual sprites, which can then be used in the game.</p>
-
+    
+    <pre><code id="liveDemoCode"></code></pre>
+    
     <div id="liveDemo">
         <h2>Live Demo</h2>
         <!-- Live demo code goes here -->
@@ -85,16 +52,10 @@
 
     <p>Ready to embark on your game development journey with Text2Game? Stay tuned for updates and be part of the revolution!</p>
 
-    <pre><code id="liveDemoCode"></code></pre>
+    
 
-    <script>
-        function outputLiveDemoCode() {
-            const liveDemoContainer = document.getElementById('liveDemo');
-            const liveDemoCode = liveDemoContainer.innerHTML;
-            document.getElementById('liveDemoCode').innerText = liveDemoCode;
-        }
-    </script>
-    <script type="module">
+
+    <script type="module" id="demoCode">
         // Live demo code goes here
         import SpriteExtractor from './spriteExtractor.js';
 
@@ -156,6 +117,14 @@
                 spriteContainer.appendChild(img);
             });
         }
+    </script>
+        <script>
+        function outputLiveDemoCode() {
+            const liveDemoContainer = document.getElementById('liveDemo');
+            const liveDemoCode = liveDemoContainer.innerHTML;
+            document.getElementById('liveDemoCode').innerText = liveDemoCode;
+        }
+        outputLiveDemoCode();
     </script>
 </body>
 </html>

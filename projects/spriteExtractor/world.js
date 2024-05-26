@@ -296,7 +296,7 @@ function createWorldSeedForm() {
   const formContainer = document.createElement('div');
   const form = document.createElement('form');
   form.setAttribute('id', 'world-seed-form');
-  const targetElement = document.getElementById('worldSeedBuilder'); // No need for conditional checks
+  let targetElement = document.getElementById('worldSeedBuilder'); // Changed to 'let' for reassignment
   if (!targetElement) {
     console.error('Element with ID "worldSeedBuilder" not found. Attaching form to body as fallback.');
     targetElement = document.body;
@@ -344,7 +344,10 @@ function createWorldSeedForm() {
   });
   // Event listener to update the prompts whenever a selection is made
   formContainer.addEventListener('change', updatePrompts);
+  // Append the formContainer to the targetElement, not just the form
+  targetElement.appendChild(formContainer);
 }
+
 
 
 // Function to update the short and detailed prompts based on the selected world seed

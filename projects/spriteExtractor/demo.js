@@ -2,6 +2,7 @@
 import { createWorldSeedForm, updatePrompts } from './world.js'; // Assuming world.js is in the same directory
 
 document.addEventListener('DOMContentLoaded', () => {
+  /*
   const localUploadButton = document.getElementById('localUploadButton');
   const dalle3Button = document.getElementById('dalle3Button');
   const generatedImage = document.getElementById('generatedImage');
@@ -41,8 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
       spriteContainer.appendChild(sprite);
     }
   }
-
-  createWorldSeedForm("worldSeedBuilder"); // from world.js
+*/
+  createWorldSeedForm(); // from world.js
   //updatePrompts(); // from world.js
 
 });

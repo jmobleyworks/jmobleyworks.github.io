@@ -104,27 +104,23 @@ timeDistortions: ['Time Travel', 'Time Loops', 'Temporal Rifts']
 }
 };
 
-// Generate a random world seed prompt
+function getRandomOption(options) {
+  if (Array.isArray(options)) {
+    return options[Math.floor(Math.random() * options.length)];
+  } else {
+    const subcategory = Object.keys(options)[Math.floor(Math.random() * Object.keys(options).length)];
+    return options[subcategory][Math.floor(Math.random() * options[subcategory].length)];
+  }
+}
+
 function generateWorldSeed() {
-    const prompt = {};
+  const prompt = {};
 
-    for (const category in categories) {
-        const options = categories[category];
-        let choice;
+  for (const category in gameDesignChoices) {
+    prompt[category] = getRandomOption(gameDesignChoices[category]);
+  }
 
-        if (Array.isArray(options)) {
-            // If options is an array, select a random option
-            choice = options[Math.floor(Math.random() * options.length)];
-        } else {
-            // If options is an object (subcategories), select a random option from a random subcategory
-            const subcategory = Object.keys(options)[Math.floor(Math.random() * Object.keys(options).length)];
-            choice = options[subcategory][Math.floor(Math.random() * options[subcategory].length)];
-        }
-
-        prompt[category] = choice;
-    }
-
-    return prompt;
+  return prompt;
 }
 
 function detailedPrompt(worldSeed) {

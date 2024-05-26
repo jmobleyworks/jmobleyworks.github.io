@@ -1,3 +1,5 @@
+ToDO: MErge above and below
+
 // World.js
 
 // Utility function to determine the correct article 'a' or 'an'
@@ -347,5 +349,219 @@ document.addEventListener('DOMContentLoaded', () => {
 
 export { generateWorldSeed, synthesizePixelArtPrompt };
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Utility function to determine the correct article 'a' or 'an'
+function AorAn(value) {
+  const vowels = ['a', 'e', 'i', 'o', 'u'];
+  const firstLetter = value.toLowerCase().charAt(0);
+  return vowels.includes(firstLetter) ? `an ${value}` : `a ${value}`;
+}
+
+// Function to synthesize pixel art prompts based on the world seed
+function shortPrompt(worldSeed) {
+  let prompt = `Design a 2D action RPG with the following elements: `;
+  prompt += `Set in ${AorAn(worldSeed.timePeriod)} ${worldSeed.theme} world with a ${worldSeed.atmosphere} atmosphere. `;
+  prompt += `The environment features ${AorAn(worldSeed.environment)} ${worldSeed.location} adorned with ${worldSeed.landmarks}. `;
+  prompt += `Inhabited by ${worldSeed.inhabitants}, the world faces ${AorAn(worldSeed.conflict)} influenced by ${worldSeed.elementalInfluence} and ${worldSeed.technologyLevel} technology. `;
+  prompt += `Cultural inspiration is drawn from ${worldSeed.culturalInfluences} traditions, focusing on ${worldSeed.narrativeFocus} narratives.`;
+  return prompt;
+}
+
+// Function to generate detailed prompts based on the world seed
+function detailedPrompt(worldSeed) {
+  return `Generate a sprite sheet for a 2D action RPG game, reflecting the following requirements and world characteristics:
+
+**Character Sprites**:
+- Create character sprites for a variety of roles, including ${requirements.charAssetTypes.join(', ')}.
+- Each character sprite should include animations for idle, walk, run, attack, death, and special abilities.
+- Ensure unique designs for each character type, incorporating elements like ${worldSeed.technologyLevel.toLowerCase()} technology and ${worldSeed.culturalInfluences.toLowerCase()} cultural influences.
+
+**Object Sprites**:
+- Develop sprites for environmental objects such as ${requirements.hardAssetTypes.join(', ')}.
+- Each object should be distinct and interactive where applicable (e.g., openable chests, destructible barrels).
+- Include variations and details that reflect the ${worldSeed.environment.toLowerCase()} environment and ${worldSeed.atmosphere.toLowerCase()} atmosphere.
+
+**Environment Elements**:
+- Design a comprehensive set of tiles for the game environment, including ${requirements.softAssetTypes.join(', ')}.
+- Provide multiple variations for each tile type to allow for a diverse and natural-looking landscape.
+- Incorporate specific environmental features like ${worldSeed.location.toLowerCase()} landmarks and geological formations.
+
+**Enemy Sprites**:
+- Create detailed enemy sprites for types such as ${requirements.enemyTypes.join(', ')}.
+- Each enemy type should have unique animations for idle, attack, and death, as well as distinctive visual characteristics.
+- Reflect the influence of ${worldSeed.elementalInfluence.toLowerCase()} elements and ${worldSeed.theme.toLowerCase()} themes in their design.
+
+**Friendly NPC Sprites**:
+- Design sprites for friendly characters like ${requirements.friendlyTypes.join(', ')}.
+- Include animations for interactions such as talking, trading, and giving quests.
+- Ensure that each NPC type is easily identifiable and visually distinct.
+
+**Vehicle Sprites**:
+- Develop sprites for vehicles such as ${requirements.vehicleTypes.join(', ')}.
+- Include animations for movement and idle states, as well as any interactive elements.
+- Reflect the ${worldSeed.technologyLevel.toLowerCase()} technology in the vehicle designs.
+
+**Weapon and Armor Sprites**:
+- Create a variety of weapon sprites including ${requirements.weaponTypes.join(', ')}.
+- Design armor sprites such as ${requirements.armorTypes.join(', ')} with attention to detail and consistency.
+- Ensure that weapons and armor fit with the characters and overall art style.
+
+**Item Sprites**:
+- Design sprites for items like ${requirements.itemTypes.join(', ')}.
+- Each item should be easily recognizable and have a unique design.
+- Include small details that hint at their use and importance in the game.
+
+**Building Sprites**:
+- Develop building sprites for structures like ${requirements.buildingTypes.join(', ')}.
+- Ensure buildings are visually appealing and consistent with the game's architectural style.
+- Include variations for different states or conditions (e.g., intact, damaged).
+
+**Environmental Features**:
+- Integrate environmental features like ${requirements.environmentFeatures.weatherConditions.join(', ')} weather conditions, ${requirements.environmentFeatures.terrainTypes.join(', ')} terrain types, ${requirements.environmentFeatures.celestialBodies.join(', ')} celestial bodies, and ${requirements.environmentFeatures.geologicalFormations.join(', ')} geological formations into the sprite designs.
+- Ensure these features enhance the immersive experience of the game world.
+
+**Art Style**:
+- Adopt a ${worldSeed.theme.toLowerCase()}-themed art style with vibrant colors and intricate details.
+- The art style should align with the aesthetic of a ${worldSeed.atmosphere.toLowerCase()}-${worldSeed.technologyLevel.toLowerCase()} world, reflecting elements like ${worldSeed.culturalInfluences.toLowerCase()} culture and ${worldSeed.narrativeFocus.toLowerCase()} narratives.
+
+**Resolution and Format**:
+- Deliver the sprite sheet in PNG format with dimensions suitable for a 2D game (e.g., 32x32 pixels or 64x64 pixels per sprite).
+- Maintain a consistent grid layout for easy integration into game development frameworks.
+
+**Revision and Feedback**:
+- Be open to iterations based on feedback to refine the sprite sheet and ensure it meets the game project's specific requirements.
+
+**Context**:
+- The game is set in a ${worldSeed.timePeriod.toLowerCase()} ${worldSeed.theme.toLowerCase()} world.
+- The environment is a ${worldSeed.environment.toLowerCase()} with a ${worldSeed.atmosphere.toLowerCase()} atmosphere.
+- The scene is located ${worldSeed.location.toLowerCase()} and includes ${worldSeed.landmarks.toLowerCase()} landmarks.
+- The inhabitants are ${worldSeed.inhabitants.toLowerCase()}.
+- The main conflict involves ${worldSeed.conflict.toLowerCase()} influenced by ${worldSeed.elementalInfluence.toLowerCase()} elements and ${worldSeed.technologyLevel.toLowerCase()} technology.
+- The cultural style is inspired by ${worldSeed.culturalInfluences.toLowerCase()} culture, focusing on ${worldSeed.narrativeFocus.toLowerCase()}.
+
+**Additional Notes**:
+- The sprite sheet will be used as essential visual assets in the game development process, contributing to the immersive experience and engaging gameplay mechanics.`;
+}
+
+// Requirements for art assets
+const requirements = {
+  charAssetTypes: [
+    'warriors', 'mages', 'monsters', 'NPCs', 'rogues', 'healers',
+    'paladins', 'necromancers', 'beastmasters', 'assassins', 'rangers', 'summoners'
+  ],
+  hardAssetTypes: [
+    'trees', 'rocks', 'chests', 'barrels', 'doors', 'treasure chests',
+    'statues', 'fountains', 'altars', 'signposts', 'bridges', 'wells'
+  ],
+  softAssetTypes: [
+    'ground tiles', 'water tiles', 'grass patches', 'flowers', 'bushes',
+    'sand dunes', 'snow drifts', 'mud tiles', 'lava flows', 'ice formations'
+  ],
+  enemyTypes: [
+    'goblins', 'orcs', 'demons', 'undead', 'dragons', 'trolls', 'elementals',
+    'vampires', 'werewolves', 'golems', 'specters', 'witches', 'giants'
+  ],
+  friendlyTypes: [
+    'merchants', 'villagers', 'quest givers', 'allies', 'healers', 'scholars',
+    'blacksmiths', 'innkeepers', 'guards', 'nobles', 'farmers', 'bards'
+  ],
+  vehicleTypes: [
+    'horses', 'chariots', 'wagons', 'boats', 'airships', 'magic carpets',
+    'sleds', 'submarines', 'steam trains', 'balloons', 'griffins', 'elephants'
+  ],
+  weaponTypes: [
+    'swords', 'axes', 'bows', 'staves', 'wands', 'scythes', 'spears',
+    'daggers', 'hammers', 'flails', 'crossbows', 'slingshots', 'blowguns'
+  ],
+  armorTypes: [
+    'helmets', 'breastplates', 'greaves', 'gauntlets', 'shields', 'capes', 'robes',
+    'masks', 'boots', 'belts', 'amulets', 'rings', 'bracers'
+  ],
+  itemTypes: [
+    'potions', 'scrolls', 'gems', 'artifacts', 'treasures', 'maps', 'keys',
+    'food', 'tools', 'clothing', 'books', 'furniture', 'musical instruments'
+  ],
+  buildingTypes: [
+    'houses', 'inns', 'shops', 'forges', 'temples', 'libraries', 'taverns',
+    'castles', 'towers', 'dungeons', 'academies', 'gardens', 'markets'
+  ],
+  environmentFeatures: {
+    weatherConditions: [
+      'clear', 'rainy', 'snowy', 'foggy', 'stormy', 'windy',
+      'sunny', 'cloudy', 'hail', 'thunderstorm', 'tornado', 'blizzard'
+    ],
+    terrainTypes: [
+      'forests', 'mountains', 'deserts', 'plains', 'swamps', 'hills',
+      'caves', 'jungles', 'tundras', 'beaches', 'cliffs', 'valleys'
+    ],
+    celestialBodies: [
+      'sun', 'moon', 'stars', 'constellations', 'comets', 'planets',
+      'eclipses', 'meteor showers', 'auroras', 'nebulae', 'galaxies', 'black holes'
+    ],
+    geologicalFormations: [
+      'volcanoes', 'waterfalls', 'canyons', 'glaciers', 'geysers', 'sinkholes',
+      'plateaus', 'lava fields', 'hot springs', 'rock arches', 'stalactites', 'stalagmites'
+    ]
+  }
+};
+
+// Function to generate and attach the form to the specified element
+function createWorldSeedForm(elementId) {
+  const form = document.createElement('form');
+  form.setAttribute('id', 'world-seed-form');
+  
+  const fields = [
+    { name: 'timePeriod', label: 'Time Period', type: 'text' },
+    { name: 'theme', label: 'Theme', type: 'text' },
+    { name: 'atmosphere', label: 'Atmosphere', type: 'text' },
+    { name: 'environment', label: 'Environment', type: 'text' },
+    { name: 'location', label: 'Location', type: 'text' },
+    { name: 'landmarks', label: 'Landmarks', type: 'text' },
+    { name: 'inhabitants', label: 'Inhabitants', type: 'text' },
+    { name: 'conflict', label: 'Conflict', type: 'text' },
+    { name: 'elementalInfluence', label: 'Elemental Influence', type: 'text' },
+    { name: 'technologyLevel', label: 'Technology Level', type: 'text' },
+    { name: 'culturalInfluences', label: 'Cultural Influences', type: 'text' },
+    { name: 'narrativeFocus', label: 'Narrative Focus', type: 'text' }
+  ];
+  
+  fields.forEach(field => {
+    const fieldDiv = document.createElement('div');
+    
+    const label = document.createElement('label');
+    label.setAttribute('for', field.name);
+    label.textContent = field.label;
+    fieldDiv.appendChild(label);
+    
+    const input = document.createElement('input');
+    input.setAttribute('type', field.type);
+    input.setAttribute('name', field.name);
+    input.setAttribute('id', field.name);
+    fieldDiv.appendChild(input);
+    
+    form.appendChild(fieldDiv);
+  });
+  
+  const button = document.createElement('button');
+  button.setAttribute('type', 'submit');
+  button.textContent = 'Generate Prompt';
+  form.appendChild(button);
+  
+  const element = document.getElementById(elementId);
+  element.appendChild(form);
+  
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const worldSeed = {};
+    fields.forEach(field => {
+      worldSeed[field.name] = document.getElementById(field.name).value;
+    });
+    
+    console.log(shortPrompt(worldSeed));
+    console.log(detailedPrompt(worldSeed));
+  });
+}
 
 

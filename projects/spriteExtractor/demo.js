@@ -1,7 +1,6 @@
-// demo.js
 import { generateWorldSeed, synthesizePixelArtPrompt } from './world.js';
 
-// Set up file input event listener
+// Set up file input event listener for local file upload
 document.getElementById('localUploadButton').addEventListener('click', function() {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
@@ -9,9 +8,9 @@ document.getElementById('localUploadButton').addEventListener('click', function(
     fileInput.onchange = handleFileUpload;
     fileInput.click();
 });
-document.getElementById('dalle3Button').addEventListener('click', generateImageFromDalle3);
 
-    // spriteExtractor.js
+// Set up event listener for DALL-E 3 button
+document.getElementById('dalle3Button').addEventListener('click', generateImageFromDalle3);
 
 // Extract sprites from the uploaded image
 function extractSpritesFromImage(image) {
@@ -41,8 +40,6 @@ function handleFileUpload(event) {
     reader.readAsDataURL(file);
 }
 
-
-
 // Placeholder function for DALL-E 3 image generation
 function generateImageFromDalle3() {
     // Replace with actual DALL-E 3 API call and image generation logic
@@ -54,10 +51,6 @@ function generateImageFromDalle3() {
         extractSpritesFromImage(image);
     };
 }
-
-
-
-
 
 // Generate and display world seed with prompt
 function generateAndDisplayWorldSeed() {

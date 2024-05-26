@@ -270,6 +270,21 @@ function detailedPrompt(worldSeed) {
 - The sprite sheet will be used as essential visual assets in the game development process, contributing to the immersive experience and engaging gameplay mechanics.`;
 }
 
+const initialWorldSeed = {
+  timePeriod: 'Medieval',
+  theme: 'Fantasy',
+  atmosphere: 'Mystical',
+  environment: 'Forest',
+  location: 'Ancient Ruins',
+  landmarks: 'Old Temples',
+  inhabitants: 'Mythical Creatures',
+  conflict: 'Epic Battle',
+  elementalInfluence: 'Fire',
+  technologyLevel: 'Magical',
+  culturalInfluences: 'Norse',
+  narrativeFocus: 'Heroic Quests',
+};
+
 function createWorldSeedForm(elementId) {
   const form = document.createElement('form');
   form.setAttribute('id', 'world-seed-form');

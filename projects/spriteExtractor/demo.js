@@ -1,4 +1,5 @@
 // Demo.js
+import { createWorldSeedForm } from './world.js'; // Assuming world.js is in the same directory
 
 document.addEventListener('DOMContentLoaded', () => {
   const localUploadButton = document.getElementById('localUploadButton');

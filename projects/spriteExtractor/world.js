@@ -375,4 +375,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-export { generateWorldSeed, synthesizePixelArtPrompt };
+export { generateWorldSeed, shortPrompt, detailedPrompt, createWorldSeedForm, updatePrompts  };

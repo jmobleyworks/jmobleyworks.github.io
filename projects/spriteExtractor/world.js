@@ -1,11 +1,26 @@
 //World.js
-
+function AorAn(value) {
+  const vowels = ['a', 'e', 'i', 'o', 'u'];
+  const firstLetter = value.toLowerCase().charAt(0);
+  const article = vowels.includes(firstLetter) ? 'an' : 'a';
+  return `${article} ${value}`;
+}
 const requirements = {
     charAssetTypes :['warriors', 'mages', 'monsters', 'NPCs'],
     hardAssetTypes : ['trees', 'rocks', 'chests', 'barrels', 'doors', 'treasure chests'],
     softAssetTypes : ['ground tiles', 'water tiles', 'grass patches', 'flowers', 'bushes']
 };
-// Define the categories and options
+function synthesizePixelArtPrompt(worldSeed) {
+  let prompt = `Create ${AorAn(worldSeed.atmosphere)} pixel art spritesheet for an immersive 2D action RPG set in ${AorAn(worldSeed.timePeriod)} ${worldSeed.theme} world. `;
+
+  prompt += `The game's environment is ${AorAn(worldSeed.environment)} ${worldSeed.location} adorned with ${worldSeed.landmarks}, inhabited by ${worldSeed.inhabitants}. `;
+
+  prompt += `The central conflict driving the narrative is ${AorAn(worldSeed.conflict)} influenced by ${AorAn(worldSeed.elementalInfluence)} elemental forces and ${worldSeed.technologyLevel} technology. `;
+
+  prompt += `The cultural inspiration draws from ${AorAn(worldSeed.culturalInfluences)} traditions, focusing on ${worldSeed.narrativeFocus} narratives.`;
+
+  return prompt;
+}
 const categories = {
     timePeriod: ['Ancient', 'Medieval', 'Renaissance', 'Industrial', 'Futuristic', 'Alternate History'],
     theme: {
@@ -14,7 +29,7 @@ const categories = {
         postApocalyptic: ['Nuclear Fallout', 'Zombie Apocalypse', 'Environmental Catastrophe'],
         mythological: ['Greek Mythology', 'Norse Mythology', 'Egyptian Mythology', 'Asian Mythology']
     },
-    environment: ['Forest', 'Desert', 'Mountains', 'Ocean', 'Urban', 'Arctic', 'Swamp', 'Underwater'],
+    environment: ['Forest', 'Desert', 'Mountain', 'Ocean', 'Urban', 'Arctic', 'Swamp', 'Underwater'],
     atmosphere: ['Mysterious', 'Magical', 'Dark', 'Whimsical', 'Serene', 'Surreal', 'Dystopian', 'Utopian'],
     location: ['Island', 'Underground', 'Floating', 'Celestial', 'Extraterrestrial', 'Subterranean', 'Dimensional'],
     landmarks: ['Ruins', 'Temples', 'Caves', 'Castles', 'Monuments', 'Megaliths', 'Laboratories'],
@@ -54,20 +69,6 @@ function generateWorldSeed() {
 
         prompt[category] = choice;
     }
-
-    return prompt;
-}
-
-function synthesizePixelArtPrompt(worldSeed) {
-    let prompt = `Create a pixel art spritesheet for an immersive 2D action RPG set in a ${worldSeed.timePeriod} world. The game's theme is ${worldSeed.theme}, with a ${worldSeed.atmosphere} atmosphere permeating the realm. `;
-
-    prompt += `The world's environment is a vast ${worldSeed.environment}, where the action takes place on a ${worldSeed.location} adorned with ${worldSeed.landmarks}. `;
-
-    prompt += `Among the inhabitants of this world are ${worldSeed.inhabitants}, each with their unique traits and characteristics. `;
-
-    prompt += `The central conflict driving the narrative is a ${worldSeed.conflict}, influenced by the forces of ${worldSeed.elementalInfluence} and the presence of ${worldSeed.technologyLevel} technology. `;
-
-    prompt += `The cultural inspiration for this world draws from the rich traditions of ${worldSeed.culturalInfluences}, with a focus on ${worldSeed.narrativeFocus} narratives.`;
 
     return prompt;
 }

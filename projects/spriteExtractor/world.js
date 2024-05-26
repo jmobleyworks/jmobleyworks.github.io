@@ -384,8 +384,8 @@ function updatePrompts() {
 
 // Initialize the form on page load
 document.addEventListener('DOMContentLoaded', () => {
-  createWorldSeedForm();
-  updatePrompts();
+  //createWorldSeedForm();
+  //updatePrompts();
 });
 
 

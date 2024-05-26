@@ -301,6 +301,7 @@ function createWorldSeedForm() {
     console.error('Element with ID "worldSeedBuilder" not found. Attaching form to body as fallback.');
     targetElement = document.body;
   }
+  console.log(targetElement);
   targetElement.appendChild(form);
 
   Object.keys(gameDesignChoices).forEach(category => {

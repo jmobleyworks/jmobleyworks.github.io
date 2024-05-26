@@ -117,15 +117,11 @@
     </script>
     <script>
         function displayDemoCode() {
-            const demo = document.getElementById('demo');
-            const demoCode = document.getElementById('demoCode');
-            const demoScript = document.getElementbyId('demoScript');
-            demo.innerText = document.getElementbyId('demoScript').innerHTML;
-            //const liveDemoCode = liveDemoContainer.innerHTML;
-            //document.getElementById('liveDemoCode').innerText = liveDemoCode;
+            const demo = document.getElementById('demoCode');
+            const demoScript = document.getElementById('demoScript');
+            demo.innerText = demoScript.innerHTML;
         }
         displayDemoCode();
     </script>
 </body>
 </html>
-

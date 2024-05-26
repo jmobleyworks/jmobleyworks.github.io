@@ -1,77 +1,43 @@
-import { generateWorldSeed, synthesizePixelArtPrompt } from './world.js';
+// Demo.js
 
-// Set up file input event listener for local file upload
-document.getElementById('localUploadButton').addEventListener('click', function() {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = 'image/*';
-    fileInput.onchange = handleFileUpload;
-    fileInput.click();
-});
+document.addEventListener('DOMContentLoaded', () => {
+  const localUploadButton = document.getElementById('localUploadButton');
+  const dalle3Button = document.getElementById('dalle3Button');
+  const generatedImage = document.getElementById('generatedImage');
+  const spriteContainer = document.getElementById('spriteContainer');
 
-// Set up event listener for DALL-E 3 button
-document.getElementById('dalle3Button').addEventListener('click', generateImageFromDalle3);
+  localUploadButton.addEventListener('change', handleLocalUpload);
+  dalle3Button.addEventListener('click', generateImageFromDalle3);
 
-// Extract sprites from the uploaded image
-function extractSpritesFromImage(image) {
-    // Placeholder for sprite extraction logic
-    // Replace with actual implementation
-    const spriteContainer = document.getElementById('spriteContainer');
-    spriteContainer.innerHTML = '<p>Sprites extracted successfully (dummy content).</p>';
-    const extractedSprite = document.createElement('img');
-    extractedSprite.src = image.src;  // Dummy sprite
-    spriteContainer.appendChild(extractedSprite);
-}
-
-// Handle file upload
-function handleFileUpload(event) {
+  function handleLocalUpload(event) {
     const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const image = new Image();
-        image.onload = function() {
-            extractSpritesFromImage(image);
-        };
-        image.src = e.target.result;
-        document.getElementById('generatedImage').src = image.src;
-    };
-    reader.readAsDataURL(file);
-}
-
-// Placeholder function for DALL-E 3 image generation
-function generateImageFromDalle3() {
-    // Replace with actual DALL-E 3 API call and image generation logic
-    const dummyImageUrl = 'https://via.placeholder.com/150';
-    const image = new Image();
-    image.src = dummyImageUrl;
-    image.onload = function() {
-        document.getElementById('generatedImage').src = image.src;
-        extractSpritesFromImage(image);
-    };
-}
-
-// Generate and display world seed with prompt
-function generateAndDisplayWorldSeed() {
-    const worldSeed = generateWorldSeed();
-    const pixelArtPrompt = shortPrompt(worldSeed);
-
-    const worldSeedDisplay = document.getElementById('worldSeedDisplay');
-    worldSeedDisplay.innerHTML = '<h3>Generated World Seed:</h3>';
-
-    const ul = document.createElement('ul');
-    for (const key in worldSeed) {
-        const li = document.createElement('li');
-        li.textContent = `${key}: ${worldSeed[key]}`;
-        ul.appendChild(li);
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        generatedImage.src = e.target.result;
+        extractSprites(generatedImage.src);
+      };
+      reader.readAsDataURL(file);
     }
-    worldSeedDisplay.appendChild(ul);
+  }
 
-    const promptDisplay = document.createElement('div');
-    promptDisplay.innerHTML = `<h3>Synthesized Pixel Art Prompt:</h3><p>${pixelArtPrompt}</p>`;
-    worldSeedDisplay.appendChild(promptDisplay);
-}
+  function generateImageFromDalle3() {
+    // Placeholder function to simulate DALL-E 3 image generation
+    const mockImageUrl = 'path/to/mock-image.png'; // Replace with actual DALL-E 3 API call
+    generatedImage.src = mockImageUrl;
+    extractSprites(mockImageUrl);
+  }
 
-// Add event listener to the Generate World Seed button
-document.getElementById('generateSeedButton').addEventListener('click', generateAndDisplayWorldSeed);
+  function extractSprites(imageSrc) {
+    // Placeholder for sprite extraction logic
+    spriteContainer.innerHTML = '';
+    const numSprites = 5; // Example number of sprites
+    for (let i = 0; i < numSprites; i++) {
+      const sprite = document.createElement('div');
+      sprite.className = 'sprite';
+      sprite.style.backgroundImage = `url(${imageSrc})`;
+      sprite.style.backgroundPosition = `${-i * 32}px 0`; // Adjust as needed for sprite sheet
+      spriteContainer.appendChild(sprite);
+    }
+  }
+});

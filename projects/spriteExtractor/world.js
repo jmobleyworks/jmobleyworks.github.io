@@ -9,10 +9,11 @@ function AorAn(value) {
 
 // Function to synthesize pixel art prompts based on the world seed
 function shortPrompt(worldSeed) {
-  let prompt = `Create ${AorAn(worldSeed.atmosphere)} pixel art spritesheet for an immersive 2D action RPG set in ${AorAn(worldSeed.timePeriod)} ${worldSeed.theme} world. `;
-  prompt += `The game's environment is ${AorAn(worldSeed.environment)} ${worldSeed.location} adorned with ${worldSeed.landmarks}, inhabited by ${worldSeed.inhabitants}. `;
-  prompt += `The central conflict driving the narrative is ${AorAn(worldSeed.conflict)} influenced by ${AorAn(worldSeed.elementalInfluence)} elemental forces and ${worldSeed.technologyLevel} technology. `;
-  prompt += `The cultural inspiration draws from ${AorAn(worldSeed.culturalInfluences)} traditions, focusing on ${worldSeed.narrativeFocus} narratives.`;
+  let prompt = `Design a 2D action RPG with the following elements: `;
+  prompt += `Set in ${AorAn(worldSeed.timePeriod)} ${worldSeed.theme} world with a ${worldSeed.atmosphere} atmosphere. `;
+  prompt += `The environment features ${AorAn(worldSeed.environment)} ${worldSeed.location} adorned with ${worldSeed.landmarks}. `;
+  prompt += `Inhabited by ${worldSeed.inhabitants}, the world faces ${AorAn(worldSeed.conflict)} influenced by ${worldSeed.elementalInfluence} and ${worldSeed.technologyLevel} technology. `;
+  prompt += `Cultural inspiration is drawn from ${worldSeed.culturalInfluences} traditions, focusing on ${worldSeed.narrativeFocus} narratives.`;
   return prompt;
 }
 
@@ -198,21 +199,57 @@ function detailedPrompt(worldSeed) {
     return `Generate a sprite sheet for a 2D action RPG game, reflecting the following requirements and world characteristics:
 
 **Character Sprites**:
-- Create character sprites for ${requirements.charAssetTypes.join(', ')}.
-- Each character sprite should have animations for actions like idle, walk, run, attack, and death.
-- Maintain consistency in style and proportion across all character sprites.
+- Create character sprites for a variety of roles, including ${requirements.charAssetTypes.join(', ')}.
+- Each character sprite should include animations for idle, walk, run, attack, death, and special abilities.
+- Ensure unique designs for each character type, incorporating elements like ${worldSeed.technologyLevel.toLowerCase()} technology and ${worldSeed.culturalInfluences.toLowerCase()} cultural influences.
 
 **Object Sprites**:
 - Develop sprites for environmental objects such as ${requirements.hardAssetTypes.join(', ')}.
-- Each object sprite should be distinguishable, visually appealing, and detailed.
+- Each object should be distinct and interactive where applicable (e.g., openable chests, destructible barrels).
+- Include variations and details that reflect the ${worldSeed.environment.toLowerCase()} environment and ${worldSeed.atmosphere.toLowerCase()} atmosphere.
 
 **Environment Elements**:
-- Design tiles for the game environment, including ${requirements.softAssetTypes.join(', ')}.
-- Provide variations in terrain for diverse level designs.
+- Design a comprehensive set of tiles for the game environment, including ${requirements.softAssetTypes.join(', ')}.
+- Provide multiple variations for each tile type to allow for a diverse and natural-looking landscape.
+- Incorporate specific environmental features like ${worldSeed.location.toLowerCase()} landmarks and geological formations.
+
+**Enemy Sprites**:
+- Create detailed enemy sprites for types such as ${requirements.enemyTypes.join(', ')}.
+- Each enemy type should have unique animations for idle, attack, and death, as well as distinctive visual characteristics.
+- Reflect the influence of ${worldSeed.elementalInfluence.toLowerCase()} elements and ${worldSeed.theme.toLowerCase()} themes in their design.
+
+**Friendly NPC Sprites**:
+- Design sprites for friendly characters like ${requirements.friendlyTypes.join(', ')}.
+- Include animations for interactions such as talking, trading, and giving quests.
+- Ensure that each NPC type is easily identifiable and visually distinct.
+
+**Vehicle Sprites**:
+- Develop sprites for vehicles such as ${requirements.vehicleTypes.join(', ')}.
+- Include animations for movement and idle states, as well as any interactive elements.
+- Reflect the ${worldSeed.technologyLevel.toLowerCase()} technology in the vehicle designs.
+
+**Weapon and Armor Sprites**:
+- Create a variety of weapon sprites including ${requirements.weaponTypes.join(', ')}.
+- Design armor sprites such as ${requirements.armorTypes.join(', ')} with attention to detail and consistency.
+- Ensure that weapons and armor fit with the characters and overall art style.
+
+**Item Sprites**:
+- Design sprites for items like ${requirements.itemTypes.join(', ')}.
+- Each item should be easily recognizable and have a unique design.
+- Include small details that hint at their use and importance in the game.
+
+**Building Sprites**:
+- Develop building sprites for structures like ${requirements.buildingTypes.join(', ')}.
+- Ensure buildings are visually appealing and consistent with the game's architectural style.
+- Include variations for different states or conditions (e.g., intact, damaged).
+
+**Environmental Features**:
+- Integrate environmental features like ${requirements.environmentFeatures.weatherConditions.join(', ')} weather conditions, ${requirements.environmentFeatures.terrainTypes.join(', ')} terrain types, ${requirements.environmentFeatures.celestialBodies.join(', ')} celestial bodies, and ${requirements.environmentFeatures.geologicalFormations.join(', ')} geological formations into the sprite designs.
+- Ensure these features enhance the immersive experience of the game world.
 
 **Art Style**:
 - Adopt a ${worldSeed.theme.toLowerCase()}-themed art style with vibrant colors and intricate details.
-- The art style should align with the aesthetic of a ${worldSeed.atmosphere.toLowerCase()}-${worldSeed.technologyLevel.toLowerCase()} world.
+- The art style should align with the aesthetic of a ${worldSeed.atmosphere.toLowerCase()}-${worldSeed.technologyLevel.toLowerCase()} world, reflecting elements like ${worldSeed.culturalInfluences.toLowerCase()} culture and ${worldSeed.narrativeFocus.toLowerCase()} narratives.
 
 **Resolution and Format**:
 - Deliver the sprite sheet in PNG format with dimensions suitable for a 2D game (e.g., 32x32 pixels or 64x64 pixels per sprite).
@@ -232,6 +269,7 @@ function detailedPrompt(worldSeed) {
 **Additional Notes**:
 - The sprite sheet will be used as essential visual assets in the game development process, contributing to the immersive experience and engaging gameplay mechanics.`;
 }
+
 
 
 export { generateWorldSeed, synthesizePixelArtPrompt };

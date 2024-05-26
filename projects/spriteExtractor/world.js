@@ -286,6 +286,7 @@ const initialWorldSeed = {
 };
 
 function createWorldSeedForm(elementId) {
+  console.log("elementId="+elementId);
   const formContainer = document.createElement('div'); // Declare formContainer here
   const form = document.createElement('form');
   form.setAttribute('id', 'world-seed-form');

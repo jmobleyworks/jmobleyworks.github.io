@@ -29,13 +29,12 @@
             
             <h4>2. Generating Sprite Sheet</h4>
             <p>Choose how you want to generate the sprite sheet:</p>
-            <button id="localUploadButton">Upload from Local Filesystem</button>
+            <input type="file" id="localUploadButton" accept="image/*">
             <button id="dalle3Button">Generate from DALL-E 3</button>
             <img id="generatedImage" src="" alt="Generated Sprite Sheet">
             
             <h4>3. Sprite Extraction</h4>
             <p>The generated image is processed by our SpriteExtractor to isolate the individual sprites, which can then be used in the game.</p>
-            <pre><code id="demoCode"></code></pre>
             <div id="spriteContainer"></div>
         </section>
         
@@ -43,8 +42,6 @@
         <p>Text2Game makes game development more accessible and efficient. By leveraging AI-driven dynamic assets, developers can focus on crafting engaging narratives and gameplay experiences without the hassle of traditional asset creation processes. Whether you're an experienced developer or new to game design, Text2Game helps you bring your ideas to life.</p>
         <p>Ready to start your game development journey with Text2Game? Stay tuned for updates and explore the possibilities!</p>
     </main>
-    <script type="module" src="world.js"></script>
-    <script type="module" src="spriteExtractor.js"></script>
     <script type="module" src="demo.js"></script>
 </body>
 </html>

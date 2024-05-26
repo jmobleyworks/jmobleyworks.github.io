@@ -1,1 +1,88 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
 
+header {
+    background: #333;
+    color: #fff;
+    padding: 1em 0;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+    background: #fff;
+}
+
+h1, h2, h3, h4 {
+    color: #333;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h2 {
+    margin-top: 1em;
+    border-bottom: 2px solid #333;
+    padding-bottom: 0.5em;
+}
+
+h3, h4 {
+    margin-top: 0.5em;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+section#demonstration .step {
+    margin-bottom: 1.5em;
+}
+
+button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+img#generatedImage {
+    display: block;
+    margin: 10px 0;
+    max-width: 100%;
+}
+
+pre {
+    background: #f4f4f4;
+    padding: 10px;
+    border: 1px solid #ddd;
+    overflow-x: auto;
+}
+
+#spriteContainer img {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+}

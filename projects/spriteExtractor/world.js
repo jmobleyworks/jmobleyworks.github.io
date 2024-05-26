@@ -365,9 +365,22 @@ function getSelectedWorldSeed() {
 // Function to update the short and detailed prompts based on the selected world seed
 function updatePrompts() {
   const worldSeed = getSelectedWorldSeed();
-  document.getElementById('short-prompt').innerText = shortPrompt(worldSeed);
-  document.getElementById('detailed-prompt').innerText = detailedPrompt(worldSeed);
+  const shortPromptElement = document.getElementById('short-prompt');
+  const detailedPromptElement = document.getElementById('detailed-prompt');
+
+  if (shortPromptElement) {
+    shortPromptElement.innerText = shortPrompt(worldSeed);
+  } else {
+    console.error("Element with ID 'short-prompt' not found.");
+  }
+
+  if (detailedPromptElement) {
+    detailedPromptElement.innerText = detailedPrompt(worldSeed);
+  } else {
+    console.error("Element with ID 'detailed-prompt' not found.");
+  }
 }
+
 
 // Initialize the form on page load
 document.addEventListener('DOMContentLoaded', () => {

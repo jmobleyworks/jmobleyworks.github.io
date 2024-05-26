@@ -1,5 +1,10 @@
 //World.js
 
+const requirements = {
+    charAssetTypes :['warriors', 'mages', 'monsters', 'NPCs'],
+    hardAssetTypes : ['trees', 'rocks', 'chests', 'barrels', 'doors', 'treasure chests'],
+    softAssetTypes : ['ground tiles', 'water tiles', 'grass patches', 'flowers', 'bushes']
+};
 // Define the categories and options
 const categories = {
     timePeriod: ['Ancient', 'Medieval', 'Renaissance', 'Industrial', 'Futuristic', 'Alternate History'],
@@ -10,7 +15,7 @@ const categories = {
         mythological: ['Greek Mythology', 'Norse Mythology', 'Egyptian Mythology', 'Asian Mythology']
     },
     environment: ['Forest', 'Desert', 'Mountains', 'Ocean', 'Urban', 'Arctic', 'Swamp', 'Underwater'],
-    atmosphere: ['Mysterious', 'Magical', 'Dark', 'Whimsical', 'Serene', 'Surreal', 'Dystopian', 'Utopian'],
+    atmosphere: ['Mysterious', 'Mystical', 'Dark', 'Whimsical', 'Serene', 'Surreal', 'Dystopian', 'Utopian'],
     location: ['Island', 'Underground', 'Floating', 'Celestial', 'Extraterrestrial', 'Subterranean', 'Dimensional'],
     landmarks: ['Ruins', 'Temples', 'Caves', 'Castles', 'Monuments', 'Megaliths', 'Laboratories'],
     inhabitants: {
@@ -57,5 +62,45 @@ function generateWorldSeed() {
 function synthesizePixelArtPrompt(worldSeed) {
     return `A pixel art scene set in ${worldSeed.timePeriod} ${worldSeed.theme} theme. The environment is ${worldSeed.environment} with a ${worldSeed.atmosphere} atmosphere, located ${worldSeed.location}. The scene features ${worldSeed.landmarks} and is inhabited by ${worldSeed.inhabitants}. The main conflict involves ${worldSeed.conflict}, influenced by ${worldSeed.elementalInfluence} elements and ${worldSeed.technologyLevel} technology. The cultural style is inspired by ${worldSeed.culturalInfluences}, focusing on ${worldSeed.narrativeFocus}.`;
 }
+
+function detailedPrompt(worldSeed) {
+    return `Generate a sprite sheet for a 2D action RPG game, reflecting the following requirements and world characteristics:
+
+**Character Sprites**:
+- Create character sprites for ${requirements.charAssetTypes.join(', ')}.
+- Each character sprite should have animations for actions like idle, walk, run, attack, and death.
+- Maintain consistency in style and proportion across all character sprites.
+
+**Object Sprites**:
+- Develop sprites for environmental objects such as ${requirements.hardAssetTypes.join(', ')}.
+- Each object sprite should be distinguishable, visually appealing, and detailed.
+
+**Environment Elements**:
+- Design tiles for the game environment, including ${requirements.softAssetTypes.join(', ')}.
+- Provide variations in terrain for diverse level designs.
+
+**Art Style**:
+- Adopt a ${worldSeed.theme.toLowerCase()}-themed art style with vibrant colors and intricate details.
+- The art style should align with the aesthetic of a ${worldSeed.atmosphere.toLowerCase()}-${worldSeed.technologyLevel.toLowerCase()} world.
+
+**Resolution and Format**:
+- Deliver the sprite sheet in PNG format with dimensions suitable for a 2D game (e.g., 32x32 pixels or 64x64 pixels per sprite).
+- Maintain a consistent grid layout for easy integration into game development frameworks.
+
+**Revision and Feedback**:
+- Be open to iterations based on feedback to refine the sprite sheet and ensure it meets the game project's specific requirements.
+
+**Context**:
+- The game is set in a ${worldSeed.timePeriod.toLowerCase()} ${worldSeed.theme.toLowerCase()} world.
+- The environment is a ${worldSeed.environment.toLowerCase()} with a ${worldSeed.atmosphere.toLowerCase()} atmosphere.
+- The scene is located ${worldSeed.location.toLowerCase()} and includes ${worldSeed.landmarks.toLowerCase()} landmarks.
+- The inhabitants are ${worldSeed.inhabitants.toLowerCase()}.
+- The main conflict involves ${worldSeed.conflict.toLowerCase()} influenced by ${worldSeed.elementalInfluence.toLowerCase()} elements and ${worldSeed.technologyLevel.toLowerCase()} technology.
+- The cultural style is inspired by ${worldSeed.culturalInfluences.toLowerCase()} culture, focusing on ${worldSeed.narrativeFocus.toLowerCase()}.
+
+**Additional Notes**:
+- The sprite sheet will be used as essential visual assets in the game development process, contributing to the immersive experience and engaging gameplay mechanics.`;
+}
+
 
 export { generateWorldSeed, synthesizePixelArtPrompt };

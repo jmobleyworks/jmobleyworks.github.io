@@ -18,32 +18,74 @@ function synthesizePixelArtPrompt(worldSeed) {
 
 // Requirements for art assets
 const requirements = {
-  // Add more character types as needed
-  charAssetTypes: ['warriors', 'mages', 'monsters', 'NPCs', 'rogues', 'healers'],
-  // Include additional environmental objects
-  hardAssetTypes: ['trees', 'rocks', 'chests', 'barrels', 'doors', 'treasure chests', 'statues', 'fountains'],
-  // Expand soft asset types for diverse environments
-  softAssetTypes: ['ground tiles', 'water tiles', 'grass patches', 'flowers', 'bushes', 'sand dunes', 'snow drifts'],
-  // Define more enemy types for variety
-  enemyTypes: ['goblins', 'orcs', 'demons', 'undead', 'dragons', 'trolls', 'elementals'],
-  // Add more friendly character types
-  friendlyTypes: ['merchants', 'villagers', 'quest givers', 'allies', 'healers', 'scholars'],
-  // Consider additional vehicle types for different terrains
-  vehicleTypes: ['horses', 'chariots', 'wagons', 'boats', 'airships', 'magic carpets'],
-  // Broaden the range of weapon types
-  weaponTypes: ['swords', 'axes', 'bows', 'staves', 'wands', 'scythes', 'spears'],
-  // Include more armor types for customization
-  armorTypes: ['helmets', 'breastplates', 'greaves', 'gauntlets', 'shields', 'capes', 'robes'],
-  // Expand the variety of items available
-  itemTypes: ['potions', 'scrolls', 'gems', 'artifacts', 'treasures', 'maps', 'keys'],
-  // Add more building types for a vibrant world
-  buildingTypes: ['houses', 'inns', 'shops', 'forges', 'temples', 'libraries', 'taverns'],
-  // Detail environment features for a rich setting
+  // Extend character types for a diverse cast
+  charAssetTypes: [
+    'warriors', 'mages', 'monsters', 'NPCs', 'rogues', 'healers',
+    'paladins', 'necromancers', 'beastmasters', 'assassins', 'rangers', 'summoners'
+  ],
+  // Enrich environmental objects for interactive gameplay
+  hardAssetTypes: [
+    'trees', 'rocks', 'chests', 'barrels', 'doors', 'treasure chests',
+    'statues', 'fountains', 'altars', 'signposts', 'bridges', 'wells'
+  ],
+  // Broaden soft asset types for varied landscapes
+  softAssetTypes: [
+    'ground tiles', 'water tiles', 'grass patches', 'flowers', 'bushes',
+    'sand dunes', 'snow drifts', 'mud tiles', 'lava flows', 'ice formations'
+  ],
+  // Expand enemy types for challenging encounters
+  enemyTypes: [
+    'goblins', 'orcs', 'demons', 'undead', 'dragons', 'trolls', 'elementals',
+    'vampires', 'werewolves', 'golems', 'specters', 'witches', 'giants'
+  ],
+  // Increase friendly character types for rich interactions
+  friendlyTypes: [
+    'merchants', 'villagers', 'quest givers', 'allies', 'healers', 'scholars',
+    'blacksmiths', 'innkeepers', 'guards', 'nobles', 'farmers', 'bards'
+  ],
+  // Add more vehicle types for various modes of travel
+  vehicleTypes: [
+    'horses', 'chariots', 'wagons', 'boats', 'airships', 'magic carpets',
+    'sleds', 'submarines', 'steam trains', 'balloons', 'griffins', 'elephants'
+  ],
+  // Diversify weapon types for combat variety
+  weaponTypes: [
+    'swords', 'axes', 'bows', 'staves', 'wands', 'scythes', 'spears',
+    'daggers', 'hammers', 'flails', 'crossbows', 'slingshots', 'blowguns'
+  ],
+  // Add more armor types for character customization
+  armorTypes: [
+    'helmets', 'breastplates', 'greaves', 'gauntlets', 'shields', 'capes', 'robes',
+    'masks', 'boots', 'belts', 'amulets', 'rings', 'bracers'
+  ],
+  // Enhance the variety of items for discovery and utility
+  itemTypes: [
+    'potions', 'scrolls', 'gems', 'artifacts', 'treasures', 'maps', 'keys',
+    'food', 'tools', 'clothing', 'books', 'furniture', 'musical instruments'
+  ],
+  // Increase building types for a living world
+  buildingTypes: [
+    'houses', 'inns', 'shops', 'forges', 'temples', 'libraries', 'taverns',
+    'castles', 'towers', 'dungeons', 'academies', 'gardens', 'markets'
+  ],
+  // Expand environment features for a dynamic setting
   environmentFeatures: {
-    weatherConditions: ['clear', 'rainy', 'snowy', 'foggy', 'stormy', 'windy', 'hazy', 'meteor showers'],
-    terrainTypes: ['plains', 'hills', 'mountains', 'canyons', 'valleys', 'cliffs', 'forests', 'lakes'],
-    celestialBodies: ['single moon', 'multiple moons', 'rings', 'asteroids', 'comets', 'nebulae'],
-    geologicalFormations: ['volcanoes', 'geysers', 'glaciers', 'canyons', 'waterfalls', 'caves']
+    weatherConditions: [
+      'clear', 'rainy', 'snowy', 'foggy', 'stormy', 'windy', 'hazy', 'meteor showers',
+      'sandstorms', 'thunderstorms', 'blizzards', 'heatwaves'
+    ],
+    terrainTypes: [
+      'plains', 'hills', 'mountains', 'canyons', 'valleys', 'cliffs', 'forests', 'lakes',
+      'rivers', 'oceans', 'deserts', 'jungles', 'marshes', 'caves'
+    ],
+    celestialBodies: [
+      'single moon', 'multiple moons', 'rings', 'asteroids', 'comets', 'nebulae',
+      'stars', 'planets', 'black holes', 'supernovae', 'galaxies', 'quasars'
+    ],
+    geologicalFormations: [
+      'volcanoes', 'geysers', 'glaciers', 'canyons', 'waterfalls', 'caves',
+      'craters', 'plateaus', 'basins', 'fjords', 'mesas', 'arches'
+    ]
   }
 };
 

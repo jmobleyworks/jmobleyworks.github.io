@@ -272,4 +272,80 @@ function detailedPrompt(worldSeed) {
 
 
 
+
+
+// Function to create the form for manual world seed configuration
+function createWorldSeedForm() {
+  const formContainer = document.getElementById('worldSeedBuilder');
+  formContainer.innerHTML = ''; // Clear any existing content
+
+  Object.keys(gameDesignChoices).forEach(category => {
+    const formGroup = document.createElement('div');
+    formGroup.classList.add('form-group');
+
+    const label = document.createElement('label');
+    label.innerText = category.charAt(0).toUpperCase() + category.slice(1);
+    formGroup.appendChild(label);
+
+    const select = document.createElement('select');
+    select.id = category;
+
+    if (Array.isArray(gameDesignChoices[category])) {
+      gameDesignChoices[category].forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.value = option;
+        optionElement.innerText = option;
+        select.appendChild(optionElement);
+      });
+    } else {
+      Object.keys(gameDesignChoices[category]).forEach(subCategory => {
+        const optGroup = document.createElement('optgroup');
+        optGroup.label = subCategory;
+
+        gameDesignChoices[category][subCategory].forEach(option => {
+          const optionElement = document.createElement('option');
+          optionElement.value = option;
+          optionElement.innerText = option;
+          optGroup.appendChild(optionElement);
+        });
+
+        select.appendChild(optGroup);
+      });
+    }
+
+    formGroup.appendChild(select);
+    formContainer.appendChild(formGroup);
+  });
+
+  // Event listener to update the prompts whenever a selection is made
+  formContainer.addEventListener('change', updatePrompts);
+}
+
+// Function to get the selected values and generate a world seed
+function getSelectedWorldSeed() {
+  const worldSeed = {};
+  Object.keys(gameDesignChoices).forEach(category => {
+    const selectElement = document.getElementById(category);
+    worldSeed[category] = selectElement.value;
+  });
+  return worldSeed;
+}
+
+// Function to update the short and detailed prompts based on the selected world seed
+function updatePrompts() {
+  const worldSeed = getSelectedWorldSeed();
+  document.getElementById('short-prompt').innerText = shortPrompt(worldSeed);
+  document.getElementById('detailed-prompt').innerText = detailedPrompt(worldSeed);
+}
+
+// Initialize the form on page load
+document.addEventListener('DOMContentLoaded', () => {
+  createWorldSeedForm();
+  updatePrompts();
+});
+
+
 export { generateWorldSeed, synthesizePixelArtPrompt };
+
+
+

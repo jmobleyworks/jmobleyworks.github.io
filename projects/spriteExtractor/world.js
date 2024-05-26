@@ -1,6 +1,4 @@
 // World.js
-
-// Utility function to determine the correct article 'a' or 'an'
 function AorAn(value) {const vowels = ['a', 'e', 'i', 'o', 'u'];const firstLetter = value.toLowerCase().charAt(0);return vowels.includes(firstLetter) ? `an ${value}` : `a ${value}`;}
 
 // Function to synthesize pixel art prompts based on the world seed

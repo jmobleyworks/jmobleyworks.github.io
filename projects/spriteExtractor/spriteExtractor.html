@@ -8,73 +8,29 @@
 <body>
     <h1>Introducing Text2Game: Revolutionizing Game Development with AI-Driven Dynamic Assets</h1>
     <p>Welcome to the future of game development! Today, we are excited to introduce <strong>Text2Game</strong>, an innovative engine that transforms text-based inputs into engaging and interactive game worlds. Powered by the latest advancements in AI, including DALL-E 3 for image generation and our custom SpriteExtractor for sprite extraction, Text2Game makes it easier than ever to create dynamic game assets on-the-fly.</p>
-
     <h2>What is a Text2Game Engine?</h2>
     <p>A Text2Game engine is a game development platform that uses natural language inputs to generate game content. Imagine describing a scene or a character in simple text, and having the engine instantly create the corresponding pixel art, animations, and interactive elements. This approach opens up endless possibilities for game developers, allowing for more creativity, faster prototyping, and richer player experiences.</p>
-
     <h2>Demonstration</h2>
     <p>Let's dive into an example to see Text2Game in action. We'll demonstrate how a simple user input can generate a dynamic game scene.</p>
-
     <h3>Step-by-Step Example</h3>
     <h4>1. Generating World Seed</h4>
     <p>Click the button below to generate a random world seed:</p>
     <button id="generateSeedButton">Generate World Seed</button>
     <p id="worldSeedPrompt"></p>
-
     <h4>2. Generating Sprite Sheet</h4>
     <p>Choose how you want to generate the sprite sheet:</p>
     <button id="localUploadButton">Upload from Local Filesystem</button>
     <button id="dalle3Button">Generate from DALL-E 3</button>
-
-    <div id="demo">
-        <h2>Live Demo</h2>
-        <img id="generatedImage" src="Designer (40).png" alt="Generated Sprite Sheet">
-        <div id="spriteContainer"></div>
-    </div>
-
-    <h2>Conclusion</h2>
-    <p>With Text2Game, game development becomes more accessible, efficient, and creative. By harnessing the power of AI-driven dynamic assets, developers can focus on crafting engaging narratives and gameplay experiences without being limited by traditional asset creation processes. Whether you're a seasoned developer or a newcomer to game design, Text2Game empowers you to bring your ideas to life like never before.</p>
-
-    <p>Ready to embark on your game development journey with Text2Game? Stay tuned for updates and be part of the revolution!</p>
-
-    <script type="module">
-       
-    </script>
-
-    <h1>Introducing Text2Game: Revolutionizing Game Development with AI-Driven Dynamic Assets</h1>
-    <p>Welcome to the future of game development! Today, we are excited to introduce <strong>Text2Game</strong>, an innovative engine that transforms text-based inputs into engaging and interactive game worlds. Powered by the latest advancements in AI, including DALL-E 3 for image generation and our custom SpriteExtractor for sprite extraction, Text2Game makes it easier than ever to create dynamic game assets on-the-fly.</p>
-
-    <h2>What is a Text2Game Engine?</h2>
-    <p>A Text2Game engine is a game development platform that uses natural language inputs to generate game content. Imagine describing a scene or a character in simple text, and having the engine instantly create the corresponding pixel art, animations, and interactive elements. This approach opens up endless possibilities for game developers, allowing for more creativity, faster prototyping, and richer player experiences.</p>
-
-    <h2>Our Approach</h2>
-    <p>At the core of Text2Game is the seamless integration of text-based prompts and AI-generated assets. Here's how it works:</p>
-    <ol>
-        <li><strong>User Input</strong>: Players or developers input text descriptions or select from predefined options.</li>
-        <li><strong>AI Generation</strong>: The engine sends these inputs to DALL-E 3, which generates pixel art images based on the descriptions.</li>
-        <li><strong>Sprite Extraction</strong>: Using our SpriteExtractor class, we process these images to extract usable sprites.</li>
-        <li><strong>Game Integration</strong>: The extracted sprites are integrated into the game world, ready for interaction and further manipulation.</li>
-    </ol>
-    <p>This workflow ensures that game content is always fresh, unique, and tailored to the player's actions and story choices.</p>
-
-    <h2>Demonstration</h2>
-    <p>Let's dive into an example to see Text2Game in action. We'll demonstrate how a simple user input can generate a dynamic game scene.</p>
-
+    <img id="generatedImage" src="Designer (40).png" alt="Generated Sprite Sheet">
     <h4>3. Sprite Extraction</h4>
     <p>The generated image is processed by our SpriteExtractor to isolate the individual sprites, which can then be used in the game.</p>
-    
     <pre><code id="demoCode"></code></pre>
-    
-    <div id="demo">
-        <h2>Live Demo</h2>
-        <!-- Live demo code goes here -->
-    </div>
-
+    <div id="demo"><h2>Live Demo</h2><div id="spriteContainer"></div></div><h2>Conclusion</h2>
+    <p>With Text2Game, game development becomes more accessible, efficient, and creative. By harnessing the power of AI-driven dynamic assets, developers can focus on crafting engaging narratives and gameplay experiences without being limited by traditional asset creation processes. Whether you're a seasoned developer or a newcomer to game design, Text2Game empowers you to bring your ideas to life like never before.</p>
+    <p>Ready to embark on your game development journey with Text2Game? Stay tuned for updates and be part of the revolution!</p>
     <h2>Conclusion</h2>
     <p>With Text2Game, game development becomes more accessible, efficient, and creative. By harnessing the power of AI-driven dynamic assets, developers can focus on crafting engaging narratives and gameplay experiences without being limited by traditional asset creation processes. Whether you're a seasoned developer or a newcomer to game design, Text2Game empowers you to bring your ideas to life like never before.</p>
-
     <p>Ready to embark on your game development journey with Text2Game? Stay tuned for updates and be part of the revolution!</p>
-
     <script type="module" id="demoScript">
         // Live demo code goes here
         import SpriteExtractor from './spriteExtractor.js';
@@ -92,27 +48,9 @@
             worldSeedPrompt.textContent = `World Seed: ${JSON.stringify(worldSeed)}`;
         });
 
-        localUploadButton.addEventListener('click', () => {
-            // Code for uploading from local filesystem
-            alert('Uploading from local filesystem...');
-        });
+        localUploadButton.addEventListener('click', () => { });
 
-        dalle3Button.addEventListener('click', () => {
-            // Code for generating from DALL-E 3
-            alert('Generating from DALL-E 3...');
-        });
-
-        exploreButton.addEventListener('click', () => {
-            generateAssets("mystical forest");
-        });
-
-        animalsButton.addEventListener('click', () => {
-            generateAssets("forest with various animals");
-        });
-
-        campButton.addEventListener('click', () => {
-            generateAssets("forest campsite");
-        });
+        dalle3Button.addEventListener('click', () => { });
 
         async function generateAssets(prompt) {
             gameTextElement.textContent = `Generating assets for: ${prompt}`;

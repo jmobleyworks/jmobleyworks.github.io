@@ -285,42 +285,36 @@ const initialWorldSeed = {
   narrativeFocus: 'Heroic Quests',
 };
 
-function createWorldSeedForm(elementId) {
-  console.log("elementId="+elementId);
-  const formContainer = document.createElement('div'); // Declare formContainer here
+
+
+// Function to get the selected values and generate a world seed
+function getSelectedWorldSeed() {
+  const worldSeed = {};
+  Object.keys(gameDesignChoices).forEach(category => {
+    const selectElement = document.getElementById(category);
+    worldSeed[category] = selectElement.value;
+  });
+  return worldSeed;
+}
+
+function createWorldSeedForm() {
+  const formContainer = document.createElement('div');
   const form = document.createElement('form');
   form.setAttribute('id', 'world-seed-form');
-
-  // Determine where to attach the form based on the argument
-  let targetElement;
-  if (elementId) {
-    targetElement = document.getElementById(elementId);
-    if (!targetElement) {
-      console.error(`Element with the provided ID "${elementId}" not found. Attaching form to body as fallback.`);
-    }
-  } else {
-    targetElement = document.getElementById('worldSeedBuilder');
-  }
-
-  // If no suitable element found, use document body
+  const targetElement = document.getElementById('worldSeedBuilder'); // No need for conditional checks
   if (!targetElement) {
+    console.error('Element with ID "worldSeedBuilder" not found. Attaching form to body as fallback.');
     targetElement = document.body;
-    console.warn("Target element not found, attaching form to body.");
   }
-  // Now that we have the target element, attach the form
   targetElement.appendChild(form);
-
   Object.keys(gameDesignChoices).forEach(category => {
     const formGroup = document.createElement('div');
     formGroup.classList.add('form-group');
-
     const label = document.createElement('label');
     label.innerText = category.charAt(0).toUpperCase() + category.slice(1);
     formGroup.appendChild(label);
-
     const select = document.createElement('select');
     select.id = category;
-
     if (Array.isArray(gameDesignChoices[category])) {
       gameDesignChoices[category].forEach(option => {
         const optionElement = document.createElement('option');
@@ -332,34 +326,20 @@ function createWorldSeedForm(elementId) {
       Object.keys(gameDesignChoices[category]).forEach(subCategory => {
         const optGroup = document.createElement('optgroup');
         optGroup.label = subCategory;
-
         gameDesignChoices[category][subCategory].forEach(option => {
           const optionElement = document.createElement('option');
           optionElement.value = option;
           optionElement.innerText = option;
           optGroup.appendChild(optionElement);
         });
-
         select.appendChild(optGroup);
       });
     }
-
     formGroup.appendChild(select);
     formContainer.appendChild(formGroup);
   });
-
   // Event listener to update the prompts whenever a selection is made
   formContainer.addEventListener('change', updatePrompts);
-}
-
-// Function to get the selected values and generate a world seed
-function getSelectedWorldSeed() {
-  const worldSeed = {};
-  Object.keys(gameDesignChoices).forEach(category => {
-    const selectElement = document.getElementById(category);
-    worldSeed[category] = selectElement.value;
-  });
-  return worldSeed;
 }
 
 // Function to update the short and detailed prompts based on the selected world seed

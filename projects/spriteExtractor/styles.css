@@ -68,3 +68,57 @@ input[type="file"] {
   height: 32px;
   background-size: 160px 32px; /* Adjust based on sprite sheet size */
 }
+#world-seed-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+#world-seed-form .form-group {
+  margin-bottom: 15px;
+}
+
+#world-seed-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+#world-seed-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+}
+
+#world-seed-form select:focus {
+  border-color: #88aaff;
+  outline: none;
+}
+
+#world-seed-form optgroup {
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+#world-seed-form option {
+  padding: 5px;
+  font-weight: normal;
+}
+
+/* Add some responsiveness */
+@media (max-width: 768px) {
+  #world-seed-form {
+    width: 90%;
+    padding: 10px;
+  }
+}
+

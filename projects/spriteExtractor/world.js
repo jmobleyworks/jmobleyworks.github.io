@@ -1,5 +1,3 @@
-ToDO: MErge above and below
-
 // World.js
 
 // Utility function to determine the correct article 'a' or 'an'

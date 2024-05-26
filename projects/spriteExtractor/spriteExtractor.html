@@ -4,92 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introducing Text2Game</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Introducing Text2Game: Revolutionizing Game Development with AI-Driven Dynamic Assets</h1>
-    <p>Welcome to the future of game development! Today, we are excited to introduce <strong>Text2Game</strong>, an innovative engine that transforms text-based inputs into engaging and interactive game worlds. Powered by the latest advancements in AI, including DALL-E 3 for image generation and our custom SpriteExtractor for sprite extraction, Text2Game makes it easier than ever to create dynamic game assets on-the-fly.</p>
-    <h2>What is a Text2Game Engine?</h2>
-    <p>A Text2Game engine is a game development platform that uses natural language inputs to generate game content. Imagine describing a scene or a character in simple text, and having the engine instantly create the corresponding pixel art, animations, and interactive elements. This approach opens up endless possibilities for game developers, allowing for more creativity, faster prototyping, and richer player experiences.</p>
-    <h2>Demonstration</h2>
-    <p>Let's dive into an example to see Text2Game in action. We'll demonstrate how a simple user input can generate a dynamic game scene.</p>
-    <h3>Step-by-Step Example</h3>
-    <h4>1. Generating World Seed</h4>
-    <p>Click the button below to generate a random world seed:</p>
-    <button id="generateSeedButton">Generate World Seed</button>
-    <p id="worldSeedPrompt"></p>
-    <h4>2. Generating Sprite Sheet</h4>
-    <p>Choose how you want to generate the sprite sheet:</p>
-    <button id="localUploadButton">Upload from Local Filesystem</button>
-    <button id="dalle3Button">Generate from DALL-E 3</button>
-    <img id="generatedImage" src="Designer (40).png" alt="Generated Sprite Sheet">
-    <h4>3. Sprite Extraction</h4>
-    <p>The generated image is processed by our SpriteExtractor to isolate the individual sprites, which can then be used in the game.</p>
-    <pre><code id="demoCode"></code></pre>
-    <div id="demo"><h2>Live Demo</h2><div id="spriteContainer"></div></div><h2>Conclusion</h2>
-    <p>With Text2Game, game development becomes more accessible, efficient, and creative. By harnessing the power of AI-driven dynamic assets, developers can focus on crafting engaging narratives and gameplay experiences without being limited by traditional asset creation processes. Whether you're a seasoned developer or a newcomer to game design, Text2Game empowers you to bring your ideas to life like never before.</p>
-    <p>Ready to embark on your game development journey with Text2Game? Stay tuned for updates and be part of the revolution!</p>
-    <script type="module" id="demoScript">
-        // Live demo code goes here
-        import SpriteExtractor from './spriteExtractor.js';
-
-        const gameTextElement = document.getElementById('gameText');
-        const generatedImage = document.getElementById('generatedImage');
-        const spriteContainer = document.getElementById('spriteContainer');
-        const generateSeedButton = document.getElementById('generateSeedButton');
-        const worldSeedPrompt = document.getElementById('worldSeedPrompt');
-        const localUploadButton = document.getElementById('localUploadButton');
-        const dalle3Button = document.getElementById('dalle3Button');
-
-        generateSeedButton.addEventListener('click', () => {
-            const worldSeed = generateWorldSeed();
-            worldSeedPrompt.textContent = `World Seed: ${JSON.stringify(worldSeed)}`;
-        });
-
-        localUploadButton.addEventListener('click', () => { });
-
-        dalle3Button.addEventListener('click', () => { });
-
-        async function generateAssets(prompt) {
-            gameTextElement.textContent = `Generating assets for: ${prompt}`;
-            await fetchGeneratedImage(prompt);
-            processGeneratedImage();
-        }
-
-        async function fetchGeneratedImage(prompt) {
-            // Replace this with actual API call to DALL-E 3
-            return new Promise((resolve) => {
-                setTimeout(() => {
-                    generatedImage.src = 'generated_image.png';
-                    resolve();
-                }, 1000);
-            });
-        }
-
-        function processGeneratedImage() {
-            generatedImage.onload = function() {
-                const options = {
-                    tolerance: 20,
-                    numSamples: 4444,
-                    edgePadding: 10,
-                    debug: true
-                };
-                const spriteExtractor = new SpriteExtractor(generatedImage, options);
-                const sprites = spriteExtractor.extractSprites();
-                displaySprites(sprites);
-            };
-        }
-
-        function displaySprites(sprites) {
-            spriteContainer.innerHTML = '';
-            sprites.forEach((sprite, index) => {
-                const img = document.createElement('img');
-                img.src = sprite;
-                img.alt = `Sprite ${index + 1}`;
-                spriteContainer.appendChild(img);
-            });
-        }
-    </script>
-<script>const categories={timePeriod:['Ancient','Medieval','Renaissance','Industrial','Futuristic','Alternate History'],theme:{fantasy:['High Fantasy','Low Fantasy','Urban Fantasy','Gothic Fantasy'],sciFi:['Space Opera','Cyberpunk','Steampunk','Biopunk'],postApocalyptic:['Nuclear Fallout','Zombie Apocalypse','Environmental Catastrophe'],mythological:['Greek Mythology','Norse Mythology','Egyptian Mythology','Asian Mythology']},environment:['Forest','Desert','Mountains','Ocean','Urban','Arctic','Swamp','Underwater'],atmosphere:['Mysterious','Magical','Dark','Whimsical','Serene','Surreal','Dystopian','Utopian'],location:['Island','Underground','Floating','Celestial','Extraterrestrial','Subterranean','Dimensional'],landmarks:['Ruins','Temples','Caves','Castles','Monuments','Megaliths','Laboratories'],inhabitants:{humans:['Medieval European','Asian','African','Indigenous','Futuristic'],elves:['High Elves','Wood Elves','Dark Elves'],dwarves:['Mountain Dwarves','Hill Dwarves','Deep Dwarves'],mythicalCreatures:['Dragons','Griffins','Phoenixes','Unicorns'],aliens:['Extraterrestrial'],robots:['Androids','Cyborgs'],mutants:['Genetic Experimentations'],spirits:['Ghosts','Elementals']},conflict:['War','Exploration','Survival','Quest','Discovery','Intrigue','Revolution','Liberation'],elementalInfluence:['Fire','Water','Earth','Air','Ice','Lightning','Shadow','Light'],technologyLevel:['Primitive','Advanced','Magical','Industrial','Cybernetic','Nanotech','Genetic','Quantum'],culturalInfluences:['Medieval European','Asian','African','Indigenous','Futuristic','Ancient Greek','Norse','Mayan'],narrativeFocus:['Mystery','Adventure','Romance','Intrigue','Redemption','Heroism','Tragedy','Exploration']};function generateWorldSeed(){const prompt={};for(const category in categories){const options=categories[category];let choice;if(Array.isArray(options)){choice=options[Math.floor(Math.random()*options.length)];}else{const subcategory=Object.keys(options)[Math.floor(Math.random()*Object.keys(options).length)];choice=options[subcategory][Math.floor(Math.random()*options[subcategory].length)];}prompt[category]=choice;}return prompt;}</script>
-<script>function displayDemoCode() {const demo = document.getElementById('demoCode');const demoScript = document.getElementById('demoScript');demo.innerText = demoScript.innerHTML;}displayDemoCode();</script>
+    <header>
+        <h1>Introducing Text2Game: Revolutionizing Game Development with AI-Driven Dynamic Assets</h1>
+    </header>
+    <main>
+        <p>Welcome to the future of game development! Today, we are excited to introduce <strong>Text2Game</strong>, an innovative engine that transforms text-based inputs into engaging and interactive game worlds. Powered by the latest advancements in AI, including DALL-E 3 for image generation and our custom SpriteExtractor for sprite extraction, Text2Game makes it easier than ever to create dynamic game assets on-the-fly.</p>
+        
+        <h2>What is a Text2Game Engine?</h2>
+        <p>A Text2Game engine is a game development platform that uses natural language inputs to generate game content. Imagine describing a scene or a character in simple text, and having the engine instantly create the corresponding pixel art, animations, and interactive elements. This approach opens up endless possibilities for game developers, allowing for more creativity, faster prototyping, and richer player experiences.</p>
+        
+        <section id="demonstration">
+            <h2>Demonstration</h2>
+            <p>Let's dive into an example to see Text2Game in action. We'll demonstrate how a simple user input can generate a dynamic game scene.</p>
+            
+            <h3>Step-by-Step Example</h3>
+            
+            <h4>1. Generating World Seed</h4>
+            <p>Click the button below to generate a random world seed:</p>
+            <button id="generateSeedButton">Generate World Seed</button>
+            <div id="worldSeedDisplay"></div>
+            
+            <h4>2. Generating Sprite Sheet</h4>
+            <p>Choose how you want to generate the sprite sheet:</p>
+            <button id="localUploadButton">Upload from Local Filesystem</button>
+            <button id="dalle3Button">Generate from DALL-E 3</button>
+            <img id="generatedImage" src="" alt="Generated Sprite Sheet">
+            
+            <h4>3. Sprite Extraction</h4>
+            <p>The generated image is processed by our SpriteExtractor to isolate the individual sprites, which can then be used in the game.</p>
+            <pre><code id="demoCode"></code></pre>
+            <div id="spriteContainer"></div>
+        </section>
+        
+        <h2>Conclusion</h2>
+        <p>With Text2Game, game development becomes more accessible, efficient, and creative. By harnessing the power of AI-driven dynamic assets, developers can focus on crafting engaging narratives and gameplay experiences without being limited by traditional asset creation processes. Whether you're a seasoned developer or a newcomer to game design, Text2Game empowers you to bring your ideas to life like never before.</p>
+        <p>Ready to embark on your game development journey with Text2Game? Stay tuned for updates and be part of the revolution!</p>
+    </main>
+    <script type="module" src="world.js"></script>
+    <script type="module" src="spriteExtractor.js"></script>
+    <script type="module" src="demo.js"></script>
 </body>
 </html>

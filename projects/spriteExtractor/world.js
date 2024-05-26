@@ -60,7 +60,9 @@ function generateWorldSeed() {
 
 // Synthesize a pixel art prompt from the generated world seed
 function synthesizePixelArtPrompt(worldSeed) {
-    return `A pixel art scene set in ${worldSeed.timePeriod} ${worldSeed.theme} theme. The environment is ${worldSeed.environment} with a ${worldSeed.atmosphere} atmosphere, located ${worldSeed.location}. The scene features ${worldSeed.landmarks} and is inhabited by ${worldSeed.inhabitants}. The main conflict involves ${worldSeed.conflict}, influenced by ${worldSeed.elementalInfluence} elements and ${worldSeed.technologyLevel} technology. The cultural style is inspired by ${worldSeed.culturalInfluences}, focusing on ${worldSeed.narrativeFocus}.`;
+    return `generate a pixel art spritesheet for a 2d action rpg set in  ${worldSeed.theme} themed world in a ${worldSeed.timePeriod} time perid with a ${worldSeed.atmosphere} atomosphere.
+    The world assets should refelect a ${worldSeed.environment} environment set in a ${worldSeed.location} location. 
+    The scene features ${worldSeed.landmarks} and is inhabited by ${worldSeed.inhabitants}. The main conflict involves ${worldSeed.conflict}, influenced by ${worldSeed.elementalInfluence} elements and ${worldSeed.technologyLevel} technology. The cultural style is inspired by ${worldSeed.culturalInfluences}, focusing on ${worldSeed.narrativeFocus}.`;
 }
 
 function detailedPrompt(worldSeed) {

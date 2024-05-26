@@ -8,7 +8,7 @@ function AorAn(value) {
 }
 
 // Function to synthesize pixel art prompts based on the world seed
-function synthesizePixelArtPrompt(worldSeed) {
+function shortPrompt(worldSeed) {
   let prompt = `Create ${AorAn(worldSeed.atmosphere)} pixel art spritesheet for an immersive 2D action RPG set in ${AorAn(worldSeed.timePeriod)} ${worldSeed.theme} world. `;
   prompt += `The game's environment is ${AorAn(worldSeed.environment)} ${worldSeed.location} adorned with ${worldSeed.landmarks}, inhabited by ${worldSeed.inhabitants}. `;
   prompt += `The central conflict driving the narrative is ${AorAn(worldSeed.conflict)} influenced by ${AorAn(worldSeed.elementalInfluence)} elemental forces and ${worldSeed.technologyLevel} technology. `;

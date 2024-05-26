@@ -59,15 +59,15 @@ function generateWorldSeed() {
 }
 
 function synthesizePixelArtPrompt(worldSeed) {
-    let prompt = `Generate a pixel art spritesheet for a 2D action RPG set in a ${worldSeed.theme} themed world during the ${worldSeed.timePeriod} era, with a ${worldSeed.atmosphere} atmosphere. `;
+    let prompt = `Create a pixel art spritesheet for an immersive 2D action RPG set in a ${worldSeed.timePeriod} world. The game's theme is ${worldSeed.theme}, with a ${worldSeed.atmosphere} atmosphere permeating the realm. `;
 
-    prompt += `The world is set in a ${worldSeed.environment} environment, featuring a ${worldSeed.location} location with ${worldSeed.landmarks}. `;
+    prompt += `The world's environment is a vast ${worldSeed.environment}, where the action takes place on a ${worldSeed.location} adorned with ${worldSeed.landmarks}. `;
 
-    prompt += `The inhabitants of this world include ${worldSeed.inhabitants}. `;
+    prompt += `Among the inhabitants of this world are ${worldSeed.inhabitants}, each with their unique traits and characteristics. `;
 
-    prompt += `The main conflict revolves around ${worldSeed.conflict}, influenced by ${worldSeed.elementalInfluence} elemental forces and ${worldSeed.technologyLevel} technology. `;
+    prompt += `The central conflict driving the narrative is a ${worldSeed.conflict}, influenced by the forces of ${worldSeed.elementalInfluence} and the presence of ${worldSeed.technologyLevel} technology. `;
 
-    prompt += `The cultural style draws inspiration from ${worldSeed.culturalInfluences} cultures, with a focus on ${worldSeed.narrativeFocus} narratives.`;
+    prompt += `The cultural inspiration for this world draws from the rich traditions of ${worldSeed.culturalInfluences}, with a focus on ${worldSeed.narrativeFocus} narratives.`;
 
     return prompt;
 }

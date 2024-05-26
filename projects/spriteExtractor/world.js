@@ -15,15 +15,15 @@ const categories = {
         mythological: ['Greek Mythology', 'Norse Mythology', 'Egyptian Mythology', 'Asian Mythology']
     },
     environment: ['Forest', 'Desert', 'Mountains', 'Ocean', 'Urban', 'Arctic', 'Swamp', 'Underwater'],
-    atmosphere: ['Mysterious', 'Mystical', 'Dark', 'Whimsical', 'Serene', 'Surreal', 'Dystopian', 'Utopian'],
+    atmosphere: ['Mysterious', 'Magical', 'Dark', 'Whimsical', 'Serene', 'Surreal', 'Dystopian', 'Utopian'],
     location: ['Island', 'Underground', 'Floating', 'Celestial', 'Extraterrestrial', 'Subterranean', 'Dimensional'],
     landmarks: ['Ruins', 'Temples', 'Caves', 'Castles', 'Monuments', 'Megaliths', 'Laboratories'],
     inhabitants: {
-        humans: ['Medieval European', 'Asian', 'African', 'Indigenous', 'Futuristic'],
+        humans: ['Medieval European Humans', 'Asian Humans', 'African Humans', 'Indigenous Humans', 'Futuristic Humans'],
         elves: ['High Elves', 'Wood Elves', 'Dark Elves'],
         dwarves: ['Mountain Dwarves', 'Hill Dwarves', 'Deep Dwarves'],
         mythicalCreatures: ['Dragons', 'Griffins', 'Phoenixes', 'Unicorns'],
-        aliens: ['Extraterrestrial'],
+        aliens: ['Extraterrestrials', 'Greys', 'Reptilians', 'Nordics', 'Mantis Beings', 'Annunaki', 'Sirians', 'Pleiadians', 'Arcturians', 'Zeta Reticulans', 'Draconians', 'Orions', 'Andromedans'],
         robots: ['Androids', 'Cyborgs'],
         mutants: ['Genetic Experimentations'],
         spirits: ['Ghosts', 'Elementals']

@@ -81,6 +81,22 @@ pre {
     margin: 5px;
 }
 
+#worldSeedDisplay {
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+#worldSeedDisplay .selected {
+    font-weight: bold;
+    color: #007bff;
+}
+
+#worldSeedDisplay .unselected {
+    color: #999;
+}
+
 @media (max-width: 768px) {
     h1 {
         font-size: 2em;

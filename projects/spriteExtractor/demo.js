@@ -40,4 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
       spriteContainer.appendChild(sprite);
     }
   }
+
+  createWorldSeedForm(); // from world.js
+  updatePrompts(); // from world.js
+
 });

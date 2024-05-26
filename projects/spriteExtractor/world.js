@@ -296,7 +296,7 @@ function createWorldSeedForm(elementId) {
   if (elementId) {
     targetElement = document.getElementById(elementId);
     if (!targetElement) {
-      console.error(`Element with ID "${elementId}" not found.`);
+      console.error(`Element with the provided ID "${elementId}" not found. Attaching form to body as fallback.`);
     }
   } else {
     targetElement = document.getElementById('worldSeedBuilder');
@@ -307,7 +307,6 @@ function createWorldSeedForm(elementId) {
     targetElement = document.body;
     console.warn("Target element not found, attaching form to body.");
   }
-
   // Now that we have the target element, attach the form
   targetElement.appendChild(form);
 

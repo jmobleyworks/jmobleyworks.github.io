@@ -28,7 +28,7 @@
 
     <div id="demo">
         <h2>Live Demo</h2>
-        <img id="generatedImage" src="sample_sprite_sheet.png" alt="Generated Sprite Sheet">
+        <img id="generatedImage" src="Designer (40).png" alt="Generated Sprite Sheet">
         <div id="spriteContainer"></div>
     </div>
 
@@ -41,19 +41,6 @@
        
     </script>
 
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introducing Text2Game</title>
-</head>
-<body>
     <h1>Introducing Text2Game: Revolutionizing Game Development with AI-Driven Dynamic Assets</h1>
     <p>Welcome to the future of game development! Today, we are excited to introduce <strong>Text2Game</strong>, an innovative engine that transforms text-based inputs into engaging and interactive game worlds. Powered by the latest advancements in AI, including DALL-E 3 for image generation and our custom SpriteExtractor for sprite extraction, Text2Game makes it easier than ever to create dynamic game assets on-the-fly.</p>
 
@@ -167,73 +154,7 @@
             });
         }
     </script>
-    <script>
-        //World.js
-
-// Define the categories and options
-const categories = {
-    timePeriod: ['Ancient', 'Medieval', 'Renaissance', 'Industrial', 'Futuristic', 'Alternate History'],
-    theme: {
-        fantasy: ['High Fantasy', 'Low Fantasy', 'Urban Fantasy', 'Gothic Fantasy'],
-        sciFi: ['Space Opera', 'Cyberpunk', 'Steampunk', 'Biopunk'],
-        postApocalyptic: ['Nuclear Fallout', 'Zombie Apocalypse', 'Environmental Catastrophe'],
-        mythological: ['Greek Mythology', 'Norse Mythology', 'Egyptian Mythology', 'Asian Mythology']
-    },
-    environment: ['Forest', 'Desert', 'Mountains', 'Ocean', 'Urban', 'Arctic', 'Swamp', 'Underwater'],
-    atmosphere: ['Mysterious', 'Magical', 'Dark', 'Whimsical', 'Serene', 'Surreal', 'Dystopian', 'Utopian'],
-    location: ['Island', 'Underground', 'Floating', 'Celestial', 'Extraterrestrial', 'Subterranean', 'Dimensional'],
-    landmarks: ['Ruins', 'Temples', 'Caves', 'Castles', 'Monuments', 'Megaliths', 'Laboratories'],
-    inhabitants: {
-        humans: ['Medieval European', 'Asian', 'African', 'Indigenous', 'Futuristic'],
-        elves: ['High Elves', 'Wood Elves', 'Dark Elves'],
-        dwarves: ['Mountain Dwarves', 'Hill Dwarves', 'Deep Dwarves'],
-        mythicalCreatures: ['Dragons', 'Griffins', 'Phoenixes', 'Unicorns'],
-        aliens: ['Extraterrestrial'],
-        robots: ['Androids', 'Cyborgs'],
-        mutants: ['Genetic Experimentations'],
-        spirits: ['Ghosts', 'Elementals']
-    },
-    conflict: ['War', 'Exploration', 'Survival', 'Quest', 'Discovery', 'Intrigue', 'Revolution', 'Liberation'],
-    elementalInfluence: ['Fire', 'Water', 'Earth', 'Air', 'Ice', 'Lightning', 'Shadow', 'Light'],
-    technologyLevel: ['Primitive', 'Advanced', 'Magical', 'Industrial', 'Cybernetic', 'Nanotech', 'Genetic', 'Quantum'],
-    culturalInfluences: ['Medieval European', 'Asian', 'African', 'Indigenous', 'Futuristic', 'Ancient Greek', 'Norse', 'Mayan'],
-    narrativeFocus: ['Mystery', 'Adventure', 'Romance', 'Intrigue', 'Redemption', 'Heroism', 'Tragedy', 'Exploration']
-};
-
-// Generate a random world seed prompt
-function generateWorldSeed() {
-    const prompt = {};
-
-    for (const category in categories) {
-        const options = categories[category];
-        let choice;
-
-        if (Array.isArray(options)) {
-            // If options is an array, select a random option
-            choice = options[Math.floor(Math.random() * options.length)];
-        } else {
-            // If options is an object (subcategories), select a random option from a random subcategory
-            const subcategory = Object.keys(options)[Math.floor(Math.random() * Object.keys(options).length)];
-            choice = options[subcategory][Math.floor(Math.random() * options[subcategory].length)];
-        }
-
-        prompt[category] = choice;
-    }
-
-    return prompt;
-}
-
-// Example usage:
-// const worldSeed = generateWorldSeed();
-// console.log(worldSeed);
-    </script>
-    <script>
-        function displayDemoCode() {
-            const demo = document.getElementById('demoCode');
-            const demoScript = document.getElementById('demoScript');
-            demo.innerText = demoScript.innerHTML;
-        }
-        displayDemoCode();
-    </script>
+<script>const categories={timePeriod:['Ancient','Medieval','Renaissance','Industrial','Futuristic','Alternate History'],theme:{fantasy:['High Fantasy','Low Fantasy','Urban Fantasy','Gothic Fantasy'],sciFi:['Space Opera','Cyberpunk','Steampunk','Biopunk'],postApocalyptic:['Nuclear Fallout','Zombie Apocalypse','Environmental Catastrophe'],mythological:['Greek Mythology','Norse Mythology','Egyptian Mythology','Asian Mythology']},environment:['Forest','Desert','Mountains','Ocean','Urban','Arctic','Swamp','Underwater'],atmosphere:['Mysterious','Magical','Dark','Whimsical','Serene','Surreal','Dystopian','Utopian'],location:['Island','Underground','Floating','Celestial','Extraterrestrial','Subterranean','Dimensional'],landmarks:['Ruins','Temples','Caves','Castles','Monuments','Megaliths','Laboratories'],inhabitants:{humans:['Medieval European','Asian','African','Indigenous','Futuristic'],elves:['High Elves','Wood Elves','Dark Elves'],dwarves:['Mountain Dwarves','Hill Dwarves','Deep Dwarves'],mythicalCreatures:['Dragons','Griffins','Phoenixes','Unicorns'],aliens:['Extraterrestrial'],robots:['Androids','Cyborgs'],mutants:['Genetic Experimentations'],spirits:['Ghosts','Elementals']},conflict:['War','Exploration','Survival','Quest','Discovery','Intrigue','Revolution','Liberation'],elementalInfluence:['Fire','Water','Earth','Air','Ice','Lightning','Shadow','Light'],technologyLevel:['Primitive','Advanced','Magical','Industrial','Cybernetic','Nanotech','Genetic','Quantum'],culturalInfluences:['Medieval European','Asian','African','Indigenous','Futuristic','Ancient Greek','Norse','Mayan'],narrativeFocus:['Mystery','Adventure','Romance','Intrigue','Redemption','Heroism','Tragedy','Exploration']};function generateWorldSeed(){const prompt={};for(const category in categories){const options=categories[category];let choice;if(Array.isArray(options)){choice=options[Math.floor(Math.random()*options.length)];}else{const subcategory=Object.keys(options)[Math.floor(Math.random()*Object.keys(options).length)];choice=options[subcategory][Math.floor(Math.random()*options[subcategory].length)];}prompt[category]=choice;}return prompt;}</script>
+<script>function displayDemoCode() {const demo = document.getElementById('demoCode');const demoScript = document.getElementById('demoScript');demo.innerText = demoScript.innerHTML;}displayDemoCode();</script>
 </body>
 </html>

@@ -53,6 +53,62 @@ function generateWorldSeed() {
     return prompt;
 }
 
-// Example usage:
-// const worldSeed = generateWorldSeed();
-// console.log(worldSeed);
+// Synthesize a pixel art prompt from the generated world seed
+function synthesizePixelArtPrompt(worldSeed) {
+    let pixelArtPrompt = `${worldSeed.timePeriod} ${worldSeed.theme} ${worldSeed.environment}`;
+    if (worldSeed.atmosphere) {
+        pixelArtPrompt += ` with a ${worldSeed.atmosphere} atmosphere`;
+    }
+    if (worldSeed.location) {
+        pixelArtPrompt += ` located in a ${worldSeed.location}`;
+    }
+    if (worldSeed.landmarks) {
+        pixelArtPrompt += ` featuring ${worldSeed.landmarks}`;
+    }
+    if (worldSeed.inhabitants) {
+        pixelArtPrompt += ` inhabited by ${worldSeed.inhabitants}`;
+    }
+    if (worldSeed.conflict) {
+        pixelArtPrompt += ` and involves ${worldSeed.conflict}`;
+    }
+    if (worldSeed.elementalInfluence) {
+        pixelArtPrompt += ` with a touch of ${worldSeed.elementalInfluence} influence`;
+    }
+    if (worldSeed.technologyLevel) {
+        pixelArtPrompt += ` and ${worldSeed.technologyLevel} technology`;
+    }
+    if (worldSeed.culturalInfluences) {
+        pixelArtPrompt += ` inspired by ${worldSeed.culturalInfluences} culture`;
+    }
+    if (worldSeed.narrativeFocus) {
+        pixelArtPrompt += ` focusing on ${worldSeed.narrativeFocus}`;
+    }
+
+    return pixelArtPrompt;
+}
+
+// Display the world seed and pixel art prompt
+function displayWorldSeedAndPrompt() {
+    const worldSeed = generateWorldSeed();
+    const pixelArtPrompt = synthesizePixelArtPrompt(worldSeed);
+
+    const worldSeedDisplay = document.getElementById('worldSeedDisplay');
+    worldSeedDisplay.innerHTML = '<h3>Generated World Seed:</h3>';
+    
+    const ul = document.createElement('ul');
+    for (const key in worldSeed) {
+        const li = document.createElement('li');
+        li.textContent = `${key}: ${worldSeed[key]}`;
+        ul.appendChild(li);
+    }
+    worldSeedDisplay.appendChild(ul);
+
+    const promptDisplay = document.createElement('div');
+    promptDisplay.innerHTML = `<h3>Synthesized Pixel Art Prompt:</h3><p>${pixelArtPrompt}</p>`;
+    worldSeedDisplay.appendChild(promptDisplay);
+}
+
+// Event listener for button click
+document.getElementById('generateSeedButton').addEventListener('click', displayWorldSeedAndPrompt);
+
+export { generateWorldSeed, synthesizePixelArtPrompt };

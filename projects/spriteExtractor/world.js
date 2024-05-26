@@ -292,20 +292,15 @@ function getSelectedWorldSeed() {
 }
 
 function createWorldSeedForm() {
-  console.log("Made it to createWorldSeedForm()");
   const formContainer = document.createElement('div');
   const form = document.createElement('form');
   form.setAttribute('id', 'world-seed-form');
-  let targetElement = document.getElementById('worldSeedBuilder'); // Changed to 'let' for reassignment
+  let targetElement = document.getElementById('worldSeedBuilder');
   if (!targetElement) {
-    console.error('Element with ID "worldSeedBuilder" not found. Attaching form to body as fallback.');
     targetElement = document.body;
   }
-  console.log(targetElement);
   targetElement.appendChild(form);
-
   Object.keys(gameDesignChoices).forEach(category => {
-    console.log("Creating form group for category:", category);
     const formGroup = document.createElement('div');
     formGroup.classList.add('form-group');
     const label = document.createElement('label');
@@ -313,9 +308,7 @@ function createWorldSeedForm() {
     formGroup.appendChild(label);
     const select = document.createElement('select');
     select.id = category;
-
     if (Array.isArray(gameDesignChoices[category])) {
-      console.log("Adding options for category:", category);
       gameDesignChoices[category].forEach(option => {
         const optionElement = document.createElement('option');
         optionElement.value = option;
@@ -324,17 +317,14 @@ function createWorldSeedForm() {
         console.log("  Added option:", option);
       });
     } else {
-      console.log("Creating subcategories for category:", category);
       Object.keys(gameDesignChoices[category]).forEach(subCategory => {
         const optGroup = document.createElement('optgroup');
         optGroup.label = subCategory;
-        console.log("  Adding subcategory:", subCategory);
         gameDesignChoices[category][subCategory].forEach(option => {
           const optionElement = document.createElement('option');
           optionElement.value = option;
           optionElement.innerText = option;
           optGroup.appendChild(optionElement);
-          console.log("    Added option:", option);
         });
         select.appendChild(optGroup);
       });
@@ -342,39 +332,13 @@ function createWorldSeedForm() {
     formGroup.appendChild(select);
     formContainer.appendChild(formGroup);
   });
-  // Event listener to update the prompts whenever a selection is made
   formContainer.addEventListener('change', updatePrompts);
-  // Append the formContainer to the targetElement, not just the form
   targetElement.appendChild(formContainer);
 }
 
-
-
-// Function to update the short and detailed prompts based on the selected world seed
 function updatePrompts() {
-  const worldSeed = getSelectedWorldSeed();
-  const shortPromptElement = document.getElementById('short-prompt');
-  const detailedPromptElement = document.getElementById('detailed-prompt');
-
-  if (shortPromptElement) {
-    shortPromptElement.innerText = shortPrompt(worldSeed);
-  } else {
-    console.error("Element with ID 'short-prompt' not found.");
-  }
-
-  if (detailedPromptElement) {
-    detailedPromptElement.innerText = detailedPrompt(worldSeed);
-  } else {
-    console.error("Element with ID 'detailed-prompt' not found.");
-  }
+  const worldSeed = getSelectedWorldSeed(),shortPromptElement = document.getElementById('short-prompt'),detailedPromptElement = document.getElementById('detailed-prompt');
+  shortPromptElement.innerText = shortPrompt(worldSeed);detailedPromptElement.innerText = detailedPrompt(worldSeed);
 }
-
-
-// Initialize the form on page load
-document.addEventListener('DOMContentLoaded', () => {
-  //createWorldSeedForm();
-  //updatePrompts();
-});
-
 
 export { generateWorldSeed, shortPrompt, detailedPrompt, createWorldSeedForm, updatePrompts  };

@@ -5,11 +5,7 @@ function AorAn(value) {
   const article = vowels.includes(firstLetter) ? 'an' : 'a';
   return `${article} ${value}`;
 }
-const requirements = {
-    charAssetTypes :['warriors', 'mages', 'monsters', 'NPCs'],
-    hardAssetTypes : ['trees', 'rocks', 'chests', 'barrels', 'doors', 'treasure chests'],
-    softAssetTypes : ['ground tiles', 'water tiles', 'grass patches', 'flowers', 'bushes']
-};
+
 function synthesizePixelArtPrompt(worldSeed) {
   let prompt = `Create ${AorAn(worldSeed.atmosphere)} pixel art spritesheet for an immersive 2D action RPG set in ${AorAn(worldSeed.timePeriod)} ${worldSeed.theme} world. `;
 
@@ -21,33 +17,91 @@ function synthesizePixelArtPrompt(worldSeed) {
 
   return prompt;
 }
-const categories = {
-    timePeriod: ['Ancient', 'Medieval', 'Renaissance', 'Industrial', 'Futuristic', 'Alternate History'],
-    theme: {
-        fantasy: ['High Fantasy', 'Low Fantasy', 'Urban Fantasy', 'Gothic Fantasy'],
-        sciFi: ['Space Opera', 'Cyberpunk', 'Steampunk', 'Biopunk'],
-        postApocalyptic: ['Nuclear Fallout', 'Zombie Apocalypse', 'Environmental Catastrophe'],
-        mythological: ['Greek Mythology', 'Norse Mythology', 'Egyptian Mythology', 'Asian Mythology']
-    },
-    environment: ['Forest', 'Desert', 'Mountain', 'Ocean', 'Urban', 'Arctic', 'Swamp', 'Underwater'],
-    atmosphere: ['Mysterious', 'Magical', 'Dark', 'Whimsical', 'Serene', 'Surreal', 'Dystopian', 'Utopian'],
-    location: ['Island', 'Underground', 'Floating', 'Celestial', 'Extraterrestrial', 'Subterranean', 'Dimensional'],
-    landmarks: ['Ruins', 'Temples', 'Caves', 'Castles', 'Monuments', 'Megaliths', 'Laboratories'],
-    inhabitants: {
-        humans: ['Medieval European Humans', 'Asian Humans', 'African Humans', 'Indigenous Humans', 'Futuristic Humans'],
-        elves: ['High Elves', 'Wood Elves', 'Dark Elves'],
-        dwarves: ['Mountain Dwarves', 'Hill Dwarves', 'Deep Dwarves'],
-        mythicalCreatures: ['Dragons', 'Griffins', 'Phoenixes', 'Unicorns'],
-        aliens: ['Extraterrestrials', 'Greys', 'Reptilians', 'Nordics', 'Mantis Beings', 'Annunaki', 'Sirians', 'Pleiadians', 'Arcturians', 'Zeta Reticulans', 'Draconians', 'Orions', 'Andromedans'],
-        robots: ['Androids', 'Cyborgs'],
-        mutants: ['Genetic Experimentations'],
-        spirits: ['Ghosts', 'Elementals']
-    },
-    conflict: ['War', 'Exploration', 'Survival', 'Quest', 'Discovery', 'Intrigue', 'Revolution', 'Liberation'],
-    elementalInfluence: ['Fire', 'Water', 'Earth', 'Air', 'Ice', 'Lightning', 'Shadow', 'Light'],
-    technologyLevel: ['Primitive', 'Advanced', 'Magical', 'Industrial', 'Cybernetic', 'Nanotech', 'Genetic', 'Quantum'],
-    culturalInfluences: ['Medieval European', 'Asian', 'African', 'Indigenous', 'Futuristic', 'Ancient Greek', 'Norse', 'Mayan'],
-    narrativeFocus: ['Mystery', 'Adventure', 'Romance', 'Intrigue', 'Redemption', 'Heroism', 'Tragedy', 'Exploration']
+const requirements = {
+  charAssetTypes: ['warriors', 'mages', 'monsters', 'NPCs'],
+  hardAssetTypes: ['trees', 'rocks', 'chests', 'barrels', 'doors', 'treasure chests'],
+  softAssetTypes: ['ground tiles', 'water tiles', 'grass patches', 'flowers', 'bushes'],
+  enemyTypes: ['goblins', 'orcs', 'demons', 'undead', 'dragons'],
+  friendlyTypes: ['merchants', 'villagers', 'quest givers', 'allies'],
+  vehicleTypes: ['horses', 'chariots', 'wagons', 'boats', 'airships'],
+  weaponTypes: ['swords', 'axes', 'bows', 'staves', 'wands'],
+  armorTypes: ['helmets', 'breastplates', 'greaves', 'gauntlets', 'shields'],
+  itemTypes: ['potions', 'scrolls', 'gems', 'artifacts', 'treasures'],
+  buildingTypes: ['houses', 'inns', 'shops', 'forges', 'temples'],
+  environmentFeatures: {
+    weatherConditions: ['clear', 'rainy', 'snowy', 'foggy', 'stormy', 'windy'],
+    terrainTypes: ['plains', 'hills', 'mountains', 'canyons', 'valleys', 'cliffs'],
+    celestialBodies: ['single moon', 'multiple moons', 'rings', 'asteroids'],
+    geologicalFormations: ['volcanoes', 'geysers', 'glaciers', 'canyons']
+  }
+};
+
+const gameDesignChoices = {
+  timePeriod: ['Ancient', 'Medieval', 'Renaissance', 'Industrial', 'Futuristic', 'Alternate History'],
+  theme: {
+    fantasy: ['High Fantasy', 'Low Fantasy', 'Urban Fantasy', 'Gothic Fantasy'],
+    sciFi: ['Space Opera', 'Cyberpunk', 'Steampunk', 'Biopunk'],
+    postApocalyptic: ['Nuclear Fallout', 'Zombie Apocalypse', 'Environmental Catastrophe'],
+    mythological: ['Greek Mythology', 'Norse Mythology', 'Egyptian Mythology', 'Asian Mythology']
+  },
+  environment: ['Forest', 'Desert', 'Mountain', 'Ocean', 'Urban', 'Arctic', 'Swamp', 'Underwater'],
+  atmosphere: ['Mysterious', 'Magical', 'Dark', 'Whimsical', 'Serene', 'Surreal', 'Dystopian', 'Utopian'],
+  location: ['Island', 'Underground', 'Floating', 'Celestial', 'Extraterrestrial', 'Subterranean', 'Dimensional'],
+  landmarks: ['Ruins', 'Temples', 'Caves', 'Castles', 'Monuments', 'Megaliths', 'Laboratories'],
+  inhabitants: {
+    humans: ['Medieval European Humans', 'Asian Humans', 'African Humans', 'Indigenous Humans', 'Futuristic Humans'],
+    elves: ['High Elves', 'Wood Elves', 'Dark Elves'],
+    dwarves: ['Mountain Dwarves', 'Hill Dwarves', 'Deep Dwarves'],
+    mythicalCreatures: ['Dragons', 'Griffins', 'Phoenixes', 'Unicorns'],
+    aliens: ['Extraterrestrials', 'Greys', 'Reptilians', 'Nordics', 'Mantis Beings', 'Annunaki', 'Sirians', 'Pleiadians', 'Arcturians', 'Zeta Reticulans', 'Draconians', 'Orions', 'Andromedans'],
+    robots: ['Androids', 'Cyborgs'],
+    mutants: ['Genetic Experimentations'],
+    spirits: ['Ghosts', 'Elementals'],
+    animalLikeRaces: ['Centaurs', 'Merfolk', 'Minotaurs', 'Harpies'],
+    plantBasedRaces: ['Treants', 'Dryads', 'Spriggans', 'Myconids'],
+    elementalRaces: ['Fire Elementals', 'Water Elementals', 'Air Elementals']
+  },
+  conflict: ['War', 'Exploration', 'Survival', 'Quest', 'Discovery', 'Intrigue', 'Revolution', 'Liberation'],
+  elementalInfluence: ['Fire', 'Water', 'Earth', 'Air', 'Ice', 'Lightning', 'Shadow', 'Light'],
+  technologyLevel: ['Primitive', 'Advanced', 'Magical', 'Industrial', 'Cybernetic', 'Nanotech', 'Genetic', 'Quantum'],
+  culturalInfluences: ['Medieval European', 'Asian', 'African', 'Indigenous', 'Futuristic', 'Ancient Greek', 'Norse', 'Mayan'],
+  narrativeFocus: ['Mystery', 'Adventure', 'Romance', 'Intrigue', 'Redemption', 'Heroism', 'Tragedy', 'Exploration'],
+  mythology: {
+    creationStories: ['Cosmic Eggs', 'Primordial Beings', 'Divine Interventions'],
+    mythologicalFigures: ['Heroes', 'Gods', 'Goddesses', 'Demigods', 'Titans'],
+    legendaryArtifacts: ['Swords', 'Amulets', 'Relics', 'Talismans', 'Orbs'],
+    ancientTexts: ['Scriptures', 'Prophecies', 'Fables', 'Epics', 'Grimoires']
+  },
+  societalStructures: {
+    governmentTypes: ['Monarchy', 'Democracy', 'Oligarchy', 'Theocracy'],
+    socialClasses: ['Nobility', 'Commoners', 'Slaves', 'Merchants', 'Artisans'],
+    religions: ['Polytheistic', 'Monotheistic', 'Pantheistic', 'Animistic'],
+    culturalCustoms: ['Rituals', 'Festivals', 'Rites of Passage', 'Taboos']
+  },
+  magicalSystems: {
+    magicalSchools: ['Elemental', 'Necromancy', 'Illusion', 'Enchantment'],
+    magicalArtifacts: ['Wands', 'Staves', 'Orbs', 'Grimoires', 'Talismans'],
+    magicalBeings: ['Fairies', 'Pixies', 'Gnomes', 'Golems', 'Familiars'],
+    magicalAbilities: ['Shapeshifting', 'Teleportation', 'Mind Control']
+  },
+  historicalEvents: {
+    warsAndConflicts: ['Epic Battles', 'Invasions', 'Revolutions'],
+    naturalDisasters: ['Floods', 'Earthquakes', 'Volcanic Eruptions'],
+    technologicalBreakthroughs: ['Inventions', 'Scientific Discoveries'],
+    culturalRenaissances: ['Artistic', 'Philosophical', 'Spiritual']
+  },
+  economicSystems: {
+    tradeRoutes: ['Land', 'Sea', 'Air', 'Interdimensional'],
+    currencies: ['Gold', 'Gems', 'Barter', 'Magical Energy'],
+    industries: ['Mining', 'Agriculture', 'Crafting', 'Alchemy'],
+    tradeOrganizations: ['Guilds', 'Cartels', 'Monopolies']
+  },
+  supernaturalPhenomena: {
+    cosmicEvents: ['Solar Eclipses', 'Lunar Eclipses', 'Comets'],
+planarRealms: ['Celestial', 'Infernal', 'Fey', 'Elemental'],
+portalsAndGateways: ['Interdimensional', 'Teleportation'],
+timeDistortions: ['Time Travel', 'Time Loops', 'Temporal Rifts']
+}
 };
 
 // Generate a random world seed prompt

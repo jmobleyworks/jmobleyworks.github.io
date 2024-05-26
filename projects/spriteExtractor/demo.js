@@ -55,7 +55,7 @@ function generateImageFromDalle3() {
 // Generate and display world seed with prompt
 function generateAndDisplayWorldSeed() {
     const worldSeed = generateWorldSeed();
-    const pixelArtPrompt = synthesizePixelArtPrompt(worldSeed);
+    const pixelArtPrompt = shortPrompt(worldSeed);
 
     const worldSeedDisplay = document.getElementById('worldSeedDisplay');
     worldSeedDisplay.innerHTML = '<h3>Generated World Seed:</h3>';

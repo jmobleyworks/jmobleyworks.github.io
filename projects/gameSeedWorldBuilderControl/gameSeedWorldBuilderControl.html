@@ -5,6 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GameSeed WorldBuilder Control</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      padding: 20px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      font-weight: bold;
+    }
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .option {
+      padding: 10px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .option.selected {
+      background-color: #4caf50;
+      color: white;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -21,46 +62,122 @@
       <h4>1. Generating World Seed</h4>
       <p>Use the interactive form below to customize your world seed:</p>
       <div id="gameSeedWorldBuilderControl"></div>
+      <h4>2. Generated World Seed</h4>
+      <p id="short-prompt"></p>
+      <pre id="worldSeedDisplay"></pre>
     </section>
   </main>
   <script>
-    const options = {}, timePeriods = ["Ancient", "Medieval", "Renaissance"], themes = ["Ancient", "Medieval", "Renaissance"]; // ... (shortened gameDesignChoices)...
-      createGroup = (c, choices) => (g => (l = document.createElement('label')).textContent = c.charAt(0).toUpperCase() + c.slice(1), g.appendChild(l), (o = document.createElement('div')).classList.add('options'), g.appendChild(o), choices.forEach(choice => {
+    const gameDesignChoices = {
+      "timePeriod": ["Ancient", "Medieval", "Renaissance"],
+      "theme": ["Fantasy", "SciFi", "PostApocalyptic"],
+      "environment": ["Forest", "Desert", "Mountain"],
+      "atmosphere": ["Mysterious", "Magical", "Dark"],
+      "location": ["Island", "Underground", "Floating"],
+      "landmarks": ["Ruins", "Temples", "Caves"],
+      "inhabitants": ["Humans", "Mythical Creatures", "Aliens"],
+      "conflict": ["War", "Exploration", "Survival"],
+      "elementalInfluence": ["Fire", "Water", "Earth"],
+      "technologyLevel": ["Primitive", "Advanced", "Magical"],
+      "culturalInfluences": ["Medieval European", "Asian", "African"],
+      "narrativeFocus": ["Heroic Journey", "Coming of Age", "Intrigue"]
+    };
+
+    let options = {};
+
+    const createGroup = (category, choices) => {
+      const group = document.createElement('div');
+      group.classList.add('form-group');
+      
+      const label = document.createElement('label');
+      label.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+      group.appendChild(label);
+      
+      const optionsContainer = document.createElement('div');
+      optionsContainer.classList.add('options');
+      group.appendChild(optionsContainer);
+      
+      choices.forEach(choice => {
         const option = document.createElement('div');
         option.classList.add('option');
-        option.innerText = choice;
-        option.classList.add('selected', choice === timePeriods[0]); // Assuming default is first option
-        option.addEventListener('click', () => updateOption(c, option)), o.appendChild(option)
-      }), g)(document.createElement('div')).classList.add('form-group'),
-      updateOption = (category, element) => element instanceof Element && (choices = options[category] || [], element.classList.toggle('selected'), choices[element.classList.contains('selected') ? 'push' : 'splice'](choices.indexOf(element.innerText), 1), options[category] = [...new Set(choices)], updatePrompts()),
-      formatOptions = options => Array.isArray(options) && options.length > 0 ? options.length === 1 ? options[0] : `${options.join(', ')} and ${options.pop()}` : "**No Options Available**",
-      shortPrompt = worldSeed => `Design a 2D action RPG with the following elements: Set in ${formatOptions(worldSeed.timePeriod)} ${formatOptions(worldSeed.theme)} world with a ${formatOptions(worldSeed.atmosphere)} atmosphere. The environment features ${formatOptions(worldSeed.environment)} ${formatOptions(worldSeed.location)} adorned with ${formatOptions(worldSeed.landmarks)}. Inhabited by ${formatOptions(worldSeed.inhabitants)}, the world faces ${formatOptions(worldSeed.conflict)} influenced by ${formatOptions(worldSeed.elementalInfluence)} and ${formatOptions(worldSeed.technologyLevel)} technology. Cultural inspiration is drawn from ${formatOptions(worldSeed.culturalInfluences)} traditions, focusing on ${formatOptions(worldSeed.narrativeFocus)} narratives.`,
-      updatePrompts = () => {
-        const chosen = Object.assign({}, ...Object.keys(timePeriods).map(c => ({ [c]: options[c] || timePeriods[0] }))), // Assuming default is first option for all categories
-          shortPromptElement = document.getElementById('short-prompt'),
-          worldSeedDisplayElement = document.getElementById('worldSeedDisplay');
-        shortPromptElement.innerText = shortPrompt(chosen);
-        worldSeedDisplayElement.innerText = JSON.stringify(chosen, null, 2);
-      };
+        option.textContent = choice;
+        option.addEventListener('click', () => updateOption(category, option));
+        optionsContainer.appendChild(option);
+      });
+      
+      return group;
+    };
+
+    const updateOption = (category, element) => {
+      const choices = options[category] || [];
+      const choice = element.textContent;
+      
+      if (element.classList.contains('selected')) {
+        element.classList.remove('selected');
+        options[category] = choices.filter(c => c !== choice);
+      } else {
+        element.classList.add('selected');
+        choices.push(choice);
+        options[category] = choices;
+      }
+      
+      updatePrompts();
+    };
+
+    const formatOptions = options => {
+      if (!options.length) return "**No Options Available**";
+      if (options.length === 1) return options[0];
+      return `${options.slice(0, -1).join(', ')} and ${options[options.length - 1]}`;
+    };
+
+    const shortPrompt = worldSeed => `Design a 2D action RPG with the following elements: Set in a ${formatOptions(worldSeed.timePeriod)} ${formatOptions(worldSeed.theme)} world with a ${formatOptions(worldSeed.atmosphere)} atmosphere. The environment features ${formatOptions(worldSeed.environment)} ${formatOptions(worldSeed.location)} adorned with ${formatOptions(worldSeed.landmarks)}. Inhabited by ${formatOptions(worldSeed.inhabitants)}, the world faces ${formatOptions(worldSeed.conflict)} influenced by ${formatOptions(worldSeed.elementalInfluence)} and ${formatOptions(worldSeed.technologyLevel)} technology. Cultural inspiration is drawn from ${formatOptions(worldSeed.culturalInfluences)} traditions, focusing on ${formatOptions(worldSeed.narrativeFocus)} narratives.`;
+
+    const updatePrompts = () => {
+      const chosen = {};
+      for (const category in gameDesignChoices) {
+        chosen[category] = options[category] || [];
+      }
+      document.getElementById('short-prompt').innerText = shortPrompt(chosen);
+      document.getElementById('worldSeedDisplay').innerText = JSON.stringify(chosen, null, 2);
+    };
+
     const getRandomOption = choices => choices[Math.floor(Math.random() * choices.length)];
-    const seed = () => Object.fromEntries(Object.keys(timePeriods).map(c => [c, getRandomOption(timePeriods)])); // Assuming seed uses timePeriods
+
+    const seed = () => {
+      const seededOptions = {};
+      for (const category in gameDesignChoices) {
+        seededOptions[category] = [getRandomOption(gameDesignChoices[category])];
+      }
+      return seededOptions;
+    };
+
     const createForm = () => {
       const form = document.createElement('form');
       form.setAttribute('id', 'world-seed-form');
-      (document.getElementById('gameSeedWorldBuilderControl') || document.body).appendChild(form);
-      
+      document.getElementById('gameSeedWorldBuilderControl').appendChild(form);
+
+      Object.keys(gameDesignChoices).forEach(category => {
+        form.appendChild(createGroup(category, gameDesignChoices[category]));
+      });
+
       const button = document.createElement('button');
       button.innerText = 'Randomize';
+      button.type = 'button';
       button.addEventListener('click', () => {
-        options = {};
-        Object.assign(options, seed());
-        updateFormSelection();
+        options = seed();
+        document.querySelectorAll('.option').forEach(option => {
+          const category = option.parentElement.previousElementSibling.textContent.toLowerCase();
+          option.classList.toggle('selected', options[category].includes(option.textContent));
+        });
         updatePrompts();
       });
       form.appendChild(button);
-      Object.keys(timePeriods).forEach(category => form.appendChild(createGroup(category, timePeriods[category]))); // Assuming each category uses its choices list
-      updateFormSelection = () => document.querySelectorAll('.option').forEach(option => option.classList.toggle('selected', options[option.parentElement.parentElement.querySelector('label').innerText.toLowerCase()]?.includes(option.innerText))),
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
       createForm();
+      updatePrompts();
+    });
   </script>
 </body>
 </html>

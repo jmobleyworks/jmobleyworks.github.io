@@ -44,7 +44,7 @@ label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #0f0;
+  color: #888; /* Medium gray */
 }
 
 input[type="text"], input[type="submit"], button {
@@ -102,35 +102,44 @@ input[type="file"] {
   display: block;
   margin-bottom: 5px;
   font-size: 16px;
-  color: #0f0;
+  color: #888; /* Medium gray */
 }
 
-#world-seed-form select {
-  width: 100%;
+#world-seed-form .options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#world-seed-form .option {
   padding: 10px;
   border: 1px solid #0f0;
   border-radius: 4px;
   background-color: #222;
-  font-size: 14px;
   color: #0f0;
+  cursor: pointer;
+  text-align: center;
+  flex: 1;
 }
 
-#world-seed-form select:focus {
-  border-color: #88aaff;
-  outline: none;
+#world-seed-form .option.selected {
+  background-color: #0f0;
+  color: #000;
 }
 
-#world-seed-form optgroup {
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 16px;
+#world-seed-form .option button {
+  display: none;
 }
 
-#world-seed-form option {
-  padding: 5px;
-  font-weight: normal;
-  background-color: #333; /* Dark background for options */
+#world-seed-form .option.selected button {
+  display: block;
+  margin-top: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #000;
   color: #0f0;
+  cursor: pointer;
 }
 
 /* Responsive Styles */
@@ -144,8 +153,12 @@ input[type="file"] {
     padding: 10px;
   }
 
-  input[type="text"], input[type="submit"], button, select {
+  input[type="text"], input[type="submit"], button {
     font-size: 16px;
     padding: 12px;
+  }
+
+  .options {
+    flex-direction: column;
   }
 }

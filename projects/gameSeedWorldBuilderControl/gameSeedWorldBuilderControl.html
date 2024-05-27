@@ -109,16 +109,18 @@
     };
 
     const updateOption = (category, element) => {
-      const choices = options[category] || [];
       const choice = element.textContent;
+      
+      if (!options[category]) {
+        options[category] = [];
+      }
       
       if (element.classList.contains('selected')) {
         element.classList.remove('selected');
-        options[category] = choices.filter(c => c !== choice);
+        options[category] = options[category].filter(c => c !== choice);
       } else {
         element.classList.add('selected');
-        choices.push(choice);
-        options[category] = choices;
+        options[category].push(choice);
       }
       
       updatePrompts();

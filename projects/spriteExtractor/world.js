@@ -234,16 +234,22 @@ function getSelectedWorldSeed() {
   return worldSeed;
 }
 function updateSelectedOptions(category, optionElement) {
-  const selectedOptionsForCategory = selectedOptions[category] || [];
-  if (optionElement.classList.contains('selected')) {
-    selectedOptionsForCategory.push(optionElement.innerText);
-  } else {
-    const index = selectedOptionsForCategory.indexOf(optionElement.innerText);
-    if (index !== -1) {
-      selectedOptionsForCategory.splice(index, 1);
+  if (optionElement instanceof Element) {
+    const selectedOptionsForCategory = selectedOptions[category] || [];
+
+    if (optionElement.classList.contains('selected')) {
+      selectedOptionsForCategory.push(optionElement.innerText);
+    } else {
+      const index = selectedOptionsForCategory.indexOf(optionElement.innerText);
+      if (index !== -1) {
+        selectedOptionsForCategory.splice(index, 1);
+      }
     }
+
+    selectedOptions[category] = selectedOptionsForCategory;
+  } else {
+    console.error('Invalid optionElement passed to updateSelectedOptions');
   }
-  selectedOptions[category] = selectedOptionsForCategory;
 }
 function createWorldSeedForm() {
   const formContainer = document.createElement('div');

@@ -204,7 +204,7 @@ function getSelectedWorldSeed() {
   const worldSeed = {};
   Object.keys(gameDesignChoices).forEach(category => {
     const selectElement = document.getElementById(category);
-    if (selectElement.value) {
+    if (selectElement.value!==null) {
       worldSeed[category] = selectElement.value;
     } else {
       worldSeed[category] = gameDesignChoices[category][0];

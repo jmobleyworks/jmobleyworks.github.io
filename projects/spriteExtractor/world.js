@@ -89,32 +89,25 @@ const gameDesignChoices = {
   // Extend time periods for more historical settings
   timePeriod: ['Ancient', 'Medieval', 'Renaissance', 'Industrial', 'Futuristic', 'Alternate History', 'Prehistoric', 'Colonial'],
   // Define themes for different genres
-  theme: ['Fantasy: High Fantasy', 'Fantasy: Low Fantasy', 'Fantasy: Urban Fantasy', 'Fantasy: Gothic Fantasy', 'Fantasy: Dark Fantasy', 'Fantasy: Fairy Tale',
-          'SciFi: Space Opera', 'SciFi: Cyberpunk', 'SciFi: Steampunk', 'SciFi: Biopunk', 'SciFi: Utopian Sci-Fi', 'SciFi: Dystopian Sci-Fi',
-          'postApocalyptic: Nuclear Fallout', 'postApocalyptic: Zombie Apocalypse', 'postApocalyptic: Environmental Catastrophe', 'postApocalyptic: Alien Invasion',
-          'mythological: Greek Mythology', 'mythological: Norse Mythology', 'mythological: Egyptian Mythology', 'mythological: Asian Mythology', 'mythological: Celtic Mythology', 'mythological: Native American Mythology'
-         ],
+  theme: ['Fantasy: High Fantasy', 'Fantasy: Low Fantasy', 'Fantasy: Urban Fantasy', 'Fantasy: Gothic Fantasy', 'Fantasy: Dark Fantasy', 'Fantasy: Fairy Tale','SciFi: Space Opera', 'SciFi: Cyberpunk', 'SciFi: Steampunk', 'SciFi: Biopunk', 'SciFi: Utopian Sci-Fi', 'SciFi: Dystopian Sci-Fi','postApocalyptic: Nuclear Fallout', 'postApocalyptic: Zombie Apocalypse', 'postApocalyptic: Environmental Catastrophe', 'postApocalyptic: Alien Invasion','mythological: Greek Mythology', 'mythological: Norse Mythology', 'mythological: Egyptian Mythology', 'mythological: Asian Mythology', 'mythological: Celtic Mythology', 'mythological: Native American Mythology'],
   // More environments for diverse gameplay
   environment: ['Forest', 'Desert', 'Mountain', 'Ocean', 'Urban', 'Arctic', 'Swamp', 'Underwater', 'Volcanic', 'Sky'],
   // Atmosphere options to set the mood
   atmosphere: ['Mysterious', 'Magical', 'Dark', 'Whimsical', 'Serene', 'Surreal', 'Dystopian', 'Utopian', 'Eerie', 'Lively'],
   // Varied locations for different world settings
-  location: ['Island', 'Underground', 'Floating', 'Celestial', 'Extraterrestrial', 'Subterranean', 'Dimensional', 'Interstellar'],
+  location: ['Island', 'Underground', 'Floating', 'Celestial', 'Extraterrestrial', 'Subterranean', 'Dimensional', 'Interstellar', 'Seaside Town', 'Wilderness', 'Wasteland', 'City', 'Border Town', 'Small Town', 'Village'],
   // Landmarks to explore and discover
   landmarks: ['Ruins', 'Temples', 'Caves', 'Castles', 'Monuments', 'Megaliths', 'Laboratories', 'Ancient Cities'],
   // Diverse inhabitants to interact with
-  inhabitants: {
-    // Add more human cultures for inclusivity
-    humans: ['Medieval European Humans', 'Asian Humans', 'African Humans', 'Indigenous Humans', 'Futuristic Humans', 'Victorian Humans', 'Nomadic Tribes'],
+  inhabitants: ['Humans: Medieval European Humans', 'Humans: Asian Humans', 'Humans: African Humans', 'Humans: Indigenous Humans', 'Humans: Futuristic Humans', 'Humans: Victorian Humans', 'Humans: Nomadic Tribes'],
     // Expand the range of mythical creatures
-    mythicalCreatures: ['Dragons', 'Griffins', 'Phoenixes', 'Unicorns', 'Chimeras', 'Basilisks', 'Sphinxes'],
+  mythicalCreatures: ['Dragons', 'Griffins', 'Phoenixes', 'Unicorns', 'Chimeras', 'Basilisks', 'Sphinxes'],
     // Include more alien races for sci-fi themes
-    aliens: ['Extraterrestrials', 'Greys', 'Reptilians', 'Nordics', 'Mantis Beings', 'Annunaki', 'Sirians', 'Pleiadians', 'Arcturians', 'Zeta Reticulans', 'Draconians', 'Orions', 'Andromedans', 'Martians'],
+   aliens: ['Extraterrestrials', 'Greys', 'Reptilians', 'Nordics', 'Mantis Beings', 'Annunaki', 'Sirians', 'Pleiadians', 'Arcturians', 'Zeta Reticulans', 'Draconians', 'Orions', 'Andromedans', 'Martians'],
     // Add more robot types for futuristic settings
     robots: ['Androids', 'Cyborgs', 'Automatons', 'Sentinels'],
     // Broaden the range of elemental races
-    elementalRaces: ['Fire Elementals', 'Water Elementals', 'Air Elementals', 'Earth Elementals', 'Light Elementals', 'Dark Elementals']
-  },
+    elementalRaces: ['Fire Elementals', 'Water Elementals', 'Air Elementals', 'Earth Elementals', 'Light Elementals', 'Dark Elementals'],
   // Additional conflicts to drive the narrative
   conflict: ['War', 'Exploration', 'Survival', 'Quest', 'Discovery', 'Intrigue', 'Revolution', 'Liberation', 'Conquest', 'Rebellion'],
   // More elemental influences for magical settings
@@ -124,50 +117,31 @@ const gameDesignChoices = {
   // Cultural influences from around the world
   culturalInfluences: ['Medieval European', 'Asian', 'African', 'Indigenous', 'Futuristic', 'Ancient Greek', 'Norse', 'Mayan', 'Roman', 'Persian'],
   // Varied narrative focuses for storytelling
-  narrativeFocus: ['Heroic Journey', 'Coming of Age', 'Intrigue', 'Redemption', 'Revenge', 'Mystery', 'Romance', 'Adventure', 'Tragedy', 'Comedy', 'Satire', 'Parable', 'Exploration', 'Betrayal', 'Friendship']
-},
-  // Expand mythology for rich lore
-  mythology: {
+  narrativeFocus: ['Heroic Journey', 'Coming of Age', 'Intrigue', 'Redemption', 'Revenge', 'Mystery', 'Romance', 'Adventure', 'Tragedy', 'Comedy', 'Satire', 'Parable', 'Exploration', 'Betrayal', 'Friendship'],
     creationStories: ['Cosmic Eggs', 'Primordial Beings', 'Divine Interventions', 'World Trees', 'Chaos and Order'],
     mythologicalFigures: ['Heroes', 'Gods', 'Goddesses', 'Demigods', 'Titans', 'Monsters', 'Sages'],
     legendaryArtifacts: ['Swords', 'Amulets', 'Relics', 'Talismans', 'Orbs', 'Runestones', 'Crystal Skulls'],
-    ancientTexts: ['Scriptures', 'Prophecies', 'Fables', 'Epics', 'Grimoires', 'Codices', 'Tablets']
-  },
-// More societal structures for complex societies
-societalStructures: {
+    ancientTexts: ['Scriptures', 'Prophecies', 'Fables', 'Epics', 'Grimoires', 'Codices', 'Tablets'],
   governmentTypes: ['Monarchy', 'Democracy', 'Oligarchy', 'Theocracy', 'Anarchy', 'Republic'],
   socialClasses: ['Nobility', 'Commoners', 'Slaves', 'Merchants', 'Artisans', 'Scholars', 'Criminals'],
   religions: ['Polytheistic', 'Monotheistic', 'Pantheistic', 'Animistic', 'Cults', 'Mysticism'],
-  culturalCustoms: ['Rituals', 'Festivals', 'Rites of Passage', 'Taboos', 'Etiquette', 'Traditions']
-},
-// Magical systems for diverse gameplay
-magicalSystems: {
+  culturalCustoms: ['Rituals', 'Festivals', 'Rites of Passage', 'Taboos', 'Etiquette', 'Traditions'],
   magicalSchools: ['Elemental', 'Necromancy', 'Illusion', 'Enchantment', 'Alchemy', 'Divination'],
   magicalArtifacts: ['Wands', 'Staves', 'Orbs', 'Grimoires', 'Talismans', 'Runes'],
   magicalBeings: ['Fairies', 'Pixies', 'Gnomes', 'Golems', 'Familiars', 'Spirits', 'Elementals'],
-  magicalAbilities: ['Shapeshifting', 'Teleportation', 'Mind Control', 'Time Manipulation', 'Summoning']
-},
-// Historical events shaping the world
-historicalEvents: {
+  magicalAbilities: ['Shapeshifting', 'Teleportation', 'Mind Control', 'Time Manipulation', 'Summoning'],
   warsAndConflicts: ['Epic Battles', 'Invasions', 'Revolutions', 'Civil Wars', 'Crusades'],
   naturalDisasters: ['Floods', 'Earthquakes', 'Volcanic Eruptions', 'Tsunamis', 'Meteor Strikes'],
   technologicalBreakthroughs: ['Inventions', 'Scientific Discoveries', 'Industrial Revolution'],
-  culturalRenaissances: ['Artistic', 'Philosophical', 'Spiritual', 'Literary']
-},
-// Economic systems and trade
-economicSystems: {
+  culturalRenaissances: ['Artistic', 'Philosophical', 'Spiritual', 'Literary'],
   tradeRoutes: ['Land', 'Sea', 'Air', 'Interdimensional', 'Silk Road', 'Trade Caravans'],
   currencies: ['Gold', 'Gems', 'Barter', 'Magical Energy', 'Cryptocurrency'],
   industries: ['Mining', 'Agriculture', 'Crafting', 'Alchemy', 'Textiles', 'Shipbuilding'],
-  tradeOrganizations: ['Guilds', 'Cartels', 'Monopolies', 'Merchant Alliances']
-},
-// Supernatural phenomena adding mystery
-supernaturalPhenomena: {
+  tradeOrganizations: ['Guilds', 'Cartels', 'Monopolies', 'Merchant Alliances'],
   cosmicEvents: ['Solar Eclipses', 'Lunar Eclipses', 'Comets', 'Meteor Showers', 'Auroras'],
   planarRealms: ['Celestial', 'Infernal', 'Fey', 'Elemental', 'Astral', 'Dreamscape'],
   portalsAndGateways: ['Interdimensional', 'Teleportation', 'Ancient Portals', 'Wormholes'],
   timeDistortions: ['Time Travel', 'Time Loops', 'Temporal Rifts', 'Anachronisms']
-}
 };
 
 function getRandomOption(options) {

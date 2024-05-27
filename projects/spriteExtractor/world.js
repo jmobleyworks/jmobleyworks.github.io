@@ -263,11 +263,26 @@ function createWorldSeedForm() {
       optionElement.classList.add('option');
       optionElement.innerText = option;
       optionsContainer.appendChild(optionElement);
-
+/*
       optionElement.addEventListener('click', () => {
         optionElement.classList.toggle('selected');
         updatePrompts();
       });
+*/
+optionElement.addEventListener('click', function() {
+  // Toggle selected state visually
+  this.classList.toggle('selected');
+
+  // Update selected options for this category (array or set)
+  const selectedOptions = this.parentElement.querySelectorAll('.selected');
+  const category = category; // Assuming category is still accessible
+  // Update worldSeed in getSelectedWorldSeed (explained later)
+  updateSelectedOptions(category, Array.from(selectedOptions).map(option => option.innerText));
+  updatePrompts();
+});
+
+
+      
     });
 
     form.appendChild(formGroup);

@@ -61,15 +61,30 @@ const gameDesignChoices = {
   "portalsAndGateways": ["Interdimensional", "Teleportation", "Ancient Portals", "Wormholes"],
   "timeDistortions": ["Time Travel", "Time Loops", "Temporal Rifts", "Anachronisms"]
 };
+function formatOptions(options) {
+  if (Array.isArray(options) && options.length > 0) {
+    if (options.length === 1) {
+      return options[0];
+    } else {
+      const lastOption = options.pop();
+      return `${options.join(', ')} and ${lastOption}`;
+    }
+  } else {
+    return "**No Options Available**";
+  }
+}
 function shortPrompt(worldSeed) {
   let prompt = `Design a 2D action RPG with the following elements: `;
-  prompt += `Set in ${worldSeed.timePeriod.join(', ')} ${worldSeed.theme.join(', ')} world with a ${worldSeed.atmosphere.join(', ')} atmosphere. `;
-  prompt += `The environment features ${worldSeed.environment.join(', ')} ${worldSeed.location.join(', ')} adorned with ${worldSeed.landmarks.join(', ')}. `;
-  prompt += `Inhabited by ${worldSeed.inhabitants.join(', ')}, the world faces ${worldSeed.conflict.join(', ')} influenced by ${worldSeed.elementalInfluence.join(', ')} and ${worldSeed.technologyLevel.join(', ')} technology. `;
-  prompt += `Cultural inspiration is drawn from ${worldSeed.culturalInfluences.join(', ')} traditions, focusing on ${worldSeed.narrativeFocus.join(', ')} narratives.`;
+  prompt += `Set in ${formatOptions(worldSeed.timePeriod)} ${formatOptions(worldSeed.theme)} world with a ${formatOptions(worldSeed.atmosphere)} atmosphere. `;
+  prompt += `The environment features ${formatOptions(worldSeed.environment)} ${formatOptions(worldSeed.location)} adorned with ${formatOptions(worldSeed.landmarks)}. `;
+  prompt += `Inhabited by ${formatOptions(worldSeed.inhabitants)}, the world faces ${formatOptions(worldSeed.conflict)} influenced by ${formatOptions(worldSeed.elementalInfluence)} and ${formatOptions(worldSeed.technologyLevel)} technology. `;
+  prompt += `Cultural inspiration is drawn from ${formatOptions(worldSeed.culturalInfluences)} traditions, focusing on ${formatOptions(worldSeed.narrativeFocus)} narratives.`;
   return prompt;
 }
-function detailedPrompt(worldSeed) {
+function detailedPrompt(worldSeed){
+  return worldSeed;
+}
+function detailedPromptOld(worldSeed) {
     return `Generate a sprite sheet for a 2D action RPG game, reflecting the following requirements and world characteristics:
 
 **Character Sprites**:
@@ -219,12 +234,12 @@ function getSelectedWorldSeed() {
       // Get the selected options for this category
       const selectedOptionsForCategory = selectedOptions[category] || [];
 
-      // If there are selected options, use them, otherwise use the element value
+      // Use the selected options, or wrap the element value in an array
       worldSeed[category] = selectedOptionsForCategory.length > 0
         ? selectedOptionsForCategory
         : [element.value];
     } catch (error) {
-      //console.error(`Error retrieving element or value for world seed selection: ${category}`, error);
+      console.error(`Error retrieving element or value for world seed selection: ${category}`, error);
       worldSeed[category] = getDefaultValueProvider()(category);
     }
   });

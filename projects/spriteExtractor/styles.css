@@ -1,14 +1,16 @@
+/* Global Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 20px;
   background-color: #f4f4f4;
+  color: #333;
 }
 
 header {
   background-color: #333;
   color: #fff;
-  padding: 10px 0;
+  padding: 20px;
   text-align: center;
 }
 
@@ -18,16 +20,20 @@ main {
   background-color: #fff;
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 h1, h2, h3, h4 {
   color: #333;
+  margin-top: 0;
 }
 
 p {
   line-height: 1.6;
+  margin-bottom: 20px;
 }
 
+/* Form Styles */
 form {
   margin-bottom: 20px;
 }
@@ -36,6 +42,7 @@ label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
+  color: #333;
 }
 
 input[type="text"], input[type="submit"], button {
@@ -43,6 +50,10 @@ input[type="text"], input[type="submit"], button {
   padding: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
 }
 
 input[type="file"] {
@@ -68,6 +79,8 @@ input[type="file"] {
   height: 32px;
   background-size: 160px 32px; /* Adjust based on sprite sheet size */
 }
+
+/* World Seed Form Styles */
 #world-seed-form {
   max-width: 600px;
   margin: 20px auto;
@@ -114,11 +127,19 @@ input[type="file"] {
   font-weight: normal;
 }
 
-/* Add some responsiveness */
+/* Responsive Styles */
 @media (max-width: 768px) {
+  main {
+    padding: 10px;
+  }
+
   #world-seed-form {
     width: 90%;
     padding: 10px;
   }
-}
 
+  input[type="text"], input[type="submit"], button, select {
+    font-size: 16px;
+    padding: 12px;
+  }
+}

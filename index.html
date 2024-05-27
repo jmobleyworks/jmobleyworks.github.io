@@ -70,40 +70,26 @@
 <body>
     <div class="container">
         <h1>JMobley's Projects</h1>
-        <div class="projects">
-            <!-- Project 1 -->
-            <div class="project">
-                <a href="https://jmobleyworks.github.io/projects/2dActionRpg/2dActionRpg.html">2d Action RPG</a>
-            </div>
-            <!-- Project 2 >
-            <div class="project">
-                <a href="https://jmobleyworks.github.io/projects/screenplayEditor/screenplayEditor.html">Screenplay Editor</a>
-            </div-->
-            <!-- Project 3 -->
-            <div class="project">
-                <a href="https://jmobleyworks.github.io/projects/aiPhotobooth/aiPhotobooth.html">AI Photobooth</a>
-            </div>
-            <!-- Project 4 >
-            <div class="project">
-                <a href="https://jmobleyworks.github.io/projects/rpbTimeTracker/rpbTimeTracker.html">RPB Time Tracker</a>
-            </div-->
-            <!-- Project 5 -->
-            <div class="project">
-                <a href="https://jmobleyworks.github.io/projects/gameTest/gameTest.html">gameTest</a>
-            </div>
-            <!-- Project 6 -->
-            <div class="project">
-                <a href="https://jmobleyworks.github.io/projects/gameScribe/gameScribe.html">GameScribe Text2Game Engine</a>
-            </div>
-            <!-- Project 7 -->
-            <div class="project">
-                <a href="https://jmobleyworks.github.io/projects/spriteDetector/spriteDetector.html">SpriteDetector</a>
-            </div>
-            <!-- Project 8 -->
-            <div class="project">
-                <a href="https://jmobleyworks.github.io/projects/worldSeedCombinations/spriteExtractor.html">WorldSeed-Combinations</a>
-            </div>
-        </div>
+        <div class="projects" id="projects"></div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('projects.json')
+                .then(response => response.json())
+                .then(projects => {
+                    const projectsContainer = document.getElementById('projects');
+                    projects.forEach(project => {
+                        const projectDiv = document.createElement('div');
+                        projectDiv.className = 'project';
+                        const projectLink = document.createElement('a');
+                        projectLink.href = `https://jmobleyworks.github.io/projects/${project}/${project}.html`;
+                        projectLink.textContent = project;
+                        projectDiv.appendChild(projectLink);
+                        projectsContainer.appendChild(projectDiv);
+                    });
+                })
+                .catch(error => console.error('Error fetching projects:', error));
+        });
+    </script>
 </body>
 </html>

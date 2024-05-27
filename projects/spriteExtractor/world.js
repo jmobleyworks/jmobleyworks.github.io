@@ -1,15 +1,7 @@
 // World.js
 function AorAn(value) {const vowels = ['a', 'e', 'i', 'o', 'u'];const firstLetter = value.toLowerCase().charAt(0);return vowels.includes(firstLetter) ? `an ${value}` : `a ${value}`;}
 
-// Function to synthesize pixel art prompts based on the world seed
-function shortPrompt(worldSeed) {
-  let prompt = `Design a 2D action RPG with the following elements: `;
-  prompt += `Set in ${AorAn(worldSeed.timePeriod)} ${worldSeed.theme} world with a ${worldSeed.atmosphere} atmosphere. `;
-  prompt += `The environment features ${AorAn(worldSeed.environment)} ${worldSeed.location} adorned with ${worldSeed.landmarks}. `;
-  prompt += `Inhabited by ${worldSeed.inhabitants}, the world faces ${AorAn(worldSeed.conflict)} influenced by ${worldSeed.elementalInfluence} and ${worldSeed.technologyLevel} technology. `;
-  prompt += `Cultural inspiration is drawn from ${worldSeed.culturalInfluences} traditions, focusing on ${worldSeed.narrativeFocus} narratives.`;
-  return prompt;
-}
+
 
 // Requirements for art assets
 const requirements = {
@@ -73,22 +65,13 @@ const gameDesignChoices = {
   "timeDistortions": ["Time Travel", "Time Loops", "Temporal Rifts", "Anachronisms"]
 };
 
-function getRandomOption(options) {
-  if (Array.isArray(options)) {
-    return options[Math.floor(Math.random() * options.length)];
-  } else {
-    const subcategory = Object.keys(options)[Math.floor(Math.random() * Object.keys(options).length)];
-    return options[subcategory][Math.floor(Math.random() * options[subcategory].length)];
-  }
-}
-
-function generateWorldSeed() {
-  const prompt = {};
-
-  for (const category in gameDesignChoices) {
-    prompt[category] = getRandomOption(gameDesignChoices[category]);
-  }
-
+// Function to synthesize pixel art prompts based on the world seed
+function shortPrompt(worldSeed) {
+  let prompt = `Design a 2D action RPG with the following elements: `;
+  prompt += `Set in ${AorAn(worldSeed.timePeriod)} ${worldSeed.theme} world with a ${worldSeed.atmosphere} atmosphere. `;
+  prompt += `The environment features ${AorAn(worldSeed.environment)} ${worldSeed.location} adorned with ${worldSeed.landmarks}. `;
+  prompt += `Inhabited by ${worldSeed.inhabitants}, the world faces ${AorAn(worldSeed.conflict)} influenced by ${worldSeed.elementalInfluence} and ${worldSeed.technologyLevel} technology. `;
+  prompt += `Cultural inspiration is drawn from ${worldSeed.culturalInfluences} traditions, focusing on ${worldSeed.narrativeFocus} narratives.`;
   return prompt;
 }
 
@@ -182,7 +165,24 @@ const initialWorldSeed = {
   narrativeFocus: 'Heroic Quests',
 };
 
+function getRandomOption(options) {
+  if (Array.isArray(options)) {
+    return options[Math.floor(Math.random() * options.length)];
+  } else {
+    const subcategory = Object.keys(options)[Math.floor(Math.random() * Object.keys(options).length)];
+    return options[subcategory][Math.floor(Math.random() * options[subcategory].length)];
+  }
+}
 
+function generateWorldSeed() {
+  const prompt = {};
+
+  for (const category in gameDesignChoices) {
+    prompt[category] = getRandomOption(gameDesignChoices[category]);
+  }
+
+  return prompt;
+}
 
 // Function to get the selected values and generate a world seed
 function getSelectedWorldSeed() {
@@ -192,43 +192,6 @@ function getSelectedWorldSeed() {
     worldSeed[category] = selectElement.value;
   });
   return worldSeed;
-}
-
-// Function to create world seed form buttons
-function createWorldSeedFormButtons() {
-  const worldSeedFormContainer = document.getElementById('worldSeedFormContainer');
-
-  // Remove any existing buttons
-  while (worldSeedFormContainer.firstChild) {
-    worldSeedFormContainer.removeChild(worldSeedFormContainer.firstChild);
-  }
-
-  // Iterate through each design choice and create buttons
-  for (const [category, choices] of Object.entries(gameDesignChoices)) {
-    // Create a container div for each category
-    const categoryDiv = document.createElement('div');
-    categoryDiv.classList.add('category');
-
-    // Create a label for the category
-    const categoryLabel = document.createElement('h3');
-    categoryLabel.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-    categoryDiv.appendChild(categoryLabel);
-
-    // Create buttons for each choice
-    choices.forEach(choice => {
-      const button = document.createElement('button');
-      button.classList.add('choice-button');
-      button.textContent = choice;
-      button.addEventListener('click', () => {
-        // Handle button click event
-        // You can customize this part to set the selected choice for the world seed
-        console.log(`${category}: ${choice}`);
-      });
-      categoryDiv.appendChild(button);
-    });
-
-    worldSeedFormContainer.appendChild(categoryDiv);
-  }
 }
 
 function createWorldSeedForm() {
@@ -268,54 +231,5 @@ function createWorldSeedForm() {
     form.appendChild(formGroup);
   });
 }
-
-function createWorldSeedFormDropDowns() {
-  const formContainer = document.createElement('div');
-  const form = document.createElement('form');
-  form.setAttribute('id', 'world-seed-form');
-  let targetElement = document.getElementById('worldSeedBuilder');
-  if (!targetElement) {
-    targetElement = document.body;
-  }
-  targetElement.appendChild(form);
-  Object.keys(gameDesignChoices).forEach(category => {
-    const formGroup = document.createElement('div');
-    formGroup.classList.add('form-group');
-    const label = document.createElement('label');
-    label.innerText = category.charAt(0).toUpperCase() + category.slice(1);
-    formGroup.appendChild(label);
-    const select = document.createElement('select');
-    select.id = category;
-    if (Array.isArray(gameDesignChoices[category])) {
-      gameDesignChoices[category].forEach(option => {
-        const optionElement = document.createElement('option');
-        optionElement.value = option;
-        optionElement.innerText = option;
-        select.appendChild(optionElement);
-      });
-    } else {
-      Object.keys(gameDesignChoices[category]).forEach(subCategory => {
-        const optGroup = document.createElement('optgroup');
-        optGroup.label = subCategory;
-        gameDesignChoices[category][subCategory].forEach(option => {
-          const optionElement = document.createElement('option');
-          optionElement.value = option;
-          optionElement.innerText = option;
-          optGroup.appendChild(optionElement);
-        });
-        select.appendChild(optGroup);
-      });
-    }
-    formGroup.appendChild(select);
-    formContainer.appendChild(formGroup);
-  });
-  formContainer.addEventListener('change', updatePrompts);
-  targetElement.innerHTML = formContainer.outerHTML;
-}
-
-function updatePrompts() {
-  const worldSeed = getSelectedWorldSeed(),shortPromptElement = document.getElementById('short-prompt'),detailedPromptElement = document.getElementById('detailed-prompt');
-  shortPromptElement.innerText = shortPrompt(worldSeed);detailedPromptElement.innerText = detailedPrompt(worldSeed);
-}
-
+function updatePrompts() {const worldSeed = getSelectedWorldSeed(),shortPromptElement = document.getElementById('short-prompt'),detailedPromptElement = document.getElementById('detailed-prompt');shortPromptElement.innerText = shortPrompt(worldSeed);detailedPromptElement.innerText = detailedPrompt(worldSeed);}
 export { generateWorldSeed, shortPrompt, detailedPrompt, createWorldSeedForm, updatePrompts  };

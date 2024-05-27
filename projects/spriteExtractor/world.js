@@ -268,7 +268,10 @@ function createWorldSeedForm() {
       optionElement.classList.add('option');
       optionElement.innerText = option;
       optionsContainer.appendChild(optionElement);
-
+      // Set the selected state based on the default value
+      if (option === getDefaultValueProvider()(category)) {
+        optionElement.classList.add('selected');
+      }
 optionElement.addEventListener('click', function() {
   // Toggle selected state visually
   this.classList.toggle('selected');

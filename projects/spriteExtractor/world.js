@@ -1,8 +1,5 @@
 // World.js
 function AorAn(value) {const vowels = ['a', 'e', 'i', 'o', 'u'];const firstLetter = value.toLowerCase().charAt(0);return vowels.includes(firstLetter) ? `an ${value}` : `a ${value}`;}
-
-
-
 // Requirements for art assets
 const requirements = {
   "charAssetTypes": ["warriors", "mages", "monsters", "NPCs", "rogues", "healers", "paladins", "necromancers", "beastmasters", "assassins", "rangers", "summoners"],
@@ -20,7 +17,6 @@ const requirements = {
   "celestialBodies": ["single moon", "multiple moons", "rings", "asteroids", "comets", "nebulae", "stars", "planets", "black holes", "supernovae", "galaxies", "quasars"],
   "geologicalFormations": ["volcanoes", "geysers", "glaciers", "canyons", "waterfalls", "caves", "craters", "plateaus", "basins", "fjords", "mesas", "arches"]
 };
-
 // Game design choices to influence the look and feel of the game
 const gameDesignChoices = {
   "timePeriod": ["Ancient", "Medieval", "Renaissance", "Industrial", "Futuristic", "Alternate History", "Prehistoric", "Colonial"],
@@ -64,7 +60,6 @@ const gameDesignChoices = {
   "portalsAndGateways": ["Interdimensional", "Teleportation", "Ancient Portals", "Wormholes"],
   "timeDistortions": ["Time Travel", "Time Loops", "Temporal Rifts", "Anachronisms"]
 };
-
 // Function to synthesize pixel art prompts based on the world seed
 function shortPrompt(worldSeed) {
   let prompt = `Design a 2D action RPG with the following elements: `;
@@ -151,27 +146,50 @@ function detailedPrompt(worldSeed) {
 }
 
 const initialWorldSeed = {
-  timePeriod: 'Medieval',
-  theme: 'Fantasy',
-  atmosphere: 'Mystical',
-  environment: 'Forest',
-  location: 'Ancient Ruins',
-  landmarks: 'Old Temples',
-  inhabitants: 'Mythical Creatures',
-  conflict: 'Epic Battle',
-  elementalInfluence: 'Fire',
-  technologyLevel: 'Magical',
-  culturalInfluences: 'Norse',
-  narrativeFocus: 'Heroic Quests',
+  timePeriod: gameDesignChoices.timePeriod[1] || "Medieval",
+  theme: gameDesignChoices.theme[0] || "Fantasy: High Fantasy",
+  atmosphere: gameDesignChoices.atmosphere[1] || "Magical",
+  environment: gameDesignChoices.environment[0] || "Forest",
+  location: gameDesignChoices.location[0] || "Island",
+  landmarks: gameDesignChoices.landmarks[0] || "Ruins",
+  inhabitants: gameDesignChoices.inhabitants[0] || "Humans: Medieval European Humans",
+  mythicalCreatures: gameDesignChoices.mythicalCreatures[0] || "Dragons",
+  aliens: gameDesignChoices.aliens[0] || "Extraterrestrials",
+  robots: gameDesignChoices.robots[0] || "Androids",
+  elementalRaces: gameDesignChoices.elementalRaces[0] || "Fire Elementals",
+  conflict: gameDesignChoices.conflict[0] || "War",
+  elementalInfluence: gameDesignChoices.elementalInfluence[0] || "Fire",
+  technologyLevel: gameDesignChoices.technologyLevel[2] || "Magical",
+  culturalInfluences: gameDesignChoices.culturalInfluences[6] || "Norse",
+  narrativeFocus: gameDesignChoices.narrativeFocus[0] || "Heroic Journey",
+  creationStories: gameDesignChoices.creationStories[0] || "Cosmic Eggs",
+  mythologicalFigures: gameDesignChoices.mythologicalFigures[0] || "Heroes",
+  legendaryArtifacts: gameDesignChoices.legendaryArtifacts[0] || "Swords",
+  ancientTexts: gameDesignChoices.ancientTexts[0] || "Scriptures",
+  governmentTypes: gameDesignChoices.governmentTypes[0] || "Monarchy",
+  socialClasses: gameDesignChoices.socialClasses[0] || "Nobility",
+  religions: gameDesignChoices.religions[0] || "Polytheistic",
+  culturalCustoms: gameDesignChoices.culturalCustoms[0] || "Rituals",
+  magicalSchools: gameDesignChoices.magicalSchools[0] || "Elemental",
+  magicalArtifacts: gameDesignChoices.magicalArtifacts[0] || "Wands",
+  magicalBeings: gameDesignChoices.magicalBeings[0] || "Fairies",
+  magicalAbilities: gameDesignChoices.magicalAbilities[0] || "Shapeshifting",
+  warsAndConflicts: gameDesignChoices.warsAndConflicts[0] || "Epic Battles",
+  naturalDisasters: gameDesignChoices.naturalDisasters[0] || "Floods",
+  technologicalBreakthroughs: gameDesignChoices.technologicalBreakthroughs[0] || "Inventions",
+  culturalRenaissances: gameDesignChoices.culturalRenaissances[0] || "Artistic",
+  tradeRoutes: gameDesignChoices.tradeRoutes[0] || "Land",
+  currencies: gameDesignChoices.currencies[0] || "Gold",
+  industries: gameDesignChoices.industries[0] || "Mining",
+  tradeOrganizations: gameDesignChoices.tradeOrganizations[0] || "Guilds",
+  cosmicEvents: gameDesignChoices.cosmicEvents[0] || "Solar Eclipses",
+  planarRealms: gameDesignChoices.planarRealms[0] || "Celestial",
+  portalsAndGateways: gameDesignChoices.portalsAndGateways[0] || "Interdimensional",
+  timeDistortions: gameDesignChoices.timeDistortions[0] || "Time Travel"
 };
 
 function getRandomOption(options) {
-  if (Array.isArray(options)) {
-    return options[Math.floor(Math.random() * options.length)];
-  } else {
-    const subcategory = Object.keys(options)[Math.floor(Math.random() * Object.keys(options).length)];
-    return options[subcategory][Math.floor(Math.random() * options[subcategory].length)];
-  }
+  return options[Math.floor(Math.random() * options.length)];
 }
 
 function generateWorldSeed() {
@@ -231,5 +249,14 @@ function createWorldSeedForm() {
     form.appendChild(formGroup);
   });
 }
-function updatePrompts() {const worldSeed = getSelectedWorldSeed(),shortPromptElement = document.getElementById('short-prompt'),detailedPromptElement = document.getElementById('detailed-prompt');shortPromptElement.innerText = shortPrompt(worldSeed);detailedPromptElement.innerText = detailedPrompt(worldSeed);}
-export { generateWorldSeed, shortPrompt, detailedPrompt, createWorldSeedForm, updatePrompts  };
+
+function updatePrompts() {
+  const worldSeed = getSelectedWorldSeed();
+  const shortPromptElement = document.getElementById('short-prompt');
+  const detailedPromptElement = document.getElementById('detailed-prompt');
+  shortPromptElement.innerText = shortPrompt(worldSeed);
+  detailedPromptElement.innerText = detailedPrompt(worldSeed);
+}
+
+export { generateWorldSeed, shortPrompt, detailedPrompt, createWorldSeedForm, updatePrompts };
+

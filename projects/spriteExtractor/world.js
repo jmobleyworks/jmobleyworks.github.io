@@ -300,6 +300,44 @@ function createWorldSeedForm() {
     targetElement = document.body;
   }
   targetElement.appendChild(form);
+
+  Object.keys(gameDesignChoices).forEach(category => {
+    const formGroup = document.createElement('div');
+    formGroup.classList.add('form-group');
+    
+    const label = document.createElement('label');
+    label.innerText = category.charAt(0).toUpperCase() + category.slice(1);
+    formGroup.appendChild(label);
+
+    const optionsContainer = document.createElement('div');
+    optionsContainer.classList.add('options');
+    formGroup.appendChild(optionsContainer);
+
+    gameDesignChoices[category].forEach(option => {
+      const optionElement = document.createElement('div');
+      optionElement.classList.add('option');
+      optionElement.innerText = option;
+      optionsContainer.appendChild(optionElement);
+
+      optionElement.addEventListener('click', () => {
+        optionElement.classList.toggle('selected');
+        updatePrompts();
+      });
+    });
+
+    form.appendChild(formGroup);
+  });
+}
+
+function createWorldSeedFormDropDowns() {
+  const formContainer = document.createElement('div');
+  const form = document.createElement('form');
+  form.setAttribute('id', 'world-seed-form');
+  let targetElement = document.getElementById('worldSeedBuilder');
+  if (!targetElement) {
+    targetElement = document.body;
+  }
+  targetElement.appendChild(form);
   Object.keys(gameDesignChoices).forEach(category => {
     const formGroup = document.createElement('div');
     formGroup.classList.add('form-group');

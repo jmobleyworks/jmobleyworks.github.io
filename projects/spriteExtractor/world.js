@@ -188,6 +188,13 @@ const initialWorldSeed = {
   timeDistortions: gameDesignChoices.timeDistortions[0] || "Time Travel"
 };
 
+function getDefaultValueProvider() {
+  return function(category) {
+    return initialWorldSeed[category] || "**No Default Available**";
+  };
+}
+
+
 function getRandomOption(options) {
   return options[Math.floor(Math.random() * options.length)];
 }

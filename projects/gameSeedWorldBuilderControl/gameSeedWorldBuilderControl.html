@@ -1,176 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GameSeed WorldBuilder Control</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameSeed WorldBuilder Control</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-  <header>
-    <h1>GameSeed WorldBuilder Control</h1>
-  </header>
-  <main>
-    <p>Welcome! This tool helps generate world seeds for games.</p>
-    <h2>What is it?</h2>
-    <p>The GameSeed WorldBuilder Control lets you create custom world seeds by selecting options from various categories.</p>
-    <section id="demonstration">
-      <h2>Demonstration</h2>
-      <p>Follow these steps to use the tool and generate your world seed:</p>
-      <h3>Step-by-Step Example</h3>
-      <h4>1. Generating World Seed</h4>
-      <p>Use the interactive form below to customize your world seed:</p>
-      <div id="gameSeedWorldBuilderControl"></div>
-      <h4>2. Generated World Seed</h4>
-      <p id="short-prompt"></p>
-      <pre id="worldSeedDisplay"></pre>
-    </section>
-  </main>
-  <script>
-    const gameDesignChoices = {
-      "timePeriod": ["Ancient", "Medieval", "Renaissance"],
-      "theme": ["Fantasy", "SciFi", "PostApocalyptic"],
-      "environment": ["Forest", "Desert", "Mountain"],
-      "atmosphere": ["Mysterious", "Magical", "Dark"],
-      "location": ["Island", "Underground", "Floating"],
-      "landmarks": ["Ruins", "Temples", "Caves"],
-      "inhabitants": ["Humans", "Mythical Creatures", "Aliens"],
-      "conflict": ["War", "Exploration", "Survival"],
-      "elementalInfluence": ["Fire", "Water", "Earth"],
-      "technologyLevel": ["Primitive", "Advanced", "Magical"],
-      "culturalInfluences": ["Medieval European", "Asian", "African"],
-      "narrativeFocus": ["Heroic Journey", "Coming of Age", "Intrigue"]
-    };
+    <header>
+        <h1>GameSeed WorldBuilder Control</h1>
+    </header>
+    <main>
+        <p>Welcome! This tool helps generate world seeds for games.</p>
+        <h2>What is it?</h2>
+        <p>The GameSeed WorldBuilder Control lets you create custom world seeds by selecting options from various
+            categories.</p>
+        <section id="demonstration">
+            <h2>Demonstration</h2>
+            <p>Follow these steps to use the tool and generate your world seed:</p>
+            <h3>Step-by-Step Example</h3>
+            <h4>1. Generating World Seed</h4>
+            <p>Use the interactive form below to customize your world seed:</p>
+            <div id="gameSeedWorldBuilderControl"></div>
+            <h4>2. Generated World Seed</h4>
+            <p id="short-prompt"></p>
+            <pre id="worldSeedDisplay"></pre>
+        </section>
+    </main>
+    <script>
+        const gameDesignChoices = {
+            timePeriod: ["Ancient", "Medieval", "Renaissance"],
+            theme: ["Fantasy", "SciFi", "PostApocalyptic"],
+            environment: ["Forest", "Desert", "Mountain"],
+            atmosphere: ["Mysterious", "Magical", "Dark"],
+            location: ["Island", "Underground", "Floating"],
+            landmarks: ["Ruins", "Temples", "Caves"],
+            inhabitants: ["Humans", "Mythical Creatures", "Aliens"],
+            conflict: ["War", "Exploration", "Survival"],
+            elementalInfluence: ["Fire", "Water", "Earth"],
+            technologyLevel: ["Primitive", "Advanced", "Magical"],
+            culturalInfluences: ["Medieval European", "Asian", "African"],
+            narrativeFocus: ["Heroic Journey", "Coming of Age", "Intrigue"]
+        };
 
-    let options = {};
+        let options = {};
 
-    const createGroup = (category, choices) => {
-      const group = document.createElement('div');
-      group.classList.add('form-group');
-      
-      const label = document.createElement('label');
-      label.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-      group.appendChild(label);
-      
-      const optionsContainer = document.createElement('div');
-      optionsContainer.classList.add('options');
-      group.appendChild(optionsContainer);
-      
-      choices.forEach(choice => {
-        const option = document.createElement('div');
-        option.classList.add('option');
-        option.textContent = choice;
-        option.addEventListener('click', () => updateOption(category, option));
-        optionsContainer.appendChild(option);
-      });
-      
-      return group;
-    };
+        const createGroup = (category, choices) => {
+            const group = document.createElement('div');
+            group.classList.add('form-group');
 
-    const updateOption = (category, element) => {
-      const choice = element.textContent;
-      
-      if (!options[category]) {
-        options[category] = [];
-      }
-      
-      if (element.classList.contains('selected')) {
-        element.classList.remove('selected');
-        options[category] = options[category].filter(c => c !== choice);
-      } else {
-        element.classList.add('selected');
-        options[category].push(choice);
-      }
-      
-      updatePrompts();
-    };
+            const label = document.createElement('label');
+            label.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            group.appendChild(label);
 
-    const formatOptions = options => {
-      if (!options.length) return "";
-      if (options.length === 1) return options[0];
-      return `${options.slice(0, -1).join(', ')} and ${options[options.length - 1]}`;
-    };
+            const optionsContainer = document.createElement('div');
+            optionsContainer.classList.add('options');
+            group.appendChild(optionsContainer);
 
-    const shortPrompt = worldSeed => {
-      const promptParts = [
-        `Design a 2D action RPG with the following elements:`,
-        worldSeed.timePeriod.length ? `Set in a ${formatOptions(worldSeed.timePeriod)} world` : "",
-        worldSeed.theme.length ? `${formatOptions(worldSeed.theme)}` : "",
-        worldSeed.atmosphere.length ? `with a ${formatOptions(worldSeed.atmosphere)} atmosphere.` : "",
-        worldSeed.environment.length ? `The environment features ${formatOptions(worldSeed.environment)}` : "",
-        worldSeed.location.length ? `${formatOptions(worldSeed.location)}` : "",
-        worldSeed.landmarks.length ? `adorned with ${formatOptions(worldSeed.landmarks)}.` : "",
-        worldSeed.inhabitants.length ? `Inhabited by ${formatOptions(worldSeed.inhabitants)},` : "",
-        worldSeed.conflict.length ? `the world faces ${formatOptions(worldSeed.conflict)}` : "",
-        worldSeed.elementalInfluence.length ? `influenced by ${formatOptions(worldSeed.elementalInfluence)}` : "",
-        worldSeed.technologyLevel.length ? `and ${formatOptions(worldSeed.technologyLevel)} technology.` : "",
-        worldSeed.culturalInfluences.length ? `Cultural inspiration is drawn from ${formatOptions(worldSeed.culturalInfluences)} traditions,` : "",
-        worldSeed.narrativeFocus.length ? `focusing on ${formatOptions(worldSeed.narrativeFocus)} narratives.` : ""
-      ];
+            choices.forEach(choice => {
+                const option = document.createElement('div');
+                option.classList.add('option');
+                option.textContent = choice;
+                option.addEventListener('click', () => updateOption(category, option));
+                optionsContainer.appendChild(option);
+            });
 
-      return promptParts.filter(part => part).join(' ');
-    };
+            return group;
+        };
 
-    const updatePrompts = () => {
-      const chosen = {};
-      for (const category in gameDesignChoices) {
-        chosen[category] = options[category] || [];
-      }
-      document.getElementById('short-prompt').innerText = shortPrompt(chosen);
-      document.getElementById('worldSeedDisplay').innerText = JSON.stringify(chosen, null, 2);
-    };
+        const updateOption = (category, element) => {
+            const choice = element.textContent;
 
-    const getRandomOption = choices => choices[Math.floor(Math.random() * choices.length)];
+            if (!options[category]) {
+                options[category] = [];
+            }
 
-    const seed = () => {
-      const seededOptions = {};
-      for (const category in gameDesignChoices) {
-        seededOptions[category] = [getRandomOption(gameDesignChoices[category])];
-      }
-      return seededOptions;
-    };
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                options[category] = options[category].filter(c => c !== choice);
+            } else {
+                element.classList.add('selected');
+                options[category].push(choice);
+            }
 
-    const createForm = () => {
-      const form = document.createElement('form');
-      form.setAttribute('id', 'world-seed-form');
-      document.getElementById('gameSeedWorldBuilderControl').appendChild(form);
+            updatePrompts();
+        };
 
-      Object.keys(gameDesignChoices).forEach(category => {
-        form.appendChild(createGroup(category, gameDesignChoices[category]));
-      });
+        const formatOptions = options => {
+            if (!options.length) return "";
+            if (options.length === 1) return options[0];
+            return `${options.slice(0, -1).join(', ')} and ${options[options.length - 1]}`;
+        };
 
-      const buttonContainer = document.createElement('div');
-      buttonContainer.setAttribute('id', 'button-container');
-      form.appendChild(buttonContainer);
+        const shortPrompt = worldSeed => {
+            const promptParts = [
+                `Design a 2D action RPG with the following elements:`,
+                worldSeed.timePeriod.length ? `Set in a ${formatOptions(worldSeed.timePeriod)} world` : "",
+                worldSeed.theme.length ? `${formatOptions(worldSeed.theme)}` : "",
+                worldSeed.atmosphere.length ? `with a ${formatOptions(worldSeed.atmosphere)} atmosphere.` : "",
+                worldSeed.environment.length ? `The environment features ${formatOptions(worldSeed.environment)}` : "",
+                worldSeed.location.length ? `${formatOptions(worldSeed.location)}` : "",
+                worldSeed.landmarks.length ? `adorned with ${formatOptions(worldSeed.landmarks)}.` : "",
+                worldSeed.inhabitants.length ? `Inhabited by ${formatOptions(worldSeed.inhabitants)},` : "",
+                worldSeed.conflict.length ? `the world faces ${formatOptions(worldSeed.conflict)}` : "",
+                worldSeed.elementalInfluence.length ? `influenced by ${formatOptions(worldSeed.elementalInfluence)}` : "",
+                worldSeed.technologyLevel.length ? `and ${formatOptions(worldSeed.technologyLevel)} technology.` : "",
+                worldSeed.culturalInfluences.length ? `Cultural inspiration is drawn from ${formatOptions(worldSeed.culturalInfluences)} traditions,` : "",
+                worldSeed.narrativeFocus.length ? `focusing on ${formatOptions(worldSeed.narrativeFocus)} narratives.` : ""
+            ];
 
-      const randomizeButton = document.createElement('button');
-      randomizeButton.innerText = 'Randomize';
-      randomizeButton.type = 'button';
-      randomizeButton.addEventListener('click', () => {
-        options = seed();
-        document.querySelectorAll('.option').forEach(option => {
-          const category = option.parentElement.previousElementSibling.textContent.toLowerCase();
-          option.classList.toggle('selected', options[category]?.includes(option.textContent));
+            return promptParts.filter(part => part).join(' ');
+        };
+
+        const updatePrompts = () => {
+            const chosen = {};
+            for (const category in gameDesignChoices) {
+                chosen[category] = options[category] || [];
+            }
+            document.getElementById('short-prompt').innerText = shortPrompt(chosen);
+            document.getElementById('worldSeedDisplay').innerText = JSON.stringify(chosen, null, 2);
+        };
+
+        const getRandomOption = choices => choices[Math.floor(Math.random() * choices.length)];
+
+        const seed = () => {
+            const seededOptions = {};
+            for (const category in gameDesignChoices) {
+                seededOptions[category] = [getRandomOption(gameDesignChoices[category])];
+            }
+            return seededOptions;
+        };
+
+        const createForm = () => {
+            const form = document.createElement('form');
+            form.setAttribute('id', 'world-seed-form');
+            document.getElementById('gameSeedWorldBuilderControl').appendChild(form);
+
+            Object.keys(gameDesignChoices).forEach(category => {
+                form.appendChild(createGroup(category, gameDesignChoices[category]));
+            });
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.setAttribute('id', 'button-container');
+            form.appendChild(buttonContainer);
+
+            const randomizeButton = document.createElement('button');
+            randomizeButton.innerText = 'Randomize';
+            randomizeButton.type = 'button';
+            randomizeButton.addEventListener('click', () => {
+                options = seed();
+                document.querySelectorAll('.option').forEach(option => {
+                    const category = option.parentElement.previousElementSibling.textContent.toLowerCase();
+                    option.classList.toggle('selected', options[category]?.includes(option.textContent));
+                });
+                updatePrompts();
+            });
+            buttonContainer.appendChild(randomizeButton);
+
+            const clearButton = document.createElement('button');
+            clearButton.innerText = 'Clear';
+            clearButton.type = 'button';
+            clearButton.addEventListener('click', () => {
+                options = {};
+                document.querySelectorAll('.option').forEach(option => option.classList.remove('selected'));
+                updatePrompts();
+            });
+            buttonContainer.appendChild(clearButton);
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createForm();
+            updatePrompts();
         });
-        updatePrompts();
-      });
-      buttonContainer.appendChild(randomizeButton);
 
-      const clearButton = document.createElement('button');
-      clearButton.innerText = 'Clear';
-      clearButton.type = 'button';
-      clearButton.addEventListener('click', () => {
-        options = {};
-        document.querySelectorAll('.option').forEach(option => option.classList.remove('selected'));
-        updatePrompts();
-      });
-      buttonContainer.appendChild(clearButton);
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-      createForm();
-      updatePrompts();
-    });
-  </script>
+    </script>
 </body>
+
 </html>

@@ -1,4 +1,5 @@
 // World.js
+const selectedOptions = {};
 function AorAn(value) {const vowels = ['a', 'e', 'i', 'o', 'u'];const firstLetter = value.toLowerCase().charAt(0);return vowels.includes(firstLetter) ? `an ${value}` : `a ${value}`;}
 // Requirements for art assets
 const requirements = {
@@ -60,16 +61,14 @@ const gameDesignChoices = {
   "portalsAndGateways": ["Interdimensional", "Teleportation", "Ancient Portals", "Wormholes"],
   "timeDistortions": ["Time Travel", "Time Loops", "Temporal Rifts", "Anachronisms"]
 };
-// Function to synthesize pixel art prompts based on the world seed
 function shortPrompt(worldSeed) {
   let prompt = `Design a 2D action RPG with the following elements: `;
-  prompt += `Set in ${AorAn(worldSeed.timePeriod)} ${worldSeed.theme} world with a ${worldSeed.atmosphere} atmosphere. `;
-  prompt += `The environment features ${AorAn(worldSeed.environment)} ${worldSeed.location} adorned with ${worldSeed.landmarks}. `;
-  prompt += `Inhabited by ${worldSeed.inhabitants}, the world faces ${AorAn(worldSeed.conflict)} influenced by ${worldSeed.elementalInfluence} and ${worldSeed.technologyLevel} technology. `;
-  prompt += `Cultural inspiration is drawn from ${worldSeed.culturalInfluences} traditions, focusing on ${worldSeed.narrativeFocus} narratives.`;
+  prompt += `Set in ${worldSeed.timePeriod.join(', ')} ${worldSeed.theme.join(', ')} world with a ${worldSeed.atmosphere.join(', ')} atmosphere. `;
+  prompt += `The environment features ${worldSeed.environment.join(', ')} ${worldSeed.location.join(', ')} adorned with ${worldSeed.landmarks.join(', ')}. `;
+  prompt += `Inhabited by ${worldSeed.inhabitants.join(', ')}, the world faces ${worldSeed.conflict.join(', ')} influenced by ${worldSeed.elementalInfluence.join(', ')} and ${worldSeed.technologyLevel.join(', ')} technology. `;
+  prompt += `Cultural inspiration is drawn from ${worldSeed.culturalInfluences.join(', ')} traditions, focusing on ${worldSeed.narrativeFocus.join(', ')} narratives.`;
   return prompt;
 }
-
 function detailedPrompt(worldSeed) {
     return `Generate a sprite sheet for a 2D action RPG game, reflecting the following requirements and world characteristics:
 
@@ -143,7 +142,7 @@ function detailedPrompt(worldSeed) {
 
 **Additional Notes**:
 - The sprite sheet will be used as essential visual assets in the game development process, contributing to the immersive experience and engaging gameplay mechanics.`;
-}
+};
 
 const initialWorldSeed = {
   timePeriod: gameDesignChoices.timePeriod[1] || "Medieval",
@@ -213,28 +212,38 @@ function getSelectedWorldSeed() {
     try {
       const element = document.getElementById(category);
 
-      // Validate element existence and type (optional)
       if (!element || element.tagName.toLowerCase() !== 'select') {
         throw new Error(`Invalid element with ID "${category}" for world seed selection.`);
       }
 
-      worldSeed[category] = element.value;
+      // Get the selected options for this category
+      const selectedOptionsForCategory = selectedOptions[category] || [];
+
+      // If there are selected options, use them, otherwise use the element value
+      worldSeed[category] = selectedOptionsForCategory.length > 0
+        ? selectedOptionsForCategory
+        : [element.value];
     } catch (error) {
       console.error(`Error retrieving element or value for world seed selection: ${category}`, error);
-
-      // Advanced error handling (choose one or combine):
-      // 1. Use a configurable default value provider (uncomment line 1)
-       worldSeed[category] = getDefaultValueProvider()(category);
-
-      // 2. Throw a custom, more informative error (uncomment line 2)
-      // throw new Error(`World seed selection failed for category: ${category}. See console for details.`);
-
-      // 3. Provide user feedback (e.g., display an error message on the UI)
+      worldSeed[category] = getDefaultValueProvider()(category);
     }
   });
   return worldSeed;
 }
+function updateSelectedOptions(category, optionElement) {
+  const selectedOptionsForCategory = selectedOptions[category] || [];
 
+  if (optionElement.classList.contains('selected')) {
+    selectedOptionsForCategory.push(optionElement.innerText);
+  } else {
+    const index = selectedOptionsForCategory.indexOf(optionElement.innerText);
+    if (index !== -1) {
+      selectedOptionsForCategory.splice(index, 1);
+    }
+  }
+
+  selectedOptions[category] = selectedOptionsForCategory;
+}
 
 function createWorldSeedForm() {
   const formContainer = document.createElement('div');
@@ -249,7 +258,7 @@ function createWorldSeedForm() {
   Object.keys(gameDesignChoices).forEach(category => {
     const formGroup = document.createElement('div');
     formGroup.classList.add('form-group');
-    
+
     const label = document.createElement('label');
     label.innerText = category.charAt(0).toUpperCase() + category.slice(1);
     formGroup.appendChild(label);
@@ -263,32 +272,24 @@ function createWorldSeedForm() {
       optionElement.classList.add('option');
       optionElement.innerText = option;
       optionsContainer.appendChild(optionElement);
-/*
-      optionElement.addEventListener('click', () => {
-        optionElement.classList.toggle('selected');
+
+      optionElement.addEventListener('click', function() {
+        // Toggle selected state visually
+        this.classList.toggle('selected');
+
+        // Update selected options for this category (array or set)
+        const selectedOptions = this.parentElement.querySelectorAll('.selected');
+        const currentCategory = category; // Assuming category is still accessible
+
+        // Update worldSeed in getSelectedWorldSeed (explained later)
+        updateSelectedOptions(currentCategory, Array.from(selectedOptions).map(option => option.innerText));
         updatePrompts();
       });
-*/
-optionElement.addEventListener('click', function() {
-  // Toggle selected state visually
-  this.classList.toggle('selected');
-
-  // Update selected options for this category (array or set)
-  const selectedOptions = this.parentElement.querySelectorAll('.selected');
-  const category = category; // Assuming category is still accessible
-  // Update worldSeed in getSelectedWorldSeed (explained later)
-  updateSelectedOptions(category, Array.from(selectedOptions).map(option => option.innerText));
-  updatePrompts();
-});
-
-
-      
     });
 
     form.appendChild(formGroup);
   });
 }
-
 function updatePrompts() {
   const worldSeed = getSelectedWorldSeed();
   const shortPromptElement = document.getElementById('short-prompt');

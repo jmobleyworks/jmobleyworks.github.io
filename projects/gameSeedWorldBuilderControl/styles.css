@@ -2,7 +2,8 @@ body {
   font: Arial, sans-serif; /* Base font */
   margin: 0;
   padding: 20px;
-  color: #333; /* Base text color */
+  color: #f0f0f0; /* Light text color */
+  background-color: #000; /* Black background */
 }
 
 header,
@@ -29,14 +30,14 @@ h1,
 h2,
 h3,
 h4 {
-  color: #0f0; /* Inherits font from body */
+  color: #0f0; /* Bright green text color */
   margin-top: 0;
 }
 
 p {
   line-height: 1.6;
   margin-bottom: 20px;
-  color: #d0d0d0; /* Can be adjusted if needed */
+  color: #d0d0d0; /* Light gray text color */
 }
 
 /* Forms & Buttons */
@@ -48,7 +49,7 @@ form {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #888;
+  color: #f0f0f0;
 }
 
 label {
@@ -105,23 +106,29 @@ img,
   border: 1px solid #0f0;
   border-radius: 8px;
   background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
 }
 
 #world-seed-form .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 #world-seed-form label {
-  font-size: 16px;
+  font-size: 14px;
+  color: #f0f0f0; /* Bright text color for labels */
 }
 
 #world-seed-form .options {
+  display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
 }
 
 #world-seed-form .option {
-  padding: 10px;
+  padding: 5px;
   border: 1px solid #0f0;
   border-radius: 4px;
   background-color: #222;
@@ -129,11 +136,46 @@ img,
   cursor: pointer;
   text-align: center;
   flex: 1;
+  min-width: 60px; /* Ensure options are not too small */
 }
 
 #world-seed-form .option.selected {
   background-color: #0f0;
   color: #000;
+}
+
+#button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  width: 48%;
+  padding: 10px;
+  font-size: 12px;
+}
+
+/* Prompt Styles */
+#short-prompt,
+#worldSeedDisplay {
+  background-color: #222;
+  padding: 10px;
+  border: 1px solid #0f0;
+  border-radius: 4px;
+  color: #0f0;
+  white-space: pre-wrap; /* Ensure text wraps nicely */
+  margin-bottom: 10px;
+}
+
+#short-prompt::selection,
+#worldSeedDisplay::selection {
+  background: #0f0;
+  color: #000;
+}
+
+#short-prompt,
+#worldSeedDisplay {
+  user-select: all; /* Make the text copyable */
 }
 
 /* Responsive Styles */
@@ -155,6 +197,10 @@ img,
   }
 
   #world-seed-form .option {
-    font-size: 14px; /* Adjust font size for options on smaller screens */
+    font-size: 12px; /* Adjust font size for options on smaller screens */
+  }
+
+  button {
+    font-size: 10px; /* Smaller button text for small screens */
   }
 }

@@ -89,12 +89,11 @@ const gameDesignChoices = {
   // Extend time periods for more historical settings
   timePeriod: ['Ancient', 'Medieval', 'Renaissance', 'Industrial', 'Futuristic', 'Alternate History', 'Prehistoric', 'Colonial'],
   // Define themes for different genres
-  theme: {
-    fantasy: ['High Fantasy', 'Low Fantasy', 'Urban Fantasy', 'Gothic Fantasy', 'Dark Fantasy', 'Fairy Tale'],
-    sciFi: ['Space Opera', 'Cyberpunk', 'Steampunk', 'Biopunk', 'Utopian Sci-Fi', 'Dystopian Sci-Fi'],
-    postApocalyptic: ['Nuclear Fallout', 'Zombie Apocalypse', 'Environmental Catastrophe', 'Alien Invasion'],
-    mythological: ['Greek Mythology', 'Norse Mythology', 'Egyptian Mythology', 'Asian Mythology', 'Celtic Mythology', 'Native American Mythology']
-  },
+  theme: ['Fantasy: High Fantasy', 'Fantasy: Low Fantasy', 'Fantasy: Urban Fantasy', 'Fantasy: Gothic Fantasy', 'Fantasy: Dark Fantasy', 'Fantasy: Fairy Tale',
+          'SciFi: Space Opera', 'SciFi: Cyberpunk', 'SciFi: Steampunk', 'SciFi: Biopunk', 'SciFi: Utopian Sci-Fi', 'SciFi: Dystopian Sci-Fi',
+          'postApocalyptic: Nuclear Fallout', 'postApocalyptic: Zombie Apocalypse', 'postApocalyptic: Environmental Catastrophe', 'postApocalyptic: Alien Invasion',
+          'mythological: Greek Mythology', 'mythological: Norse Mythology', 'mythological: Egyptian Mythology', 'mythological: Asian Mythology', 'mythological: Celtic Mythology', 'mythological: Native American Mythology'
+         ],
   // More environments for diverse gameplay
   environment: ['Forest', 'Desert', 'Mountain', 'Ocean', 'Urban', 'Arctic', 'Swamp', 'Underwater', 'Volcanic', 'Sky'],
   // Atmosphere options to set the mood

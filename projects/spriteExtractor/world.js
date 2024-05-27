@@ -246,7 +246,8 @@ function updateSelectedOptions(category, optionElement) {
       }
     }
 
-    selectedOptions[category] = selectedOptionsForCategory;
+    // Remove duplicates
+    selectedOptions[category] = [...new Set(selectedOptionsForCategory)];
   } else {
     console.error('Invalid optionElement passed to updateSelectedOptions');
   }
@@ -279,18 +280,15 @@ function createWorldSeedForm() {
       optionElement.innerText = option;
       optionsContainer.appendChild(optionElement);
 
-      optionElement.addEventListener('click', function() {
-        // Toggle selected state visually
-        this.classList.toggle('selected');
+optionElement.addEventListener('click', function() {
+  // Toggle selected state visually
+  this.classList.toggle('selected');
 
-        // Update selected options for this category (array or set)
-        const selectedOptions = this.parentElement.querySelectorAll('.selected');
-        const currentCategory = category; // Assuming category is still accessible
-
-        // Update worldSeed in getSelectedWorldSeed (explained later)
-        updateSelectedOptions(currentCategory, Array.from(selectedOptions).map(option => option.innerText));
-        updatePrompts();
-      });
+  // Update selected options for this category
+  const currentCategory = category; // Assuming category is still accessible
+  updateSelectedOptions(currentCategory, this);
+  updatePrompts();
+});
     });
 
     form.appendChild(formGroup);

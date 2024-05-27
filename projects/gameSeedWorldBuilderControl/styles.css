@@ -3,8 +3,10 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 20px;
-  background-color: #000; /* Black background */
-  color: #0f0; /* Neon green text */
+  background-color: #000;
+  /* Black background */
+  color: #0f0;
+  /* Neon green text */
 }
 
 header {
@@ -12,19 +14,25 @@ header {
   color: #0f0;
   padding: 20px;
   text-align: center;
-  border-bottom: 2px solid #0f0; /* Neon green border */
+  border-bottom: 2px solid #0f0;
+  /* Neon green border */
 }
 
 main {
   max-width: 800px;
   margin: 0 auto;
-  background-color: #121212; /* Dark grey background for content */
+  background-color: #121212;
+  /* Dark grey background for content */
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* Neon green shadow */
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  /* Neon green shadow */
   border-radius: 8px;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   color: #0f0;
   margin-top: 0;
 }
@@ -32,7 +40,8 @@ h1, h2, h3, h4 {
 p {
   line-height: 1.6;
   margin-bottom: 20px;
-  color: #d0d0d0; /* Light grey text for paragraphs */
+  color: #d0d0d0;
+  /* Light grey text for paragraphs */
 }
 
 /* Form Styles */
@@ -44,17 +53,21 @@ label {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #888; /* Medium gray */
+  color: #888;
+  /* Medium gray */
 }
 
-input[type="text"], input[type="submit"], button {
+input[type="text"],
+input[type="submit"],
+button {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
   border: 1px solid #0f0;
   border-radius: 4px;
-  background-color: #222; /* Darker grey for input background */
+  background-color: #222;
+  /* Darker grey for input background */
   color: #0f0;
   font-size: 14px;
 }
@@ -81,7 +94,8 @@ input[type="file"] {
 .sprite {
   width: 32px;
   height: 32px;
-  background-size: 160px 32px; /* Adjust based on sprite sheet size */
+  background-size: 160px 32px;
+  /* Adjust based on sprite sheet size */
 }
 
 /* World Seed Form Styles */
@@ -91,7 +105,8 @@ input[type="file"] {
   padding: 20px;
   border: 1px solid #0f0;
   border-radius: 8px;
-  background-color: #1a1a1a; /* Dark grey */
+  background-color: #1a1a1a;
+  /* Dark grey */
 }
 
 #world-seed-form .form-group {
@@ -102,7 +117,8 @@ input[type="file"] {
   display: block;
   margin-bottom: 5px;
   font-size: 16px;
-  color: #888; /* Medium gray */
+  color: #888;
+  /* Medium gray */
 }
 
 #world-seed-form .options {
@@ -153,7 +169,9 @@ input[type="file"] {
     padding: 10px;
   }
 
-  input[type="text"], input[type="submit"], button {
+  input[type="text"],
+  input[type="submit"],
+  button {
     font-size: 16px;
     padding: 12px;
   }

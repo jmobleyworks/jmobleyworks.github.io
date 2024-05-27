@@ -218,18 +218,7 @@ function generateWorldSeed() {
 function getSelectedWorldSeed() {
   const worldSeed = {};
   Object.keys(gameDesignChoices).forEach(category => {
-    try {
-      const element = document.getElementById(category);
-      if (!element || element.tagName.toLowerCase() !== 'select') {
-        throw new Error(`Invalid element with ID "${category}" for world seed selection.`);
-      }
-      const selectedOptionsForCategory = selectedOptions[category] || [];
-      worldSeed[category] = selectedOptionsForCategory.length > 0
-        ? selectedOptionsForCategory
-        : [element.value];
-    } catch (error) {
-      worldSeed[category] = getDefaultValueProvider()(category);
-    }
+    worldSeed[category] = selectedOptions[category] || getDefaultValueProvider()(category);
   });
   return worldSeed;
 }

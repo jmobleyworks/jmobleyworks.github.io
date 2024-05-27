@@ -52,8 +52,8 @@ form {
   color: #f0f0f0;
 }
 
-label {
-  .form-control /* Use the reusable class */
+label.form-control { /* Apply the reusable class to labels */
+  font-size: 16px;
 }
 
 input[type="text"],

@@ -169,7 +169,7 @@
         options = seed();
         document.querySelectorAll('.option').forEach(option => {
           const category = option.parentElement.previousElementSibling.textContent.toLowerCase();
-          option.classList.toggle('selected', options[category].includes(option.textContent));
+          option.classList.toggle('selected', options[category]?.includes(option.textContent));
         });
         updatePrompts();
       });

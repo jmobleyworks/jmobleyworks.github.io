@@ -250,7 +250,19 @@ function createWorldSeedForm() {
     targetElement = document.body;
   }
   targetElement.appendChild(form);
-
+  // Randomize button
+  const randomButton = document.createElement('button');
+  randomButton.innerText = 'Randomize';
+  randomButton.addEventListener('click', function() {
+    const randomSeed = generateWorldSeed();
+    // Update selected options based on the random seed
+    Object.keys(gameDesignChoices).forEach(category => {
+      selectedOptions[category] = [randomSeed[category]];
+    });
+    updateFormSelection(); // Update the visual selection in the form
+    updatePrompts();
+  });
+  form.appendChild(randomButton);
   Object.keys(gameDesignChoices).forEach(category => {
     const formGroup = document.createElement('div');
     formGroup.classList.add('form-group');

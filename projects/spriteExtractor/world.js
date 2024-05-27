@@ -241,6 +241,16 @@ function updateSelectedOptions(category, optionElement) {
     console.error('Invalid optionElement passed to updateSelectedOptions');
   }
 }
+function updateFormSelection() {
+  const form = document.getElementById('world-seed-form');
+  const optionElements = form.querySelectorAll('.option');
+
+  optionElements.forEach(optionElement => {
+    const category = optionElement.parentElement.parentElement.querySelector('label').innerText.toLowerCase();
+    optionElement.classList.toggle('selected', selectedOptions[category] && selectedOptions[category].includes(optionElement.innerText));
+  });
+}
+
 function createWorldSeedForm() {
   const formContainer = document.createElement('div');
   const form = document.createElement('form');
@@ -253,15 +263,15 @@ function createWorldSeedForm() {
   // Randomize button
   const randomButton = document.createElement('button');
   randomButton.innerText = 'Randomize';
-  randomButton.addEventListener('click', function() {
-    const randomSeed = generateWorldSeed();
-    // Update selected options based on the random seed
-    Object.keys(gameDesignChoices).forEach(category => {
-      selectedOptions[category] = [randomSeed[category]];
-    });
-    updateFormSelection(); // Update the visual selection in the form
-    updatePrompts();
+randomButton.addEventListener('click', function() {
+  const randomSeed = generateWorldSeed();
+  // Update selected options based on the random seed
+  Object.keys(gameDesignChoices).forEach(category => {
+    selectedOptions[category] = [randomSeed[category]];
   });
+  updateFormSelection(); // Update the visual selection in the form
+  updatePrompts();
+});
   form.appendChild(randomButton);
   Object.keys(gameDesignChoices).forEach(category => {
     const formGroup = document.createElement('div');
@@ -307,7 +317,6 @@ function updatePrompts() {
   const shortPromptElement = document.getElementById('shortPrompt');
   shortPromptElement.innerText = `World Seed: [${selectedOptionsText.join(', ')}]`; // Combine selected options
 }
-
 function updatePromptsOld() {
   const worldSeed = getSelectedWorldSeed();
   const shortPromptElement = document.getElementById('short-prompt');

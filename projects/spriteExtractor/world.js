@@ -194,20 +194,21 @@ function getRandomOption(options) {
 
 function generateWorldSeed() {
   const prompt = {};
-
   for (const category in gameDesignChoices) {
     prompt[category] = getRandomOption(gameDesignChoices[category]);
   }
-
   return prompt;
 }
 
-// Function to get the selected values and generate a world seed
 function getSelectedWorldSeed() {
   const worldSeed = {};
   Object.keys(gameDesignChoices).forEach(category => {
     const selectElement = document.getElementById(category);
-    worldSeed[category] = selectElement.value;
+    if (selectElement.value) {
+      worldSeed[category] = selectElement.value;
+    } else {
+      worldSeed[category] = gameDesignChoices[category][0];
+    }
   });
   return worldSeed;
 }

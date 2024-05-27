@@ -224,7 +224,7 @@ function getSelectedWorldSeed() {
         ? selectedOptionsForCategory
         : [element.value];
     } catch (error) {
-      console.error(`Error retrieving element or value for world seed selection: ${category}`, error);
+      //console.error(`Error retrieving element or value for world seed selection: ${category}`, error);
       worldSeed[category] = getDefaultValueProvider()(category);
     }
   });

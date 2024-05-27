@@ -266,7 +266,7 @@ function getSelectedWorldSeed() {
 }
 
 // Function to create world seed form buttons
-function createWorldSeedForm() {
+function createWorldSeedFormButtons() {
   const worldSeedFormContainer = document.getElementById('worldSeedFormContainer');
 
   // Remove any existing buttons
@@ -302,7 +302,7 @@ function createWorldSeedForm() {
   }
 }
 
-function createWorldSeedFormButtons() {
+function createWorldSeedForm() {
   const formContainer = document.createElement('div');
   const form = document.createElement('form');
   form.setAttribute('id', 'world-seed-form');

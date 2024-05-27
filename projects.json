@@ -8,5 +8,6 @@
     "gameTest",
     "screenplayEditor",
     "spriteDetector",
-    "spriteExtractor"
+    "spriteExtractor",
+    "Text2Game"
 ]

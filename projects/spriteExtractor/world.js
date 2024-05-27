@@ -203,15 +203,31 @@ function generateWorldSeed() {
 function getSelectedWorldSeed() {
   const worldSeed = {};
   Object.keys(gameDesignChoices).forEach(category => {
-    const selectElement = document.getElementById(category);
-    if (selectElement.value!==null) {
-      worldSeed[category] = selectElement.value;
-    } else {
-      worldSeed[category] = gameDesignChoices[category][0];
+    try {
+      const element = document.getElementById(category);
+
+      // Validate element existence and type (optional)
+      if (!element || element.tagName.toLowerCase() !== 'select') {
+        throw new Error(`Invalid element with ID "${category}" for world seed selection.`);
+      }
+
+      worldSeed[category] = element.value;
+    } catch (error) {
+      console.error(`Error retrieving element or value for world seed selection: ${category}`, error);
+
+      // Advanced error handling (choose one or combine):
+      // 1. Use a configurable default value provider (uncomment line 1)
+       worldSeed[category] = getDefaultValueProvider()(category);
+
+      // 2. Throw a custom, more informative error (uncomment line 2)
+      // throw new Error(`World seed selection failed for category: ${category}. See console for details.`);
+
+      // 3. Provide user feedback (e.g., display an error message on the UI)
     }
   });
   return worldSeed;
 }
+
 
 function createWorldSeedForm() {
   const formContainer = document.createElement('div');

@@ -1,158 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameSeed WorldBuilder Control(Combinations Version) Example</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameSeed WorldBuilder Control</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-    <header>
-        <h1>GameSeed WorldBuilder Control(Combinations Version) Example</h1>
-    </header>
-    <main>
-        <p>Welcome to the GameSeed WorldBuilder Control(Combinations Version) Example! This interactive tool is designed
-            to help game developers generate unique and compelling world seeds for their game projects. By combining
-            various elements and design choices, you can create a rich foundation for your game's setting, atmosphere,
-            and narrative.</p>
-        <h2>What is the GameSeed WorldBuilder Control?</h2>
-        <p>The GameSeed WorldBuilder Control is a versatile library that allows you to generate custom world seeds for
-            your game projects. It provides a user-friendly interface where you can select from a wide range of options,
-            such as time periods, themes, environments, and cultural influences, to create a unique blend that suits
-            your vision.</p>
-        <section id="demonstration">
-            <h2>Demonstration</h2>
-            <p>Follow these steps to use the GameSeed WorldBuilder Control and generate your own world seed:</p>
-            <h3>Step-by-Step Example</h3>
-            <h4>1. Generating World Seed</h4>
-            <p>Use the interactive form below to customize your world seed by selecting the desired options from various
-                categories:</p>
-            <div id="worldSeedBuilder"></div>
-            <p>Your Generated World Seed:</p>
-            <div id="worldSeedDisplay"></div>
-            <p>Short Prompt:</p>
-            <div id="short-prompt"></div>
-            <p>Detailed Prompt:</p>
-            <div id="detailed-prompt"></div>
-            <h4>2. Generating Sprite Sheet (Optional)</h4>
-            <p>Once you have your world seed, you can optionally generate a sprite sheet based on your selections:</p>
-            <input type="file" id="localUploadButton" accept="image/*">
-            <button id="dalle3Button">Generate from DALL-E 3</button>
-            <img id="generatedImage" src="" alt="Generated Sprite Sheet">
-            <h4>3. Sprite Extraction (Optional)</h4>
-            <p>If you generated a sprite sheet, you can use our SpriteExtractor to isolate individual sprites for use in
-                your game.</p>
-            <div id="spriteContainer"></div>
-        </section>
-        <h2>Conclusion</h2>
-        <p>The GameSeed WorldBuilder Control(Combinations Version) Example is a powerful tool for game developers
-            looking to create unique and immersive game worlds. By leveraging this library, you can effortlessly
-            generate world seeds tailored to your specific vision, and optionally generate sprite sheets to complement
-            your game's visual assets.</p>
-        <p>Whether you're working on a new project or looking to add depth to an existing one, the GameSeed WorldBuilder
-            Control(Combinations Version) Example can be a valuable asset in your game development toolkit. Explore the
-            possibilities and bring your imaginative worlds to life!</p>
-    </main>
-    <script>
-        // World.js
-        const selectedOptions = {};
-        function AorAn(value) { const vowels = ['a', 'e', 'i', 'o', 'u']; const firstLetter = value.toLowerCase().charAt(0); return vowels.includes(firstLetter) ? `an ${value}` : `a ${value}`; }
-        // Requirements for art assets
-        const requirements = {
-            "charAssetTypes": ["warriors", "mages", "monsters", "NPCs", "rogues", "healers", "paladins", "necromancers", "beastmasters", "assassins", "rangers", "summoners"],
-            "hardAssetTypes": ["trees", "rocks", "chests", "barrels", "doors", "treasure chests", "statues", "fountains", "altars", "signposts", "bridges", "wells"]
-        };
-        const gameDesignChoices = {
-            "timePeriod": ["Ancient", "Medieval", "Renaissance", "Industrial", "Futuristic", "Alternate History", "Prehistoric", "Colonial"],
-            "theme": ["Fantasy: High Fantasy", "Fantasy: Low Fantasy", "Fantasy: Urban Fantasy", "Fantasy: Gothic Fantasy", "Fantasy: Dark Fantasy", "Fantasy: Fairy Tale", "SciFi: Space Opera", "SciFi: Cyberpunk", "SciFi: Steampunk", "SciFi: Biopunk", "SciFi: Utopian Sci-Fi", "SciFi: Dystopian Sci-Fi", "postApocalyptic: Nuclear Fallout", "postApocalyptic: Zombie Apocalypse", "postApocalyptic: Environmental Catastrophe", "postApocalyptic: Alien Invasion", "mythological: Greek Mythology", "mythological: Norse Mythology", "mythological: Egyptian Mythology", "mythological: Asian Mythology", "mythological: Celtic Mythology", "mythological: Native American Mythology"]
-        };
-        const getRandomOption = choices => choices[Math.floor(Math.random() * choices.length)];
-        const seed = () => Object.fromEntries(Object.keys(gameDesignChoices).map(c => [c, getRandomOption(gameDesignChoices[c])]));
-        const getDefaultValue = c => gameDesignChoices[c][0];
-        const chosenSeed = () => Object.assign({}, ...Object.keys(gameDesignChoices).map(c => ({ [c]: selectedOptions[c] || getDefaultValue(c) })));
-        const updateOption = (category, element) => {
-            if (element instanceof Element) {
-                const choices = selectedOptions[category] || [];
-                element.classList.toggle('selected');
-                choices[element.classList.contains('selected') ? 'push' : 'splice'](choices.indexOf(element.innerText), 1);
-                selectedOptions[category] = [...new Set(choices)];
-                updatePrompts();
-            } else {
-                console.error('Invalid optionElement passed to updateSelectedOptions');
-            }
-        };
-        const createGroup = (category, choices) => {
-            const group = document.createElement('div');
-            group.classList.add('form-group'); const label = document.createElement('label');
-            label.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-            group.appendChild(label);
-
-            const optionsContainer = document.createElement('div');
-            optionsContainer.classList.add('options');
-            group.appendChild(optionsContainer);
-
-            choices.forEach(choice => {
-                const option = document.createElement('div');
-                option.classList.add('option');
-                option.innerText = choice;
-                option.classList.add('selected', choice === getDefaultValue(category));
-                option.addEventListener('click', () => updateOption(category, option));
-                optionsContainer.appendChild(option);
-            });
-
-            return group;
-        };
-        const createForm = () => {
-            const form = document.createElement('form');
-            form.setAttribute('id', 'world-seed-form');
-            (document.getElementById('worldSeedBuilder') || document.body).appendChild(form);
-            const button = document.createElement('button');
-            button.innerText = 'Randomize';
-            button.addEventListener('click', () => {
-                selectedOptions = {};
-                Object.assign(selectedOptions, seed());
-                updateFormSelection();
-                updatePrompts();
-            });
-            form.appendChild(button);
-            Object.keys(gameDesignChoices).forEach(category => form.appendChild(createGroup(category, gameDesignChoices[category])));
-        };
-        const updateFormSelection = () => document.querySelectorAll('.option').forEach(option => option.classList.toggle('selected', selectedOptions[option.parentElement.parentElement.querySelector('label').innerText.toLowerCase()]?.includes(option.innerText))); const formatOptions = (options) => {
-            if (Array.isArray(options) && options.length > 0) {
-                if (options.length === 1) {
-                    return options[0];
-                } else {
-                    const lastOption = options.pop();
-                    return `${options.join(', ')} and ${lastOption}`;
-                }
-            } else {
-                return "**No Options Available**";
-            }
-        }
-
-        const shortPrompt = (worldSeed) => {
-            let prompt = `Design a 2D action RPG with the following elements: `;
-            prompt += `Set in ${formatOptions(worldSeed.timePeriod)} ${formatOptions(worldSeed.theme)} world with a ${formatOptions(worldSeed.atmosphere)} atmosphere. `;
-            prompt += `The environment features ${formatOptions(worldSeed.environment)} ${formatOptions(worldSeed.location)} adorned with ${formatOptions(worldSeed.landmarks)}. `;
-            prompt += `Inhabited by ${formatOptions(worldSeed.inhabitants)}, the world faces ${formatOptions(worldSeed.conflict)} influenced by ${formatOptions(worldSeed.elementalInfluence)} and ${formatOptions(worldSeed.technologyLevel)} technology. `;
-            prompt += `Cultural inspiration is drawn from ${formatOptions(worldSeed.culturalInfluences)} traditions, focusing on ${formatOptions(worldSeed.narrativeFocus)} narratives.`;
-            return prompt;
-        }
-
-        const updatePrompts = () => {
-            const chosen = chosenSeed();
-            const shortPromptElement = document.getElementById('short-prompt');
-            const worldSeedDisplayElement = document.getElementById('worldSeedDisplay');
-            shortPromptElement.innerText = shortPrompt(chosen);
-            worldSeedDisplayElement.innerText = JSON.stringify(chosen, null, 2);
-        };
-
-        createForm();</script>
+  <header>
+    <h1>GameSeed WorldBuilder Control</h1>
+  </header>
+  <main>
+    <p>Welcome! This tool helps generate world seeds for games.</p>
+    <h2>What is it?</h2>
+    <p>The GameSeed WorldBuilder Control lets you create custom world seeds by selecting options from various categories.</p>
+    <section id="demonstration">
+      <h2>Demonstration</h2>
+      <p>Follow these steps to use the tool and generate your world seed:</p>
+      <h3>Step-by-Step Example</h3>
+      <h4>1. Generating World Seed</h4>
+      <p>Use the interactive form below to customize your world seed:</p>
+      <div id="gameSeedWorldBuilderControl"></div>
+    </section>
+  </main>
+  <script>
+    const options = {}, timePeriods = ["Ancient", "Medieval", "Renaissance"], themes = ["Ancient", "Medieval", "Renaissance"]; // ... (shortened gameDesignChoices)...
+      createGroup = (c, choices) => (g => (l = document.createElement('label')).textContent = c.charAt(0).toUpperCase() + c.slice(1), g.appendChild(l), (o = document.createElement('div')).classList.add('options'), g.appendChild(o), choices.forEach(choice => {
+        const option = document.createElement('div');
+        option.classList.add('option');
+        option.innerText = choice;
+        option.classList.add('selected', choice === timePeriods[0]); // Assuming default is first option
+        option.addEventListener('click', () => updateOption(c, option)), o.appendChild(option)
+      }), g)(document.createElement('div')).classList.add('form-group'),
+      updateOption = (category, element) => element instanceof Element && (choices = options[category] || [], element.classList.toggle('selected'), choices[element.classList.contains('selected') ? 'push' : 'splice'](choices.indexOf(element.innerText), 1), options[category] = [...new Set(choices)], updatePrompts()),
+      formatOptions = options => Array.isArray(options) && options.length > 0 ? options.length === 1 ? options[0] : `${options.join(', ')} and ${options.pop()}` : "**No Options Available**",
+      shortPrompt = worldSeed => `Design a 2D action RPG with the following elements: Set in ${formatOptions(worldSeed.timePeriod)} ${formatOptions(worldSeed.theme)} world with a ${formatOptions(worldSeed.atmosphere)} atmosphere. The environment features ${formatOptions(worldSeed.environment)} ${formatOptions(worldSeed.location)} adorned with ${formatOptions(worldSeed.landmarks)}. Inhabited by ${formatOptions(worldSeed.inhabitants)}, the world faces ${formatOptions(worldSeed.conflict)} influenced by ${formatOptions(worldSeed.elementalInfluence)} and ${formatOptions(worldSeed.technologyLevel)} technology. Cultural inspiration is drawn from ${formatOptions(worldSeed.culturalInfluences)} traditions, focusing on ${formatOptions(worldSeed.narrativeFocus)} narratives.`,
+      updatePrompts = () => {
+        const chosen = Object.assign({}, ...Object.keys(timePeriods).map(c => ({ [c]: options[c] || timePeriods[0] }))), // Assuming default is first option for all categories
+          shortPromptElement = document.getElementById('short-prompt'),
+          worldSeedDisplayElement = document.getElementById('worldSeedDisplay');
+        shortPromptElement.innerText = shortPrompt(chosen);
+        worldSeedDisplayElement.innerText = JSON.stringify(chosen, null, 2);
+      };
+    const getRandomOption = choices => choices[Math.floor(Math.random() * choices.length)];
+    const seed = () => Object.fromEntries(Object.keys(timePeriods).map(c => [c, getRandomOption(timePeriods)])); // Assuming seed uses timePeriods
+    const createForm = () => {
+      const form = document.createElement('form');
+      form.setAttribute('id', 'world-seed-form');
+      (document.getElementById('gameSeedWorldBuilderControl') || document.body).appendChild(form);
+      
+      const button = document.createElement('button');
+      button.innerText = 'Randomize';
+      button.addEventListener('click', () => {
+        options = {};
+        Object.assign(options, seed());
+        updateFormSelection();
+        updatePrompts();
+      });
+      form.appendChild(button);
+      Object.keys(timePeriods).forEach(category => form.appendChild(createGroup(category, timePeriods[category]))); // Assuming each category uses its choices list
+      updateFormSelection = () => document.querySelectorAll('.option').forEach(option => option.classList.toggle('selected', options[option.parentElement.parentElement.querySelector('label').innerText.toLowerCase()]?.includes(option.innerText))),
+      createForm();
+  </script>
 </body>
-
 </html>

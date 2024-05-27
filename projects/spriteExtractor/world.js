@@ -126,7 +126,7 @@ const gameDesignChoices = {
   culturalInfluences: ['Medieval European', 'Asian', 'African', 'Indigenous', 'Futuristic', 'Ancient Greek', 'Norse', 'Mayan', 'Roman', 'Persian'],
   // Varied narrative focuses for storytelling
   narrativeFocus: ['Heroic Journey', 'Coming of Age', 'Intrigue', 'Redemption', 'Revenge', 'Mystery', 'Romance', 'Adventure', 'Tragedy', 'Comedy', 'Satire', 'Parable', 'Exploration', 'Betrayal', 'Friendship']
-};
+},
   // Expand mythology for rich lore
   mythology: {
     creationStories: ['Cosmic Eggs', 'Primordial Beings', 'Divine Interventions', 'World Trees', 'Chaos and Order'],

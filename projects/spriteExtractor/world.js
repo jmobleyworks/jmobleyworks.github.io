@@ -158,7 +158,6 @@ function detailedPromptOld(worldSeed) {
 **Additional Notes**:
 - The sprite sheet will be used as essential visual assets in the game development process, contributing to the immersive experience and engaging gameplay mechanics.`;
 };
-
 const initialWorldSeed = {
   timePeriod: gameDesignChoices.timePeriod[1] || "Medieval",
   theme: gameDesignChoices.theme[0] || "Fantasy: High Fantasy",
@@ -201,18 +200,14 @@ const initialWorldSeed = {
   portalsAndGateways: gameDesignChoices.portalsAndGateways[0] || "Interdimensional",
   timeDistortions: gameDesignChoices.timeDistortions[0] || "Time Travel"
 };
-
 function getDefaultValueProvider() {
   return function(category) {
     return initialWorldSeed[category] || "**No Default Available**";
   };
 }
-
-
 function getRandomOption(options) {
   return options[Math.floor(Math.random() * options.length)];
 }
-
 function generateWorldSeed() {
   const prompt = {};
   for (const category in gameDesignChoices) {
@@ -220,26 +215,19 @@ function generateWorldSeed() {
   }
   return prompt;
 }
-
 function getSelectedWorldSeed() {
   const worldSeed = {};
   Object.keys(gameDesignChoices).forEach(category => {
     try {
       const element = document.getElementById(category);
-
       if (!element || element.tagName.toLowerCase() !== 'select') {
         throw new Error(`Invalid element with ID "${category}" for world seed selection.`);
       }
-
-      // Get the selected options for this category
       const selectedOptionsForCategory = selectedOptions[category] || [];
-
-      // Use the selected options, or wrap the element value in an array
       worldSeed[category] = selectedOptionsForCategory.length > 0
         ? selectedOptionsForCategory
         : [element.value];
     } catch (error) {
-      console.error(`Error retrieving element or value for world seed selection: ${category}`, error);
       worldSeed[category] = getDefaultValueProvider()(category);
     }
   });
@@ -247,7 +235,6 @@ function getSelectedWorldSeed() {
 }
 function updateSelectedOptions(category, optionElement) {
   const selectedOptionsForCategory = selectedOptions[category] || [];
-
   if (optionElement.classList.contains('selected')) {
     selectedOptionsForCategory.push(optionElement.innerText);
   } else {
@@ -256,10 +243,8 @@ function updateSelectedOptions(category, optionElement) {
       selectedOptionsForCategory.splice(index, 1);
     }
   }
-
   selectedOptions[category] = selectedOptionsForCategory;
 }
-
 function createWorldSeedForm() {
   const formContainer = document.createElement('div');
   const form = document.createElement('form');
@@ -312,6 +297,4 @@ function updatePrompts() {
   shortPromptElement.innerText = shortPrompt(worldSeed);
   detailedPromptElement.innerText = detailedPrompt(worldSeed);
 }
-
 export { generateWorldSeed, shortPrompt, detailedPrompt, createWorldSeedForm, updatePrompts };
-

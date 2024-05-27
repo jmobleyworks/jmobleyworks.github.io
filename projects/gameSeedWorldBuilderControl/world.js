@@ -28,15 +28,24 @@ const updateOption = (category, element) => {
 const createGroup = (category, choices) => {
   const group = document.createElement('div');
   group.classList.add('form-group');
-  group.innerHTML = <label>${category.charAt(0).toUpperCase() + category.slice(1)}</label><div class="options"></div>;
+
+  const label = document.createElement('label');
+  label.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+  group.appendChild(label);
+
+  const optionsContainer = document.createElement('div');
+  optionsContainer.classList.add('options');
+  group.appendChild(optionsContainer);
+
   choices.forEach(choice => {
     const option = document.createElement('div');
     option.classList.add('option');
     option.innerText = choice;
     option.classList.add('selected', choice === getDefaultValue(category));
     option.addEventListener('click', () => updateOption(category, option));
-    group.querySelector('.options').appendChild(option);
+    optionsContainer.appendChild(option);
   });
+
   return group;
 };
 const createForm = () => {

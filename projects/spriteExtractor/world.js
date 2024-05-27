@@ -125,7 +125,8 @@ const gameDesignChoices = {
   // Cultural influences from around the world
   culturalInfluences: ['Medieval European', 'Asian', 'African', 'Indigenous', 'Futuristic', 'Ancient Greek', 'Norse', 'Mayan', 'Roman', 'Persian'],
   // Varied narrative focuses for storytelling
-  narrativeFocus: ['Mystery', 'Adventure', 'Romance', 'Intrigue', 'Redemption', 'Heroism', 'Tragedy', 'Exploration', 'Betrayal', 'Friendship'],
+  narrativeFocus: ['Heroic Journey', 'Coming of Age', 'Intrigue', 'Redemption', 'Revenge', 'Mystery', 'Romance', 'Adventure', 'Tragedy', 'Comedy', 'Satire', 'Parable', 'Exploration', 'Betrayal', 'Friendship']
+};
   // Expand mythology for rich lore
   mythology: {
     creationStories: ['Cosmic Eggs', 'Primordial Beings', 'Divine Interventions', 'World Trees', 'Chaos and Order'],
@@ -291,7 +292,44 @@ function getSelectedWorldSeed() {
   return worldSeed;
 }
 
+// Function to create world seed form buttons
 function createWorldSeedForm() {
+  const worldSeedFormContainer = document.getElementById('worldSeedFormContainer');
+
+  // Remove any existing buttons
+  while (worldSeedFormContainer.firstChild) {
+    worldSeedFormContainer.removeChild(worldSeedFormContainer.firstChild);
+  }
+
+  // Iterate through each design choice and create buttons
+  for (const [category, choices] of Object.entries(gameDesignChoices)) {
+    // Create a container div for each category
+    const categoryDiv = document.createElement('div');
+    categoryDiv.classList.add('category');
+
+    // Create a label for the category
+    const categoryLabel = document.createElement('h3');
+    categoryLabel.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+    categoryDiv.appendChild(categoryLabel);
+
+    // Create buttons for each choice
+    choices.forEach(choice => {
+      const button = document.createElement('button');
+      button.classList.add('choice-button');
+      button.textContent = choice;
+      button.addEventListener('click', () => {
+        // Handle button click event
+        // You can customize this part to set the selected choice for the world seed
+        console.log(`${category}: ${choice}`);
+      });
+      categoryDiv.appendChild(button);
+    });
+
+    worldSeedFormContainer.appendChild(categoryDiv);
+  }
+}
+
+function createWorldSeedFormButtons() {
   const formContainer = document.createElement('div');
   const form = document.createElement('form');
   form.setAttribute('id', 'world-seed-form');

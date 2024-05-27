@@ -299,6 +299,16 @@ optionElement.addEventListener('click', function() {
   });
 }
 function updatePrompts() {
+  const selectedOptionsText = [];
+  Object.keys(selectedOptions).forEach(category => {
+    selectedOptionsText.push(selectedOptions[category].join(', '));
+  });
+
+  const shortPromptElement = document.getElementById('shortPrompt');
+  shortPromptElement.innerText = `World Seed: [${selectedOptionsText.join(', ')}]`; // Combine selected options
+}
+
+function updatePromptsOld() {
   const worldSeed = getSelectedWorldSeed();
   const shortPromptElement = document.getElementById('short-prompt');
   const detailedPromptElement = document.getElementById('detailed-prompt');

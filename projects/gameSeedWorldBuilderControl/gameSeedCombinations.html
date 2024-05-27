@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducing Text2Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Introducing Text2Game</h1>
+    </header>
+    <main>
+        <p>Welcome! Text2Game is a project born out of a personal passion for game development. I've always wanted to build games but often ran into roadblocks. So, I decided to create a tool that would simplify the process. Text2Game is the result—a vanilla JavaScript library that lets you transform text-based inputs into interactive 2D game worlds. It's something I built for myself, and I hope others find it useful too.</p>
+        
+        <h2>What is Text2Game?</h2>
+        <p>Text2Game is a game development platform that uses natural language inputs to generate game content. Simply describe a scene or a character in text, and the engine creates the corresponding pixel art, animations, and interactive elements. This approach allows for more creativity, faster prototyping, and richer player experiences.</p>
+        
+        <section id="demonstration">
+            <h2>Demonstration</h2>
+            <p>Here's how Text2Game works with a step-by-step example:</p>
+            
+            <h3>Step-by-Step Example</h3>
+            
+            <h4>1. Generating World Seed</h4>
+            <p>Use the form below to customize your world seed:</p>
+            <div id="worldSeedBuilder"></div>
+            <p>Generated World Seed:</p>
+            <div id="worldSeedDisplay"></div>
+            <p>Short Prompt:</p>
+            <div id="short-prompt"></div>
+            <p>Detailed Prompt:</p>
+            <div id="detailed-prompt"></div>
+            
+            <h4>2. Generating Sprite Sheet</h4>
+            <p>Choose how you want to generate the sprite sheet:</p>
+            <input type="file" id="localUploadButton" accept="image/*">
+            <button id="dalle3Button">Generate from DALL-E 3</button>
+            <img id="generatedImage" src="" alt="Generated Sprite Sheet">
+            
+            <h4>3. Sprite Extraction</h4>
+            <p>The generated image is processed by our SpriteExtractor to isolate the individual sprites, which can then be used in the game.</p>
+            <div id="spriteContainer"></div>
+        </section>
+        
+        <h2>Conclusion</h2>
+        <p>Text2Game makes game development more accessible and efficient. By leveraging AI-driven dynamic assets, developers can focus on crafting engaging narratives and gameplay experiences without the hassle of traditional asset creation processes. Whether you're an experienced developer or new to game design, Text2Game helps you bring your ideas to life.</p>
+        <p>Ready to start your game development journey with Text2Game? Stay tuned for updates and explore the possibilities!</p>
+    </main>
+    <script type="module" src="world.js"></script>
+    <script type="module" src="demo.js"></script>
+</body>
+</html>

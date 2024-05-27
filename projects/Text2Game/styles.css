@@ -1,0 +1,164 @@
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #000; /* Black background */
+  color: #0f0; /* Neon green text */
+}
+
+header {
+  background-color: #000;
+  color: #0f0;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 2px solid #0f0; /* Neon green border */
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #121212; /* Dark grey background for content */
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5); /* Neon green shadow */
+  border-radius: 8px;
+}
+
+h1, h2, h3, h4 {
+  color: #0f0;
+  margin-top: 0;
+}
+
+p {
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #d0d0d0; /* Light grey text for paragraphs */
+}
+
+/* Form Styles */
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #888; /* Medium gray */
+}
+
+input[type="text"], input[type="submit"], button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  border: 1px solid #0f0;
+  border-radius: 4px;
+  background-color: #222; /* Darker grey for input background */
+  color: #0f0;
+  font-size: 14px;
+}
+
+input[type="file"] {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  color: #0f0;
+}
+
+#generatedImage {
+  display: block;
+  max-width: 100%;
+  margin: 10px 0;
+}
+
+#spriteContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sprite {
+  width: 32px;
+  height: 32px;
+  background-size: 160px 32px; /* Adjust based on sprite sheet size */
+}
+
+/* World Seed Form Styles */
+#world-seed-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #0f0;
+  border-radius: 8px;
+  background-color: #1a1a1a; /* Dark grey */
+}
+
+#world-seed-form .form-group {
+  margin-bottom: 15px;
+}
+
+#world-seed-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #888; /* Medium gray */
+}
+
+#world-seed-form .options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+#world-seed-form .option {
+  padding: 10px;
+  border: 1px solid #0f0;
+  border-radius: 4px;
+  background-color: #222;
+  color: #0f0;
+  cursor: pointer;
+  text-align: center;
+  flex: 1;
+}
+
+#world-seed-form .option.selected {
+  background-color: #0f0;
+  color: #000;
+}
+
+#world-seed-form .option button {
+  display: none;
+}
+
+#world-seed-form .option.selected button {
+  display: block;
+  margin-top: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #000;
+  color: #0f0;
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  main {
+    padding: 10px;
+  }
+
+  #world-seed-form {
+    width: 90%;
+    padding: 10px;
+  }
+
+  input[type="text"], input[type="submit"], button {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .options {
+    flex-direction: column;
+  }
+}

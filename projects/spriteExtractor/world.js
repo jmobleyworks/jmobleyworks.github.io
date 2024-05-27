@@ -240,6 +240,7 @@ function updateSelectedOptions(category, optionElement) {
   } else {
     console.error('Invalid optionElement passed to updateSelectedOptions');
   }
+  updatePrompts();
 }
 function updateFormSelection() {
   const form = document.getElementById('world-seed-form');

@@ -1,31 +1,27 @@
-/* Global Styles */
 body {
-  font-family: 'Arial', sans-serif;
+  font: Arial, sans-serif; /* Base font */
   margin: 0;
   padding: 20px;
-  background-color: #000;
-  /* Black background */
-  color: #0f0;
-  /* Neon green text */
+  color: #333; /* Base text color */
+}
+
+header,
+main {
+  padding: 20px;
 }
 
 header {
   background-color: #000;
   color: #0f0;
-  padding: 20px;
   text-align: center;
   border-bottom: 2px solid #0f0;
-  /* Neon green border */
 }
 
 main {
   max-width: 800px;
   margin: 0 auto;
   background-color: #121212;
-  /* Dark grey background for content */
-  padding: 20px;
   box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-  /* Neon green shadow */
   border-radius: 8px;
 }
 
@@ -33,28 +29,30 @@ h1,
 h2,
 h3,
 h4 {
-  color: #0f0;
+  color: #0f0; /* Inherits font from body */
   margin-top: 0;
 }
 
 p {
   line-height: 1.6;
   margin-bottom: 20px;
-  color: #d0d0d0;
-  /* Light grey text for paragraphs */
+  color: #d0d0d0; /* Can be adjusted if needed */
 }
 
-/* Form Styles */
+/* Forms & Buttons */
 form {
   margin-bottom: 20px;
 }
 
-label {
+.form-control { /* Reusable class for form elements */
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
   color: #888;
-  /* Medium gray */
+}
+
+label {
+  .form-control /* Use the reusable class */
 }
 
 input[type="text"],
@@ -67,19 +65,21 @@ button {
   border: 1px solid #0f0;
   border-radius: 4px;
   background-color: #222;
-  /* Darker grey for input background */
   color: #0f0;
   font-size: 14px;
 }
 
 input[type="file"] {
-  width: 100%;
   padding: 5px;
-  margin-bottom: 10px;
-  color: #0f0;
 }
 
-#generatedImage {
+button {
+  margin-top: 20px;
+}
+
+/* Images & Sprites */
+img,
+.sprite {
   display: block;
   max-width: 100%;
   margin: 10px 0;
@@ -94,8 +94,7 @@ input[type="file"] {
 .sprite {
   width: 32px;
   height: 32px;
-  background-size: 160px 32px;
-  /* Adjust based on sprite sheet size */
+  background-size: 160px 32px; /* Adjust based on sprite sheet size */
 }
 
 /* World Seed Form Styles */
@@ -106,7 +105,6 @@ input[type="file"] {
   border: 1px solid #0f0;
   border-radius: 8px;
   background-color: #1a1a1a;
-  /* Dark grey */
 }
 
 #world-seed-form .form-group {
@@ -114,15 +112,10 @@ input[type="file"] {
 }
 
 #world-seed-form label {
-  display: block;
-  margin-bottom: 5px;
   font-size: 16px;
-  color: #888;
-  /* Medium gray */
 }
 
 #world-seed-form .options {
-  display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -143,40 +136,25 @@ input[type="file"] {
   color: #000;
 }
 
-#world-seed-form .option button {
-  display: none;
-}
-
-#world-seed-form .option.selected button {
-  display: block;
-  margin-top: 5px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
-  background-color: #000;
-  color: #0f0;
-  cursor: pointer;
-}
-
 /* Responsive Styles */
 @media (max-width: 768px) {
+  header,
   main {
-    padding: 10px;
+    padding: 15px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-size: 1.2em; /* Adjust font size for smaller screens */
   }
 
   #world-seed-form {
-    width: 90%;
-    padding: 10px;
+    max-width: 90%; /* Adjust form width for smaller screens */
   }
 
-  input[type="text"],
-  input[type="submit"],
-  button {
-    font-size: 16px;
-    padding: 12px;
-  }
-
-  .options {
-    flex-direction: column;
+  #world-seed-form .option {
+    font-size: 14px; /* Adjust font size for options on smaller screens */
   }
 }

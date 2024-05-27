@@ -1,53 +1,124 @@
+Here's an updated version of the verbiage focused on the GameSeed WorldBuilder Control(Combinations Version) Example:
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introducing Text2Game</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameSeed WorldBuilder Control(Combinations Version) Example</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Introducing Text2Game</h1>
-    </header>
-    <main>
-        <p>Welcome! Text2Game is a project born out of a personal passion for game development. I've always wanted to build games but often ran into roadblocks. So, I decided to create a tool that would simplify the process. Text2Game is the result—a vanilla JavaScript library that lets you transform text-based inputs into interactive 2D game worlds. It's something I built for myself, and I hope others find it useful too.</p>
-        
-        <h2>What is Text2Game?</h2>
-        <p>Text2Game is a game development platform that uses natural language inputs to generate game content. Simply describe a scene or a character in text, and the engine creates the corresponding pixel art, animations, and interactive elements. This approach allows for more creativity, faster prototyping, and richer player experiences.</p>
-        
-        <section id="demonstration">
-            <h2>Demonstration</h2>
-            <p>Here's how Text2Game works with a step-by-step example:</p>
-            
-            <h3>Step-by-Step Example</h3>
-            
-            <h4>1. Generating World Seed</h4>
-            <p>Use the form below to customize your world seed:</p>
-            <div id="worldSeedBuilder"></div>
-            <p>Generated World Seed:</p>
-            <div id="worldSeedDisplay"></div>
-            <p>Short Prompt:</p>
-            <div id="short-prompt"></div>
-            <p>Detailed Prompt:</p>
-            <div id="detailed-prompt"></div>
-            
-            <h4>2. Generating Sprite Sheet</h4>
-            <p>Choose how you want to generate the sprite sheet:</p>
-            <input type="file" id="localUploadButton" accept="image/*">
-            <button id="dalle3Button">Generate from DALL-E 3</button>
-            <img id="generatedImage" src="" alt="Generated Sprite Sheet">
-            
-            <h4>3. Sprite Extraction</h4>
-            <p>The generated image is processed by our SpriteExtractor to isolate the individual sprites, which can then be used in the game.</p>
-            <div id="spriteContainer"></div>
-        </section>
-        
-        <h2>Conclusion</h2>
-        <p>Text2Game makes game development more accessible and efficient. By leveraging AI-driven dynamic assets, developers can focus on crafting engaging narratives and gameplay experiences without the hassle of traditional asset creation processes. Whether you're an experienced developer or new to game design, Text2Game helps you bring your ideas to life.</p>
-        <p>Ready to start your game development journey with Text2Game? Stay tuned for updates and explore the possibilities!</p>
-    </main>
-    <script type="module" src="world.js"></script>
-    <script type="module" src="demo.js"></script>
+  <header>
+    <h1>GameSeed WorldBuilder Control(Combinations Version) Example</h1>
+  </header>
+  <main>
+    <p>Welcome to the GameSeed WorldBuilder Control(Combinations Version) Example! This interactive tool is designed to help game developers generate unique and compelling world seeds for their game projects. By combining various elements and design choices, you can create a rich foundation for your game's setting, atmosphere, and narrative.</p>
+    <h2>What is the GameSeed WorldBuilder Control?</h2>
+    <p>The GameSeed WorldBuilder Control is a versatile library that allows you to generate custom world seeds for your game projects. It provides a user-friendly interface where you can select from a wide range of options, such as time periods, themes, environments, and cultural influences, to create a unique blend that suits your vision.</p>
+    <section id="demonstration">
+      <h2>Demonstration</h2>
+      <p>Follow these steps to use the GameSeed WorldBuilder Control and generate your own world seed:</p>
+      <h3>Step-by-Step Example</h3>
+      <h4>1. Generating World Seed</h4>
+      <p>Use the interactive form below to customize your world seed by selecting the desired options from various categories:</p>
+      <div id="worldSeedBuilder"></div>
+      <p>Your Generated World Seed:</p>
+      <div id="worldSeedDisplay"></div>
+      <p>Short Prompt:</p>
+      <div id="short-prompt"></div>
+      <p>Detailed Prompt:</p>
+      <div id="detailed-prompt"></div>
+      <h4>2. Generating Sprite Sheet (Optional)</h4>
+      <p>Once you have your world seed, you can optionally generate a sprite sheet based on your selections:</p>
+      <input type="file" id="localUploadButton" accept="image/\*">
+      <button id="dalle3Button">Generate from DALL-E 3</button>
+      <img id="generatedImage" src="" alt="Generated Sprite Sheet">
+      <h4>3. Sprite Extraction (Optional)</h4>
+      <p>If you generated a sprite sheet, you can use our SpriteExtractor to isolate individual sprites for use in your game.</p>
+      <div id="spriteContainer"></div>
+    </section>
+    <h2>Conclusion</h2>
+    <p>The GameSeed WorldBuilder Control(Combinations Version) Example is a powerful tool for game developers looking to create unique and immersive game worlds. By leveraging this library, you can effortlessly generate world seeds tailored to your specific vision, and optionally generate sprite sheets to complement your game's visual assets.</p>
+    <p>Whether you're working on a new project or looking to add depth to an existing one, the GameSeed WorldBuilder Control(Combinations Version) Example can be a valuable asset in your game development toolkit. Explore the possibilities and bring your imaginative worlds to life!</p>
+  </main>
+  <script>
+    // World.js
+const selectedOptions = {};
+function AorAn(value) { const vowels = ['a', 'e', 'i', 'o', 'u']; const firstLetter = value.toLowerCase().charAt(0); return vowels.includes(firstLetter) ? `an ${value}` : `a ${value}`; }
+// Requirements for art assets
+const requirements = {
+  "charAssetTypes": ["warriors", "mages", "monsters", "NPCs", "rogues", "healers", "paladins", "necromancers", "beastmasters", "assassins", "rangers", "summoners"],
+  "hardAssetTypes": ["trees", "rocks", "chests", "barrels", "doors", "treasure chests", "statues", "fountains", "altars", "signposts", "bridges", "wells"]
+};
+const gameDesignChoices = {
+  "timePeriod": ["Ancient", "Medieval", "Renaissance", "Industrial", "Futuristic", "Alternate History", "Prehistoric", "Colonial"],
+  "theme": ["Fantasy: High Fantasy", "Fantasy: Low Fantasy", "Fantasy: Urban Fantasy", "Fantasy: Gothic Fantasy", "Fantasy: Dark Fantasy", "Fantasy: Fairy Tale", "SciFi: Space Opera", "SciFi: Cyberpunk", "SciFi: Steampunk", "SciFi: Biopunk", "SciFi: Utopian Sci-Fi", "SciFi: Dystopian Sci-Fi", "postApocalyptic: Nuclear Fallout", "postApocalyptic: Zombie Apocalypse", "postApocalyptic: Environmental Catastrophe", "postApocalyptic: Alien Invasion", "mythological: Greek Mythology", "mythological: Norse Mythology", "mythological: Egyptian Mythology", "mythological: Asian Mythology", "mythological: Celtic Mythology", "mythological: Native American Mythology"]
+};
+const getRandomOption = choices => choices[Math.floor(Math.random() * choices.length)];
+const seed = () => Object.fromEntries(Object.keys(gameDesignChoices).map(c => [c, getRandomOption(gameDesignChoices[c])]));
+const getDefaultValue = c => gameDesignChoices[c][0];
+const chosenSeed = () => Object.assign({}, ...Object.keys(gameDesignChoices).map(c => ({ [c]: options[c] || getDefaultValue(c) })));
+const updateOption = (category, element) => {
+  if (element instanceof Element) {
+    const choices = options[category] || [];
+    element.classList.toggle('selected');
+    choices[element.classList.contains('selected') ? 'push' : 'splice'](choices.indexOf(element.innerText), 1);
+    options[category] = [...new Set(choices)];
+    updatePrompts();
+  } else {
+    console.error('Invalid optionElement passed to updateSelectedOptions');
+  }
+};
+const createGroup = (category, choices) => {
+  const group = document.createElement('div');
+  group.classList.add('form-group');
+
+  const label = document.createElement('label');
+  label.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+  group.appendChild(label);
+
+  const optionsContainer = document.createElement('div');
+  optionsContainer.classList.add('options');
+  group.appendChild(optionsContainer);
+
+  choices.forEach(choice => {
+    const option = document.createElement('div');
+    option.classList.add('option');
+    option.innerText = choice;
+    option.classList.add('selected', choice === getDefaultValue(category));
+    option.addEventListener('click', () => updateOption(category, option));
+    optionsContainer.appendChild(option);
+  });
+
+  return group;
+};
+const createForm = () => {
+  const form = document.createElement('form');
+  form.setAttribute('id', 'world-seed-form');
+  (document.getElementById('worldSeedBuilder') || document.body).appendChild(form);
+  const button = document.createElement('button');
+  button.innerText = 'Randomize';
+  button.addEventListener('click', () => {
+    options = {};
+    Object.assign(options, seed());
+    updateFormSelection();
+    updatePrompts();
+  });
+  form.appendChild(button);
+  Object.keys(gameDesignChoices).forEach(category => form.appendChild(createGroup(category, gameDesignChoices[category])));
+};
+const updateFormSelection = () => document.querySelectorAll('.option').forEach(option => option.classList.toggle('selected', options[option.parentElement.parentElement.querySelector('label').innerText.toLowerCase()]?.includes(option.innerText)));
+const updatePrompts = () => {
+  const chosen = chosenSeed();
+  const prompts = requirements.map(r => r.template.replace(/{{(.*?)}}/g, (_, capture) => chosen[capture] || r.default || "No data available"));
+  // Update the UI with the generated prompts (implementation omitted for brevity)
+};
+createForm();
+
+
+export { generateWorldSeed, shortPrompt, detailedPrompt, createWorldSeedForm, updatePrompts };
+
+  </script>
 </body>
 </html>

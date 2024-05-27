@@ -332,7 +332,7 @@ function createWorldSeedForm() {
     formContainer.appendChild(formGroup);
   });
   formContainer.addEventListener('change', updatePrompts);
-  targetElement.appendChild(formContainer);
+  targetElement.innerHTML = formContainer.outerHTML;
 }
 
 function updatePrompts() {

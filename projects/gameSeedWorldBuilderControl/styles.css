@@ -54,6 +54,10 @@ form {
   margin-bottom: 20px;
 }
 
+.control-header{
+ display: block;
+}
+
 .form-control {
   display: block;
   margin-bottom: 5px;

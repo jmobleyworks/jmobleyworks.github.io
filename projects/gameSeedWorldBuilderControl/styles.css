@@ -83,7 +83,7 @@ textarea {
   background-color: #000; /* Pure black background for textarea */
   border-color: #fff;
   color:#fff;
-  padding-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 #world-seed-form {

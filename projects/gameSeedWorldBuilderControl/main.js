@@ -83,7 +83,6 @@ function createForm(container) {
 }
 
 function updatePrompts() {
-    alert("made it");
     const shortPrompt = document.getElementById('short-prompt');
     const outputString = (Array.from(document.getElementsByClassName('form-group')) || ["None"])
     .reduce((acc, formGroup) => {

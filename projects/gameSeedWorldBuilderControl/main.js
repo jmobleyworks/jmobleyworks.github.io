@@ -82,11 +82,12 @@ function createForm(container) {
     container.appendChild(formContainer);
 }
 
-const outputString = (document.getElementsByClassName('form-group') || [])
+function updatePrompts() {
+    const shortPrompt = document.getElementById('short-prompt');
+    const outputString = (document.getElementsByClassName('form-group') || [])
     .reduce((acc, formGroup) => {
         // Extract selected options within the form group
         const selectedOptions = formGroup.querySelectorAll('.option.selected');
-
         // Check if any options are selected
         if (selectedOptions.length > 0) {
             // Build a string representation of selected options
@@ -97,6 +98,8 @@ const outputString = (document.getElementsByClassName('form-group') || [])
             return acc; // No selected options, skip to next form group
         }
     }, '');
+    shortPrompt.textContent = outputString;
+  }
 
 function randomizeForm() {
     const form = document.getElementById('world-seed-form');

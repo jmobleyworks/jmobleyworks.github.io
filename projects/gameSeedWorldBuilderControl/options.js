@@ -17,23 +17,14 @@ export const gameDesignChoices = {
   "Narrative Focus": ["Heroic Journey", "Coming of Age", "Intrigue", "Redemption", "Revenge", "Mystery", "Romance", "Adventure", "Tragedy", "Comedy", "Satire", "Parable", "Exploration", "Betrayal", "Friendship"],
   "Creation Stories": ["Big Bang","Simulation Theory","Cosmic Eggs", "Primordial Beings", "Divine Interventions", "World Trees", "Chaos and Order", "Cosmic Serpents", "Celestial Wars", "Mythical Creation","Titanomachy"],
   "Mythological Figures": ["Heroes", "Gods", "Goddesses", "Demigods", "Titans", "Monsters", "Sages", "Dragons", "Legendary Beasts","Mythical Creatures"],
-  Mythological Figures: Heroes, Gods, Goddesses, Demigods, Titans, Monsters, Sages, Dragons, Legendary Beasts, Mythical Creatures
-  Legendary Artifacts: Swords, Amulets, Relics, Talismans, Orbs, Runestones, Crystal Skulls, Ancient Tomes, Enchanted Armor, Holy Grail
-  Ancient Texts: Scriptures, Prophecies, Fables, Epics, Grimoires, Codices, Tablets, Scrolls, Inscriptions, Manuscripts
-  Trade Routes: Land, Sea, Air, Interdimensional, Silk Road, Trade Caravans, Space Routes, Magical Paths, Underground Tunnels, Sky Bridges
-  Trade Organizations: Guilds, Cartels, Monopolies, Merchant Alliances, Federations, Consortiums, Trade Unions, Syndicates, Chambers of Commerce, Marketplaces
-  Currency: Gold, Gems, Barter, Magical Energy, Cryptocurrency, Trade Tokens, Credits, Soul Gems, Favor Points, Star Dust
-  Industries: Mining, Agriculture, Crafting, Alchemy, Textiles, Shipbuilding, Smithing, Fishing, Logging, Construction
-  Wars and Conflicts: Epic Battles, Invasions, Revolutions, Civil Wars, Crusades, Sieges, Skirmishes, Tribal Conflicts, Nuclear Warfare, Cold War
-  Natural Disasters: Floods, Earthquakes, Volcanic Eruptions, Tsunamis, Meteor Strikes, Droughts, Hurricanes, Tornadoes, Blizzards, Avalanches
   "Legendary Artifacts": ["Swords", "Amulets", "Relics", "Talismans", "Orbs", "Runestones", "Crystal Skulls", "Ancient Tomes", "Enchanted Armor"],
-  "Ancient Texts": ["Scriptures", "Prophecies", "Fables", "Epics", "Grimoires", "Codices", "Tablets", "Scrolls"],
-  "Trade Routes": ["Land", "Sea", "Air", "Interdimensional", "Silk Road", "Trade Caravans", "Space Routes", "Magical Paths"],
-  "Trade Organizations": ["Guilds", "Cartels", "Monopolies", "Merchant Alliances", "Federations", "Consortiums"],
-  "Currency": ["Gold", "Gems", "Barter", "Magical Energy", "Cryptocurrency", "Trade Tokens"],
-  "Industries": ["Mining", "Agriculture", "Crafting", "Alchemy", "Textiles", "Shipbuilding", "Smithing", "Fishing", "Logging"],
-  "Wars and Conflicts": ["Epic Battles", "Invasions", "Revolutions", "Civil Wars", "Crusades", "Sieges"],
-  "Natural Disasters": ["Floods", "Earthquakes", "Volcanic Eruptions", "Tsunamis", "Meteor Strikes", "Droughts", "Hurricanes"],
+  "Ancient Texts": ["Scriptures", "Prophecies", "Fables", "Epics", "Grimoires", "Codices", "Tablets", "Scrolls","Incsriptions","Manuscripts"],
+  "Trade Routes": ["Land", "Sea", "Air", "Interdimensional", "Silk Road", "Trade Caravans", "Space Routes", "Magical Paths", "Underground Tunnels", "Sky Bridges"],
+  "Trade Organizations": ["Guilds", "Cartels", "Monopolies", "Merchant Alliances", "Federations", "Consortiums","Trade Unions", "Syndicates", "Chambers of Commerce", "Marketplaces"],
+  "Currency": ["Gold", "Gems", "Barter", "Magical Energy", "Cryptocurrency", "Trade Tokens","Credits", "Soul Gems", "Favor Points", "Star Dust"],
+  "Industries": ["Mining", "Agriculture", "Crafting", "Alchemy", "Textiles", "Shipbuilding", "Smithing", "Fishing", "Logging","Construction"],
+  "Wars and Conflicts": ["Epic Battles", "Invasions", "Revolutions", "Civil Wars", "Crusades", "Sieges", "Skirmishes", "Tribal Conflicts", "Nuclear Warfare", "Cold War"],
+  "Natural Disasters": ["Floods", "Earthquakes", "Volcanic Eruptions", "Tsunamis", "Meteor Strikes", "Droughts", "Hurricanes","Tornadoes", "Blizzards", "Avalanches"],
   "Technological Breakthroughs": ["Inventions", "Scientific Discoveries", "Industrial Revolution", "Space Exploration"],
   "Cultural Renaissances": ["Artistic", "Philosophical", "Spiritual", "Literary", "Scientific", "Technological"],
   "Cosmic Events": ["Solar Eclipses", "Lunar Eclipses", "Comets", "Meteor Showers", "Auroras", "Supernovas", "Black Holes", "Celestial Alignments", "Galactic Collisions"],
@@ -56,3 +47,54 @@ export const gameDesignChoices = {
   "Timekeeping": ["Calendars", "Clocks", "Sundials", "Hourglasses", "Water Clocks", "Astrolabes", "Chronometers", "Atomic Clocks", "Celestial Observations"],
   "Factions and Organizations": ["Guilds", "Cults", "Mercenary Companies", "Adventurer Guilds", "Secret Societies", "Trade Unions", "Religious Orders", "Exploration Societies", "Spy Networks"]
   };
+
+  export const promptTemplates = {
+    "TimePeriod": "The game's world is set in the following time periods: ${formattedChoices}.",
+    "Theme": "The game's theme includes the following elements: ${formattedChoices}.",
+    "Environment": "The game's world is characterized by various environments, including: ${formattedChoices}.",
+    "Atmosphere": "The atmosphere of the game varies, offering elements of: ${formattedChoices}.",
+    "Location": "The game's setting encompasses diverse locations, such as: ${formattedChoices}.",
+    "Inhabitants": "The world is inhabited by various beings, including: ${formattedChoices}.",
+    "Social Classes": "The society is divided into different social classes, including: ${formattedChoices}.",
+    "Government Types": "The ruling system varies and includes: ${formattedChoices}.",
+    "Religions": "The game's world is influenced by different religions, including: ${formattedChoices}.",
+    "Conflict": "The central conflict revolves around various themes, such as: ${formattedChoices}.",
+    "Elemental": "The elements play a significant role, including: ${formattedChoices}.",
+    "Magic Schools": "Magic is practiced through various schools, including: ${formattedChoices}.",
+    "Magic Artifacts": "Powerful artifacts exist, such as: ${formattedChoices}.",
+    "Magic Beings": "Various magical beings inhabit the world, including: ${formattedChoices}.",
+    "Magic Abilities": "Characters possess various magical abilities, including: ${formattedChoices}.",
+    "Narrative Focus": "The story's focus encompasses various themes, including: ${formattedChoices}.",
+    "Creation Stories": "The world's creation is explained through various stories, including: ${formattedChoices}.",
+    "Mythological Figures": "Legends feature various mythological figures, including: ${formattedChoices}.",
+    "Legendary Artifacts": "There are legendary items, including: ${formattedChoices}.",
+    "Ancient Texts": "Ancient texts include various scriptures, prophecies, and fables, such as: ${formattedChoices}.",
+    "Trade Routes": "Trade occurs through various routes, including: ${formattedChoices}.",
+    "Trade Organizations": "Various organizations control commerce, such as: ${formattedChoices}.",
+    "Currency": "The currency used varies and includes: ${formattedChoices}.",
+    "Industries": "Major industries include: ${formattedChoices}.",
+    "Wars and Conflicts": "Historical wars include: ${formattedChoices}.",
+    "Natural Disasters": "The world is prone to various natural disasters, including: ${formattedChoices}.",
+    "Technological Breakthroughs": "Advancements include: ${formattedChoices}.",
+    "Cultural Renaissances": "Periods of renaissance include: ${formattedChoices}.",
+    "Cosmic Events": "Celestial events include: ${formattedChoices}.",
+    "Planar Realms": "Different realms exist, including: ${formattedChoices}.",
+    "Portals and Gateways": "Access to other realms is possible through: ${formattedChoices}.",
+    "Time Distortions": "Time is distorted by phenomena such as: ${formattedChoices}.",
+    "Fauna": "The world is home to various creatures, including: ${formattedChoices}.",
+    "Flora": "Flora includes various types, such as: ${formattedChoices}.",
+    "Weather": "Weather patterns consist of: ${formattedChoices}.",
+    "Terrain Features": "Terrain is marked by various features, including: ${formattedChoices}.",
+    "Architectural Styles": "Architecture reflects various styles, including: ${formattedChoices}.",
+    "Transportation": "Transportation methods include: ${formattedChoices}.",
+    "Communication Methods": "Communication is achieved through: ${formattedChoices}.",
+    "Entertainment": "Entertainment includes: ${formattedChoices}.",
+    "Food and Cuisine": "Cuisine comprises various dishes, including: ${formattedChoices}.",
+    "Healthcare Practices": "Healthcare involves various methods, including: ${formattedChoices}.",
+    "Education Systems": "Education is provided by systems such as: ${formattedChoices}.",
+    "Social Norms and Customs": "Norms and customs include: ${formattedChoices}.",
+    "Environmental Hazards": "Hazards such as: ${formattedChoices} pose threats.",
+    "Timekeeping": "Time is measured using various methods, including: ${formattedChoices}.",
+    "Factions and Organizations": "The game's world is shaped by: ${formattedChoices}."
+  };
+  

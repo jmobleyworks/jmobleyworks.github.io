@@ -3,7 +3,7 @@ import { worldBuildingElements, promptTemplates } from './options.js';
 document.addEventListener('DOMContentLoaded', () => {
     const app = document.createElement('div');
     app.classList.add('app');
-    createForm(document.getElementById('gameSeedWorldBuilderControl'));
+    createForm(document.getElementById('WorldSeedBuilder'));
 });
 
 function createForm(container) {
@@ -13,7 +13,7 @@ function createForm(container) {
     // Create control header with label
     const controlHeader = document.createElement('h2');
     controlHeader.classList.add('control-header');
-    controlHeader.textContent = 'GameSeed WorldBuilder Control';
+    controlHeader.textContent = 'WorldSeed Builder';
     formContainer.appendChild(controlHeader);
     
 

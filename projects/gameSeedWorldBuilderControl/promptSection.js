@@ -8,9 +8,6 @@ class PromptSection extends HTMLElement {
   render() {
     const template = document.createElement('template');
     template.innerHTML = `
-      <style>
-        @import './styles/promptSection.css';
-      </style>
       <section class="prompts-section">
         <h2>Prompts</h2>
         <prompt-header></prompt-header>

@@ -8,9 +8,6 @@ class PromptHeader extends HTMLElement {
     render() {
       const template = document.createElement('template');
       template.innerHTML = `
-        <style>
-          @import './styles/promptHeader.css';
-        </style>
         <div class="prompt-header">
           <button class="copy-prompt-button">
             <i class="fas fa-copy"></i>

@@ -69,7 +69,7 @@ form {
 input[type="text"],
 input[type="submit"],
 button {
-  height:50px;
+  height:60px;
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -93,14 +93,14 @@ input[type="file"] {
 }
 
 textarea {
-  height: 50px;
+  height: 60px;
   width: 100%;
   /* Fills the entire available space */
   background-color: #000;
   /* Pure black background for textarea */
   border-color: #fff;
   color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   padding: 10px;
   box-sizing: border-box;
   border: 1px solid #fff;

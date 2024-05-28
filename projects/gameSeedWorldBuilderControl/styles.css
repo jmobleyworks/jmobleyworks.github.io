@@ -1,7 +1,7 @@
-/* Improved CSS - Black and White Monochromatic */
+/* Improved CSS - Pure Black and White */
 
 body {
-  font: 16px Times New Roman, Verdana, sans-serif;  /* Helvetica as preferred, then Arial, then sans-serif */
+  font: 16px Times New Roman, Verdana, sans-serif; /* Preferred font with fallback */
   margin: 0;
   padding: 20px;
   color: #fff; /* White text */
@@ -38,7 +38,7 @@ h4 {
 p {
   line-height: 1.6;
   margin-bottom: 20px;
-  color: #fff; /* White text, may need adjustment for readability */
+  color: #fff; /* White text */
 }
 
 form {
@@ -53,7 +53,10 @@ form {
 }
 
 label {
+  display: block; /* Make all labels render on a new line */
   color: #fff; /* White labels */
+  font-size: 16px; /* Adjust font size if needed */
+  margin-bottom: 10px; /* Add some space between label and options */
 }
 
 input[type="text"],
@@ -63,9 +66,9 @@ button {
   padding: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
-  border: 1px solid #fff; /* White borders */
+  border: none; /* Remove borders */
   border-radius: 4px;
-  background-color: #000; /* Pure black background for inputs and buttons */
+  background-color: #000; /* Black background for inputs and buttons */
   color: #fff; /* White text */
   font-size: 14px;
 }
@@ -80,9 +83,9 @@ button {
 
 textarea {
   width: 100%; /* Fills the entire available space */
-  background-color: #000; /* Pure black background for textarea */
-  border-color: #fff;
-  color:#fff;
+  background-color: #000; /* Black background for textarea */
+  border: none; /* Remove borders */
+  color: #fff; /* White text */
   margin-bottom: 10px;
 }
 
@@ -90,63 +93,36 @@ textarea {
   max-width: 100%; /* Allow full width for horizontal squish */
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #fff; /* White border */
+  border: none; /* Remove borders */
   border-radius: 8px;
-  background-color: #000; /* Pure black background for form */
+  background-color: #000; /* Black background for form */
 }
 
 #world-seed-form .form-group {
   margin-bottom: 15px;
 }
 
-
-
 #world-seed-form .options {
-  display: flex;
-  /* Maintain flexbox for horizontal alignment */
-  flex-wrap: wrap;
-  /* Wrap options as needed */
+  display: flex; /* Maintain flexbox for horizontal alignment */
+  flex-wrap: wrap; /* Wrap options as needed */
   gap: 10px;
-  padding: 10px;
-  /* Adjust padding if needed for content size */
-  border: 1px solid #fff; /* White borders for container */
+  padding: 10px; /* Adjust padding if needed for content size */
+  border: none; /* Remove borders */
   border-radius: 4px;
-  background-color: #000; /* Pure black background for options */
-  color: #fff; /* Light gray text for options, adjust for readability */  /* New line */
+  background-color: #000; /* Black background for options */
+  color: #fff; /* White text for options */
   cursor: pointer;
   text-align: center;
   /* Removed flex for individual options, allowing form container to control width */
 }
 
 #world-seed-form .option {
-  border: 1px solid #fff; 
+  border: none; /* Remove borders */
   padding: 10px;
+  background-color: #222; /* Optional: Slightly darker shade of black for hover effect */
+  color: #fff; /* White text for options */
 }
 
 #world-seed-form .option.selected {
-  border: 1px solid #fff; /* White border */
-  padding: 10px;
-  color: #000; /* Black text */
-  background-color: #fff; /* White background */
+  background-color: #fff; /* White background for selected option
 }
-
-#world-seed-form .form-group {
-  display: flex; /* Make the form group a flex container */
-  flex-wrap: wrap; /* Allow wrapping of elements if needed */
-}
-
-#world-seed-form .form-group label {
-  /* Existing styles for labels within form-group */
-  font-size: 16px;
-  color: #fff; /* White labels */
-  /* New styles for centering */
-  text-align: center;
-  margin-bottom: 10px; /* Add some space between label and options */
-}
-
-textarea {
-  flex: 2; /* Allow textarea to take up twice the space as the label */
-  background-color: #000; /* Pure black background for textarea */
-}
-
-

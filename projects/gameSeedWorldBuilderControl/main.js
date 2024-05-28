@@ -1,4 +1,4 @@
-import { worldBuildingElements } from './options.js';
+import { worldBuildingElements, promptTemplates } from './options.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = document.createElement('div');
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
   app.appendChild(worldBuilderDescription);
 
   const customSeedDescription = document.createElement('p');
-  customSeedDescription.textContent = 'Users can also create custom world seedd by selecting options from various categories.';
+  customSeedDescription.textContent = 'Users can also create custom world seeds by selecting options from various categories.';
   app.appendChild(customSeedDescription);
 
   const demoSection = document.createElement('demo-section');
@@ -37,9 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
   app.appendChild(demoSection);
 
   createForm(demoSection);
-  updatePrompts();
-
   document.body.appendChild(app);
+  updatePrompts();
 });
 
 
@@ -77,9 +76,6 @@ function createForm(container) {
   
     container.appendChild(formContainer);
   }
-  
-
-
 function updatePrompts() {
   const shortPrompt = document.getElementById('short-prompt');
   shortPrompt.textContent = 'This is a sample prompt.';

@@ -25,6 +25,9 @@ function createForm(container) {
     // Create short prompt text area
     const shortPrompt = document.createElement('textarea');
     shortPrompt.id = "short-prompt";
+    shortPrompt.classList.add('short-prompt');
+    shortPrompt.textContent = "Game Prompt";
+    controlHeader.appendChild(shortPrompt);
 
     // Create button container
     const buttonContainer = document.createElement('div');

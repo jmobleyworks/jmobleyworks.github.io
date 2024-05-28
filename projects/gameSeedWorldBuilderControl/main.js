@@ -80,6 +80,7 @@ function createForm(container) {
     }
 
     container.appendChild(formContainer);
+    randomizeForm();
 }
 
 function updatePrompts() {

@@ -81,6 +81,7 @@ button {
 textarea {
   width: 100%; /* Fills the entire available space */
   background-color: #000; /* Pure black background for textarea */
+  border-color: #fff;
 }
 
 #world-seed-form {

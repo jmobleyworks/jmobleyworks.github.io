@@ -111,6 +111,7 @@ function randomizeForm() {
             option.classList.add('selected');
         }
     });
+    updatePrompts();
 }
 
 function clearForm() {

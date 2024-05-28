@@ -24,7 +24,7 @@ main {
   max-width: 1200px;
   margin: 0 auto;
   background-color: #000; /* Black background for main content */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Black box-shadow */
+  box-shadow: 0 0 10px rgb(36, 36, 36); /* Black box-shadow */
   border-radius: 8px;
 }
 
@@ -76,7 +76,10 @@ input[type="file"] {
 }
 
 button {
-  margin-top: 20px;
+  margin-top: 2px;
+}
+textarea{
+  background-color: #000;
 }
 
 #world-seed-form {

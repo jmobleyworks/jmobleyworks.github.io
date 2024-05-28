@@ -1,11 +1,14 @@
 /* Improved CSS - Black and White Monochromatic */
 
 body {
-  font: 16px Times New Roman, Verdana, sans-serif;  /* Helvetica as preferred, then Arial, then sans-serif */
+  font: 16px Times New Roman, Verdana, sans-serif;
+  /* Helvetica as preferred, then Arial, then sans-serif */
   margin: 0;
   padding: 20px;
-  color: #fff; /* White text */
-  background-color: #000; /* Black background */
+  color: #fff;
+  /* White text */
+  background-color: #000;
+  /* Black background */
 }
 
 header,
@@ -14,16 +17,20 @@ main {
 }
 
 header {
-  background-color: #000; /* Black header background */
-  color: #fff; /* White header text */
+  background-color: #000;
+  /* Black header background */
+  color: #fff;
+  /* White header text */
   text-align: center;
-  border-bottom: 2px solid #fff; /* White border */
+  border-bottom: 2px solid #fff;
+  /* White border */
 }
 
 main {
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #000; /* Black background for main content */
+  background-color: #000;
+  /* Black background for main content */
   border-radius: 8px;
 }
 
@@ -31,14 +38,16 @@ h1,
 h2,
 h3,
 h4 {
-  color: #fff; /* White headings */
+  color: #fff;
+  /* White headings */
   margin-top: 0;
 }
 
 p {
   line-height: 1.6;
   margin-bottom: 20px;
-  color: #fff; /* White text, may need adjustment for readability */
+  color: #fff;
+  /* White text, may need adjustment for readability */
 }
 
 form {
@@ -49,11 +58,8 @@ form {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #fff; /* White labels */
-}
-
-label {
-  color: #fff; /* White labels */
+  color: #fff;
+  /* White lb */
 }
 
 input[type="text"],
@@ -63,10 +69,13 @@ button {
   padding: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
-  border: 1px solid #fff; /* White borders */
+  border: 1px solid #fff;
+  /* White borders */
   border-radius: 4px;
-  background-color: #000; /* Pure black background for inputs and buttons */
-  color: #fff; /* White text */
+  background-color: #000;
+  /* Pure black background for inputs and buttons */
+  color: #fff;
+  /* White text */
   font-size: 14px;
 }
 
@@ -79,20 +88,25 @@ button {
 }
 
 textarea {
-  width: 100%; /* Fills the entire available space */
-  background-color: #000; /* Pure black background for textarea */
+  width: 100%;
+  /* Fills the entire available space */
+  background-color: #000;
+  /* Pure black background for textarea */
   border-color: #fff;
-  color:#fff;
+  color: #fff;
   margin-bottom: 10px;
 }
 
 #world-seed-form {
-  max-width: 100%; /* Allow full width for horizontal squish */
+  max-width: 100%;
+  /* Allow full width for horizontal squish */
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #fff; /* White border */
+  border: 1px solid #fff;
+  /* White border */
   border-radius: 8px;
-  background-color: #000; /* Pure black background for form */
+  background-color: #000;
+  /* Pure black background for form */
 }
 
 #world-seed-form .form-group {
@@ -109,45 +123,56 @@ textarea {
   gap: 10px;
   padding: 10px;
   /* Adjust padding if needed for content size */
-  border: 1px solid #fff; /* White borders for container */
+  border: 1px solid #fff;
+  /* White borders for container */
   border-radius: 4px;
-  background-color: #000; /* Pure black background for options */
-  color: #fff; /* Light gray text for options, adjust for readability */  /* New line */
+  background-color: #000;
+  /* Pure black background for options */
+  color: #fff;
+  /* Light gray text for options, adjust for readability */
+  /* New line */
   cursor: pointer;
   text-align: center;
   /* Removed flex for individual options, allowing form container to control width */
 }
 
 #world-seed-form .option {
-  border: 1px solid #fff; 
+  border: 1px solid #fff;
   padding: 10px;
 }
 
 #world-seed-form .option.selected {
-  border: 1px solid #fff; /* White border */
+  border: 1px solid #fff;
+  /* White border */
   padding: 10px;
-  color: #000; /* Black text */
-  background-color: #fff; /* White background */
+  color: #000;
+  /* Black text */
+  background-color: #fff;
+  /* White background */
 }
 
 #world-seed-form .form-group {
-  display: flex; /* Make the form group a flex container */
-  flex-wrap: wrap; /* Allow wrapping of elements if needed */
+  display: flex;
+  /* Make the form group a flex container */
+  flex-wrap: wrap;
+  /* Allow wrapping of elements if needed */
 }
 
-#world-seed-form .form-group label {
-  display:block;
-  /* Existing styles for labels within form-group */
+label {
+  display: block;
+  /* Existing styles for lbs within form-group */
   font-size: 16px;
-  color: #fff; /* White labels */
+  color: #fff;
+  /* White lbs */
   /* New styles for centering */
   text-align: center;
-  margin-bottom: 10px; /* Add some space between label and options */
+  margin-bottom: 10px;
+  /* Add some space between lb and options */
 }
 
 textarea {
-  flex: 2; /* Allow textarea to take up twice the space as the label */
-  background-color: #000; /* Pure black background for textarea */
+  flex: 2;
+  /* Allow textarea to take up twice the space as the lb */
+  background-color: #000;
+  /* Pure black background for textarea */
 }
-
-

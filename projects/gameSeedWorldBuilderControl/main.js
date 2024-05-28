@@ -1,139 +1,131 @@
-import { gameDesignChoices, promptTemplates } from './options.js';
-
-let options = {};
-
-const createGroup = (category, choices) => {
-  const group = document.createElement('div');
-  group.classList.add('form-group');
-
-  const label = document.createElement('label');
-  label.textContent = category.charAt(0).toUpperCase() + category.slice(1);
-  group.appendChild(label);
-
-  const optionsContainer = document.createElement('div');
-  optionsContainer.classList.add('options');
-  group.appendChild(optionsContainer);
-
-  choices.forEach(choice => {
-    const option = document.createElement('div');
-    option.classList.add('option');
-    option.innerText = choice;
-    option.addEventListener('click', () => updateOption(category, option));
-    optionsContainer.appendChild(option);
-  });
-
-  return group;
-};
-
-const updateOption = (category, element) => {
-  const choices = options[category] || [];
-  const choiceIndex = choices.indexOf(element.innerText);
-
-  if (choiceIndex === -1) {
-    element.classList.add('selected');
-    choices.push(element.innerText);
-  } else {
-    element.classList.remove('selected');
-    choices.splice(choiceIndex, 1);
-  }
-
-  options[category] = choices;
-};
-
-const formatOptions = options => {
-  if (!options || options.length === 0) return "";
-  if (options.length === 1) return options[0];
-  return `${options.slice(0, -1).join(', ')} and ${options[options.length - 1]}`;
-};
-
-const generatePrompt = chosen => {
-  const promptParts = [];
-  for (const category in chosen) {
-    const formattedChoices = formatOptions(chosen[category]);
-    if (formattedChoices && promptTemplates[category]) {
-      promptParts.push(promptTemplates[category].replace("${formattedChoices}", formattedChoices));
-    }
-  }
-  return promptParts.join('. ');
-};
-
-const updatePrompts = () => {
-  const chosen = {};
-  for (const category in gameDesignChoices) {
-    chosen[category] = options[category] || [];
-  }
-  const shortPromptElement = document.getElementById('short-prompt');
-  shortPromptElement.innerText = generatePrompt(chosen);
-};
-
-const getRandomOption = choices => choices[Math.floor(Math.random() * choices.length)];
-
-const seed = () => {
-  const randomOptions = {};
-  for (const category in gameDesignChoices) {
-    randomOptions[category] = [getRandomOption(gameDesignChoices[category])];
-  }
-  return randomOptions;
-};
-
-const createForm = () => {
-  const form = document.createElement('form');
-  form.setAttribute('id', 'world-seed-form');
-
-  document.getElementById('gameSeedWorldBuilderControl').appendChild(form);
-
-  const controlHeader = document.createElement('header');
-  controlHeader.innerHTML = `<h2>World Seed Customization</h2>`;
-  controlHeader.classList.add('control-header');
-  form.appendChild(controlHeader);
-
-  const randomizeButton = document.createElement('button');
-  randomizeButton.innerText = 'Randomize';
-  randomizeButton.addEventListener('click', (event) => {
-    event.preventDefault();
-    options = seed();
-    updateFormSelection();
-    updatePrompts();
-  });
-  controlHeader.appendChild(randomizeButton);
-
-  const clearButton = document.createElement('button');
-  clearButton.innerText = 'Clear';
-  clearButton.addEventListener('click', (event) => {
-    event.preventDefault();
-    options = {};
-    updateFormSelection();
-    updatePrompts();
-  });
-  controlHeader.appendChild(clearButton);
-
-  for (const category in gameDesignChoices) {
-    form.appendChild(createGroup(category, gameDesignChoices[category]));
-  }
-};
-
-const updateFormSelection = () => {
-  document.querySelectorAll('.option').forEach(option => {
-    const category = option.parentElement.previousElementSibling.innerText.toLowerCase();
-    if (options[category] && options[category].includes(option.innerText)) {
-      option.classList.add('selected');
-    } else {
-      option.classList.remove('selected');
-    }
-  });
-};
-
 document.addEventListener('DOMContentLoaded', () => {
-  createForm();
-  updatePrompts();
-
-  const controlHeader = document.querySelector('.control-header');
-  controlHeader.addEventListener('click', () => {
-    const formGroups = document.querySelectorAll('.form-group');
-    formGroups.forEach(group => {
-      if (group !== controlHeader) {
-        group.classList.toggle('collapsed');
+    const controlDiv = document.getElementById('gameSeedWorldBuilderControl');
+  
+    // Create prompt header with buttons
+    const promptHeader = document.createElement('div');
+    promptHeader.classList.add('prompt-header');
+  
+    const copyPromptButton = document.createElement('button');
+    copyPromptButton.id = 'copyPromptButton';
+    copyPromptButton.title = 'Copy Prompt';
+    copyPromptButton.innerHTML = '<i class="fas fa-copy"></i>';
+  
+    const toggleControlButton = document.createElement('button');
+    toggleControlButton.id = 'toggleControlButton';
+    toggleControlButton.title = 'Collapse/Expand Control';
+    toggleControlButton.innerHTML = '<i class="fas fa-caret-up"></i>';
+  
+    promptHeader.appendChild(copyPromptButton);
+    promptHeader.appendChild(toggleControlButton);
+  
+    // Create prompts section
+    const promptsSection = document.createElement('section');
+    promptsSection.id = 'prompts';
+  
+    const promptsTitle = document.createElement('h2');
+    promptsTitle.innerText = 'Prompts';
+  
+    const shortPrompt = document.createElement('p');
+    shortPrompt.id = 'short-prompt';
+    shortPrompt.contentEditable = true;
+  
+    promptsSection.appendChild(promptsTitle);
+    promptsSection.appendChild(promptHeader);
+    promptsSection.appendChild(shortPrompt);
+  
+    // Append prompts section to control div
+    controlDiv.appendChild(promptsSection);
+  
+    // Create demonstration section
+    const demoSection = document.createElement('section');
+    demoSection.id = 'demonstration';
+  
+    const demoTitle = document.createElement('h2');
+    demoTitle.innerText = 'Demonstration';
+  
+    const demoDescription = document.createElement('p');
+    demoDescription.innerText = 'Follow these steps to use the tool and generate your world seed:';
+  
+    demoSection.appendChild(demoTitle);
+    demoSection.appendChild(demoDescription);
+    demoSection.appendChild(controlDiv);
+  
+    // Append demonstration section to main
+    document.querySelector('main').appendChild(demoSection);
+  
+    // Apply CSS for Collapsible Control and Copy Prompt Button
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .prompt-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 10px;
       }
+  
+      .prompt-header button {
+        background-color: transparent;
+        border: none;
+        color: #0f0;
+        cursor: pointer;
+        font-size: 20px;
+        margin-left: 10px;
+      }
+  
+      #copyPromptButton:hover, #toggleControlButton:hover {
+        color: #00ff00;
+      }
+  
+      #copyPromptButton {
+        padding: 5px;
+      }
+  
+      #toggleControlButton {
+        padding: 0;
+      }
+  
+      #short-prompt {
+        line-height: 1.6;
+        margin-bottom: 20px;
+        color: #d0d0d0;
+        padding-right: 35px; /* To accommodate for button space */
+      }
+  
+      .collapsed {
+        display: none;
+      }
+    `;
+    document.head.appendChild(style);
+  
+    // Initialize form and prompts
+    createForm();
+    updatePrompts();
+  
+    // Toggle collapse/expand state
+    toggleControlButton.addEventListener('click', () => {
+      const formGroups = document.querySelectorAll('.form-group');
+      formGroups.forEach(group => {
+        if (group !== promptHeader) {
+          group.classList.toggle('collapsed');
+        }
+      });
+  
+      // Toggle caret icon
+      const icon = toggleControlButton.querySelector('i');
+      icon.classList.toggle('fa-caret-up');
+      icon.classList.toggle('fa-caret-down');
+    });
+  
+    // Copy prompt functionality
+    copyPromptButton.addEventListener('click', () => {
+      const promptText = document.getElementById('short-prompt').innerText;
+      navigator.clipboard.writeText(promptText)
+        .then(() => {
+          alert('Prompt copied to clipboard!');
+        })
+        .catch(err => {
+          console.error('Error copying prompt:', err);
+        });
     });
   });
-});
+  

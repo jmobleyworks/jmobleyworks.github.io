@@ -1,4 +1,4 @@
-export const formGroups = {
+export const worldBuildingElements = {
   "TimePeriod": ["Ancient", "Medieval", "Renaissance", "Industrial", "Futuristic", "Alternate History", "Prehistoric", "Colonial"],
   "Theme": ["Fantasy", "High Fantasy", "Low Fantasy", "Urban Fantasy", "Gothic Fantasy", "Dark Fantasy", "Fairy Tale", "SciFi", "Space Opera", "Cyberpunk", "Steampunk", "Biopunk", "Utopian", "Dystopian", "Nuclear Fallout", "Zombie Apocalypse", "Environmental Catastrophe", "Alien Invasion", "Postapocalyptic", "Greek Mythology", "Norse Mythology", "Egyptian Mythology", "Asian Mythology", "Celtic Mythology", "Native American Mythology"],
   "Environment": ["Forest", "Desert", "Mountain", "Ocean", "Urban", "Arctic", "Swamp", "Underwater", "Volcanic", "Sky"],

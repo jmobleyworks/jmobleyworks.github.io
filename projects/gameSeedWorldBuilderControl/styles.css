@@ -54,8 +54,8 @@ form {
   margin-bottom: 20px;
 }
 
-.control-header{
- display: block;
+.control-header {
+  display: block;
 }
 
 .form-control {
@@ -77,7 +77,7 @@ button {
   /* White borders */
   border-radius: 4px;
   background-color: #000;
-  /* Pure black background for inputs and buttons */
+  /* Pure black background for inputs and bttns */
   color: #fff;
   /* White text */
   font-size: 14px;
@@ -99,6 +99,12 @@ textarea {
   border-color: #fff;
   color: #fff;
   margin-bottom: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  flex: 2;
+  /* Allow textarea to take up twice the space as the lb */
 }
 
 #world-seed-form {
@@ -170,11 +176,4 @@ label {
   text-align: center;
   margin-bottom: 10px;
   /* Add some space between lb and options */
-}
-
-textarea {
-  flex: 2;
-  /* Allow textarea to take up twice the space as the lb */
-  background-color: #000;
-  /* Pure black background for textarea */
 }

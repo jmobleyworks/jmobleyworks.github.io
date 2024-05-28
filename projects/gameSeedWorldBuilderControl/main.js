@@ -1,4 +1,4 @@
-import { gameDesignChoices } from './options.js';
+import { gameDesignChoices, promptTemplates } from './options.js';
 
 let options = {};
 
@@ -38,7 +38,6 @@ const updateOption = (category, element) => {
   }
 
   options[category] = choices;
-  updatePrompts();
 };
 
 const formatOptions = options => {
@@ -47,12 +46,12 @@ const formatOptions = options => {
   return `${options.slice(0, -1).join(', ')} and ${options[options.length - 1]}`;
 };
 
-const shortPrompt = worldSeed => {
+const generatePrompt = chosen => {
   const promptParts = [];
-  for (const [category, choices] of Object.entries(worldSeed)) {
-    const formattedChoices = formatOptions(choices);
-    if (formattedChoices) {
-      promptParts.push(`${category.charAt(0).toUpperCase() + category.slice(1)}: ${formattedChoices}`);
+  for (const category in chosen) {
+    const formattedChoices = formatOptions(chosen[category]);
+    if (formattedChoices && promptTemplates[category]) {
+      promptParts.push(promptTemplates[category].replace("${formattedChoices}", formattedChoices));
     }
   }
   return promptParts.join('. ');
@@ -64,7 +63,7 @@ const updatePrompts = () => {
     chosen[category] = options[category] || [];
   }
   const shortPromptElement = document.getElementById('short-prompt');
-  shortPromptElement.innerText = shortPrompt(chosen);
+  shortPromptElement.innerText = generatePrompt(chosen);
 };
 
 const getRandomOption = choices => choices[Math.floor(Math.random() * choices.length)];
@@ -83,6 +82,11 @@ const createForm = () => {
 
   document.getElementById('gameSeedWorldBuilderControl').appendChild(form);
 
+  const controlHeader = document.createElement('header');
+  controlHeader.innerHTML = `<h2>World Seed Customization</h2>`;
+  controlHeader.classList.add('control-header');
+  form.appendChild(controlHeader);
+
   const randomizeButton = document.createElement('button');
   randomizeButton.innerText = 'Randomize';
   randomizeButton.addEventListener('click', (event) => {
@@ -91,7 +95,7 @@ const createForm = () => {
     updateFormSelection();
     updatePrompts();
   });
-  form.appendChild(randomizeButton);
+  controlHeader.appendChild(randomizeButton);
 
   const clearButton = document.createElement('button');
   clearButton.innerText = 'Clear';
@@ -101,7 +105,7 @@ const createForm = () => {
     updateFormSelection();
     updatePrompts();
   });
-  form.appendChild(clearButton);
+  controlHeader.appendChild(clearButton);
 
   for (const category in gameDesignChoices) {
     form.appendChild(createGroup(category, gameDesignChoices[category]));
@@ -122,4 +126,14 @@ const updateFormSelection = () => {
 document.addEventListener('DOMContentLoaded', () => {
   createForm();
   updatePrompts();
+
+  const controlHeader = document.querySelector('.control-header');
+  controlHeader.addEventListener('click', () => {
+    const formGroups = document.querySelectorAll('.form-group');
+    formGroups.forEach(group => {
+      if (group !== controlHeader) {
+        group.classList.toggle('collapsed');
+      }
+    });
+  });
 });

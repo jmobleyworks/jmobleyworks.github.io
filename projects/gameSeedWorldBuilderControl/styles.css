@@ -91,6 +91,9 @@ input[type="file"] {
 button {
   margin-top: 2px;
 }
+.button-container{
+  margin-bottom: 5px;
+}
 
 textarea {
   height: 50px;

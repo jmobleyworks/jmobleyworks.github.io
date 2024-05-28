@@ -24,7 +24,7 @@ main {
   max-width: 1200px;
   margin: 0 auto;
   background-color: #000; /* Black background for main content */
-  box-shadow: 0 0 10px rgb(36, 36, 36); /* Black box-shadow */
+  box-shadow: 0 0 10px rgb(0, 0, 0); /* Black box-shadow */
   border-radius: 8px;
 }
 
@@ -66,7 +66,7 @@ button {
   box-sizing: border-box;
   border: 1px solid #fff; /* White borders */
   border-radius: 4px;
-  background-color: #000000; /* Dark gray background for inputs and buttons */
+  background-color: #000; /* Pure black background for inputs and buttons */
   color: #fff; /* White text */
   font-size: 14px;
 }
@@ -78,8 +78,9 @@ input[type="file"] {
 button {
   margin-top: 2px;
 }
-textarea{
-  background-color: #000;
+
+textarea {
+  background-color: #000; /* Pure black background for textarea */
 }
 
 #world-seed-form {
@@ -88,7 +89,7 @@ textarea{
   padding: 20px;
   border: 1px solid #fff; /* White border */
   border-radius: 8px;
-  background-color: #000000; /* Dark gray background for form */
+  background-color: #000; /* Pure black background for form */
 }
 
 #world-seed-form .form-group {
@@ -106,15 +107,12 @@ textarea{
   flex-wrap: wrap;
   /* Wrap options as needed */
   gap: 10px;
-}
-
-#world-seed-form .option {
   padding: 10px;
   /* Adjust padding if needed for content size */
   border: 1px solid #fff; /* White borders */
   border-radius: 4px;
-  background-color: #333; /* Even darker gray background for options, consider #000 for pure black */
-  color: #fff; /* White text */
+  background-color: #000; /* Pure black background for options */
+  color: #fff; /* Light gray text for options, adjust for readability */  /* New line */
   cursor: pointer;
   text-align: center;
   /* Removed flex for individual options, allowing form container to control width */
@@ -169,7 +167,7 @@ textarea{
   .short-prompt {
     line-height: 1.6;
     margin-bottom: 20px;
-    color: #eee; /* Lighter white for better readability on some backgrounds */
+    color: #ffffff; /* Lighter white for better readability on some backgrounds */
     padding-right: 35px;
     /* To accommodate for button space */
   }

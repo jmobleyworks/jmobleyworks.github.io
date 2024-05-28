@@ -136,6 +136,7 @@ textarea {
 }
 
 #world-seed-form .form-group label {
+  display:block;
   /* Existing styles for labels within form-group */
   font-size: 16px;
   color: #fff; /* White labels */

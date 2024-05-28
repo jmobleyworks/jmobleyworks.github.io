@@ -69,6 +69,7 @@ form {
 input[type="text"],
 input[type="submit"],
 button {
+  height:50px
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -92,6 +93,7 @@ button {
 }
 
 textarea {
+  height: 50px;
   width: 100%;
   /* Fills the entire available space */
   background-color: #000;
@@ -149,6 +151,7 @@ textarea {
 #world-seed-form .option {
   border: 1px solid #fff;
   padding: 10px;
+  border-radius: 4px;
 }
 
 #world-seed-form .option.selected {
@@ -159,6 +162,7 @@ textarea {
   /* Black text */
   background-color: #fff;
   /* White background */
+  border-radius: 4px;
 }
 
 #world-seed-form .form-group {

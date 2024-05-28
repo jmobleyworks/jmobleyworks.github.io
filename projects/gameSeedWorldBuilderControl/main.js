@@ -1,4 +1,4 @@
-import { worldBuildingElements as formData } from './options.js';
+import { worldBuildingElements } from './options.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = document.createElement('div');

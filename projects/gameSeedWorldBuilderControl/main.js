@@ -81,10 +81,22 @@ function createForm(container) {
 
     container.appendChild(formContainer);
 }
-function updatePrompts() {
-    const shortPrompt = document.getElementById('short-prompt');
-    shortPrompt.innerHTML = 'This is a sample prompt.';
-}
+
+const outputString = (document.getElementsByClassName('form-group') || [])
+    .reduce((acc, formGroup) => {
+        // Extract selected options within the form group
+        const selectedOptions = formGroup.querySelectorAll('.option.selected');
+
+        // Check if any options are selected
+        if (selectedOptions.length > 0) {
+            // Build a string representation of selected options
+            const optionValues = Array.from(selectedOptions).map(option => option.textContent);
+            const groupValue = `${formGroup.querySelector('.control-header').textContent}: ${optionValues.join(', ')}`;
+            return acc + groupValue + '\n';
+        } else {
+            return acc; // No selected options, skip to next form group
+        }
+    }, '');
 
 function randomizeForm() {
     const form = document.getElementById('world-seed-form');

@@ -1,7 +1,14 @@
 /* Improved CSS - Black and White Monochromatic */
 .logo-container {
   display: flex; /* Enable flexbox layout */
-  align-items: center; /* Align content vertically */
+  align-items: left; /* Align content vertically */
+}
+
+/* Make the logo image responsive */
+.logo-container img {
+  width: 100%; /* Take up 100% of the container width */
+  height: auto; /* Maintain the original aspect ratio */
+  max-width: 800px; /* Optional: Set a maximum width for larger screens */
 }
 
 body {

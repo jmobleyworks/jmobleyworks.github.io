@@ -1,4 +1,4 @@
-import './styles/promptSection.css';
+import './styles/promptSection';
 
 class PromptSection extends HTMLElement {
   constructor() {

@@ -1,4 +1,4 @@
-import './styles/demoSection.css';
+import './styles/demoSection';
 
 class DemoSection extends HTMLElement {
   constructor() {

@@ -80,6 +80,7 @@ button {
 
 textarea {
   background-color: #000; /* Pure black background for textarea */
+  color: #fff;
 }
 
 #world-seed-form {

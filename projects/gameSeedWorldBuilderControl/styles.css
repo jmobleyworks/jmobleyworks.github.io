@@ -122,3 +122,12 @@ textarea {
   border: 1px solid #fff; 
   padding: 10px;
 }
+
+#world-seed-form .option.selected {
+  border: 1px solid #fff; /* White border */
+  padding: 10px;
+  color: #000; /* Black text */
+  background-color: #fff; /* White background */
+}
+
+

@@ -156,10 +156,8 @@ textarea {
 }
 
 #world-seed-form .form-group {
-  display: flex;
-  /* Make the form group a flex container */
-  flex-wrap: wrap;
-  /* Allow wrapping of elements if needed */
+  display: block;
+  /* Make the form group a block container */
 }
 
 label {

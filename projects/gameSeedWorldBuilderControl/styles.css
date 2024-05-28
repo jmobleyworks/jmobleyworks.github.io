@@ -1,7 +1,7 @@
 /* Improved CSS - Black and White Monochromatic */
 
 body {
-  font: 16px Helvetica, sans-serif;
+  font: 16px Helvetica, Arial, sans-serif;  /* Helvetica as preferred, then Arial, then sans-serif */
   margin: 0;
   padding: 20px;
   color: #fff; /* White text */
@@ -79,8 +79,8 @@ button {
 }
 
 textarea {
+  width: 100%; /* Fills the entire available space */
   background-color: #000; /* Pure black background for textarea */
-  color: #fff;
 }
 
 #world-seed-form {
@@ -128,6 +128,21 @@ textarea {
   padding: 10px;
   color: #000; /* Black text */
   background-color: #fff; /* White background */
+}
+
+#world-seed-form .form-group {
+  display: flex; /* Make the form group a flex container */
+  flex-wrap: wrap; /* Allow wrapping of elements if needed */
+}
+
+#world-seed-form label {
+  flex: 1; /* Allow label to shrink and grow as needed */
+  margin-right: 10px; /* Add some margin between label and textarea */
+}
+
+textarea {
+  flex: 2; /* Allow textarea to take up twice the space as the label */
+  background-color: #000; /* Pure black background for textarea */
 }
 
 

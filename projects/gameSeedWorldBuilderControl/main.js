@@ -1,5 +1,5 @@
 import { formGroups } from './formData.js';
-import './styles/app.css';
+import './styles/app';
 import './styles/promptHeader.css';
 import './styles/promptSection.css';
 import './styles/demoSection.css';

@@ -32,20 +32,14 @@ function createForm(container) {
     const randomizeButton = document.createElement('button');
     randomizeButton.classList.add('randomize-button');
     randomizeButton.textContent = 'Randomize';
-    // Add event listener for randomize button functionality (implementation not provided)
-    randomizeButton.addEventListener('click', () => {
-        // Add your logic to randomize form selections here
-    });
+    randomizeButton.addEventListener('click', randomizeForm);
     buttonContainer.appendChild(randomizeButton);
 
     // Clear button
     const clearButton = document.createElement('button');
     clearButton.classList.add('clear-button');
     clearButton.textContent = 'Clear';
-    // Add event listener for clear button functionality (implementation not provided)
-    clearButton.addEventListener('click', () => {
-        // Add your logic to clear all selections here
-    });
+    clearButton.addEventListener('click', clearForm);
     buttonContainer.appendChild(clearButton);
 
     formContainer.appendChild(buttonContainer);
@@ -83,4 +77,25 @@ function createForm(container) {
 function updatePrompts() {
     const shortPrompt = document.getElementById('short-prompt');
     shortPrompt.textContent = 'This is a sample prompt.';
+}
+
+function randomizeForm() {
+    const form = document.getElementById('world-seed-form');
+    const options = form.querySelectorAll('.option'); // Select all option elements
+
+    options.forEach((option) => {
+        option.classList.remove('selected'); // Deselect all options first
+        if (Math.random() < 0.5) { // Random chance (50%) to select
+            option.classList.add('selected');
+        }
+    });
+}
+
+function clearForm() {
+    const form = document.getElementById('world-seed-form');
+    const options = form.querySelectorAll('.option'); // Select all option elements
+
+    options.forEach((option) => {
+        option.classList.remove('selected'); // Deselect all options
+    });
 }

@@ -42,38 +42,43 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.appendChild(app);
 });
 
+
 function createForm(container) {
-  const formContainer = document.createElement('div');
-  formContainer.id = 'world-seed-form';
-
-  formGroups.forEach(({ label, options }) => {
-    const formGroup = document.createElement('div');
-    formGroup.classList.add('form-group');
-
-    const controlHeader = document.createElement('div');
-    controlHeader.classList.add('control-header');
-    controlHeader.textContent = label;
-    formGroup.appendChild(controlHeader);
-
-    const optionsContainer = document.createElement('div');
-    optionsContainer.classList.add('options');
-
-    options.forEach((option) => {
-      const optionElement = document.createElement('div');
-      optionElement.classList.add('option');
-      optionElement.textContent = option;
-      optionElement.addEventListener('click', () => {
-        optionElement.classList.toggle('selected');
+    const formContainer = document.createElement('div');
+    formContainer.id = 'world-seed-form';
+  
+    // Use spread operator to create a flat array from formData
+    [...formData].forEach(({ label, options }) => {
+      const formGroup = document.createElement('div');
+      formGroup.classList.add('form-group');
+  
+      const controlHeader = document.createElement('div');
+      controlHeader.classList.add('control-header');
+      controlHeader.textContent = label;
+      formGroup.appendChild(controlHeader);
+  
+      const optionsContainer = document.createElement('div');
+      optionsContainer.classList.add('options');
+  
+      options.forEach((option) => {
+        const optionElement = document.createElement('div');
+        optionElement.classList.add('option');
+        optionElement.textContent = option;
+        optionElement.addEventListener('click', () => {
+          optionElement.classList.toggle('selected');
+        });
+        optionsContainer.appendChild(optionElement);
       });
-      optionsContainer.appendChild(optionElement);
+  
+      formGroup.appendChild(optionsContainer);
+      formContainer.appendChild(formGroup);
     });
+  
+    container.appendChild(formContainer);
+  }
+  
 
-    formGroup.appendChild(optionsContainer);
-    formContainer.appendChild(formGroup);
-  });
 
-  container.appendChild(formContainer);
-}
 
 function updatePrompts() {
   const shortPrompt = document.getElementById('short-prompt');

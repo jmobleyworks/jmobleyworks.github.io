@@ -78,7 +78,7 @@ function createForm(container) {
 }
 function updatePrompts() {
     const shortPrompt = document.getElementById('short-prompt');
-    shortPrompt.textContent = 'This is a sample prompt.';
+    shortPrompt.innerHTML = 'This is a sample prompt.';
 }
 
 function randomizeForm() {

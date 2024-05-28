@@ -66,7 +66,7 @@ button {
   box-sizing: border-box;
   border: 1px solid #fff; /* White borders */
   border-radius: 4px;
-  background-color: #222; /* Dark gray background for inputs and buttons */
+  background-color: #000000; /* Dark gray background for inputs and buttons */
   color: #fff; /* White text */
   font-size: 14px;
 }
@@ -88,7 +88,7 @@ textarea{
   padding: 20px;
   border: 1px solid #fff; /* White border */
   border-radius: 8px;
-  background-color: #222; /* Dark gray background for form */
+  background-color: #000000; /* Dark gray background for form */
 }
 
 #world-seed-form .form-group {
@@ -191,7 +191,7 @@ textarea{
   }
 
   .prompt-header button:hover {
-    color: #aaa; /* Lighter gray on hover */
+    color: #000000; /* Lighter gray on hover */
   }
 
   .copy-prompt-button {

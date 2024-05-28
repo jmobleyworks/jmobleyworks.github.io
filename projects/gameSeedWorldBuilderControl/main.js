@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePrompts();
 });
 
-
-
 function createForm(container) {
     const formContainer = document.createElement('div');
     formContainer.id = 'world-seed-form';
@@ -23,6 +21,10 @@ function createForm(container) {
     controlHeader.classList.add('control-header');
     controlHeader.textContent = 'GameSeed WorldBuilder Control';
     formContainer.appendChild(controlHeader);
+    
+    // Create short prompt text area
+    const shortPrompt = document.createElement('textarea');
+    shortPrompt.id = "short-prompt";
 
     // Create button container
     const buttonContainer = document.createElement('div');

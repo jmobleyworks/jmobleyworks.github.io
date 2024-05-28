@@ -11,7 +11,7 @@ body {
   padding: 20px;
   color: #fff;
   /* White text */
-  background-color: #000;
+  background-color: #0B0B45;
   /* Black background */
 }
 
@@ -21,7 +21,7 @@ main {
 }
 
 header {
-  background-color: #000;
+  background-color: #0B0B45;
   /* Black header background */
   color: #fff;
   /* White header text */
@@ -33,7 +33,7 @@ header {
 main {
   max-width: 1200px;
   margin: 0 auto;
-  background-color: #000;
+  background-color: #0B0B45;
   /* Black background for main content */
   border-radius: 8px;
 }
@@ -81,7 +81,7 @@ button {
   border: 1px solid #fff;
   /* White borders */
   border-radius: 4px;
-  background-color: #000;
+  background-color: #0B0B45;
   /* Pure black background for inputs and bttns */
   color: #fff;
   /* White text */
@@ -100,7 +100,7 @@ textarea {
   height: 60px;
   width: 100%;
   /* Fills the entire available space */
-  background-color: #000;
+  background-color: #0B0B45;
   /* Pure black background for textarea */
   border-color: #fff;
   color: #fff;
@@ -121,7 +121,7 @@ textarea {
   border: 1px solid #fff;
   /* White border */
   border-radius: 8px;
-  background-color: #000;
+  background-color: #0B0B45;
   /* Pure black background for form */
 }
 
@@ -142,7 +142,7 @@ textarea {
   border: 1px solid #fff;
   /* White borders for container */
   border-radius: 4px;
-  background-color: #000;
+  background-color: #0B0B45;
   /* Pure black background for options */
   color: #fff;
   /* Light gray text for options, adjust for readability */
@@ -162,7 +162,7 @@ textarea {
   border: 1px solid #fff;
   /* White border */
   padding: 10px;
-  color: #000;
+  color: #0B0B45;
   /* Black text */
   background-color: #fff;
   /* White background */

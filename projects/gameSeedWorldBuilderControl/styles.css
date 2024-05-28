@@ -59,6 +59,7 @@ label {
 
 input[type="text"],
 input[type="submit"],
+
 button {
   width: 100%;
   padding: 10px;
@@ -152,6 +153,7 @@ textarea {
   }
 
   #world-seed-form .option {
+    border: 1px solid #fff; /* White border for options */
     font-size: 14px;
   }
 

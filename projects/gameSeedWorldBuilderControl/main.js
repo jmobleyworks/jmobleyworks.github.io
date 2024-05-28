@@ -3,13 +3,8 @@ import { worldBuildingElements, promptTemplates } from './options.js';
 document.addEventListener('DOMContentLoaded', () => {
     const app = document.createElement('div');
     app.classList.add('app');
-    const demoSection = document.createElement('demo-section');
-    const promptSection = document.createElement('prompt-section');
-    demoSection.appendChild(promptSection);
-    app.appendChild(demoSection);
-    createForm(demoSection);
-    document.body.appendChild(app);
-    updatePrompts();
+    const gameSeedWorldBuilderControl = document.getElementById('gameSeedWorldBuilderControl');
+    gameSeedWorldBuilderControl(app);
 });
 
 function createForm(container) {

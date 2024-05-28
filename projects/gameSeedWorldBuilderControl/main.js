@@ -1,8 +1,4 @@
 import { formGroups } from './formData.js';
-import './styles/app';
-import './styles/promptHeader';
-import './styles/promptSection';
-import './styles/demoSection';
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = document.createElement('div');

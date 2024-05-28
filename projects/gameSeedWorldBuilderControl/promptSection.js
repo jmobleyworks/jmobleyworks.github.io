@@ -1,5 +1,3 @@
-import './styles/promptSection';
-
 class PromptSection extends HTMLElement {
   constructor() {
     super();

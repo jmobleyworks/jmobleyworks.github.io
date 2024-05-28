@@ -1,5 +1,3 @@
-import './styles/demoSection';
-
 class DemoSection extends HTMLElement {
   constructor() {
     super();

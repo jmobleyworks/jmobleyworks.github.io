@@ -11,7 +11,7 @@ export const worldBuildingElements = {
   "Conflict": ["War", "Exploration", "Survival", "Quest", "Discovery", "Intrigue", "Revolution", "Liberation", "Conquest", "Rebellion"],
   "Elemental": ["Fire", "Water", "Earth", "Air", "Ice", "Lightning", "Shadow", "Light", "Metal", "Wood"],
   "Magic Schools": ["Elemental", "Necromancy", "Illusion", "Enchantment", "Alchemy", "Divination", "Summoning", "Transmutation", "Blood Magic", "Rune Craft", "Wardcrafting", "Artificing", "Primal Magic"],
-  "Magic Artifacts": ["Wands", "Staffs", "Orbs", "Grimoires", "Talismans", "Runes", "Potions", "Scrolls", "Crystals", "Tomes", "Relics", "Rings", "Amulets", "Potions", "Spellbooks"],
+  "Magic Artifacts": ["Wands", "Staffs", "Orbs", "Grimoires", "Talismans", "Runes", "Potions", "Scrolls", "Crystals", "Tomes", "Relics", "Rings", "Amulets", "Spellbooks"],
   "Magic Beings": ["Fairies", "Pixies", "Gnomes", "Golems", "Familiars", "Spirits", "Elementals", "Demons", "Angels", "Genies", "Celestial Beings"],
   "Magic Abilities": ["Shapeshifting", "Teleportation", "Mind Control", "Time Manipulation", "Summoning", "Illusions", "Healing", "Flight", "Invisibility", "Elemental Manipulation", "Astral Projection", "Precognition", "Empathy", "Telekinesis", "Metamorphosis"],
   "Narrative Focus": ["Heroic Journey", "Coming of Age", "Intrigue", "Redemption", "Revenge", "Mystery", "Romance", "Adventure", "Tragedy", "Comedy", "Satire", "Parable", "Exploration", "Betrayal", "Friendship"],

@@ -11,13 +11,25 @@ function createForm(container) {
     formContainer.id = 'world-seed-form';
 
     // Create control header with label
-    const controlHeader = document.createElement('h2');
+    const controlHeader = document.createElement('h1');
     controlHeader.classList.add('control-header');
     controlHeader.textContent = 'WorldSeed Builder';
     formContainer.appendChild(controlHeader);
     
+    /*
+    // Copy button
+    const copyButton = document.createElement('img');
+    copyButton.src = ("MobleysoftGothichGlyphSetCopy.png");
+    copyButton.addEventListener('click', copyForm);
+    controlHeader.appendChild(copyButton);
 
-
+    // Donate Button
+    const donateButton = document.createElement('img');
+    donateButton.src = ("MobleysoftGothichGlyphSetCoin.png");
+    donateButton.addEventListener('click', donate);
+    controlHeader.appendChild(donateButton);
+    */
+   
     // Create button container
     const buttonContainer = document.createElement('div');
     buttonContainer.classList.add('button-container');

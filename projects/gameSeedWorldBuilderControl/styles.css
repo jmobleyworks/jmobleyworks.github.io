@@ -2,6 +2,7 @@
 .logo-container {
   display: flex; /* Enable flexbox layout */
   align-items: left; /* Align content vertically */
+  max-width: 100%;
 }
 
 /* Make the logo image responsive */

@@ -1,95 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JMobley's Projects</title>
+    <title>Mobleysoft Darkworks</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body, html {
-            height: 100%;
-            font-family: 'Roboto', sans-serif;
-        }
-        body {
-            background-color: #121212;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: auto;
-        }
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: calc(100vh - 40px);
-        }
-        h1 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .projects {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-        .project {
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            margin: 10px 0;
-            border-radius: 8px;
-            padding: 20px;
-            transition: transform 0.3s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50px; /* Fixed height for each project button */
-        }
-        .project:hover {
-            transform: translateY(-5px);
-        }
-        .project a {
-            font-size: 1.5rem;
-            color: #fff;
-            text-decoration: none;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>JMobley's Projects</h1>
-        <div class="projects" id="projects"></div>
+    <div>
+        <a href="https://jmobleyworks.github.io/projects/2dActionRpg/2dActionRpg.html">2dActionRpg</a>
+        <a href="https://jmobleyworks.github.io/projects/aiPhotobooth/aiPhotobooth.html">aiPhotobooth</a>
+        <!--a href="https://jmobleyworks.github.io/projects/gameScribe/gameScribe.html">gameScribe</a-->
+        <!--a href="https://jmobleyworks.github.io/projects/gameSeedCombinations/gameSeedCombinations.html">gameSeedCombinations</a-->
+        <!--a href="https://jmobleyworks.github.io/projects/gameSeedPermutations/gameSeedPermutations.html">gameSeedPermutations</a-->
+        <!--a href="https://jmobleyworks.github.io/projects/gameTest/gameTest.html">gameTest</a-->
+        <a href="https://jmobleyworks.github.io/projects/screenplayEditor/screenplayEditor.html">screenplayEditor</a>
+        <a href="https://jmobleyworks.github.io/projects/spriteDetector/spriteDetector.html">spriteDetector</a>
+        <!--a href="https://jmobleyworks.github.io/projects/spriteExtractor/spriteExtractor.html">spriteExtractor</a-->
+        <!--a href="https://jmobleyworks.github.io/projects/Text2Game/Text2Game.html">Text2Game</a-->
+        <a href="https://jmobleyworks.github.io/projects/WorldBender/WorldBender.html">WorldBender</a>
+        <a href="https://jmobleyworks.github.io/projects/WorldSeed/WorldSeed.html">WorldSeed</a>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('projects.json')
-                .then(response => response.json())
-                .then(projects => {
-                    const projectsContainer = document.getElementById('projects');
-                    projects.forEach(project => {
-                        const projectDiv = document.createElement('div');
-                        projectDiv.className = 'project';
-                        const projectLink = document.createElement('a');
-                        projectLink.href = `https://jmobleyworks.github.io/projects/${project}/${project}.html`;
-                        projectLink.textContent = project;
-                        projectDiv.appendChild(projectLink);
-                        projectsContainer.appendChild(projectDiv);
-                    });
-                })
-                .catch(error => console.error('Error fetching projects:', error));
-        });
-    </script>
 </body>
 </html>

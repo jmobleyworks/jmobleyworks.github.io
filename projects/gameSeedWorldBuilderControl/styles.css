@@ -16,7 +16,7 @@ body {
   font: 16px Baskerville Old Face, Times New Roman, sans-serif;
   /* Helvetica as preferred, then Arial, then sans-serif */
   margin: 0;
-  padding: 20px;
+  padding: 0px, 20px, 20px, 20px;
   color: #fdfdf3;
   /* White text */
   background-color: #000711;

@@ -4,10 +4,11 @@
     "gameScribe",
     "gameSeedCombinations",
     "gameSeedPermutations",
-    "gameSeedWorldBuilderControl",
     "gameTest",
     "screenplayEditor",
     "spriteDetector",
     "spriteExtractor",
-    "Text2Game"
+    "Text2Game",
+    "WorldBender",
+    "WorldSeed"
 ]

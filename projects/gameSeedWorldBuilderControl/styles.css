@@ -17,7 +17,7 @@ body {
   /* Helvetica as preferred, then Arial, then sans-serif */
   margin: 0;
   padding: 20px;
-  color: #fff;
+  color: #fdfdf3;
   /* White text */
   background-color: #000711;
   /* Black background */
@@ -31,10 +31,10 @@ main {
 header {
   background-color: #000711;
   /* Black header background */
-  color: #fff;
+  color: #fdfdf3;
   /* White header text */
   text-align: center;
-  border-bottom: 2px solid #fff;
+  border-bottom: 2px solid #fdfdf3;
   /* White border */
 }
 
@@ -50,7 +50,7 @@ h1,
 h2,
 h3,
 h4 {
-  color: #fff;
+  color: #fdfdf3;
   /* White headings */
   margin-top: 0;
 }
@@ -58,7 +58,7 @@ h4 {
 p {
   line-height: 1.6;
   margin-bottom: 20px;
-  color: #fff;
+  color: #fdfdf3;
   /* White text, may need adjustment for readability */
 }
 
@@ -74,7 +74,7 @@ form {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
-  color: #fff;
+  color: #fdfdf3;
   /* White lb */
 }
 
@@ -86,12 +86,12 @@ button {
   padding: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
-  border: 1px solid #fff;
+  border: 1px solid #fdfdf3;
   /* White borders */
   border-radius: 4px;
   background-color: #000711;
   /* Pure black background for inputs and bttns */
-  color: #fff;
+  color: #fdfdf3;
   /* White text */
   font-size: 14px;
 }
@@ -110,12 +110,12 @@ textarea {
   /* Fills the entire available space */
   background-color: #000711;
   /* Pure black background for textarea */
-  border-color: #fff;
-  color: #fff;
+  border-color: #fdfdf3;
+  color: #fdfdf3;
   margin-bottom: 7px;
   padding: 10px;
   box-sizing: border-box;
-  border: 1px solid #fff;
+  border: 1px solid #fdfdf3;
   border-radius: 4px;
   flex: 2;
   /* Allow textarea to take up twice the space as the lb */
@@ -126,7 +126,7 @@ textarea {
   /* Allow full width for horizontal squish */
   margin: 20px auto;
   padding: 20px;
-  border: 1px solid #fff;
+  border: 1px solid #fdfdf3;
   /* White border */
   border-radius: 8px;
   background-color: #000711;
@@ -147,12 +147,12 @@ textarea {
   gap: 10px;
   padding: 10px;
   /* Adjust padding if needed for content size */
-  border: 1px solid #fff;
+  border: 1px solid #fdfdf3;
   /* White borders for container */
   border-radius: 4px;
   background-color: #000711;
   /* Pure black background for options */
-  color: #fff;
+  color: #fdfdf3;
   /* Light gray text for options, adjust for readability */
   /* New line */
   cursor: pointer;
@@ -161,18 +161,18 @@ textarea {
 }
 
 #world-seed-form .option {
-  border: 1px solid #fff;
+  border: 1px solid #fdfdf3;
   padding: 10px;
   border-radius: 4px;
 }
 
 #world-seed-form .option.selected {
-  border: 1px solid #fff;
+  border: 1px solid #fdfdf3;
   /* White border */
   padding: 10px;
   color: #000711;
   /* Black text */
-  background-color: #fff;
+  background-color: #fdfdf3;
   /* White background */
   border-radius: 4px;
 }
@@ -186,7 +186,7 @@ label {
   display: block;
   /* Existing styles for lbs within form-group */
   font-size: 16px;
-  color: #fff;
+  color: #fdfdf3;
   /* White lbs */
   /* New styles for centering */
   text-align: center;

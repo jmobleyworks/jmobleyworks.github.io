@@ -1,15 +1,14 @@
-/* Improved CSS - Black and White Monochromatic */
 .logo-container {
-  align-items: center; /* Align content vertically */
+  align-items: center;
   max-width: 100%;
+  display: flex; /* Add this line */
+  justify-content: center; /* Add this line */
 }
 
-/* Make the logo image responsive */
 .logo-container img {
-  width: 100%; /* Take up 100% of the container width */
-  height: auto; /* Maintain the original aspect ratio */
-  max-width: 800px; /* Optional: Set a maximum width for larger screens */
-  align-self: center;
+  width: 100%;
+  height: auto;
+  max-width: 800px;
 }
 
 body {

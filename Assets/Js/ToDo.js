@@ -50,3 +50,15 @@ export const spriteAsJson = {
     "3": ["x:0","y:1","r:0", "g:0", "b:0", "a:0"],
     "4": ["x:1","y:1","r:0", "g:0", "b:0", "a:0"],
     };
+
+    /*
+    Based on the world seed information provided, here are some prompts to generate pixel art in the classic 3/4 top-down style of SNES RPGs like Chrono Trigger and Final Fantasy III:
+
+"Create a pixel art scene depicting a mystical forest clearing with ancient ruins overgrown by vines and moss. Include towering trees with twisted branches, a crumbling stone archway covered in runes, and a small pond reflecting the celestial night sky with auroras dancing above."
+"Illustrate a seaside town in a pixel art style reminiscent of SNES RPGs. Show cobblestone streets lined with quaint cottages and shops, a bustling harbor with sailing ships and airships docked, and a towering lighthouse overlooking the ocean. Include details like barrels, crates, and seagulls to capture the whimsical atmosphere."
+"Craft a pixel art scene of a floating island in the sky, with towering spires of rock and waterfalls cascading endlessly into the clouds below. Depict mythical creatures like fairies and golems inhabiting the island, and include elements like glowing runes, ancient structures, and magical portals."
+"Create a pixel art representation of a post-apocalyptic wasteland, with a crumbling city skyline in the distance and a desolate desert landscape in the foreground. Include details like rusted car wrecks, skeletal remains, and mutated flora struggling to survive. Incorporate elements of radiation and environmental catastrophe."
+"Illustrate a dimensional rift or portal in pixel art, with swirling energy and distorted reality bleeding through the edges. Show glimpses of bizarre landscapes and alien vistas on the other side, hinting at parallel realms and cosmic wonders beyond."
+
+These prompts incorporate various themes, environments, and elements from the provided world seed, while adhering to the classic pixel art style and top-down perspective of SNES RPGs like Chrono Trigger and Final Fantasy III.
+    */

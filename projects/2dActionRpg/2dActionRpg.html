@@ -14,6 +14,7 @@
     <div id="spriteLabel" style="position: absolute; top: 30px; left: 100px; color: white;"></div>
     <div id="scoreLabel" style="position: absolute; top: 50px; left: 10px; color: white;"></div>
     <script>
+        //main
         var canvas = document.getElementById('gameCanvas'); // Get a reference to the canvas
         var ctx = canvas.getContext('2d');
         var time = 0; // Define the current time and the speed of the day-night cycle
@@ -34,19 +35,769 @@
         var playerCollidingWithWall;
         //Notes: event listener for click on start button in TitleScreen.js calls startGame() in Game.js
     </script>
-    <script src="Background.js"></script>
-    <script src="Collisions.js"></script>
-    <script src="ColorUtils.js"></script>
-    <script src="Score.js"></script>
-    <script src="DayNightCycle.js"></script>
-    <script src="Enemy.js"></script>
-    <script src="Player.js"></script>
-    <script src="PlayerAttack.js"></script>
-    <script src="Game.js"></script>
-    <script src="TitleScreen.js"></script>
-    <script src="Resize.js"></script>
-    <script src="World.js"></script>
-    <script src="GameSetup.js"></script>
+    <script>
+        // Background.js
+        // Constants for tile types
+        const TILE_EMPTY = 0;  // Empty space
+        const TILE_WALL = 1;   // Wall
+        const TILE_TREASURE = 2; // Treasure
+        const TILE_ENEMY = 3;  // Enemy
+
+        // Variable to track if the maze has been generated
+        let mazeGenerated = false;
+
+        // Function to generate a maze based on a random seed
+        function generateMaze(seed, width, height) {
+            // Initialize the maze with all walls
+            maze = [];
+            for (let y = 0; y < height; y++) {
+                maze[y] = [];
+                for (let x = 0; x < width; x++) {
+                    maze[y][x] = TILE_WALL;
+                }
+            }
+
+            // Helper function to recursively generate the maze
+            function recursiveBacktrack(x, y) {
+                // Mark the current cell as empty
+                maze[y][x] = TILE_EMPTY;
+
+                // Directions to move in (up, right, down, left)
+                const directions = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+
+                // Shuffle the directions randomly
+                directions.sort(() => Math.random() - 0.5);
+
+                // Try each direction
+                for (let i = 0; i < directions.length; i++) {
+                    const [dx, dy] = directions[i];
+                    const nx = x + dx * 2;
+                    const ny = y + dy * 2;
+
+                    // Check if the next cell is within bounds and unvisited
+                    if (nx >= 0 && ny >= 0 && nx < width && ny < height && maze[ny][nx] === TILE_WALL) {
+                        // Mark the wall between the current and next cell as empty
+                        maze[y + dy][x + dx] = TILE_EMPTY;
+                        // Recursively call the function for the next cell
+                        recursiveBacktrack(nx, ny);
+                    }
+                }
+            }
+
+            // Start generating the maze from a random cell
+            const startX = Math.floor(Math.random() * (width / 2)) * 2 + 1;
+            const startY = Math.floor(Math.random() * (height / 2)) * 2 + 1;
+            recursiveBacktrack(startX, startY);
+
+            // Optionally, place treasure and enemies in the maze
+            // You can customize this part based on your game's mechanics and rules
+
+            return maze;
+        }
+
+        function generateMazeFromScratch() {
+            // Calculate tile sizes for both width and height
+            tileSizeX = ctx.canvas.width / playerRadius;
+            tileSizeY = ctx.canvas.height / playerRadius;
+            // Generate the maze if it hasn't been generated yet
+            if (!mazeGenerated) {
+                mazeWidth = Math.floor(ctx.canvas.width / tileSizeX);
+                mazeHeight = Math.floor(ctx.canvas.height / tileSizeY);
+                mazeSeed = Math.random(); // Generate a random seed for the maze
+                maze = generateMaze(mazeSeed, mazeWidth, mazeHeight);
+                mazeGenerated = true; // Mark the maze as generated
+            }
+            return maze;
+        }
+
+        // Function to draw the background (maze) on the canvas
+        function drawBackground(ctx) {
+            //const playerSizeMultiplier = playerRadius*1;
+            generateMazeFromScratch();
+
+            // Iterate through the maze array and draw each tile based on its type
+            for (let y = 0; y < maze.length; y++) {
+                for (let x = 0; x < maze[y].length; x++) {
+                    let tile = maze[y][x];
+                    let xPos = (x) * tileSizeX; // Adding 1 for padding
+                    let yPos = (y) * tileSizeY; // Adding 1 for padding
+
+                    // Draw the tile based on its type
+                    switch (tile) {
+                        case TILE_EMPTY:
+                            // Draw an empty space
+                            ctx.fillStyle = 'white';
+                            ctx.fillRect(xPos, yPos, tileSizeX, tileSizeY);
+                            break;
+                        case TILE_WALL:
+                            // Draw a wall
+                            ctx.fillStyle = 'black';
+                            ctx.fillRect(xPos, yPos, tileSizeX, tileSizeY);
+                            break;
+                        case TILE_TREASURE:
+                            // Draw treasure
+                            ctx.fillStyle = 'gold';
+                            ctx.fillRect(xPos, yPos, tileSizeX, tileSizeY);
+                            break;
+                        case TILE_ENEMY:
+                            // Draw an enemy
+                            ctx.fillStyle = 'red';
+                            ctx.fillRect(xPos, yPos, tileSizeX, tileSizeY);
+                            break;
+                        // Add more cases for additional tile types as needed
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        //Collisions.js
+        // Function to check if a given position collides with a wall in the maze
+        function checkCollision(x, y) {
+            let mazeLength = maze[0].length * 100;
+            if (x < -mazeLength || x >= mazeLength || y < -mazeLength || y >= mazeLength) {
+                alert("out of bound, player x=" + playerX + " player y =" + playerY);
+            }
+            if (maze[Math.trunc(y / 100)][Math.trunc(x / 100)] === TILE_WALL) {
+                playerCollidingWithWall = true;
+            } else playerCollidingWithWall = false;
+
+            return maze[Math.trunc(y / 100)][Math.trunc(x / 100)] === TILE_WALL;
+        }</script>
+    <script>
+        //ColorUtils.js
+        // Function to interpolate between two colors
+        function lerpColor(a, b, amount) {
+            let ar = a >> 16, ag = a >> 8 & 0xff, ab = a & 0xff,
+                br = b >> 16, bg = b >> 8 & 0xff, bb = b & 0xff,
+                rr = ar + amount * (br - ar),
+                rg = ag + amount * (bg - ag),
+                rb = ab + amount * (bb - ab);
+            return ((rr << 16) | (rg << 8) | rb);
+        }</script>
+    <script>
+        //Score.js
+        // Initialize the score
+        let score = 0;
+
+        // Function to update the score
+        function updateScore() {
+            document.getElementById('scoreLabel').innerText = 'Score: ' + score;
+        }
+
+        // Call the updateScore function in your game loop
+        function updateGameScore() {
+            // Increase the score over time or when certain events happen
+            score += 1;
+
+            // Update the score display
+            updateScore();
+        }
+    </script>
+    <script>
+        //DayNightCycle.js
+        // Define the gradients for different times of day
+        let timeOfDayGradients = {
+            '0': { 0: 0x000010, 0.5: 0x000040, 1: 0x000070 }, // midnight, pitch black transitioning to deep blue
+            '1': { 0: 0x000040, 0.5: 0x000070, 1: 0x0000A0 }, // 1 AM, deep blue getting lighter
+            '2': { 0: 0x000070, 0.5: 0x0000A0, 1: 0x0000D0 }, // 2 AM, blue getting even lighter
+            '3': { 0: 0x0000A0, 0.5: 0x0000D0, 1: 0x0000FF }, // 3 AM, light blue transitioning to purple
+            '4': { 0: 0x0000D0, 0.5: 0x0000FF, 1: 0x3333FF }, // 4 AM, purple transitioning to lighter blue
+            '5': { 0: 0x0000FF, 0.5: 0x3333FF, 1: 0x6666FF }, // 5 AM, light blue transitioning to yellow
+            '6': { 0: 0x3333FF, 0.5: 0x6666FF, 1: 0xFFFF00 }, // 6 AM, sunrise, yellow
+            '7': { 0: 0x6666FF, 0.5: 0xFFFF00, 1: 0xFFFFCC }, // 7 AM, yellow transitioning to light yellow
+            '8': { 0: 0x9999FF, 0.5: 0xCCCCFF, 1: 0xFFFFCC }, // 8 AM, light yellow with a hint of blue
+            '9': { 0: 0xCCCCFF, 0.5: 0xFFFFCC, 1: 0xFFFFCC }, // 9 AM, light yellow
+            '10': { 0: 0xFFFFCC, 0.5: 0xFFFFCC, 1: 0xFFFFCC }, // 10 AM, light yellow
+            '11': { 0: 0xFFFFCC, 0.5: 0xFFFFCC, 1: 0xFFFFCC }, // 11 AM, light yellow
+            '12': { 0: 0xFFFFCC, 0.5: 0xFFFFCC, 1: 0xFFFFCC }, // noon, light yellow
+            '13': { 0: 0xFFFFCC, 0.5: 0xFFFFCC, 1: 0xFFFFCC }, // 1 PM, light yellow
+            '14': { 0: 0xFFFFCC, 0.5: 0xFFFFCC, 1: 0xFFFFCC }, // 2 PM, light yellow
+            '15': { 0: 0xFFFFCC, 0.5: 0xFFFFCC, 1: 0xFFFFCC }, // 3 PM, light yellow
+            '16': { 0: 0xFFFFCC, 0.5: 0xFFFFCC, 1: 0xCCCCFF }, // 4 PM, light yellow transitioning to light blue
+            '17': { 0: 0xFFFFCC, 0.5: 0xFFFF00, 1: 0xFF0000 }, // 5 PM, light blue transitioning to red
+            '18': { 0: 0xFFFF00, 0.5: 0xFF0000, 1: 0x6666FF }, // 6 PM, sunset, red
+            '19': { 0: 0xFF0000, 0.5: 0x6666FF, 1: 0x3333FF }, // 7 PM, red transitioning to blue
+            '20': { 0: 0x6666FF, 0.5: 0x3333FF, 1: 0x0000FF }, // 8 PM, blue getting darker
+            '21': { 0: 0x3333FF, 0.5: 0x0000FF, 1: 0x0000CC }, // 9 PM, dark blue transitioning to purple
+            '22': { 0: 0x0000FF, 0.5: 0x0000CC, 1: 0x000099 }, // 10 PM, purple transitioning to deep blue
+            '23': { 0: 0x0000CC, 0.5: 0x000099, 1: 0x000066 }  // 11 PM, deep blue transitioning to pitch black
+        }
+        // Function to draw the day/night cycle
+        function drawDayNightCycle() {
+            let gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            let colors;
+            let nextColors;
+            let timeOfDay;
+            let hour = Math.floor(time * 24);
+            let nextHour = (hour + 1) % 24; // Next hour, wraps around to 0 after 23
+            let fraction = (time * 24) - hour; // Fraction of the current hour that has passed
+            colors = timeOfDayGradients[hour];
+            nextColors = timeOfDayGradients[nextHour];
+            timeOfDay = 'Hour ' + hour;
+            document.getElementById('timeLabel').innerText = timeOfDay + ' ' + Math.round(time * 100) + '%';
+            for (let stop in colors) {
+                let color = lerpColor(colors[stop], nextColors[stop], fraction);
+                gradient.addColorStop(stop, '#' + ('000000' + color.toString(16)).slice(-6));
+            }
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }</script>
+    <script>
+        //Enemy.js
+        // Define the enemy's properties
+        let enemyX = Math.random() * window.innerWidth;
+        let enemyY = Math.random() * window.innerHeight;
+        let enemyRadius = 10;
+        let enemySpeed = 2;
+        // Function to move the enemy
+        function moveEnemy(canvas) {
+            let dx = Math.random() - 0.5;
+            let dy = Math.random() - 0.5;
+            enemyX += dx * enemySpeed;
+            enemyY += dy * enemySpeed;
+            // Keep the enemy within the bounds of the canvas
+            enemyX = Math.max(Math.min(enemyX, canvas.width - enemyRadius), enemyRadius);
+            enemyY = Math.max(Math.min(enemyY, canvas.height - enemyRadius), enemyRadius);
+        }
+        // Function to draw the enemy
+        function drawEnemy(ctx) {
+            ctx.beginPath();
+            ctx.arc(enemyX, enemyY, enemyRadius, 0, Math.PI * 2, false);
+            ctx.fillStyle = 'red';
+            ctx.fill();
+        }
+    </script>
+    <script>
+        // Player.js
+        // Initialize player movement variables
+        var moveUp = false;
+        var moveDown = false;
+        var moveLeft = false;
+        var moveRight = false;
+
+        // Modify the event listener for player movement
+        window.addEventListener('keydown', function (event) {
+            switch (event.key) {
+                case 'ArrowUp':
+                case 'w':
+                    moveUp = true;
+                    playerDirection = 0;
+                    break;
+                case 'ArrowDown':
+                case 's':
+                    moveDown = true;
+                    playerDirection = 2;
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                    moveLeft = true;
+                    playerDirection = 3;
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                    moveRight = true;
+                    playerDirection = 1;
+                    break;
+            }
+        });
+
+        // Add keyup event listener to stop movement when keys are released
+        window.addEventListener('keyup', function (event) {
+            switch (event.key) {
+                case 'ArrowUp':
+                case 'w':
+                    moveUp = false;
+                    break;
+                case 'ArrowDown':
+                case 's':
+                    moveDown = false;
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                    moveLeft = false;
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                    moveRight = false;
+                    break;
+            }
+        });
+
+        // Update the updatePlayer function in Player.js
+        function updatePlayer(ctx) {
+            //alert("here");
+            // Clear the previous player position
+            ctx.clearRect(playerX - playerRadius, playerY - playerRadius, playerRadius * 2, playerRadius * 2);
+
+            // Update the player's position based on the direction
+            if (moveUp && !checkCollision(playerX, playerY - speed)) { // Up
+                playerY -= speed;
+            }
+            if (moveRight && !checkCollision(playerX + speed, playerY)) { // Right
+                playerX += speed;
+            }
+            if (moveDown && !checkCollision(playerX, playerY + speed)) { // Down
+                playerY += speed;
+            }
+            if (moveLeft && !checkCollision(playerX - speed, playerY)) { // Left
+                playerX -= speed;
+            }
+
+            // Draw the player at the new position
+            drawPlayer(ctx, playerX, playerY, playerDirection);
+        }
+
+        // Update the updatePlayer function in Player.js
+        function updatePlayerb(ctx) {
+            //alert("here");
+            // Clear the previous player position
+            ctx.clearRect(playerX - playerRadius, playerY - playerRadius, playerRadius * 2, playerRadius * 2);
+
+            // Update the player's position based on the direction
+            if (moveUp) { // Up
+                playerY -= speed;
+            }
+            if (moveRight) { // Right
+                playerX += speed;
+            }
+            if (moveDown) { // Down
+                playerY += speed;
+            }
+            if (moveLeft) { // Left
+                playerX -= speed;
+            }
+
+            // Draw the player at the new position
+            drawPlayer(ctx, playerX, playerY, playerDirection);
+        }
+
+
+
+        // Function to draw the player's body
+        function drawPlayer(ctx, x, y, playerDirection) {
+            // Define gradient colors
+            const bodyGradient = ctx.createRadialGradient(x, y - 20, 5, x, y - 20, 25);
+            bodyGradient.addColorStop(0, 'darkgreen');
+            bodyGradient.addColorStop(1, 'green');
+
+            const legGradient = ctx.createLinearGradient(x - 8, y + 5, x - 8, y + 20);
+            legGradient.addColorStop(0, 'darkgreen');
+            legGradient.addColorStop(1, 'green');
+
+            const feetGradient = ctx.createLinearGradient(x - 10, y + 20, x + 10, y + 20);
+            feetGradient.addColorStop(0, 'saddlebrown');
+            feetGradient.addColorStop(1, 'brown');
+
+            // Draw the player's head (circle)
+            ctx.beginPath();
+            ctx.arc(x, y - 30, 10, 0, Math.PI * 2);
+            ctx.fillStyle = 'lightgrey';
+            ctx.fill();
+
+            // Draw the back of the head when looking up or away
+            if (playerDirection === 'up' || playerDirection === 'away') {
+                ctx.beginPath();
+                ctx.moveTo(x - 10, y - 30);
+                ctx.lineTo(x + 10, y - 30);
+                ctx.strokeStyle = 'lightgrey';
+                ctx.stroke();
+            }
+
+            // Draw the player's body (rectangle)
+            ctx.fillStyle = bodyGradient;
+            ctx.fillRect(x - 10, y - 20, 20, 25);
+
+            // Draw the player's legs (rectangle)
+            ctx.fillStyle = legGradient;
+            ctx.fillRect(x - 8, y + 5, 16, 15);
+
+            // Draw the player's feet (rectangle)
+            ctx.fillStyle = feetGradient;
+            ctx.fillRect(x - 10, y + 20, 20, 5);
+
+            // Draw the player's arms (lines)
+            ctx.strokeStyle = bodyGradient;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            if (playerDirection === 'left') {
+                ctx.moveTo(x - 5, y - 10);
+                ctx.lineTo(x - 20, y);
+                ctx.moveTo(x + 5, y - 10);
+                ctx.lineTo(x - 20, y + 5);
+            } else if (playerDirection === 'right') {
+                ctx.moveTo(x - 5, y - 10);
+                ctx.lineTo(x + 20, y);
+                ctx.moveTo(x + 5, y - 10);
+                ctx.lineTo(x + 20, y + 5);
+            }
+            ctx.stroke();
+
+            // Draw additional post-apocalyptic attire based on direction
+            if (playerDirection === 'left') {
+                // Draw left-facing attire
+                // Add your customizations here
+            } else if (playerDirection === 'right') {
+                // Draw right-facing attire
+                // Add your customizations here
+            }
+        }</script>
+    <script>
+        //PlayerAttack.js
+        // Function to draw the attack
+        function drawAttack(playerX, playerY, ctx) {
+            // Set the length of the sword
+            let swordLength = 40;
+
+            // Calculate the end point of the sword based on player direction and attack angle
+            let swordX, swordY;
+            if (playerDirection !== -1) {
+                swordX = playerX + Math.cos(attackAngle) * swordLength;
+                swordY = playerY + Math.sin(attackAngle) * swordLength;
+            } else {
+                switch (Math.floor(attackAngle / (Math.PI / 2))) {
+                    case 0: // Up
+                        swordX = playerX;
+                        swordY = playerY - swordLength;
+                        break;
+                    case 1: // Right
+                        swordX = playerX + swordLength;
+                        swordY = playerY;
+                        break;
+                    case 2: // Down
+                        swordX = playerX;
+                        swordY = playerY + swordLength;
+                        break;
+                    case 3: // Left
+                        swordX = playerX - swordLength;
+                        swordY = playerY;
+                        break;
+                }
+            }
+
+            // Flip the sword position based on playerDirection
+            if (playerDirection === 1 || playerDirection === 3) {
+                let deltaX = swordX - playerX;
+                swordX = playerX - deltaX;
+            }
+
+            // Flip the sword position for upward and downward swings
+            if (playerDirection === 0 || playerDirection === 2) {
+                let deltaY = swordY - playerY;
+                swordY = playerY - deltaY;
+            }
+
+            // Draw the sword
+            ctx.beginPath();
+            ctx.moveTo(playerX, playerY);
+            ctx.lineTo(swordX, swordY);
+            ctx.strokeStyle = 'white';
+            ctx.stroke();
+        }
+
+
+
+
+        // Add an event listener for the attack key press to start and stop the attack animation
+        window.addEventListener('keydown', function (event) {
+            if ((event.key === 'Control' || event.key === ' ') && !isAttacking) {
+                // Start the attack
+                isAttacking = true;
+                attackAngle = playerDirection * Math.PI / 2; // Use playerDirection to determine attack direction
+            }
+        });
+
+        // Add an event listener for the attack key release to stop the attack animation
+        window.addEventListener('keyup', function (event) {
+            if (event.key === 'Control' || event.key === ' ') {
+                // Stop the attack
+                isAttacking = false;
+                attackAngle = 0; // Reset attack angle
+            }
+        });
+
+        // Update the attack in your game loop
+        function updateAttack(playerX, playerY, ctx) {
+            // If an attack is in progress
+            if (isAttacking) {
+                // Draw the attack
+                drawAttack(playerX, playerY, ctx);
+
+                // Increase the attack angle
+                attackAngle += Math.PI / 30;
+            }
+        }
+
+    </script>
+    <script>
+        //Game.js
+        // Function to start the game
+        function startGame() {
+            document.getElementById('startButton').style.display = 'none';
+            document.body.style.cursor = 'none';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            //drawDayNightCycle();
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            playerX = canvas.width / 2; // Remove 'let'
+            playerY = canvas.height / 2; // Remove 'let'
+            playerRadius = 10; // Remove 'let'
+            playerDirection = 0; // Remove 'let'
+            ctx.beginPath();
+            ctx.arc(playerX, playerY, playerRadius, 0, Math.PI * 2, false);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+
+            function update() {
+                time = (time + timeSpeed) % 1; // Keep time within the range of 0 to 1
+                //drawDayNightCycle();
+                drawBackground(ctx);
+                ctx.beginPath();
+                ctx.arc(playerX, playerY, playerRadius, 0, Math.PI * 2, false);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                let hours = Math.floor(time * 24);
+                let minutes = Math.floor((time * 24 - hours) * 60);
+                let ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // the hour '0' should be '12'
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                let strTime = hours + ':' + minutes + ampm;
+                document.getElementById('clock').innerText = strTime;
+                moveEnemy(canvas);
+                drawEnemy(ctx);
+                requestAnimationFrame(update);
+                updateGameScore();
+                updatePlayer(ctx);
+                updateAttack(playerX, playerY, ctx);
+            }
+
+            update();
+        }</script>
+    <script>
+        //TitleScreen.js
+        // Create a new image object
+        var titleScreen = new Image();
+
+        // Set the source of the image
+        titleScreen.src = 'https://jmobleyworks.github.io/projects/2dActionRpg/Assets/TitleScreen.png';
+
+        // Draw the image on the canvas once it's loaded
+        titleScreen.onload = function () {
+            let aspectRatio = titleScreen.width / titleScreen.height;
+            let newWidth = canvas.height * aspectRatio;
+            let newHeight = canvas.height;
+            if (newWidth > canvas.width) {
+                newWidth = canvas.width;
+                newHeight = canvas.width / aspectRatio;
+            }
+            let xOffset = (canvas.width - newWidth) / 2;
+            let yOffset = (canvas.height - newHeight) / 2;
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(titleScreen, xOffset, yOffset, newWidth, newHeight);
+        }
+
+        // Log any errors while loading the image
+        titleScreen.onerror = function () {
+            console.error('Error loading the image.');
+        }
+
+        // Add a click event listener to the start button
+        document.getElementById('startButton').addEventListener('click', startFullScreen);
+
+        function startFullScreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { /* Safari */
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { /* IE11 */
+                document.documentElement.msRequestFullscreen();
+            }
+            document.body.style.overflow = 'hidden';
+            setupGame();
+            startGame();
+        }
+    </script>
+    <script>
+        //Resize.js
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }// Function to resize the canvas
+        resizeCanvas(); // Resize the canvas initially
+        window.addEventListener('resize', resizeCanvas);// Resize the canvas whenever the window is resized</script>
+    <script>
+        //World.js
+        const categories = {
+            "TimePeriod": ["Ancient", "Medieval", "Renaissance", "Industrial", "Futuristic", "Alternate History", "Prehistoric", "Colonial"],
+            "Theme": ["Fantasy", "High Fantasy", "Low Fantasy", "Urban Fantasy", "Gothic Fantasy", "Dark Fantasy", "Fairy Tale", "SciFi", "Space Opera", "Cyberpunk", "Steampunk", "Biopunk", "Utopian", "Dystopian", "Nuclear Fallout", "Zombie Apocalypse", "Environmental Catastrophe", "Alien Invasion", "Postapocalyptic", "Greek Mythology", "Norse Mythology", "Egyptian Mythology", "Asian Mythology", "Celtic Mythology", "Native American Mythology"],
+            "Environment": ["Forest", "Desert", "Mountain", "Ocean", "Urban", "Arctic", "Swamp", "Underwater", "Volcanic", "Sky"],
+            "Atmosphere": ["Mysterious", "Magical", "Dark", "Whimsical", "Serene", "Surreal", "Dystopian", "Utopian", "Eerie", "Lively"],
+            "Location": ["Island", "Underground", "Floating", "Celestial", "Extraterrestrial", "Subterranean", "Dimensional", "Interstellar", "Seaside Town", "Wilderness", "Wasteland", "City", "Border Town", "Small Town", "Village"],
+            "Inhabitants": ["Humans", "Mythical Creatures", "Aliens", "Robots", "Undead", "Merfolk", "Sentient Plants", "Constructs", "Symbiotic Species"],
+            "Social Classes": ["Nobility", "Commoners", "Slaves", "Merchants", "Artisans", "Scholars", "Criminals", "Peasants", "Warriors"],
+            "Government Types": ["Monarchy", "Democracy", "Oligarchy", "Theocracy", "Anarchy", "Republic", "Dictatorship", "Kleptocracy", "Confederacy"],
+            "Religions": ["Polytheistic", "Monotheistic", "Pantheistic", "Animistic", "Cults", "Mysticism", "Atheism", "Shamanism", "Paganism"],
+            "Conflict": ["War", "Exploration", "Survival", "Quest", "Discovery", "Intrigue", "Revolution", "Liberation", "Conquest", "Rebellion"],
+            "Elemental": ["Fire", "Water", "Earth", "Air", "Ice", "Lightning", "Shadow", "Light", "Metal", "Wood"],
+            "Magic Schools": ["Elemental", "Necromancy", "Illusion", "Enchantment", "Alchemy", "Divination", "Summoning", "Transmutation", "Blood Magic", "Rune Craft", "Wardcrafting", "Artificing", "Primal Magic"],
+            "Magic Artifacts": ["Wands", "Staffs", "Orbs", "Grimoires", "Talismans", "Runes", "Potions", "Scrolls", "Crystals", "Tomes", "Relics", "Rings", "Amulets", "Spellbooks"],
+            "Magic Beings": ["Fairies", "Pixies", "Gnomes", "Golems", "Familiars", "Spirits", "Elementals", "Demons", "Angels", "Genies", "Celestial Beings"],
+            "Magic Abilities": ["Shapeshifting", "Teleportation", "Mind Control", "Time Manipulation", "Summoning", "Illusions", "Healing", "Flight", "Invisibility", "Elemental Manipulation", "Astral Projection", "Precognition", "Empathy", "Telekinesis", "Metamorphosis"],
+            "Narrative Focus": ["Heroic Journey", "Coming of Age", "Intrigue", "Redemption", "Revenge", "Mystery", "Romance", "Adventure", "Tragedy", "Comedy", "Satire", "Parable", "Exploration", "Betrayal", "Friendship"],
+            "Creation Stories": ["Big Bang", "Simulation Theory", "Cosmic Eggs", "Primordial Beings", "Divine Interventions", "World Trees", "Chaos and Order", "Cosmic Serpents", "Celestial Wars", "Mythical Creation", "Titanomachy", "Cyclic Creation", "Hero's Journey (Creation)", "Alien Intervention", "Spontaneous Generation"],
+            "Mythological Figures": ["Heroes", "Gods", "Goddesses", "Demigods", "Titans", "Monsters", "Sages", "Dragons", "Legendary Beasts", "Mythical Creatures", "Trickster Figures", "Spirits of Nature", "Prophets"],
+            "Legendary Artifacts": ["Swords", "Amulets", "Relics", "Talismans", "Orbs", "Runestones", "Crystal Skulls", "Ancient Tomes", "Enchanted Armor", "Cursed Artifacts", "Sentient Weapons", "Lost Technologies"],
+            "Ancient Texts": ["Scriptures", "Prophecies", "Fables", "Epics", "Grimoires", "Codices", "Tablets", "Scrolls", "Inscriptions", "Manuscripts", "Chronicles", "Epic Poems", "Moral Codes"],
+            "Trade Routes": ["Land", "Sea", "Air", "Interdimensional", "Silk Road", "Trade Caravans", "Space Routes", "Magical Paths", "Underground Tunnels", "Sky Bridges"],
+            "Trade Organizations": ["Guilds", "Cartels", "Monopolies", "Merchant Alliances", "Federations", "Consortiums", "Trade Unions", "Syndicates", "Chambers of Commerce", "Marketplaces"],
+            "Currency": ["Gold", "Gems", "Barter", "Magical Energy", "Cryptocurrency", "Trade Tokens", "Credits", "Soul Gems", "Favor Points", "Star Dust", "Rare Materials", "Vouchers or Coupons", "Debt-based System"],
+            "Industries": ["Mining", "Agriculture", "Crafting", "Alchemy", "Textiles", "Shipbuilding", "Smithing", "Fishing", "Logging", "Construction", "Entertainment", "Tourism", "Archaeology"],
+            "Wars and Conflicts": ["Epic Battles", "Invasions", "Revolutions", "Civil Wars", "Crusades", "Sieges", "Skirmishes", "Tribal Conflicts", "Nuclear Warfare", "Cold War", "Resource Wars", "Ideological Conflicts", "Religious Wars", "Proxy Wars"],
+            "Natural Disasters": ["Floods", "Earthquakes", "Volcanic Eruptions", "Tsunamis", "Meteor Strikes", "Droughts", "Hurricanes", "Tornadoes", "Blizzards", "Avalanches", "Plagues", "Meteorological Anomalies"],
+            "Technological Breakthroughs": ["Inventions", "Scientific Discoveries", "Industrial Revolution", "Space Exploration", "Genetic Engineering", "Robotics Revolution", "Virtual Reality Integration", "Nanotechnology"],
+            "Cultural Renaissances": ["Artistic", "Philosophical", "Spiritual", "Literary", "Scientific", "Technological", "Scientific Revolution", "Philosophical Revolution", "Social Reform Movements", "Agrarian Revolution"],
+            "Cosmic Events": ["Solar Eclipses", "Lunar Eclipses", "Comets", "Meteor Showers", "Auroras", "Supernovas", "Black Holes", "Celestial Alignments", "Galactic Collisions", "Black Hole Collisions", "Nebulae Formations"],
+            "Planar Realms": ["Celestial", "Infernal", "Fey", "Elemental", "Astral", "Dreamscape", "Ethereal", "Shadow", "Prime Material", "Underworld", "Faerie Realm", "Machine Worlds", "Void"],
+            "Portals and Gateways": ["Interdimensional", "Teleportation", "Ancient Portals", "Wormholes", "Magic Circles", "Stargates", "Temporal Vortexes", "Dimensional Rifts", "Ley Lines", "Blood Magic Rituals"],
+            "Time Distortions": ["Time Travel", "Time Loops", "Temporal Rifts", "Anachronisms", "Time Dilation", "Parallel Timelines", "Time Compression", "Temporal Paradoxes", "Premonitions"],
+            "Fauna": ["Mammals", "Reptiles", "Birds", "Amphibians", "Insects", "Arachnids", "Fish", "Dinosaurs", "Dragons"],
+            "Flora": ["Trees", "Flowers", "Grasses", "Fungi", "Vines", "Mosses", "Algae", "Cacti", "Seaweed"],
+            "Weather": ["Rain", "Sunshine", "Clouds", "Thunderstorms", "Snow", "Fog", "Wind", "Hail", "Tornadoes"],
+            "Terrain Features": ["Rivers", "Caves", "Mountains", "Valleys", "Waterfalls", "Plateaus", "Cliffs", "Glaciers", "Lakes"],
+            "Mystical Locations": ["Haunted Forests", "Sacred Groves", "Ancient Ruins", "Floating Islands", "Crystal Caves", "Mystical Springs", "Hidden Valleys", "Forgotten Cities"],
+            "Folklore Creatures": ["Werewolves", "Vampires", "Ghosts", "Goblins", "Ogres", "Banshees", "Leprechauns", "Chupacabras", "Yeti", "Gremlins", "Hobgoblins"],
+            "Monsters": ["Dragons", "Hydras", "Gargoyles", "Manticores", "Chimeras", "Basilisks", "Wendigos", "Kraken", "Griffins", "Sphinxes"],
+            "Character Roles": ["Heroes", "Villains", "Sidekicks", "Mentors", "Antiheroes", "Sages", "Rogues", "Warriors", "Mages", "Healers", "Artificers", "Scouts", "Scholars"],
+            "Character Traits": ["Bravery", "Cunning", "Wisdom", "Charisma", "Strength", "Agility", "Intelligence", "Resilience", "Empathy"],
+            "Character Backstories": ["Orphaned", "Noble Heritage", "Traumatic Past", "Mysterious Origins", "Lost Memories", "Betrayal", "Quest for Redemption", "Hidden Powers"],
+            "Character Motivations": ["Revenge", "Justice", "Redemption", "Curiosity", "Love", "Power", "Greed", "Survival", "Honor"],
+            "Weapons": ["Swords", "Bows", "Axes", "Spears", "Daggers", "Maces", "Staffs", "Crossbows", "Whips", "Flails"],
+            "Armors": ["Plate Armor", "Chainmail", "Leather Armor", "Robes", "Scale Armor", "Shields", "Helmets", "Gauntlets", "Greaves"],
+            "Transport": ["Horses", "Carts", "Ships", "Airships", "Dragons", "Teleportation", "Bicycles", "Motorcycles", "Hovercrafts", "Starships"],
+            "Communication": ["Telepathy", "Letters", "Messengers", "Crystals", "Magic Mirrors", "Holograms", "Signals", "Telegraph", "Radio"],
+            "Economy": ["Feudal", "Capitalist", "Communist", "Barter", "Trade", "Subsistence", "Socialist", "Market", "Gift Economy"],
+            "Education": ["Apprenticeships", "Schools", "Universities", "Libraries", "Monasteries", "Online Learning", "Field Studies", "Mentorships", "Trade Schools"],
+            "Healthcare": ["Herbal Medicine", "Magic Healing", "Advanced Technology", "Traditional Remedies", "Shamanism", "Alchemical Treatments", "Genetic Modification", "Bionic Enhancements", "Energy Healing"],
+            "Technology Levels": ["Primitive", "Medieval", "Renaissance", "Industrial", "Modern", "Futuristic", "Post-Apocalyptic", "Steampunk", "Cyberpunk"],
+            "Housing": ["Cottages", "Castles", "Mansions", "Huts", "Tents", "Cabins", "Apartments", "Skyscrapers", "Floating Cities"],
+            "Travel": ["Walking", "Horseback", "Carriages", "Sailing Ships", "Steam Trains", "Automobiles", "Airplanes", "Spacecraft", "Teleportation Circles"],
+            "Entertainment": ["Theater", "Music", "Sports", "Gladiatorial Games", "Festivals", "Circuses", "Storytelling", "Board Games", "Virtual Reality"],
+            "Languages": ["Common Tongue", "Elvish", "Dwarvish", "Ancient", "Magical", "Runes", "Telepathic", "Code", "Sign Language"],
+            "Art": ["Painting", "Sculpture", "Music", "Dance", "Theater", "Literature", "Architecture", "Fashion", "Pottery"],
+            "Cuisine": ["Gourmet", "Street Food", "Traditional", "Exotic", "Fusion", "Vegetarian", "Meat-based", "Spicy", "Sweet"],
+            "Festivals": ["Harvest", "New Year", "Religious", "Cultural", "Seasonal", "Music", "Food", "Arts", "Historical Reenactments"],
+            "Sports": ["Archery", "Swordsmanship", "Horse Riding", "Foot Races", "Ball Games", "Wrestling", "Martial Arts", "Gladiatorial Combat", "Jousting"],
+            "Hobbies": ["Gardening", "Fishing", "Hiking", "Crafting", "Collecting", "Writing", "Cooking", "Magic Practice", "Stargazing"],
+            "Transportation": ["Walking", "Horseback", "Carts", "Ships", "Airships", "Teleportation", "Trains", "Cars", "Spaceships"],
+            "Cultural Norms": ["Hospitality", "Honor", "Chivalry", "Respect for Elders", "Community", "Individualism", "Tradition", "Innovation", "Spirituality"],
+            "Moral Dilemmas": ["Sacrifice", "Loyalty", "Justice", "Mercy", "Truth", "Deception", "Duty", "Freedom", "Honor"]
+        };
+
+        const promptTemplates = {
+            "TimePeriod": "The game's world is set in the following time periods: ${formattedChoices}.",
+            "Theme": "The game's theme includes the following elements: ${formattedChoices}.",
+            "Environment": "The game's world is characterized by various environments, including: ${formattedChoices}.",
+            "Atmosphere": "The atmosphere of the game varies, offering elements of: ${formattedChoices}.",
+            "Location": "The game's setting encompasses diverse locations, such as: ${formattedChoices}.",
+            "Inhabitants": "The world is inhabited by various beings, including: ${formattedChoices}.",
+            "Social Classes": "The society is divided into different social classes, including: ${formattedChoices}.",
+            "Government Types": "The ruling system varies and includes: ${formattedChoices}.",
+            "Religions": "The game's world is influenced by different religions, including: ${formattedChoices}.",
+            "Conflict": "The central conflict revolves around various themes, such as: ${formattedChoices}.",
+            "Elemental": "The elements play a significant role, including: ${formattedChoices}.",
+            "Magic Schools": "Magic is practiced through various schools, including: ${formattedChoices}.",
+            "Magic Artifacts": "Powerful artifacts exist, such as: ${formattedChoices}.",
+            "Magic Beings": "Various magical beings inhabit the world, including: ${formattedChoices}.",
+            "Magic Abilities": "Characters possess various magical abilities, including: ${formattedChoices}.",
+            "Narrative Focus": "The story's focus encompasses various themes, including: ${formattedChoices}.",
+            "Creation Stories": "The world's creation is explained through various stories, including: ${formattedChoices}.",
+            "Mythological Figures": "Legends feature various mythological figures, including: ${formattedChoices}.",
+            "Legendary Artifacts": "There are legendary items, including: ${formattedChoices}.",
+            "Ancient Texts": "Ancient texts include various scriptures, prophecies, and fables, such as: ${formattedChoices}.",
+            "Trade Routes": "Trade occurs through various routes, including: ${formattedChoices}.",
+            "Trade Organizations": "Various organizations control commerce, such as: ${formattedChoices}.",
+            "Currency": "The currency used varies and includes: ${formattedChoices}.",
+            "Industries": "Major industries include: ${formattedChoices}.",
+            "Wars and Conflicts": "Historical wars include: ${formattedChoices}.",
+            "Natural Disasters": "The world is prone to various natural disasters, including: ${formattedChoices}.",
+            "Technological Breakthroughs": "Advancements include: ${formattedChoices}.",
+            "Cultural Renaissances": "Periods of renaissance include: ${formattedChoices}.",
+            "Cosmic Events": "Celestial events include: ${formattedChoices}.",
+            "Planar Realms": "Different realms exist, including: ${formattedChoices}.",
+            "Portals and Gateways": "Access to other realms is possible through: ${formattedChoices}.",
+            "Time Distortions": "Time is distorted by phenomena such as: ${formattedChoices}.",
+            "Fauna": "The world is home to various creatures, including: ${formattedChoices}.",
+            "Flora": "Flora includes various types, such as: ${formattedChoices}.",
+            "Weather": "Weather patterns consist of: ${formattedChoices}.",
+            "Terrain Features": "Terrain is marked by various features, including: ${formattedChoices}.",
+            "Architectural Styles": "Architecture reflects various styles, including: ${formattedChoices}.",
+            "Transportation": "Transportation methods include: ${formattedChoices}.",
+            "Communication Methods": "Communication is achieved through: ${formattedChoices}.",
+            "Entertainment": "Entertainment includes: ${formattedChoices}.",
+            "Food and Cuisine": "Cuisine comprises various dishes, including: ${formattedChoices}.",
+            "Healthcare Practices": "Healthcare involves various methods, including: ${formattedChoices}.",
+            "Education Systems": "Education is provided by systems such as: ${formattedChoices}.",
+            "Social Norms and Customs": "Norms and customs include: ${formattedChoices}.",
+            "Environmental Hazards": "Hazards such as: ${formattedChoices} pose threats.",
+            "Timekeeping": "Time is measured using various methods, including: ${formattedChoices}.",
+            "Factions and Organizations": "The game's world is shaped by: ${formattedChoices}."
+        };
+
+
+        // Generate a random world seed prompt
+        function generateWorldSeed() {
+            const prompt = {};
+
+            for (const category in categories) {
+                const options = categories[category];
+                let choice;
+
+                if (Array.isArray(options)) {
+                    // If options is an array, select a random option
+                    choice = options[Math.floor(Math.random() * options.length)];
+                } else {
+                    // If options is an object (subcategories), select a random option from a random subcategory
+                    const subcategory = Object.keys(options)[Math.floor(Math.random() * Object.keys(options).length)];
+                    choice = options[subcategory][Math.floor(Math.random() * options[subcategory].length)];
+                }
+
+                prompt[category] = choice;
+            }
+
+            return prompt;
+        }
+
+        // Example usage:
+        // const worldSeed = generateWorldSeed();
+        // console.log(worldSeed);</script>
+    <script>
+        //SetupGame.js
+        // Function to prompt the user with a series of decisions
+        function setupGame() {
+            worldSeed = generateWorldSeed();
+            maze = generateMazeFromScratch();
+            // // Example: Prompt the user with the generated world seed
+            // console.log('Time Period:', worldSeed.timePeriod);
+            // console.log('Theme:', worldSeed.theme);
+            // console.log('Environment:', worldSeed.environment);
+            // console.log('Atmosphere:', worldSeed.atmosphere);
+            // console.log('Location:', worldSeed.location);
+            // console.log('Landmarks:', worldSeed.landmarks);
+            // console.log('Inhabitants:', worldSeed.inhabitants);
+            // console.log('Conflict:', worldSeed.conflict);
+            // console.log('Elemental Influence:', worldSeed.elementalInfluence);
+            // console.log('Technology Level:', worldSeed.technologyLevel);
+            // console.log('Cultural Influences:', worldSeed.culturalInfluences);
+            // console.log('Narrative Focus:', worldSeed.narrativeFocus);
+
+            // Return the generated world seed
+            return worldSeed;
+        }
+
+        // Call the setupGame function to start the game setup process
+        //setupGame();
+    </script>
 </body>
 
 </html>

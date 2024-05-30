@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WorldBender Database</title>
+  <style>
+    body{font-family:sans-serif;max-width:800px;margin:0 auto;padding:20px;}
+    label{display:block;margin-bottom:10px;}
+    input,button{padding:5px;font-size:16px;}
+    button{margin-left:10px;}
+    pre{background-color:#f5f5f5;padding:10px;overflow-x:auto;}
+  </style>
+</head>
+<body>
+  <h1>WorldBender Database</h1>
+  <div>
+    <label for="operation">Operation:</label>
+    <select id="operation">
+      <option value="create">Create</option>
+      <option value="read">Read</option>
+      <option value="update">Update</option>
+      <option value="delete">Delete</option>
+    </select>
+    <label for="key">Key:</label>
+    <input type="text" id="key" placeholder="Enter key">
+    <label for="value">Value:</label>
+    <input type="text" id="value" placeholder="Enter value">
+    <button onclick="performOperation()">Execute</button>
+  </div>
+  <pre id="output"></pre>
+  <script type="text/javascript">
+    const worldBenderData = JSON.parse(localStorage.getItem('worldBenderData') || '{}');
+    import { worldBendingElements } from './worldBendingElements.js';
+
+    const getDataFromStorage = () => JSON.parse(localStorage.getItem('worldBenderData') || '{}');
+    const setDataInStorage = data => localStorage.setItem('worldBenderData', JSON.stringify(data));
+
+    const createElement = (tag, attributes, content) => { const el = document.createElement(tag); for (const attr in attributes) { el.setAttribute(attr, attributes[attr]); } el.textContent = content; return el; };
+    const clearOutput = () => document.getElementById('output').innerHTML = '';
+
+    const create = (key, value) => { worldBenderData[key] = value.split(',').map(v => v.trim()); setDataInStorage(worldBenderData); };
+    const read = key => worldBenderData[key] ? worldBenderData[key].join(', ') : 'Key not found';
+    const update = (key, value) => { worldBenderData[key] = value.split(',').map(v => v.trim()); setDataInStorage(worldBenderData); };
+    const deleteData = key => { delete worldBenderData[key]; setDataInStorage(worldBenderData); };
+
+    const performOperation = () => {
+      const operation = document.getElementById('operation').value;
+      const key = document.getElementById('key').value;
+      const value = document.getElementById('value').value;
+      clearOutput();
+
+      const operationMap = { 'create': create, 'read': read, 'update': update, 'delete': deleteData };
+      const result = operationMap[operation](key, value);
+      const output = createElement('div', {}, typeof result === 'string' ? result : result.join(', '));
+      document.getElementById('output').appendChild(output);
+    };
+  </script>
+</body>
+</html>
+2dActionRpg aiPhotobooth screenplayEditor spriteDetector WorldBender WorldSeed

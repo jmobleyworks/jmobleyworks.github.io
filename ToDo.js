@@ -30,4 +30,11 @@ export const ToDo = {
     "ClaudeAI TAB": [
         "Deploy the DB invention."
     ]
+    "Art Gen": [
+        "Use Todo: Art Gen in apple notes app to see more details"
+    ]
+    put the reqs in chatgpt tab into text2game
+    mess around with non Euclidian game World
+    copy junk from RedBlockGames
+    output sonnets terzarima and villanelles
 };

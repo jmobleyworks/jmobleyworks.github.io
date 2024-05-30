@@ -77,6 +77,7 @@ function createForm(container) {
             optionElement.textContent = option;
             optionElement.addEventListener('click', () => {
                 optionElement.classList.toggle('selected');
+                updatePrompts();
             });
             optionsContainer.appendChild(optionElement);
         });
@@ -87,6 +88,7 @@ function createForm(container) {
 
     container.appendChild(formContainer);
     randomizeForm();
+    updatePrompts();
 }
 
 function updatePrompts() {
@@ -128,4 +130,5 @@ function clearForm() {
     options.forEach((option) => {
         option.classList.remove('selected'); // Deselect all options
     });
+    updatePrompts();
 }

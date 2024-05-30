@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-  <img id="forest" src="Designer (40).png" style="display: none;">
+  <img id="forest" src="../Assets/SpriteSheets/Designer (40).png" style="display: none;">
   <canvas id="canvas" style="border: 1px solid black;"></canvas>
   <p id="detectedColor" style="font-family: sans-serif; width:50px;height:50px;border:1px solid black;margin:10px;"></p>
   <script>
@@ -156,6 +156,48 @@ function getRandomForegroundSeeds(canvas, isForeground, numSamples, edgePadding)
     y: Math.floor(Math.random() * (canvas.height - 2 * edgePadding) + edgePadding)
   })).filter(point => isForeground(ctx.getImageData(point.x, point.y, 1, 1).data));
 }
+  </script>
+  <script>
+    // SpriteExtractor.js
+
+// Function to extract sprites (your existing code)
+function extractSprite(seed) {
+    // ... your sprite extraction logic ...
+}
+
+// Function to convert sprite to JSON
+function spriteToJson(spriteObject, spriteName, prompt = "No prompt provided") {
+    // ... code from previous response ...
+}
+
+// Function to convert JSON to sprite
+function json2Sprite(jsonString) {
+    // ... code from previous response ...
+}
+
+// Function to append example usage to HTML
+function appendUsageToHtml(elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        const scriptTag = document.createElement('script');
+        scriptTag.textContent = `
+            const seeds = getRandomForegroundSeeds(canvas, isForeground, numSamples, edgePadding); // Assuming these variables are defined in your HTML context
+            seeds.forEach(seed => {
+                const spriteObject = extractSprite(seed);
+                if (spriteObject) {
+                    const jsonSprite = spriteToJson(spriteObject, "SpriteName", "Optional generating prompt");
+                    console.log(jsonSprite);
+                    const reconstructedSprite = json2Sprite(jsonSprite);
+                    // (Optional) Draw or use 'reconstructedSprite'
+                }
+            });
+        `;
+        element.appendChild(scriptTag);
+    } else {
+        console.error("Element with ID '" + elementId + "' not found.");
+    }
+}
+
   </script>
 </body>
 </html>

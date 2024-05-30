@@ -170,3 +170,20 @@ textarea {
   /* Make the form group a block container */
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #000711; /* Black background */
+}
+
+th, td {
+  border: 1px solid #fdfdf3; /* White borders */
+  padding: 8px;
+  text-align: left;
+  color: #fdfdf3; /* White text */
+}
+
+th {
+  background-color: #000711; /* Black header background */
+  color: #fdfdf3; /* White text */
+}

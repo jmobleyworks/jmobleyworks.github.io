@@ -1,4 +1,10 @@
 export const ToDo = {
+    "Book:DevilsCode": [
+        "Note: You Conversation with Claude titled 'Ai Writing Assistance For Book Completion' is your Super Function for this book series",
+        "Book:Devil's Code is ready for editing and is located in apple notes.",
+        "Suggestion:See if asking gpt or gemini to act as editor yields improvents.",
+        "publish book"
+    ],    
     "2dActionRpg": [
         "Remove the map stretching thing and test that things work.",
         "Write a function to export the map to an image to upload to AI art generator to turn white traversable and black non-traversable pixel art."
@@ -161,69 +167,7 @@ By providing detailed descriptions and considering these tips, you can create pr
 */
 
 /*
-export const authorPrints = {
-    "1": ["author:Ernest Hemingway", "authorPrintDescription:Simple, direct prose; minimalistic style; iceberg theory (understated themes).", "representativeExcerpt:For sale: baby shoes, never worn.|He was an old man who fished alone in a skiff in the Gulf Stream and he had gone eighty-four days now without taking a fish."],
-    "2": ["author:Jane Austen", "authorPrintDescription:Sharp social commentary; irony and wit; focus on manners and courtship.", "representativeExcerpt:It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.|There is nothing I would not do for those who are really my friends."],
-    "3": ["author:Charles Dickens", "authorPrintDescription:Detailed character descriptions; social critique; melodramatic plots.", "representativeExcerpt:It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness...|Please, sir, I want some more."],
-    "4": ["author:F. Scott Fitzgerald", "authorPrintDescription:Lyrical prose; themes of the American Dream and disillusionment; vibrant depictions of the Jazz Age.", "representativeExcerpt:So we beat on, boats against the current, borne back ceaselessly into the past.|I hope she'll be a fool -- that's the best thing a girl can be in this world, a beautiful little fool."],
-    "5": ["author:Virginia Woolf", "authorPrintDescription:Stream of consciousness; explorations of time and consciousness; feminist themes.", "representativeExcerpt:Mrs. Dalloway said she would buy the flowers herself.|A woman must have money and a room of her own if she is to write fiction."],
-    "6": ["author:George Orwell", "authorPrintDescription:Clear, straightforward prose; social and political commentary; dystopian themes.", "representativeExcerpt:Big Brother is watching you.|All animals are equal, but some animals are more equal than others."],
-    "7": ["author:Mark Twain", "authorPrintDescription:Humorous and satirical style; regional dialects; social critique.", "representativeExcerpt:The reports of my death are greatly exaggerated.|Whenever you find yourself on the side of the majority, it is time to pause and reflect."],
-    "8": ["author:Gabriel García Márquez", "authorPrintDescription:Magical realism; lyrical and elaborate prose; exploration of Latin American culture.", "representativeExcerpt:Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice.|He really had been through death, but he had returned because he could not bear the solitude."],
-    "9": ["author:J.D. Salinger", "authorPrintDescription:Colloquial language; themes of teenage angst and alienation; introspective characters.", "representativeExcerpt:If you really want to hear about it, the first thing you'll probably want to know is where I was born, and what my lousy childhood was like...|I'm quite illiterate, but I read a lot."],
-    "10": ["author:William Faulkner", "authorPrintDescription:Complex narrative structures; stream of consciousness; Southern Gothic themes.", "representativeExcerpt:I give you the mausoleum of all hope and desire; I give it to you not that you may remember time, but that you might forget it now and then for a moment and not spend all your breath trying to conquer it.|The past is never dead. It's not even past."],
-    "11": ["author:James Joyce", "authorPrintDescription:Stream of consciousness; intricate language; allusions to classical literature.", "representativeExcerpt:History, Stephen said, is a nightmare from which I am trying to awake.|I am tomorrow, or some future day, what I establish today. I am today what I established yesterday or some previous day."],
-    "12": ["author:Haruki Murakami", "authorPrintDescription:Surreal and fantastical elements; themes of loneliness and existentialism; blending of mundane and extraordinary.", "representativeExcerpt:Sometimes fate is like a small sandstorm that keeps changing directions.|If you only read the books that everyone else is reading, you can only think what everyone else is thinking."],
-    "13": ["author:Toni Morrison", "authorPrintDescription:Rich, poetic language; exploration of African American experience; deep psychological insight.", "representativeExcerpt:You are your best thing.|Freeing yourself was one thing, claiming ownership of that freed self was another."],
-    "14": ["author:Kurt Vonnegut", "authorPrintDescription:Satirical and darkly humorous; blending of science fiction and social commentary; simple, conversational style.", "representativeExcerpt:So it goes.|And so it goes..."],
-    "15": ["author:Margaret Atwood", "authorPrintDescription:Feminist themes; speculative fiction; sharp, precise language.", "representativeExcerpt:Don't let the bastards grind you down.|Better never means better for everyone... It always means worse, for some."],
-    "16": ["author:Leo Tolstoy", "authorPrintDescription:Realistic depiction of Russian society; deep psychological insight; exploration of moral and spiritual issues.", "representativeExcerpt:All happy families are alike; each unhappy family is unhappy in its own way.|If you look for perfection, you'll never be content."],
-    "17": ["author:Fyodor Dostoevsky", "authorPrintDescription:Deep psychological and philosophical exploration; themes of guilt, redemption, and existential angst.", "representativeExcerpt:The mystery of human existence lies not in just staying alive, but in finding something to live for.|To live without Hope is to Cease to live."],
-    "18": ["author:Sylvia Plath", "authorPrintDescription:Confessional style; themes of mental illness, identity, and feminism; vivid and emotional language.", "representativeExcerpt:I am, I am, I am.|The silence depressed me. It wasn't the silence of silence. It was my own silence."],
-    "19": ["author:Franz Kafka", "authorPrintDescription:Surreal and absurd narratives; themes of alienation and existential dread; stark, precise language.", "representativeExcerpt:As Gregor Samsa awoke one morning from uneasy dreams he found himself transformed in his bed into a gigantic insect.|A book must be the axe for the frozen sea within us."],
-    "20": ["author:Emily Dickinson", "authorPrintDescription:Short, enigmatic poems; unconventional punctuation and capitalization; themes of death, immortality, and nature.", "representativeExcerpt:Because I could not stop for Death – He kindly stopped for me – The Carriage held but just Ourselves – And Immortality.|Hope is the thing with feathers that perches in the soul."],
-    "21": ["author:H.P. Lovecraft", "authorPrintDescription:Cosmic horror; archaic language; themes of existential dread and forbidden knowledge.", "representativeExcerpt:The most merciful thing in the world, I think, is the inability of the human mind to correlate all its contents.|That is not dead which can eternal lie, And with strange aeons even death may die."],
-    "22": ["author:Agatha Christie", "authorPrintDescription:Clever plotting; red herrings; meticulous attention to detail in mystery.", "representativeExcerpt:The impossible could not have happened, therefore the impossible must be possible in spite of appearances.|It is a curious thought, but it is only when you see people looking ridiculous that you realize just how much you love them."],
-    "23": ["author:Ray Bradbury", "authorPrintDescription:Lyrical prose; themes of nostalgia, dystopia, and human connection; imaginative storytelling.", "representativeExcerpt:It was a pleasure to burn.|You don't have to burn books to destroy a culture. Just get people to stop reading them."],
-    "24": ["author:Isaac Asimov", "authorPrintDescription:Clear, logical prose; exploration of science fiction and robotics; complex, thought-provoking plots.", "representativeExcerpt:I, Robot.|The saddest aspect of life right now is that science gathers knowledge faster than society gathers wisdom."],
-    "25": ["author:Arthur Conan Doyle", "authorPrintDescription:Crisp, clear prose; master of deduction; strong character development in mystery.", "representativeExcerpt:When you have eliminated the impossible, whatever remains, however improbable, must be the truth.|The world is full of obvious things which nobody by any chance ever observes."],
-    "26": ["author:Herman Melville", "authorPrintDescription:Dense, symbolic prose; themes of obsession and humanity's struggle against nature.", "representativeExcerpt:Call me Ishmael.|From hell's heart I stab at thee; for hate's sake I spit my last breath at thee. Ye damned whale."],
-    "27": ["author:Flannery O'Connor", "authorPrintDescription:Southern Gothic style; dark humor; themes of morality and redemption.", "representativeExcerpt:The life you save may be your own.|She looked at nice young men as if she could smell their stupidity."],
-    "28": ["author:Joseph Conrad", "authorPrintDescription:Complex narrative structures; themes of imperialism and existentialism; dense, descriptive prose.", "representativeExcerpt:The horror! The horror!|We live as we dream – alone."],
-    "29": ["author:Harper Lee", "authorPrintDescription:Southern Gothic elements; themes of racial injustice and moral growth; clear, compelling prose.", "representativeExcerpt:You never really understand a person until you consider things from his point of view... Until you climb inside of his skin and walk around in it.|The one thing that doesn't abide by majority rule is a person's conscience."],
-    "30": ["author:C.S. Lewis", "authorPrintDescription:Clear, allegorical prose; exploration of Christian themes; imaginative fantasy.", "representativeExcerpt:Aslan is a lion- the Lion, the great Lion.|We are what we believe we are."],
-    "31": ["author:J.R.R. Tolkien", "authorPrintDescription:Rich, detailed world-building; themes of heroism and loss; poetic, archaic language.", "representativeExcerpt:Not all those who wander are lost.|All that is gold does not glitter, Not all those who wander are lost."],
-    "32": ["author:John Steinbeck", "authorPrintDescription:Realistic and sympathetic depiction of working-class life; themes of social justice.", "representativeExcerpt:And the little screaming fact that sounds through all history: repression works only to strengthen and knit the repressed.|I wonder how many people I've looked at all my life and never seen."],
-    "33": ["author:Edgar Allan Poe", "authorPrintDescription:Gothic style; themes of death and madness; elaborate, darkly poetic language.", "representativeExcerpt:Quoth the Raven, 'Nevermore.'|All that we see or seem is but a dream within a dream."],
-    "34": ["author:Lewis Carroll", "authorPrintDescription:Playful language; whimsical, surreal narratives; wordplay and logic puzzles.", "representativeExcerpt:Curiouser and curiouser!|It's no use going back to yesterday, because I was a different person then."],
-    "35": ["author:Aldous Huxley", "authorPrintDescription:Satirical and dystopian themes; exploration of science and society; clear, analytical prose.", "representativeExcerpt:Brave New World.|Words can be like X-rays if you use them properly – they'll go through anything. You read and you're pierced."],
-    "36": ["author:Khaled Hosseini", "authorPrintDescription:Emotional, evocative prose; themes of family, betrayal, and redemption.", "representativeExcerpt:For you, a thousand times over.|It may be unfair, but what happens in a few days, sometimes even a single day, can change the course of a whole lifetime."],
-    "37": ["author:Philip K. Dick", "authorPrintDescription:Mind-bending, paranoid narratives; exploration of reality and identity; concise, impactful prose.", "representativeExcerpt:Do Androids Dream of Electric Sheep?|Reality is that which, when you stop believing in it, doesn't go away."],
-    "38": ["author:T.S. Eliot", "authorPrintDescription:Modernist poetry; themes of disillusionment and fragmentation; dense, allusive language.", "representativeExcerpt:April is the cruellest month.|This is the way the world ends, not with a bang but a whimper."],
-    "39": ["author:Herman Hesse", "authorPrintDescription:Philosophical and introspective; themes of self-discovery and spirituality.", "representativeExcerpt:I have been and still am a seeker, but I have ceased to question stars and books; I have begun to listen to the teaching my blood whispers to me.|Some of us think holding on makes us strong; but sometimes it is letting go."],
-    "40": ["author:Milan Kundera", "authorPrintDescription:Philosophical musings; themes of memory and identity; layered narrative structures.", "representativeExcerpt:The struggle of man against power is the struggle of memory against forgetting.|What is unbearable is that time passes and everything stays the same."],
-    "41": ["author:Umberto Eco", "authorPrintDescription:Dense, intertextual prose; themes of semiotics and medieval history; complex plots.", "representativeExcerpt:Books are not made to be believed, but to be subjected to inquiry.|We live for books."],
-    "42": ["author:Douglas Adams", "authorPrintDescription:Satirical and absurd humor; playful language; imaginative science fiction.", "representativeExcerpt:Don't panic.|The answer to the ultimate question of life, the universe and everything is 42."],
-    "43": ["author:Gabriel García Márquez", "authorPrintDescription:Magical realism; lyrical and elaborate prose; exploration of Latin American culture.", "representativeExcerpt:Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice.|He really had been through death, but he had returned because he could not bear the solitude."],
-    "44": ["author:Salman Rushdie", "authorPrintDescription:Magical realism; complex, layered narratives; exploration of cultural and political themes.", "representativeExcerpt:To understand just one life, you have to swallow the world.|From the beginning men used God to justify the unjustifiable."],
-    "45": ["author:Margaret Atwood", "authorPrintDescription:Feminist themes; speculative fiction; sharp, precise language.", "representativeExcerpt:Don't let the bastards grind you down.|Better never means better for everyone... It always means worse, for some."],
-    "46": ["author:Orhan Pamuk", "authorPrintDescription:Rich, layered narratives; themes of identity and cultural change; lyrical prose.", "representativeExcerpt:What is the meaning of a story that you must know the end of before you hear it?|Dogs do speak, but only to those who know how to listen."],
-    "47": ["author:Naguib Mahfouz", "authorPrintDescription:Realistic depictions of Egyptian society; exploration of moral and social issues; clear, evocative prose.", "representativeExcerpt:The truth is that we do not understand the value of our moments until they have passed.|You can tell whether a man is clever by his answers. You can tell whether a man is wise by his questions."],
-    "48": ["author:J.M. Coetzee", "authorPrintDescription:Sparse, powerful prose; themes of apartheid, ethics, and human dignity; introspective narratives.", "representativeExcerpt:It is not I who am being punished; it is the creature in me.|The secret of happiness is not in doing what one likes, but in liking what one does."],
-    "49": ["author:Graham Greene", "authorPrintDescription:Complex characters; moral ambiguity; exploration of political and social issues.", "representativeExcerpt:There is always one moment in childhood when the door opens and lets the future in.|Innocence is a kind of insanity."],
-    "50": ["author:Vladimir Nabokov", "authorPrintDescription:Intricate language; themes of obsession and art; playfulness with narrative structure.", "representativeExcerpt:Look at this tangle of thorns.|It was love at first sight, at last sight, at ever and ever sight."],
-    "51": ["author:George R.R. Martin", "authorPrintDescription:Complex characters; morally gray decisions; detailed world-building.", "representativeExcerpt:When you play the game of thrones, you win or you die.|A mind needs books as a sword needs a whetstone, if it is to keep its edge."],
-    "52": ["author:Neil Gaiman", "authorPrintDescription:Blending of myth and modernity; dark, whimsical tone; imaginative storytelling.", "representativeExcerpt:Fairy tales are more than true: not because they tell us that dragons exist, but because they tell us that dragons can be beaten.|The one thing that you have that nobody else has is you. Your voice, your mind, your story, your vision."],
-    "53": ["author:Terry Pratchett", "authorPrintDescription:Satirical humor; exploration of human nature through fantasy; witty, sharp dialogue.", "representativeExcerpt:In the beginning there was nothing, which exploded.|The trouble with having an open mind, of course, is that people will insist on coming along and trying to put things in it."],
-    "54": ["author:Zadie Smith", "authorPrintDescription:Multicultural themes; exploration of identity; sharp, observational prose.", "representativeExcerpt:The past is always tense, the future perfect.|You are never stronger...than when you land on the other side of despair."],
-    "55": ["author:Kazuo Ishiguro", "authorPrintDescription:Subtle, restrained prose; exploration of memory and loss; deeply emotional narratives.", "representativeExcerpt:There was another life that I might have had, but I am having this one.|Memories, even your most precious ones, fade surprisingly quickly."],
-    "56": ["author:Jean-Paul Sartre", "authorPrintDescription:Existential themes; dense philosophical exploration; focus on human freedom and responsibility.", "representativeExcerpt:Hell is other people.|Man is condemned to be free; because once thrown into the world, he is responsible for everything he does."],
-    "57": ["author:Simone de Beauvoir", "authorPrintDescription:Feminist philosophy; exploration of existentialism and freedom; analytical prose.", "representativeExcerpt:One is not born, but rather becomes, a woman.|Change your life today. Don't gamble on the future, act now, without delay."],
-    "58": ["author:William Golding", "authorPrintDescription:Dark, allegorical themes; exploration of human nature and societal collapse.", "representativeExcerpt:Maybe there is a beast... maybe it's only us.|The thing is - fear can't hurt you any more than a dream."],
-    "59": ["author:Robert Louis Stevenson", "authorPrintDescription:Adventure and exploration themes; clear, engaging prose; memorable characters.", "representativeExcerpt:Fifteen men on the Dead Man's Chest—Yo-ho-ho, and a bottle of rum!|You can give without loving, but you can never love without giving."],
-    "60": ["author:Miguel de Cervantes", "authorPrintDescription:Satirical exploration of chivalry; rich, humorous prose; pioneering modern novel form.", "representativeExcerpt:In short, his wits being quite gone, he hit upon the strangest notion that ever madman in this world hit upon, and that was that he fancied it was right and requisite that he should make a knight-errant of himself.|When life itself seems lunatic, who knows where madness lies?"]
-};
-This list now includes additional authors with distinct styles and multiple representative excerpts.
+
 
 
 
@@ -235,12 +179,18 @@ Certainly! Here is the continuation with more authors added:
 
 json
 Copy code
+
+Gary Provost: “This sentence has five words. Here are five more words. Five-word sentences are fine. But several together become monotonous. Listen to what is happening. The writing is getting boring. The sound of it drones. It’s like a stuck record. The ear demands some variety. Now listen. I vary the sentence length, and I create music. Music. The writing sings. It has a pleasant rhythm, a lilt, a harmony. I use short sentences. And I use sentences of medium length. And sometimes, when I am certain the reader is rested, I will engage him with a sentence of considerable length, a sentence that burns with energy and builds with all the impetus of a crescendo, the roll of the drums, the crash of the cymbals–sounds that say listen to this, it is important.”
 export const authorPrints = {
     "1": ["author:Ernest Hemingway", "authorPrintDescription:Simple, direct prose; minimalistic style; iceberg theory (understated themes).", "representativeExcerpt:For sale: baby shoes, never worn.|He was an old man who fished alone in a skiff in the Gulf Stream and he had gone eighty-four days now without taking a fish."],
     "2": ["author:Jane Austen", "authorPrintDescription:Sharp social commentary; irony and wit; focus on manners and courtship.", "representativeExcerpt:It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.|There is nothing I would not do for those who are really my friends."],
     "3": ["author:Charles Dickens", "authorPrintDescription:Detailed character descriptions; social critique; melodramatic plots.", "representativeExcerpt:It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness...|Please, sir, I want some more."],
-    "4": ["author:F. Scott Fitzgerald", "authorPrintDescription:Lyrical prose; themes of the American Dream and disillusionment; vibrant depictions of the Jazz Age.", "representativeExcerpt:So we beat on, boats against the current, borne back ceaselessly into the past.|I hope she'll be a fool -- that's the best thing a girl can be in this world, a beautiful little fool."],
-    "5": ["author:Virginia Woolf", "authorPrintDescription:Stream of consciousness; explorations of time and consciousness; feminist themes.", "representativeExcerpt:Mrs. Dalloway said she would buy the flowers herself.|A woman must have money and a room of her own if she is to write fiction."],
+      "4": [
+        "author:John Alexander Mobley",
+        "authorPrintDescription:Concise and impactful dialogue; subtext and ambiguity; internal conflict; poetic brevity; existential themes; reflective and introspective tone.",
+        "representativeExcerpt:Words Screamed In the Night\n\n“You’re telling me, you never loved me?”\n“That’s right.”\n“Liar.”\nAnd she was lying.\nFor reasons she couldn’t admit\nLeast of all to herself.\nBut he knew.\nAnd he was going to have to swallow it:\nIf he loved her.\nAnd he did.|The Lorelings\n\nThe characters in this book exist.\n\nNot in the same sense that you do.\n\nBut close enough to matter.\n\n“I feel like we were a couple in another life.”\n“But we’re a couple in this one?”\n“Yeah, but we were in another life too.”"
+    ],
+     "5": ["author:Virginia Woolf", "authorPrintDescription:Stream of consciousness; explorations of time and consciousness; feminist themes.", "representativeExcerpt:Mrs. Dalloway said she would buy the flowers herself.|A woman must have money and a room of her own if she is to write fiction."],
     "6": ["author:George Orwell", "authorPrintDescription:Clear, straightforward prose; social and political commentary; dystopian themes.", "representativeExcerpt:Big Brother is watching you.|All animals are equal, but some animals are more equal than others."],
     "7": ["author:Mark Twain", "authorPrintDescription:Humorous and satirical style; regional dialects; social critique.", "representativeExcerpt:The reports of my death are greatly exaggerated.|Whenever you find yourself on the side of the majority, it is time to pause and reflect."],
     "8": ["author:Gabriel García Márquez", "authorPrintDescription:Magical realism; lyrical and elaborate prose; exploration of Latin American culture.", "representativeExcerpt:Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice.|He really had been through death, but he had returned because he could not bear the solitude."],
@@ -305,11 +255,12 @@ export const authorPrints = {
     "67": ["author:Isabel Allende", "authorPrintDescription:Magical realism; exploration of family and history; lyrical, emotional prose.", "representativeExcerpt:There is no death, daughter. People die only when we forget them.|We don't even know how strong we are until we are forced to bring that hidden strength forward."],
     "68": ["author:José Saramago", "authorPrintDescription:Unique punctuation style; exploration of philosophical and social themes; lyrical, thought-provoking prose.", "representativeExcerpt:Inside us there is something that has no name, that something is what we are.|If I'm sincere today, what does it matter if I regret it tomorrow?"],
     "69": ["author:Michael Ondaatje", "authorPrintDescription:Lyrical, poetic prose; themes of memory and identity; complex, layered narratives.", "representativeExcerpt:The past is always carried into the present by invisible threads.|We die containing a richness of lovers and tribes, tastes we have swallowed, bodies we have plunged into and swum up as if rivers of wisdom, characters we have climbed into as if trees, fears we have hidden in as if caves."],
-    "70": ["author:Gabriel García Márquez", "authorPrintDescription:Magical realism; lyrical and elaborate prose; exploration of Latin American culture.", "representativeExcerpt:Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice.|He really had been through death, but he had returned because he could not bear the solitude."]
+    "70": ["author:Gabriel García Márquez", "authorPrintDescription:Magical realism; lyrical and elaborate prose; exploration of Latin American culture.", "representativeExcerpt:Many years later, as he faced the firing squad, Colonel Aureliano Buendía was to remember that distant afternoon when his father took him to discover ice.|He really had been through death, but he had returned because he could not bear the solitude."],
+    "71": ["author:F. Scott Fitzgerald", "authorPrintDescription:Lyrical prose; themes of the American Dream and disillusionment; vibrant depictions of the Jazz Age.", "representativeExcerpt:So we beat on, boats against the current, borne back ceaselessly into the past.|I hope she'll be a fool -- that's the best thing a girl can be in this world, a beautiful little fool."]
 };
 */
 
-/*
+/*DEMONS CODE
 export const bookAsJson = {
     "1": [
         {
@@ -1315,4 +1266,400 @@ Learn from the masters: Study sprites from classic games like Final Fantasy to s
 Don't overdo it with black: Black outlines can make sprites look crowded and jumbled. Use darker colors instead of black to divide things.
 Consider the character's shape: A pointed chin or a lack of a heavy jawline can make a character look more feminine.
 Remember that you don't need to outline everything: Use color changes to create the illusion of separation.
+*/
+
+/*
+I am John Alexander Mobley, the author. Verdant Vale is my work in progress. I'd like help continuing the story in my style. Here is my authorPrint:       "4": [         "author:John Alexander Mobley",         "authorPrintDescription:Concise and impactful dialogue; subtext and ambiguity; internal conflict; poetic brevity; existential themes; reflective and introspective tone.",         "representativeExcerpt:Words Screamed In the Night\n\n“You’re telling me, you never loved me?”\n“That’s right.”\n“Liar.”\nAnd she was lying.\nFor reasons she couldn’t admit\nLeast of all to herself.\nBut he knew.\nAnd he was going to have to swallow it:\nIf he loved her.\nAnd he did.|The Lorelings\n\nThe characters in this book exist.\n\nNot in the same sense that you do.\n\nBut close enough to matter.\n\n“I feel like we were a couple in another life.”\n“But we’re a couple in this one?”\n“Yeah, but we were in another life too.”"     ], and here is a conversation from which I'd like you to synthesize where to take the story from here:
+
+Thank you for sharing these additional details, John. I appreciate you trusting me to help brainstorm ideas for continuing your Verdant Vale story in a way that aligns with your unique writing style and creative vision.
+
+Based on the engaging character sketches you provided for the maidens John will encounter, as well as the evocative writing samples that showcase your poetic, introspective voice and focus on relatable internal conflicts, here are a few thoughts on potential story directions:
+
+With Aeliana and John's deepening bond serving as an emotional anchor, you could explore each maiden's past and the circumstances that led them to cross paths with John. Brief flashback scenes written in your signature style could add depth and poignancy.
+
+For example, when Lyra the human outcast teaches John about foraging, she could share a painful memory that hints at why she was cast out. This vulnerability brings them closer while leaving much unsaid.
+
+As John's village grows and the feast approaches, you could weave in introspective moments where he questions his role as a leader and provider, wrestling with impostor syndrome or feeling unworthy of the maidens' faith in him.
+
+Overheard conversations or knowing glances from Aeliana could underscore their unspoken understanding. Subtle actions like John working late into the night or giving away his portion could powerfully convey his inner struggles.
+
+The feast itself offers an opportunity for poignant reflections on how far the village has come, tinged with wistful musings about the ephemeral nature of happiness and lingering uncertainties about the future.
+
+Evocative descriptions of the food and festivities could mingle with John's private worries, inviting the reader to contemplate the bittersweetness of achieving a dream.
+
+I'd suggest letting any romantic subplots with the other maidens remain mostly subtextual, with John and Aeliana's bond paramount. The finale could hint at upcoming trials that will test their love and the village's strength, providing narrative threads to explore in season 2.
+
+The key is to infuse the story with your distinctive voice - lyrical prose, meaningful ambiguity, and a pervasive sense that even the simplest moments carry existential weight. Let theme dictate plot and keep the character dynamics grounded and relatable.
+
+I hope these suggestions spark some inspiration for your continued work on Verdant Vale. I'm happy to discuss further or provide feedback on anything you come up with. This is your story to tell in your singular style. Trust your instincts - based on what you've shared, I believe you have something truly special here. Write on!
+
+Copy
+Retry
+
+
+JA
+Let's adapt your understanding into a light novel, begining with the character illustrations for the characters based on how how you see them based on the descriptions that I provided to you.
+
+Edit
+Certainly! Here are the character illustrations based on the descriptions you provided, adapted into a light novel format:
+
+🌿 VERDANT VALE 🌿
+A Light Novel by John Alexander Mobley
+
+Character Illustrations:
+
+Aeliana - The Forest Elf
+Aeliana stands tall and proud, her emerald eyes gleaming with wisdom and strength. Her autumn-hued hair cascades down her back, intertwined with delicate leaves and flowers. Clad in a cloak of woven bark and foliage, she is the embodiment of the forest's essence.
+
+Mira - The Beast Girl
+Mira moves with feline grace, her striped fur shimmering in the dappled sunlight. Her keen eyes and twitching ears are always alert, ready to detect the slightest threat or prey. Beneath her wild exterior lies a loyal and fierce heart.
+
+Seraphina - The Infelette
+Seraphina's delicate wings shimmer like gossamer in the breeze, casting iridescent hues on her porcelain skin. Her gentle smile and soulful eyes radiate compassion and healing energy. She carries a basket of medicinal herbs, ready to mend any wound.
+
+Lyra - The Human Outcast
+Lyra's weathered clothing and calloused hands speak of a life of hardship, yet her eyes shine with determination and resilience. Her practical attire and resourceful demeanor hint at a sharp mind and survival instincts honed by adversity.
+
+Kaida - The Adventurer
+Kaida's vibrant smile and twinkling eyes are filled with wanderlust and curiosity. Her well-worn map and compass are constant companions, guiding her through uncharted territories. Her spirit is as free and untamed as the wind itself.
+
+Zara - The Bounty Hunter
+Zara's steely gaze and confident stance command respect and fear. Her crossbow is always at the ready, a symbol of her unwavering resolve to bring justice to the lawless. Beneath her tough exterior, a heart of gold beats for those in need.
+
+Elara - The Escaped Princess
+Elara's regal bearing and graceful movements hint at her noble upbringing, even in the simplest of garments. Her eyes hold a depth of wisdom and compassion that belies her youth. Her words carry the power to sway hearts and forge alliances.
+
+Bella - The Culinary Maiden
+Bella's infectious laughter and rosy cheeks are as warm and inviting as the delectable aromas wafting from her kitchen. Her apron is always dusted with flour, and her hands are never far from a mixing bowl or a basket of fresh ingredients. She is the heart and soul of every feast.
+
+John - The Otherworldly Protagonist
+John's eyes hold a mix of wonder and determination as he navigates this strange new world. His city clothes are slowly replaced by more practical attire, reflecting his growing connection to the land. His hands, once soft from office work, now bear the marks of honest labor and creation.
+
+These character illustrations set the stage for the enchanting tale that is about to unfold in Verdant Vale. Each maiden brings a unique presence and skill set to John's emerging village, weaving a rich tapestry of personalities and potential story arcs.
+
+As the light novel progresses, these initial sketches will come to life, deepening and evolving as John forges bonds with each maiden and discovers the joys and challenges of building a community from the ground up in this wondrous fantasy realm.
+
+*/
+
+/*OTAKU
+export const bookAsJson = {
+    "0": ["Metadata", "BookTitle:Otaku, A Treatment", "Author:John Alexander Mobley", "Description:A haunted arcade machine called 'A Simple Device' dwells in an otherwise ordinary American arcade called 'The Pit'. An American otaku, or socially unsuccessful nerd obsessed with video games, named Henry Cole, frequents the arcade where he wastes every day spending his hard-earned wages as a kitchen boy in the 'Akuma Cosplay and Maid Cafe' upstairs from The Pit where he works with an attractive multicultural mix of women who trend Asian and collectively treat him as a little brother and asexual being.", "GeneratingPrompt:Create a story treatment for a book titled 'Otaku, A Treatment' by John Alexander Mobley"],
+    "1": [
+        "incomingContextPrompt:Henry's daily routine and initial introduction.",
+        "initialInterfacePrompt:Introduce Henry Cole and his daily routine at 'The Pit' and the 'Akuma Cosplay and Maid Cafe'.",
+        "expandingPrompt:Describe Henry's typical day, focusing on his interactions with the arcade and cafe.",
+        "culminatingInterfacePrompt:Show how Henry's routine reflects his character and lifestyle.",
+        "exitingContextPrompt:Set up the context for Henry's relationships with the cafe employees."
+    ],
+    "2": [
+        "incomingContextPrompt:Henry's interactions at the cafe.",
+        "initialInterfacePrompt:Describe Henry's interactions with the women at the cafe and his dynamic with them.",
+        "expandingPrompt:Detail specific interactions and how the women treat Henry.",
+        "culminatingInterfacePrompt:Show the contrast between Henry's social life at the cafe and his isolation.",
+        "exitingContextPrompt:Transition to the introduction of Millie Brown."
+    ],
+    "3": [
+        "incomingContextPrompt:Henry's relationship with Millie.",
+        "initialInterfacePrompt:Introduce Millie Brown, Henry's best friend and secret admirer, who works at 'Heavenly Boba'.",
+        "expandingPrompt:Describe Millie's feelings for Henry and her role in his life.",
+        "culminatingInterfacePrompt:Show a moment between Henry and Millie that highlights their connection.",
+        "exitingContextPrompt:Set up Henry's living situation."
+    ],
+    "4": [
+        "incomingContextPrompt:Henry's home life.",
+        "initialInterfacePrompt:Describe Henry's living situation with his two roommates, Hailey Kim and Jenny Lee, and their side businesses.",
+        "expandingPrompt:Detail the dynamics between Henry and his roommates, including their teasing.",
+        "culminatingInterfacePrompt:Show how Hailey and Jenny's side businesses affect Henry.",
+        "exitingContextPrompt:Introduce the haunted arcade machine 'A Simple Device'."
+    ],
+    "5": [
+        "incomingContextPrompt:The haunted arcade machine.",
+        "initialInterfacePrompt:Detail the haunted arcade machine 'A Simple Device' and its eerie presence in 'The Pit'.",
+        "expandingPrompt:Describe the machine's appearance and how it stands out in the arcade.",
+        "culminatingInterfacePrompt:Show Henry's initial fascination with the machine.",
+        "exitingContextPrompt:Set up the event where Henry mocks gamers."
+    ],
+    "6": [
+        "incomingContextPrompt:Henry's mocking of gamers.",
+        "initialInterfacePrompt:Describe the triggering event where Henry mocks gamers, causing the spirit to begin replacing itself with him.",
+        "expandingPrompt:Detail Henry's mockery and the immediate reaction.",
+        "culminatingInterfacePrompt:Show the first signs of the spirit's influence on Henry.",
+        "exitingContextPrompt:Describe the initial changes in Henry."
+    ],
+    "7": [
+        "incomingContextPrompt:Initial changes in Henry.",
+        "initialInterfacePrompt:Show the initial changes in Henry, such as his hair growing long and his roommates' reactions.",
+        "expandingPrompt:Detail the roommates' reactions and their attempts to help.",
+        "culminatingInterfacePrompt:Show Henry's growing concern and confusion.",
+        "exitingContextPrompt:Introduce the mysterious young girl at the arcade."
+    ],
+    "8": [
+        "incomingContextPrompt:The mysterious young girl.",
+        "initialInterfacePrompt:Introduce the mysterious young girl who appears in the arcade and her nightly disappearances.",
+        "expandingPrompt:Describe the girl's behavior and her interactions with the arcade.",
+        "culminatingInterfacePrompt:Show the girl's cryptic conversations with the unseen spirit.",
+        "exitingContextPrompt:Describe Henry's growing curiosity about the girl."
+    ],
+    "9": [
+        "incomingContextPrompt:The night Henry triggers the spirit.",
+        "initialInterfacePrompt:Describe the night Henry triggers the spirit, leading to the local kid's strange behavior.",
+        "expandingPrompt:Detail the events leading up to the kid's behavior and the reaction of those present.",
+        "culminatingInterfacePrompt:Show Henry's shock and the impact on the arcade.",
+        "exitingContextPrompt:Set up the introduction of the game mechanics."
+    ],
+    "10": [
+        "incomingContextPrompt:The game mechanics.",
+        "initialInterfacePrompt:Detail the game mechanics and the fake blood spilling from the arcade machine.",
+        "expandingPrompt:Describe how the game operates and the effect on the players.",
+        "culminatingInterfacePrompt:Show the arcade caretaker's reaction to the mess.",
+        "exitingContextPrompt:Introduce the nun exorcist."
+    ],
+    "11": [
+        "incomingContextPrompt:The nun exorcist.",
+        "initialInterfacePrompt:Introduce the nun exorcist who is called to deal with the haunted machine.",
+        "expandingPrompt:Describe the nun's background and her initial reaction to the call.",
+        "culminatingInterfacePrompt:Show the nun preparing to investigate the machine.",
+        "exitingContextPrompt:Describe the nun's arrival at the arcade."
+    ],
+    "12": [
+        "incomingContextPrompt:The nun's investigation.",
+        "initialInterfacePrompt:Show the nun's arrival and her investigation into the haunted machine.",
+        "expandingPrompt:Detail the nun's methods and findings during her investigation.",
+        "culminatingInterfacePrompt:Show the nun's realization of the machine's power.",
+        "exitingContextPrompt:Describe the nun's decision to stay and help."
+    ],
+    "13": [
+        "incomingContextPrompt:Escalating supernatural events.",
+        "initialInterfacePrompt:Describe the escalating supernatural events and Henry's attempts to understand them.",
+        "expandingPrompt:Show specific incidents and their impact on Henry and the arcade.",
+        "culminatingInterfacePrompt:Detail Henry's growing desperation and fear.",
+        "exitingContextPrompt:Describe Henry's offer to help the arcade caretaker."
+    ],
+    "14": [
+        "incomingContextPrompt:Henry helping the arcade caretaker.",
+        "initialInterfacePrompt:Detail the moment when the arcade caretaker puts up the out-of-service sign and Henry offers to help.",
+        "expandingPrompt:Show Henry cleaning up and the caretaker's gratitude.",
+        "culminatingInterfacePrompt:Describe the caretaker's advice to Henry about the machine.",
+        "exitingContextPrompt:Set up the scene where Millie stays behind with Henry."
+    ],
+    "15": [
+        "incomingContextPrompt:Millie stays behind with Henry.",
+        "initialInterfacePrompt:Show the best friend, Millie, staying behind with Henry as the nun arrives.",
+        "expandingPrompt:Detail the interaction between Millie, Henry, and the nun.",
+        "culminatingInterfacePrompt:Show Millie's concern for Henry.",
+        "exitingContextPrompt:Describe the discovery of the grease trap."
+    ],
+    "16": [
+        "incomingContextPrompt:The grease trap discovery.",
+        "initialInterfacePrompt:Describe the discovery of the grease trap in the kitchen as a gate to the inner workings of the game.",
+        "expandingPrompt:Detail how Henry and the nun find the grease trap and its significance.",
+        "culminatingInterfacePrompt:Show the connection between the grease trap and the game.",
+        "exitingContextPrompt:Set up the moment Millie is swallowed by the game."
+    ],
+    "17": [
+        "incomingContextPrompt:Millie is swallowed by the game.",
+        "initialInterfacePrompt:Detail the moment when Millie gets swallowed by the game and Henry's reaction.",
+        "expandingPrompt:Describe Henry's desperate attempts to save Millie.",
+        "culminatingInterfacePrompt:Show the nun's efforts to help Henry.",
+        "exitingContextPrompt:Describe Henry's realization about the last caricature."
+    ],
+    "18": [
+        "incomingContextPrompt:Henry's realization about the last caricature.",
+        "initialInterfacePrompt:Describe Henry's realization that the last caricature looks like himself and his decision not to slice it.",
+        "expandingPrompt:Detail Henry's internal conflict and reasoning.",
+        "culminatingInterfacePrompt:Show the moment Henry decides not to slice the caricature.",
+        "exitingContextPrompt:Describe the consequences of Henry's decision."
+    ],
+    "19": [
+        "incomingContextPrompt:The consequences of Henry's decision.",
+        "initialInterfacePrompt:Show the consequences of Henry's decision, triggering the supernatural forces.",
+        "expandingPrompt:Detail the immediate effects on the arcade and the people present.",
+        "culminatingInterfacePrompt:Show the escalating danger and chaos.",
+        "exitingContextPrompt:Set up the reveal of the spirit's backstory."
+    ],
+    "20": [
+        "incomingContextPrompt:The spirit's backstory.",
+        "initialInterfacePrompt:Reveal the backstory of the haunting spirit and its connection to the arcade owner.",
+        "expandingPrompt:Detail the spirit's history and motivations.",
+        "culminatingInterfacePrompt:Show the connection between the spirit and the arcade owner's past.",
+        "exitingContextPrompt:Set up the owner's history with the machine."
+    ],
+    "21": [
+        "incomingContextPrompt:The arcade owner's history.",
+        "initialInterfacePrompt:Detail the owner's history with the haunted machine and its arrival in the USA.",
+        "expandingPrompt:Describe the owner's initial encounter with the machine.",
+        "culminatingInterfacePrompt:Show the owner's struggle with the machine and its impact on his life.",
+        "exitingContextPrompt:Describe the final confrontation."
+    ],
+    "22": [
+        "incomingContextPrompt:The final confrontation.",
+        "initialInterfacePrompt:Describe the final confrontation between Henry, the spirit, and the nun exorcist.",
+        "expandingPrompt:Detail the battle and the tactics used by each side.",
+        "culminatingInterfacePrompt:Show the climax of the confrontation.",
+        "exitingContextPrompt:Set up the resolution of the story."
+    ],
+    "23": [
+        "incomingContextPrompt:The resolution.",
+        "initialInterfacePrompt:Show the resolution of the story and the fate of Henry and his friends.",
+        "expandingPrompt:Describe how the characters cope with the aftermath.",
+        "culminatingInterfacePrompt:Show the final moments of peace or change for the characters.",
+        "exitingContextPrompt:Set up the epilogue."
+    ],
+    "24": [
+        "incomingContextPrompt:The epilogue.",
+        "initialInterfacePrompt:Conclude with an epilogue reflecting on the events and their impact on the characters.",
+        "expandingPrompt:Describe how the events have changed the lives of Henry, Millie, and their friends.",
+        "culminatingInterfacePrompt:Show a final, reflective scene.",
+        "exitingContextPrompt:End with a contemplative note or open-ended question."
+    ],
+    "25": [
+        "incomingContextPrompt:Henry's initial fascination with the arcade.",
+        "initialInterfacePrompt:Describe Henry's initial fascination with the arcade and how he discovers 'A Simple Device'.",
+        "expandingPrompt:Detail Henry's first interactions with the machine.",
+        "culminatingInterfacePrompt:Show the initial attraction Henry feels toward the haunted game.",
+        "exitingContextPrompt:Set up the mysterious young girl's behavior."
+    ],
+    "26": [
+        "incomingContextPrompt:The mysterious young girl's behavior.",
+        "initialInterfacePrompt:Elaborate on the mysterious young girl's behavior and her cryptic conversations with the unseen spirit.",
+        "expandingPrompt:Describe the girl's actions and her interactions with other arcade goers.",
+        "culminatingInterfacePrompt:Show a significant cryptic conversation with the spirit.",
+        "exitingContextPrompt:Detail Henry's growing curiosity."
+    ],
+    "27": [
+        "incomingContextPrompt:Henry's growing curiosity.",
+        "initialInterfacePrompt:Detail the night Henry sees the young girl disappear in the dumpster area and his growing curiosity.",
+        "expandingPrompt:Describe Henry's investigation into the girl's disappearance.",
+        "culminatingInterfacePrompt:Show Henry's determination to uncover the mystery.",
+        "exitingContextPrompt:Set up interactions with his roommates."
+    ],
+    "28": [
+        "incomingContextPrompt:Interactions with roommates.",
+        "initialInterfacePrompt:Show Henry's interactions with his roommates, focusing on their playful teasing and his growing discomfort.",
+        "expandingPrompt:Detail specific interactions and teasing moments.",
+        "culminatingInterfacePrompt:Show Henry's internal conflict and discomfort.",
+        "exitingContextPrompt:Set up the first supernatural event Henry witnesses."
+    ],
+    "29": [
+        "incomingContextPrompt:First supernatural event.",
+        "initialInterfacePrompt:Describe the first supernatural event Henry witnesses and his disbelief.",
+        "expandingPrompt:Detail the event and Henry's initial reaction.",
+        "culminatingInterfacePrompt:Show Henry's struggle to understand what he saw.",
+        "exitingContextPrompt:Set up Henry's attempts to convince others."
+    ],
+    "30": [
+        "incomingContextPrompt:Henry's attempts to convince others.",
+        "initialInterfacePrompt:Detail Henry's attempts to convince Millie and his roommates about the haunted game.",
+        "expandingPrompt:Describe their reactions and skepticism.",
+        "culminatingInterfacePrompt:Show a moment of support or doubt from Millie.",
+        "exitingContextPrompt:Set up the backstory of the nun exorcist."
+    ],
+    "31": [
+        "incomingContextPrompt:The nun exorcist's backstory.",
+        "initialInterfacePrompt:Introduce the backstory of the nun exorcist and her connection to the haunted machine.",
+        "expandingPrompt:Detail her previous encounters with similar hauntings.",
+        "culminatingInterfacePrompt:Show the nun's determination to solve this new case.",
+        "exitingContextPrompt:Set up the nun's arrival at the arcade."
+    ],
+    "32": [
+        "incomingContextPrompt:The nun's arrival.",
+        "initialInterfacePrompt:Show the nun's arrival and her investigation into the haunted machine.",
+        "expandingPrompt:Detail the nun's methods and findings during her investigation.",
+        "culminatingInterfacePrompt:Show the nun's realization of the machine's power.",
+        "exitingContextPrompt:Describe the nun's decision to stay and help."
+    ],
+    "33": [
+        "incomingContextPrompt:Nun's research.",
+        "initialInterfacePrompt:Describe the nun's research into the history of 'A Simple Device' and her findings.",
+        "expandingPrompt:Detail the nun's investigation process and the information she uncovers.",
+        "culminatingInterfacePrompt:Show the nun's growing understanding of the machine's origins.",
+        "exitingContextPrompt:Describe the nun's strategy to deal with the haunted machine."
+    ],
+    "34": [
+        "incomingContextPrompt:Tension between Henry and his friends.",
+        "initialInterfacePrompt:Show the growing tension between Henry and his friends as the supernatural events escalate.",
+        "expandingPrompt:Detail specific incidents that increase the tension.",
+        "culminatingInterfacePrompt:Show the impact of these events on Henry's relationships.",
+        "exitingContextPrompt:Describe the moment Henry offers to clean up the fake blood."
+    ],
+    "35": [
+        "incomingContextPrompt:Henry cleaning up the arcade.",
+        "initialInterfacePrompt:Detail the night Henry offers to clean up the fake blood and the spirit's attack on the annoying kid.",
+        "expandingPrompt:Describe Henry's efforts to clean and the attack's impact on the arcade.",
+        "culminatingInterfacePrompt:Show the arcade caretaker's reaction and Henry's determination.",
+        "exitingContextPrompt:Set up Henry and Millie's conversation in the arcade."
+    ],
+    "36": [
+        "incomingContextPrompt:Henry and Millie's conversation.",
+        "initialInterfacePrompt:Describe the scene where Henry and Millie are alone in the arcade, discussing their fears.",
+        "expandingPrompt:Detail their conversation and the emotional connection.",
+        "culminatingInterfacePrompt:Show a moment of vulnerability between Henry and Millie.",
+        "exitingContextPrompt:Set up Henry's discovery of the grease trap."
+    ],
+    "37": [
+        "incomingContextPrompt:Discovery of the grease trap.",
+        "initialInterfacePrompt:Show Henry's discovery of the grease trap and its connection to the game's inner workings.",
+        "expandingPrompt:Detail the investigation process and Henry's realization.",
+        "culminatingInterfacePrompt:Show the connection between the grease trap and the supernatural events.",
+        "exitingContextPrompt:Describe the moment Millie is swallowed by the game."
+    ],
+    "38": [
+        "incomingContextPrompt:Millie swallowed by the game.",
+        "initialInterfacePrompt:Detail the moment Millie is swallowed by the game and Henry's reaction.",
+        "expandingPrompt:Describe Henry's desperate attempts to save Millie.",
+        "culminatingInterfacePrompt:Show the nun's efforts to help Henry.",
+        "exitingContextPrompt:Describe Henry's realization about the last caricature."
+    ],
+    "39": [
+        "incomingContextPrompt:Henry's realization about the last caricature.",
+        "initialInterfacePrompt:Describe Henry's realization that the last caricature looks like himself and his decision not to slice it.",
+        "expandingPrompt:Detail Henry's internal conflict and reasoning.",
+        "culminatingInterfacePrompt:Show the moment Henry decides not to slice the caricature.",
+        "exitingContextPrompt:Describe the consequences of Henry's decision."
+    ],
+    "40": [
+        "incomingContextPrompt:Consequences of Henry's decision.",
+        "initialInterfacePrompt:Show the consequences of Henry's decision, triggering the supernatural forces.",
+        "expandingPrompt:Detail the immediate effects on the arcade and the people present.",
+        "culminatingInterfacePrompt:Show the escalating danger and chaos.",
+        "exitingContextPrompt:Set up the reveal of the spirit's backstory."
+    ],
+    "41": [
+        "incomingContextPrompt:The spirit's backstory.",
+        "initialInterfacePrompt:Reveal the backstory of the haunting spirit and its connection to the arcade owner.",
+        "expandingPrompt:Detail the spirit's history and motivations.",
+        "culminatingInterfacePrompt:Show the connection between the spirit and the arcade owner's past.",
+        "exitingContextPrompt:Set up the owner's history with the machine."
+    ],
+    "42": [
+        "incomingContextPrompt:Arcade owner's history.",
+        "initialInterfacePrompt:Detail the owner's history with the haunted machine and its arrival in the USA.",
+        "expandingPrompt:Describe the owner's initial encounter with the machine.",
+        "culminatingInterfacePrompt:Show the owner's struggle with the machine and its impact on his life.",
+        "exitingContextPrompt:Describe the final confrontation."
+    ],
+    "43": [
+        "incomingContextPrompt:The final confrontation.",
+        "initialInterfacePrompt:Describe the final confrontation between Henry, the spirit, and the nun exorcist.",
+        "expandingPrompt:Detail the battle and the tactics used by each side.",
+        "culminatingInterfacePrompt:Show the climax of the confrontation.",
+        "exitingContextPrompt:Set up the resolution of the story."
+    ],
+    "44": [
+        "incomingContextPrompt:The resolution.",
+        "initialInterfacePrompt:Show the resolution of the story and the fate of Henry and his friends.",
+        "expandingPrompt:Describe how the characters cope with the aftermath.",
+        "culminatingInterfacePrompt:Show the final moments of peace or change for the characters.",
+        "exitingContextPrompt:Set up the epilogue."
+    ],
+    "45": [
+        "incomingContextPrompt:The epilogue.",
+        "initialInterfacePrompt:Conclude with an epilogue reflecting on the events and their impact on the characters.",
+        "expandingPrompt:Describe how the events have changed the lives of Henry, Millie, and their friends.",
+        "culminatingInterfacePrompt:Show a final, reflective scene.",
+        "exitingContextPrompt:End with a contemplative note or open-ended question."
+    ]
+};
+
+
 */

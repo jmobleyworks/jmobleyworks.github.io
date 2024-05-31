@@ -1,50 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WorldBender</title>
   <link rel="stylesheet" href="https://jmobleyworks.github.io/Assets/Css/styles.css">
 </head>
-<body>
-  <header><div class="logo-container"><img src="https://jmobleyworks.github.io/Assets/Images/MobleysoftGothicLogoBarWithM.png" alt="Mobleysoft"></div></header>
-  <div style="text-align:center">
-      <p>"Reality is a set of doors, and magic, the keys."</p>
-  </div>
-  <div id="worldInput">
-    <label for="seedInput">Enter World Seed:</label>
-    <input type="text" id="seedInput" placeholder="Your world seed...">
-    <button id="generateButton">Bend the World!</button>
-  </div>
-  <div id="worldOutput"></div>
 
+<body>
+  <header>
+    <div class="logo-container"><img src="https://jmobleyworks.github.io/Assets/Images/MobleysoftGothicLogoBarWithM.png"
+        alt="Mobleysoft"></div>
+  </header>
+  <div style="text-align:center">
+    <p>"Reality is a set of doors, and magic, the keys."</p>
+  </div>
+  <div id="WorldSeedBuilder">
+    <div id="worldInput">
+      <label for="seedInput">Enter World Seed:</label>
+      <input type="text" id="seedInput" placeholder="Your world seed...">
+      <button id="generateButton">Bend the World!</button>
+    </div>
+    <div id="worldOutput"></div>
+  </div>
   <script type="module">
     import { worldBuildingElements, promptTemplates } from './WorldBender.js';
 
-    const seedInput = document.getElementById('seedInput');
-    const generateButton = document.getElementById('generateButton');
     const worldOutput = document.getElementById('worldOutput');
-
-    const generateWorld = () => {
-      const seed = seedInput.value;
-      const worldData = [];
-
-      for (const category in worldBuildingElements) {
-        const choices = worldBuildingElements[category];
-        const prompt = promptTemplates[category];
-
-        if (prompt) {
-          const formattedChoices = choices.join(', ');
-          const worldElement = {
-            category,
-            prompt: prompt.replace('${formattedChoices}', formattedChoices)
-          };
-          worldData.push(worldElement);
-        }
-      }
-
-      displayWorldData(worldData);
-    };
 
     const displayWorldData = (data) => {
       const table = document.createElement('table');
@@ -78,7 +61,29 @@
       worldOutput.appendChild(table);
     };
 
-    generateButton.addEventListener('click', generateWorld);
+    const generateWorld = () => {
+      const worldData = [];
+
+      for (const category in worldBuildingElements) {
+        const choices = worldBuildingElements[category];
+        const prompt = promptTemplates[category];
+
+        if (prompt) {
+          const formattedChoices = choices.join(', ');
+          const worldElement = {
+            category,
+            prompt: prompt.replace('${formattedChoices}', formattedChoices)
+          };
+          worldData.push(worldElement);
+        }
+      }
+
+      displayWorldData(worldData);
+    };
+
+    // Generate the world data on page load
+    generateWorld();
   </script>
 </body>
+
 </html>

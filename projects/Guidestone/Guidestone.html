@@ -10,11 +10,9 @@
   <header><div class="logo-container"><img src="https://jmobleyworks.github.io/Assets/Images/MobleysoftGothicLogoBarWithM.png" alt="Mobleysoft"></div></header>
   <div style="text-align:center">
       <p>"Teach the children."</p>
+      <p><h2>Guidestone</h2></p>
   </div>
   <div id="WorldSeedBuilder"></div>
-  <h1>Guidestone: Youth AI Coding Guide</h1>
-  <div id="WorldSeedBuilder"></div>
-
   <script>
     const guide = {
       "1": [
@@ -141,10 +139,10 @@
       const container = document.getElementById('WorldSeedBuilder');
       for (const [step, details] of Object.entries(guide)) {
         const stepDiv = document.createElement('div');
-        stepDiv.className = 'step';
+        stepDiv.className = 'Options';
         
         const stepTitle = document.createElement('div');
-        stepTitle.className = 'step-title';
+        stepTitle.className = 'Option';
         stepTitle.innerText = `Step ${step}:`;
         stepDiv.appendChild(stepTitle);
         

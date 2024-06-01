@@ -187,3 +187,10 @@ th {
   background-color: #000711; /* Black header background */
   color: #fdfdf3; /* White text */
 }
+
+.step {
+  margin-bottom: 20px;
+}
+.step-title {
+  font-weight: bold;
+}

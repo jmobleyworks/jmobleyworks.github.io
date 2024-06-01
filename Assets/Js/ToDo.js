@@ -2,9 +2,16 @@ export const ToDo = {
     "Book:DevilsCode": [
         "Note: You Conversation with Claude titled 'Ai Writing Assistance For Book Completion' is your Super Function for this book series",
         "Book:Devil's Code is ready for editing and is located in apple notes.",
-        "Suggestion:See if asking gpt or gemini to act as editor yields improvents.",
+        "create a book cover image with chatgpt"
         "publish book"
-    ],    
+    ],
+    "Book:Verdant Vale 1": [
+        "Readu to publish, in notes"
+        "Create character illustrations for all characters"
+        "ask ai which scenes will yield the most poignant illustrations"
+        "create an "ArtistsByStyle" one page app that requires an artistPrints json construct that contains the names, descriptions and examples of their style along with what it evokes such that someone using artists by style can input "Dark" and get a list of artists that evoke Dark with their example works showing such that when a prompt in one system asked for something in a dark style, the prompt exploder infuses the names of artists known to evoke dark into the request.
+    ],
+
     "2dActionRpg": [
         "Remove the map stretching thing and test that things work.",
         "Write a function to export the map to an image to upload to AI art generator to turn white traversable and black non-traversable pixel art."

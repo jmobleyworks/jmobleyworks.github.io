@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <body>
-  <img id="forest" src="https://jmobleyworks.github.io/Assets/SpriteSheets/Designer (40).png" style="display: none;">
+  <img id="incomingSpritesheet" src="https://jmobleyworks.github.io/Assets/SpriteSheets/Designer (40).png" style="display: none;">
   <canvas id="canvas" style="border: 1px solid black;"></canvas>
   <p id="detectedColor" style="font-family: sans-serif; width:50px;height:50px;border:1px solid black;margin:10px;"></p>
   <script>
-    var tolerance = 20, numSamples = 4444, image = document.getElementById('forest'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], extractedSprites = [], appendSpriteSize = 300, edgePadding=10, debug = true;
+    var tolerance = 20, numSamples = 4444, image = document.getElementById('incomingSpritesheet'), canvas = document.getElementById('canvas'), detectedColorDiv = document.getElementById('detectedColor'), ctx = canvas.getContext('2d'), backgroundColor = null, seeds = [], extractedSprites = [], appendSpriteSize = 300, edgePadding=10, debug = true;
 
     let isForeground = (testColor) => {
       return Math.abs(testColor[0] - backgroundColor[0]) > tolerance || Math.abs(testColor[1] - backgroundColor[1]) > tolerance || Math.abs(testColor[2] - backgroundColor[2]) > tolerance;
@@ -131,7 +131,7 @@ function extractSprite(seed) {
       document.body.appendChild(img);
     }
 
-    document.getElementById('forest').onload = function() {
+    document.getElementById('incomingSpritesheet').onload = function() {
       canvas.width = image.width;
       canvas.height = image.height;
       ctx.drawImage(image, 0, 0);
@@ -162,17 +162,133 @@ function getRandomForegroundSeeds(canvas, isForeground, numSamples, edgePadding)
 
 // Function to extract sprites (your existing code)
 function extractSprite(seed) {
-    // ... your sprite extraction logic ...
+    let spriteData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0;
+    const stack = [seed];
+    const localVisited = new Set();
+    let isCutOff = false;
+
+    if (extractedSprites.some(extractedSprite => extractedSprite && isPointInSprite(seed, extractedSprite))) {
+        return null;
+    }
+
+    while (stack.length > 0) {
+        let point = stack.pop();
+        let x = point.x, y = point.y;
+        const key = `${x},${y}`;
+
+        if (x < 0 || x >= canvas.width || y < 0 || y >= canvas.height || localVisited.has(key) || globalVisited.has(key)) continue;
+
+        let currentColor = [
+            spriteData.data[(y * canvas.width + x) * 4],
+            spriteData.data[(y * canvas.width + x) * 4 + 1],
+            spriteData.data[(y * canvas.width + x) * 4 + 2]
+        ];
+
+        if (isBackground(currentColor)) continue;
+
+        minX = Math.min(minX, x);
+        minY = Math.min(minY, y);
+        maxX = Math.max(maxX, x);
+        maxY = Math.max(maxY, y);
+
+        if (x === 0 || x === canvas.width - 1 || y === 0 || y === canvas.height - 1) {
+            isCutOff = true;
+        }
+
+        localVisited.add(key);
+        globalVisited.add(key);
+
+        stack.push({ x: x + 1, y: y });
+        stack.push({ x: x - 1, y: y });
+        stack.push({ x: x, y: y + 1 });
+        stack.push({ x: x, y: y - 1 });
+    }
+
+    if (isCutOff || minX > maxX || minY > maxY) {
+        console.log("Invalid sprite dimensions or sprite cut off along an edge. Skipping...");
+        return null;
+    }
+
+    let spriteWidth = maxX - minX + 1;
+    let spriteHeight = maxY - minY + 1;
+    let sprite = ctx.createImageData(spriteWidth, spriteHeight);
+
+    for (let y = minY; y <= maxY; y++) {
+        for (let x = minX; x <= maxX; x++) {
+            const pixelIndex = (y * canvas.width + x) * 4;
+            const spritePixelIndex = ((y - minY) * spriteWidth + (x - minX)) * 4;
+
+            let currentColor = [
+                spriteData.data[pixelIndex],
+                spriteData.data[pixelIndex + 1],
+                spriteData.data[pixelIndex + 2]
+            ];
+
+            if (!isBackground(currentColor)) {
+                sprite.data[spritePixelIndex] = spriteData.data[pixelIndex];
+                sprite.data[spritePixelIndex + 1] = spriteData.data[pixelIndex + 1];
+                sprite.data[spritePixelIndex + 2] = spriteData.data[pixelIndex + 2];
+                sprite.data[spritePixelIndex + 3] = 255;
+            }
+        }
+    }
+
+    const spriteObject = { sprite, minX, minY, maxX, maxY };
+    extractedSprites.push(spriteObject);
+    return spriteObject;
 }
 
-// Function to convert sprite to JSON
 function spriteToJson(spriteObject, spriteName, prompt = "No prompt provided") {
-    // ... code from previous response ...
+    const { sprite, minX, minY, maxX, maxY } = spriteObject;
+
+    let json = {
+        "0": ["Metadata", `Name:${spriteName}`, `Size:${sprite.width}x${sprite.height}`, "Description:Extracted sprite", `GeneratingPrompt:${prompt}`]
+    };
+
+    for (let y = 0; y < sprite.height; y++) {
+        for (let x = 0; x < sprite.width; x++) {
+            const pixelIndex = (y * sprite.width + x) * 4;
+            const r = sprite.data[pixelIndex];
+            const g = sprite.data[pixelIndex + 1];
+            const b = sprite.data[pixelIndex + 2];
+            const a = sprite.data[pixelIndex + 3]; // Include alpha
+
+            const key = Object.keys(json).length;
+            json[key] = [`x:${x + minX}`, `y:${y + minY}`, `r:${r}`, `g:${g}`, `b:${b}`, `a:${a}`];
+        }
+    }
+
+    return JSON.stringify(json);
 }
 
-// Function to convert JSON to sprite
+
 function json2Sprite(jsonString) {
-    // ... code from previous response ...
+    const json = JSON.parse(jsonString);
+    const metadata = json["0"];
+    const sizeParts = metadata[2].split(":")[1].split("x"); // Extract width and height from metadata
+    const width = parseInt(sizeParts[0]);
+    const height = parseInt(sizeParts[1]);
+
+    const sprite = new ImageData(width, height);
+
+    for (let i = 1; i < Object.keys(json).length; i++) {
+        const pixelData = json[i];
+        const x = parseInt(pixelData[0].split(":")[1]);
+        const y = parseInt(pixelData[1].split(":")[1]);
+        const r = parseInt(pixelData[2].split(":")[1]);
+        const g = parseInt(pixelData[3].split(":")[1]);
+        const b = parseInt(pixelData[4].split(":")[1]);
+        const a = parseInt(pixelData[5].split(":")[1]); // Include alpha
+
+        const pixelIndex = (y * width + x) * 4;
+        sprite.data[pixelIndex] = r;
+        sprite.data[pixelIndex + 1] = g;
+        sprite.data[pixelIndex + 2] = b;
+        sprite.data[pixelIndex + 3] = a;
+    }
+
+    return sprite;
 }
 
 // Function to append example usage to HTML

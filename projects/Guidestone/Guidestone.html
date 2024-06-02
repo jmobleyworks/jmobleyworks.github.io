@@ -19,11 +19,11 @@
   </div>
   <div id="WorldSeedBuilder"></div>
   <script>
-
+    let foo = String.raw`<a href="javascript(foo('a','b'))">test</a>`
     const guide = {
       "1": [
-        "Setup Email and GitHub: Create an Email Address:",
-        "Create an email: first initial + last name + 'works' @gmail.com (e.g., jdoeworks@gmail.com).",
+        "Setup A Development Email and GitHub: Create an Email Address:",
+        "Create an professional email: first initial + last name + 'works' @gmail.com (e.g., jdoeworks@gmail.com).",
         "Create a GitHub Account:",
         "Go to GitHub and sign up with your new email. Username should be like your email (e.g., jdoeworks).",
         "Follow the on-screen instructions to complete your registration."
@@ -32,20 +32,20 @@
         "Setup GitHub Portfolio: Create Your First Repository:",
         "Click '+' on GitHub, select 'New repository', name it jdoeworks.github.io, and initialize with a README.",
         "Create a Simple Portfolio Website:",
-        "Add a file named index.html with this code:",
-        "Ask AI to help you write an empty index.html file.",
+        "Add a file named index.html",
+        "Ask AI to help you write a single page application for your development portfolio such that everything is contained between openening and closing html tags using only vanilla javascript.",
         "Commit the new file.",
         "View Your Portfolio:",
-        "Go to https://jdoeworks.github.io in your browser to see your portfolio."
+        "Go to https://jdoeworks.github.io in your browser to see your portfolio site."
       ],
       "3": [
         "Organize Project Assets: Create Asset Folders in Base Repository:",
-        "Create folders in jdoeworks.github.io: assets, images, css, js.",
-        "Add an Example Image:",
-        "Upload example.jpg to images/.",
+        "Create folders in jdoeworks.github.io: assets, images, css, js",
+        "Add a logo image:",
+        "Upload logo.jpg to images/.",
         "Add a CSS File:",
         "Create styles.css in css/ with:",
-        "body { font-family: Arial; } h1 { color: blue; }",
+        "body { padding: 10px; }",
         "Add a JS File:",
         "Create script.js in js/ with:",
         "console.log('Hello, World!');"

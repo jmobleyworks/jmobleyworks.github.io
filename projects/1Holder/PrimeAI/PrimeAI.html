@@ -1,0 +1,76 @@
+<html>
+<body>
+<script>
+// A simple function to check if a number is prime
+function isPrime(num) {
+  for (let i = 2, s = Math.sqrt(num); i <= s; i++)
+    if (num % i === 0) return false; 
+  return num > 1;
+}
+
+function testWeightsForIntelligence(weights) {
+  const tasks = [
+    {
+      type: "imageClassification",
+      input: "imageDataOfACat", // Placeholder, replace with actual image data
+      expectedOutput: "cat",
+      evaluate: (output) => output === "cat"
+    },
+    {
+      type: "textCompletion",
+      input: "The quick brown fox",
+      expectedOutput: "jumps over the lazy dog",
+      evaluate: (output) => output.includes("jumps") && output.includes("lazy")
+    },
+    {
+      type: "logicPuzzle",
+      input: "All men are mortal. Socrates is a man. Therefore...",
+      expectedOutput: "Socrates is mortal",
+      evaluate: (output) => output.includes("mortal")
+    },
+  ];
+
+  let score = 0;
+  const maxScore = tasks.length;
+
+  for (const task of tasks) {
+    // Simulate the neural network's output using weights (very simplified)
+    const output = simulateNeuralNetwork(task.input, weights);
+    if (task.evaluate(output)) {
+      score++;
+    }
+  }
+
+  const intelligencePercentage = (score / maxScore) * 100;
+  return intelligencePercentage;
+}
+
+// Placeholder function to simulate neural network
+function simulateNeuralNetwork(input, weights) {
+  // Replace with actual neural network implementation
+  // ...
+  return "Placeholder output"; // Replace with the network's actual output
+}
+
+// The main function to calculate primes and test them
+function findIntelligentPrimes() {
+  let num = 1;
+  while(true) {
+    if (isPrime(num)) {
+      console.log("testing: "+num);
+      const weights = num.toString().split('').map(Number); // Split the prime number into digits
+      const intelligencePercentage = testWeightsForIntelligence(weights);
+      if (intelligencePercentage >= 80) { // Threshold for considering a prime intelligent
+        console.log(`Found an intelligent prime: ${num} (Intelligence: ${intelligencePercentage}%)`);
+        break;
+      }
+    }
+    num++;
+  }
+}
+
+// Start the search
+findIntelligentPrimes();
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Story</title>
+</head>
+<body>
+    <h1>Complete Story</h1>
+    <div id="story-output"></div>
+
+    <script>
+        const outline = {
+            "1": "Introduction to the protagonist and setting.",
+            "1.1": "A young girl who lives in a small village and dreams of becoming a powerful sorceress.",
+            "1.2": "She spends her days studying magic from old, dusty books in the village library.",
+            "2": "Inciting incident that disrupts the protagonist's life.",
+            "2.1": "One day, she discovers a mysterious book hidden in the library.",
+            "2.2": "The book grants her incredible magical powers, much stronger than she ever imagined.",
+            "3": "Protagonist's journey to resolve the conflict.",
+            "3.1": "She faces many challenges as she tries to master her new powers, including attacks from jealous villagers and dark creatures attracted to her magic.",
+            "3.2": "She learns to control her powers and uses them to protect her village from a looming threat.",
+            "4": "Resolution.",
+            "4.1": "She becomes the most powerful sorceress in the land and is revered by all."
+        };
+
+        function outline2prompt(outline) {
+            const sections = Object.keys(outline);
+            const prompts = {};
+
+            sections.forEach((section, index) => {
+                const prevSection = sections[index - 1] ? `${sections[index - 1]}: ${outline[sections[index - 1]]}` : "";
+                const nextSection = sections[index + 1] ? `${sections[index + 1]}: ${outline[sections[index + 1]]}` : "";
+
+                prompts[section] = `
+                    Given the previous section:
+                    ${prevSection}
+
+                    And the subsequent section:
+                    ${nextSection}
+
+                    Write a detailed narrative for the current section:
+                    ${section}: ${outline[section]}
+                `;
+            });
+
+            return prompts;
+        }
+
+        const prompts = outline2prompt(outline);
+
+        const simulatedAIResponses = {
+            "1": "In a quaint, picturesque village surrounded by lush forests and rolling hills, a young girl named Elara lived. From a young age, Elara had always dreamed of becoming a powerful sorceress. The village was peaceful, with cobblestone streets, cheerful neighbors, and a small marketplace where everyone knew each other.",
+            "1.1": "Elara, with her fiery red hair and curious green eyes, spent her days in the village library. She was often found poring over ancient, dusty tomes of magic. Her fascination with magic was well-known among the villagers, who were both supportive and wary of her ambitions.",
+            "1.2": "Every day, Elara would study diligently, learning new spells and enchanting the world around her with her growing skills. Her main goal was to master the ancient arts and become the most powerful sorceress the world had ever seen.",
+            "2": "One fateful day, Elara's routine was disrupted when she discovered a mysterious book hidden in the darkest corner of the library. The book, bound in ancient leather and inscribed with runes, seemed to pulse with a magical energy.",
+            "2.1": "Intrigued, Elara carefully opened the book. As she began to read, she felt a surge of power course through her veins. The book contained spells and knowledge far beyond her wildest dreams. She knew that her life would never be the same again.",
+            "2.2": "With these newfound powers, Elara felt invincible. However, she soon realized that great power came with great responsibility. She faced many challenges, including mastering the overwhelming magic and dealing with those who envied her abilities.",
+            "3": "Elara's journey was fraught with obstacles. She encountered jealous villagers who feared her powers and dark creatures drawn to her magical aura. Each day was a battle, but she remained determined to control her abilities and use them for good.",
+            "3.1": "Her first major challenge was a confrontation with a jealous villager who tried to sabotage her studies. Elara had to use her wits and newfound powers to outsmart her adversary, proving her strength and resilience.",
+            "3.2": "As Elara continued to grow in power, she realized that her village was under threat from a looming darkness. She decided to use her abilities to protect her home, crafting powerful spells and leading the villagers in defense against the encroaching danger.",
+            "4": "In the final battle, Elara faced the ultimate test of her powers. The dark force that threatened her village was formidable, but with courage and determination, she prevailed.",
+            "4.1": "Having saved her village, Elara was celebrated as the most powerful sorceress in the land. She became a revered figure, not only for her magical prowess but also for her bravery and selflessness. Her story inspired generations to come."
+        };
+
+        let completeStory = "";
+        for (const section in simulatedAIResponses) {
+            completeStory += `<p>${simulatedAIResponses[section]}</p>`;
+        }
+
+        document.getElementById('story-output').innerHTML = completeStory;
+    </script>
+</body>
+</html>

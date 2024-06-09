@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spec2AsciiRpg</title>
+    <style>
+        /* CSS for styling the game board and its cells */
+        #gameBoard {
+            display: flex;
+            flex-direction: column;
+        }
+        #gameBoard div {
+            display: flex;
+        }
+        #gameBoard div div {
+            width: 32px;  /* Adjust the size as needed */
+            height: 32px; /* Adjust the size as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameBoard"></div>
+
+    <script>
+        // Example game specification in JSON
+        const gameSpec = {
+            "game": {
+                "title": "Example RPG",
+                "width": 10,
+                "height": 10,
+                "startPosition": {"x": 2, "y": 2}
+            },
+            "objects": {
+                "wall": {"char": "#", "sprite": "path/to/wall.png"},
+                "floor": {"char": ".", "sprite": "path/to/floor.png"},
+                "player": {"char": "@", "sprite": "path/to/player.png", "methods": ["move", "attack"]}
+            },
+            "methods": {
+                "move": {"description": "Move the player", "parameters": ["direction"]},
+                "attack": {"description": "Attack in the current direction", "parameters": []}
+            }
+        };
+
+        function initializeGameFromJson(jsonSpec) {
+            const gameConfig = jsonSpec.game;
+            const objects = jsonSpec.objects;
+            const methods = jsonSpec.methods;
+
+            const gameBoard = Array(gameConfig.height).fill().map(() => Array(gameConfig.width).fill('.'));
+
+            const playerPosition = gameConfig.startPosition;
+
+            function renderGameBoard(board, spriteMap) {
+                const boardElement = document.getElementById("gameBoard");
+                boardElement.innerHTML = ""; // Clear the previous board
+                
+                board.forEach(row => {
+                    const rowElement = document.createElement("div");
+                    row.forEach(char => {
+                        const cellElement = document.createElement("div");
+                        if (spriteMap[char]) {
+                            const imgElement = document.createElement("img");
+                            imgElement.src = spriteMap[char].sprite;
+                            cellElement.appendChild(imgElement);
+                        } else {
+                            cellElement.textContent = char; // Fallback for missing sprites
+                        }
+                        rowElement.appendChild(cellElement);
+                    });
+                    boardElement.appendChild(rowElement);
+                });
+            }
+
+            // Initialize game objects and methods
+            const spriteMap = {};
+            for (let key in objects) {
+                spriteMap[objects[key].char] = objects[key];
+            }
+
+            // Place the player on the game board
+            gameBoard[playerPosition.y][playerPosition.x] = objects.player.char;
+
+            renderGameBoard(gameBoard, spriteMap);
+
+            // Implement game methods (simplified example)
+            const gameMethods = {
+                move: function (direction) {
+                    // Implement movement logic
+                },
+                attack: function () {
+                    // Implement attack logic
+                }
+            };
+
+            // Bind methods to player object
+            objects.player.methods.forEach(method => {
+                objects.player[method] = gameMethods[method];
+            });
+        }
+
+        // Initialize the game
+        initializeGameFromJson(gameSpec);
+    </script>
+</body>
+</html>

@@ -1,17 +1,55 @@
 export const ToDo = {
+    "Eisenhower Matrix" : [
+        "Urgent and Important: Do, Do it now",
+        "Not Urgent, But Important: Decide, Schedule Time To Do It",
+        "Urgent, But Not Important: Delagate, Who can do it for you?",
+        "Neither Urgent NOR Important: Delete, Don't do it, Eliminate"
+    ],
+    "Do" : [
+        "******************************************************************************************",
+        "******************************************************************************************",
+        "***********************MAIN:PAUSE EVERYTHING BUT WRITING BOOKS!***************************",
+        "******************************************************************************************",
+        "******************************************************************************************",
+        "Claude is better at writing the story | story execution | polish to publish | sand and polish wood piece ",
+        "ChatGPT is better at brainstorming where a story should go | story engineering | cut shape out of wood",
+        "Gemini is better at maintaining the story's world building bible and acting as it's search | story organization | precisely draw onto wood",
+        "Copilot is better at going from 0 to 1 on a story | story ideation | draw shape on paper",
+        "******************************************************************************************",
+        "Backstage: Finish Prof, Apply for roles",
+        "Publish: AbyssDroper, Verdant Vale, Otaku, The Lorelings",
+        "Organize this todo list into this Eshwr matrix",
+        "Organize ai convo's to make them mentally tractable",
+        "Gemini Convos: Animetrope ----->AbyssDropper<------- SpriteExtractorTODO Lexiquest",
+        "ChatGPT Convos:",
+        "ClaudeAI Convos: VerdantValePVE BinaryProphecy TheColorOfHope",
+        "Copilot Convos:"
+    ],
+    "Decide" : [
+        "Pursue food mob or not | Animetrope: use tensor flow lite? ",
+    ],
+    "Delagate" : [
+        "Fragments Of A Soul, A Walts In Light And Shadow, The Geometry Of Scars",
+    ],
+    "Book Titles To Use" : [
+        "Fragments Of A Soul, A Walts In Light And Shadow, The Geometry Of Scars",
+    ],
+    "Book Titles To Use" : [
+        "Fragments Of A Soul, A Walts In Light And Shadow, The Geometry Of Scars",
+    ],
+    "Quotes Of Mine To Remember" : ["God is a woman with whom’s bullshit Lucifer could no longer up with put."],
     "Book:DevilsCode": [
         "Note: You Conversation with Claude titled 'Ai Writing Assistance For Book Completion' is your Super Function for this book series",
         "Book:Devil's Code is ready for editing and is located in apple notes.",
-        "create a book cover image with chatgpt"
+        "create a book cover image with chatgpt",
         "publish book"
     ],
     "Book:Verdant Vale 1": [
-        "Readu to publish, in notes"
-        "Create character illustrations for all characters"
-        "ask ai which scenes will yield the most poignant illustrations"
-        "create an "ArtistsByStyle" one page app that requires an artistPrints json construct that contains the names, descriptions and examples of their style along with what it evokes such that someone using artists by style can input "Dark" and get a list of artists that evoke Dark with their example works showing such that when a prompt in one system asked for something in a dark style, the prompt exploder infuses the names of artists known to evoke dark into the request.
+        "Readu to publish, in notes",
+        "Create character illustrations for all characters",
+        "ask ai which scenes will yield the most poignant illustrations",
+        "create an 'ArtistsByStyle' one page app that requires an artistPrints json construct that contains the names, descriptions and examples of their style along with what it evokes such that someone using artists by style can input 'Dark' and get a list of artists that evoke Dark with their example works showing such that when a prompt in one system asked for something in a dark style, the prompt exploder infuses the names of artists known to evoke dark into the request."
     ],
-
     "2dActionRpg": [
         "Remove the map stretching thing and test that things work.",
         "Write a function to export the map to an image to upload to AI art generator to turn white traversable and black non-traversable pixel art."
@@ -31,7 +69,7 @@ export const ToDo = {
         "Add sprite sheets generated so far as buttons and let them be clicked to switch what sprite sheet has its sprites extracted."
     ],
     "chatGpT": [
-        "You subscribe to GPT-4 on johnmobley99 account.",
+        "You subscribe to GPT-4 on johnmobley99 apple acount and login through apple",
         "You subscribe to GeminiAdvanced on alexander.mobley account.",
         "You subscribe to Claude Opus on jmobleyworks account.",
         "Consider Copilot Pro.",

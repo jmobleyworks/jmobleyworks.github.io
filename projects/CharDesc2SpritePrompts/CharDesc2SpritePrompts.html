@@ -1,21 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Character Prompt Generator</title>
+  <meta charset="UTF-8">
+  <title>Character Prompt Generator</title>
 </head>
+
 <body>
-    <div id="promptOutput"></div>
-    <script>
-      window.onload = () => {
-        const attributes = { "name": "John", "age": 11, "hairColor": "dark", "eyeColor": "blue", "outfit": "white button down shirt, red tie, khaki shorts, brown belt, white socks, brown shoes", "spriteHeight": 16, "spriteWidth": 24 };
-        const updatePrompt = () => document.getElementById('promptOutput').innerText = `Character named ${document.getElementById('name').value}, ${document.getElementById('age').value} years old, with ${document.getElementById('hairColor').value} hair and ${document.getElementById('eyeColor').value} eyes, wearing ${document.getElementById('outfit').value}, sprite dimensions ${document.getElementById('spriteHeight').value}px tall and ${document.getElementById('spriteWidth').value}px wide.`;
-        Object.keys(attributes).forEach(key => {
-          const input = Object.assign(document.createElement("input"), { id: key, value: attributes[key], oninput: updatePrompt });
-          document.body.appendChild(input);
-        });
-        updatePrompt(); // Initial prompt display
+  <div id="promptOutput"></div>
+  <script>
+    window.onload = () => {
+      const characterSpritesheetSpecification = {
+        "1": ["action:walking", "frames:2", "cardinalDirections:true"],
+        "2": ["action:attacking", "frames:3", "cardinalDirections:true"],
+        "3": ["action:usingItem", "frames:1", "cardinalDirections:false"],
+        "4": ["action:castingSpell", "frames:3", "cardinalDirections:true"],
+        "5": ["action:jumping", "frames:1", "cardinalDirections:false"],
+        "6": ["action:takingDamage", "frames:1", "cardinalDirections:true"],
+        "7": ["action:dying", "frames:1", "cardinalDirections:false"],
+        "8": ["action:swimming", "frames:2", "cardinalDirections:true"],
+        "9": ["action:pushing", "frames:2", "cardinalDirections:true"],
+        "10": ["action:pulling", "frames:2", "cardinalDirections:true"],
+        "11": ["action:interacting", "frames:1", "cardinalDirections:false"],
+        "12": ["action:equipping", "frames:1", "cardinalDirections:false"],
+        "13": ["action:crouching", "frames:1", "cardinalDirections:false"],
+        "14": ["action:performingSpecialMove", "frames:3", "cardinalDirections:true"],
+        "15": ["action:riding", "frames:2", "cardinalDirections:true"],
+        "16": ["action:celebrating", "frames:2", "cardinalDirections:false"],
+        "17": ["action:idleVariations", "frames:2", "cardinalDirections:false"],
+        "18": ["action:emoting", "frames:1", "cardinalDirections:false"],
+        "19": ["action:fishing", "frames:2", "cardinalDirections:false"],
+        "20": ["action:crafting", "frames:2", "cardinalDirections:false"],
+        "21": ["action:sleeping", "frames:1", "cardinalDirections:false"],
+        "22": ["action:eating", "frames:1", "cardinalDirections:false"],
+        "23": ["action:talking", "frames:1", "cardinalDirections:false"],
+        "24": ["action:sneaking", "frames:2", "cardinalDirections:true"],
+        "25": ["action:falling", "frames:1", "cardinalDirections:false"]
       };
-    </script>
+      const characterAttributes = { "name": "John", "age": 11, "hairColor": "dark", "eyeColor": "blue", "outfit": "white button down shirt, red tie, khaki shorts, brown belt, white socks, brown shoes", "spriteHeight": 16, "spriteWidth": 24 };
+      const updatePrompt = () => document.getElementById('promptOutput').innerText = `Output a spritesheet consisting of sprites for a character named ${document.getElementById('name').value}, ${document.getElementById('age').value} years old, with ${document.getElementById('hairColor').value} hair and ${document.getElementById('eyeColor').value} eyes, wearing ${document.getElementById('outfit').value}, sprite dimensions ${document.getElementById('spriteHeight').value}px tall and ${document.getElementById('spriteWidth').value}px wide.`;
+
+      Object.keys(characterAttributes).forEach(key => {
+        const label = document.createElement("label");
+        label.htmlFor = key;
+        label.innerText = key.charAt(0).toUpperCase() + key.slice(1) + ': ';
+        document.body.appendChild(label);
+
+        const input = Object.assign(document.createElement("input"), { id: key, value: characterAttributes[key], oninput: updatePrompt });
+        document.body.appendChild(input);
+
+        document.body.appendChild(document.createElement("br"));
+      });
+
+      updatePrompt(); // Initial prompt display
+    };
+  </script>
 </body>
+
 </html>

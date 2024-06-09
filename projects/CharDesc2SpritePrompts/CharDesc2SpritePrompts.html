@@ -2,63 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Character Prompt Generator</title>
+  <title>Character Sprite Art Prompt Generator</title>
 </head>
 <body>
   <div id="promptOutput"></div>
   <script>
+    const characterAttributes = {
+      "name": "John",
+      "age": 11,
+      "hairColor": "dark",
+      "eyeColor": "blue",
+      "outfit": "white button down shirt, red tie, khaki shorts, brown belt, white socks, brown shoes",
+      "spriteHeight": 16,
+      "spriteWidth": 24
+    };
+
+    const characterSpritesheetSpecification = {
+      "1": ["action:walking", "frames:2", "cardinalDirections:true"],
+      "2": ["action:attacking", "frames:3", "cardinalDirections:true"],
+      "3": ["action:usingItem", "frames:1", "cardinalDirections:false"],
+      "4": ["action:castingSpell", "frames:3", "cardinalDirections:true"],
+      "5": ["action:jumping", "frames:1", "cardinalDirections:false"],
+      "6": ["action:takingDamage", "frames:1", "cardinalDirections:true"],
+      "7": ["action:dying", "frames:1", "cardinalDirections:false"],
+      "8": ["action:swimming", "frames:2", "cardinalDirections:true"],
+      "9": ["action:pushing", "frames:2", "cardinalDirections:true"],
+      "10": ["action:pulling", "frames:2", "cardinalDirections:true"],
+      "11": ["action:interacting", "frames:1", "cardinalDirections:false"],
+      "12": ["action:equipping", "frames:1", "cardinalDirections:false"],
+      "13": ["action:crouching", "frames:1", "cardinalDirections:false"],
+      "14": ["action:performingSpecialMove", "frames:3", "cardinalDirections:true"],
+      "15": ["action:riding", "frames:2", "cardinalDirections:true"],
+      "16": ["action:celebrating", "frames:2", "cardinalDirections:false"],
+      "17": ["action:idleVariations", "frames:2", "cardinalDirections:false"],
+      "18": ["action:emoting", "frames:1", "cardinalDirections:false"],
+      "19": ["action:fishing", "frames:2", "cardinalDirections:false"],
+      "20": ["action:crafting", "frames:2", "cardinalDirections:false"],
+      "21": ["action:sleeping", "frames:1", "cardinalDirections:false"],
+      "22": ["action:eating", "frames:1", "cardinalDirections:false"],
+      "23": ["action:talking", "frames:1", "cardinalDirections:false"],
+      "24": ["action:sneaking", "frames:2", "cardinalDirections:true"],
+      "25": ["action:falling", "frames:1", "cardinalDirections:false"]
+    };
+
+    const generatePrompt = (actionDetails) => {
+      const action = actionDetails.find(detail => detail.startsWith('action:')).split(':')[1];
+      return `Sprite sheet: ${characterAttributes.name}, ${characterAttributes.age}, ${characterAttributes.hairColor} hair, ${characterAttributes.eyeColor} eyes, wearing ${characterAttributes.outfit}, ${action}, back view, ${characterAttributes.spriteHeight}x${characterAttributes.spriteWidth}px, 2.5D RPG style.`;
+    };
+
     window.onload = () => {
-      const characterSpritesheetSpecification = {
-        "1": ["action:walking", "frames:2", "cardinalDirections:true"],
-        "2": ["action:attacking", "frames:3", "cardinalDirections:true"],
-        "3": ["action:usingItem", "frames:1", "cardinalDirections:false"],
-        "4": ["action:castingSpell", "frames:3", "cardinalDirections:true"],
-        "5": ["action:jumping", "frames:1", "cardinalDirections:false"],
-        "6": ["action:takingDamage", "frames:1", "cardinalDirections:true"],
-        "7": ["action:dying", "frames:1", "cardinalDirections:false"],
-        "8": ["action:swimming", "frames:2", "cardinalDirections:true"],
-        "9": ["action:pushing", "frames:2", "cardinalDirections:true"],
-        "10": ["action:pulling", "frames:2", "cardinalDirections:true"],
-        "11": ["action:interacting", "frames:1", "cardinalDirections:false"],
-        "12": ["action:equipping", "frames:1", "cardinalDirections:false"],
-        "13": ["action:crouching", "frames:1", "cardinalDirections:false"],
-        "14": ["action:performingSpecialMove", "frames:3", "cardinalDirections:true"],
-        "15": ["action:riding", "frames:2", "cardinalDirections:true"],
-        "16": ["action:celebrating", "frames:2", "cardinalDirections:false"],
-        "17": ["action:idleVariations", "frames:2", "cardinalDirections:false"],
-        "18": ["action:emoting", "frames:1", "cardinalDirections:false"],
-        "19": ["action:fishing", "frames:2", "cardinalDirections:false"],
-        "20": ["action:crafting", "frames:2", "cardinalDirections:false"],
-        "21": ["action:sleeping", "frames:1", "cardinalDirections:false"],
-        "22": ["action:eating", "frames:1", "cardinalDirections:false"],
-        "23": ["action:talking", "frames:1", "cardinalDirections:false"],
-        "24": ["action:sneaking", "frames:2", "cardinalDirections:true"],
-        "25": ["action:falling", "frames:1", "cardinalDirections:false"]
-      };
-      const characterAttributes = { "name": "John", "age": 11, "hairColor": "dark", "eyeColor": "blue", "outfit": "white button down shirt, red tie, khaki shorts, brown belt, white socks, brown shoes", "spriteHeight": 16, "spriteWidth": 24 };
-      const updatePrompt = () => document.getElementById('promptOutput').innerText = generateArtPrompts(characterAttributes, characterSpritesheetSpecification).join('\n');
-      
-      Object.keys(characterAttributes).forEach(key => {
-        const label = document.createElement("label");
-        label.htmlFor = key;
-        label.innerText = key.charAt(0).toUpperCase() + key.slice(1) + ': ';
-        document.body.appendChild(label);
-        
-        const input = Object.assign(document.createElement("input"), { id: key, value: characterAttributes[key], oninput: updatePrompt });
-        document.body.appendChild(input);
-        
-        document.body.appendChild(document.createElement("br"));
+      const promptsContainer = document.getElementById('promptOutput');
+      Object.values(characterSpritesheetSpecification).forEach(actionDetails => {
+        const prompt = generatePrompt(actionDetails);
+        const promptElement = document.createElement('div');
+        promptElement.innerText = prompt;
+        promptsContainer.appendChild(promptElement);
       });
-      
-      function generateArtPrompts(attributes, spritesheetSpec) {
-        return Object.values(spritesheetSpec).map(spec => {
-          const [action, frames, cardinal] = spec.map(s => s.split(':')[1]);
-          const directions = cardinal === 'true' ? ['North', 'East', 'South', 'West'] : [''];
-          return directions.map(direction => `Create a ${frames}-frame animation of ${attributes.name}, a ${attributes.age}-year-old with ${attributes.hairColor} hair and ${attributes.eyeColor} eyes, wearing ${attributes.outfit}, performing ${action} action${direction ? ' facing ' + direction : ''}. Each sprite should be ${attributes.spriteHeight}px tall and ${attributes.spriteWidth}px wide.`).join('\n');
-        }).flat();
-      }
-      
-      updatePrompt(); // Initial prompt display
     };
   </script>
 </body>

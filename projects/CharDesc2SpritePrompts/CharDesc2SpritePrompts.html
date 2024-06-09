@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Character Prompt Generator</title>
 </head>
-
 <body>
   <div id="promptOutput"></div>
   <script>
@@ -38,23 +36,30 @@
         "25": ["action:falling", "frames:1", "cardinalDirections:false"]
       };
       const characterAttributes = { "name": "John", "age": 11, "hairColor": "dark", "eyeColor": "blue", "outfit": "white button down shirt, red tie, khaki shorts, brown belt, white socks, brown shoes", "spriteHeight": 16, "spriteWidth": 24 };
-      const updatePrompt = () => document.getElementById('promptOutput').innerText = `Output a spritesheet consisting of sprites for a character named ${document.getElementById('name').value}, ${document.getElementById('age').value} years old, with ${document.getElementById('hairColor').value} hair and ${document.getElementById('eyeColor').value} eyes, wearing ${document.getElementById('outfit').value}, sprite dimensions ${document.getElementById('spriteHeight').value}px tall and ${document.getElementById('spriteWidth').value}px wide.`;
-
+      const updatePrompt = () => document.getElementById('promptOutput').innerText = generateArtPrompts(characterAttributes, characterSpritesheetSpecification).join('\n');
+      
       Object.keys(characterAttributes).forEach(key => {
         const label = document.createElement("label");
         label.htmlFor = key;
         label.innerText = key.charAt(0).toUpperCase() + key.slice(1) + ': ';
         document.body.appendChild(label);
-
+        
         const input = Object.assign(document.createElement("input"), { id: key, value: characterAttributes[key], oninput: updatePrompt });
         document.body.appendChild(input);
-
+        
         document.body.appendChild(document.createElement("br"));
       });
-
+      
+      function generateArtPrompts(attributes, spritesheetSpec) {
+        return Object.values(spritesheetSpec).map(spec => {
+          const [action, frames, cardinal] = spec.map(s => s.split(':')[1]);
+          const directions = cardinal === 'true' ? ['North', 'East', 'South', 'West'] : [''];
+          return directions.map(direction => `Create a ${frames}-frame animation of ${attributes.name}, a ${attributes.age}-year-old with ${attributes.hairColor} hair and ${attributes.eyeColor} eyes, wearing ${attributes.outfit}, performing ${action} action${direction ? ' facing ' + direction : ''}. Each sprite should be ${attributes.spriteHeight}px tall and ${attributes.spriteWidth}px wide.`).join('\n');
+        }).flat();
+      }
+      
       updatePrompt(); // Initial prompt display
     };
   </script>
 </body>
-
 </html>

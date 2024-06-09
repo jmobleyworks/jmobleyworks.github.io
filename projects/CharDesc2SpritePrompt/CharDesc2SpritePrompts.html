@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Character Prompt Generator</title>
+</head>
+<body>
+    <script>
+      window.onload = () => {
+        const attributes = { "name": "John", "age": 11, "hairColor": "dark", "eyeColor": "blue", "outfit": "white button down shirt, red tie, khaki shorts, brown belt, white socks, brown shoes", "spriteHeight": 16, "spriteWidth": 24 };
+        Object.keys(attributes).forEach(key => document.body.appendChild(Object.assign(document.createElement("input"), { id: key, value: attributes[key] })));
+        document.body.appendChild(Object.assign(document.createElement("button"), { innerText: "Generate Prompt", onclick: () => alert(`Character named ${document.getElementById('name').value}, ${document.getElementById('age').value} years old, with ${document.getElementById('hairColor').value} hair and ${document.getElementById('eyeColor').value} eyes, wearing ${document.getElementById('outfit').value}, sprite dimensions ${document.getElementById('spriteHeight').value}px tall and ${document.getElementById('spriteWidth').value}px wide.`) }));
+      };
+    </script>
+</body>
+</html>

@@ -51,7 +51,7 @@
       const frameDescriptions = actionDetails.find(detail => detail.startsWith('frameDescriptions:')).split(':')[1].split(',');
       const cardinalDirections = actionDetails.find(detail => detail.startsWith('cardinalDirections:')).split(':')[1] === 'true';
       const directions = cardinalDirections ? ['front', 'left', 'back', 'right'] : ['front'];
-      return directions.map(dir => `Sprite sheet: ${characterAttributes.name}, ${characterAttributes.age}, ${characterAttributes.hairColor} hair, ${characterAttributes.eyeColor} eyes, wearing ${characterAttributes.outfit}, ${action} ${dir}, ${frames} frames (${frameDescriptions.join(', ')}), ${characterAttributes.spriteHeight}x${characterAttributes.spriteWidth}px, 2.5D RPG style.`).join('\n');
+      return directions.map(dir => `Sprite sheet: ${characterAttributes.name}, ${characterAttributes.age}, ${characterAttributes.hairColor} hair, ${characterAttributes.eyeColor} eyes, wearing ${characterAttributes.outfit}, ${action} ${dir}, ${frames} frames (${frameDescriptions.join(', ')}), ${characterAttributes.spriteHeight}x${characterAttributes.spriteWidth}px, 2.5D RPG style, chrono trigger style, final fantasy 3 style, detailed pixel art, large pixels, color difference, dithering, professional quality, squaresoft style.`).join('\n');
     };
 
     window.onload = () => {

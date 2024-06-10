@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Character Sprite Art Prompt Generator</title>
+</head>
+<body>
+  <div id="promptOutput"></div>
+  <script>
+    const characterAttributes = {
+      "name": "John",
+      "age": 11,
+      "hairColor": "dark",
+      "eyeColor": "blue",
+      "outfit": "white button down shirt, red tie, khaki shorts, brown belt, white socks, brown shoes",
+      "spriteHeight": 16,
+      "spriteWidth": 24
+    };
+
+    const characterSpritesheetSpecification = {
+      "1": ["action:walking", "frames:9", "cardinalDirections:true", "frameDescriptions:rightHeelTouch,rightFootFlat,rightLegPass,neutral,leftHeelTouch,leftFootFlat,leftLegPass,neutral"],
+      "2": ["action:attacking", "frames:6", "cardinalDirections:true", "frameDescriptions:start,midSwing,contact,followThrough,return"],
+      "3": ["action:usingItem", "frames:4", "cardinalDirections:false", "frameDescriptions:reach,use,effect,return"],
+      "4": ["action:castingSpell", "frames:8", "cardinalDirections:true", "frameDescriptions:start,build-up,release,aftermath,return"],
+      "5": ["action:jumping", "frames:4", "cardinalDirections:false", "frameDescriptions:crouch,ascent,peak,descent"],
+      "6": ["action:takingDamage", "frames:3", "cardinalDirections:true", "frameDescriptions:impact,recoil,return"],
+      "7": ["action:dying", "frames:4", "cardinalDirections:false", "frameDescriptions:beginFall,midFall,groundContact,settled"],
+      "8": ["action:swimming", "frames:6", "cardinalDirections:true", "frameDescriptions:start,stroke,recovery"],
+      "9": ["action:pushing", "frames:6", "cardinalDirections:true", "frameDescriptions:start,strain,extend,retract"],
+      "10": ["action:pulling", "frames:6", "cardinalDirections:true", "frameDescriptions:brace,pull,retract"],
+      "11": ["action:interacting", "frames:3", "cardinalDirections:false", "frameDescriptions:reach,touch,return"],
+      "12": ["action:equipping", "frames:3", "cardinalDirections:false", "frameDescriptions:reach,equip,ready"],
+      "13": ["action:crouching", "frames:2", "cardinalDirections:false", "frameDescriptions:start,hold"],
+      "14": ["action:performingSpecialMove", "frames:6", "cardinalDirections:true", "frameDescriptions:start,charge,execute,followThrough"],
+      "15": ["action:riding", "frames:6", "cardinalDirections:true", "frameDescriptions:mount,ride,gaitChange"],
+      "16": ["action:celebrating", "frames:4", "cardinalDirections:false", "frameDescriptions:start,raise,cheer,lower"],
+      "17": ["action:idleVariations", "frames:2", "cardinalDirections:false", "frameDescriptions:shiftWeight,lookAround"],
+      "18": ["action:emoting", "frames:3", "cardinalDirections:false", "frameDescriptions:start,express,return"],
+      "19": ["action:fishing", "frames:4", "cardinalDirections:false", "frameDescriptions:cast,wait,reel,catch"],
+      "20": ["action:crafting", "frames:4", "cardinalDirections:false", "frameDescriptions:prepare,craft,inspect,complete"],
+      "21": ["action:sleeping", "frames:2", "cardinalDirections:false", "frameDescriptions:lieDown,sleep"],
+      "22": ["action:eating", "frames:3", "cardinalDirections:false", "frameDescriptions:takeBite,chew,swallow"],
+      "23": ["action:talking", "frames:2", "cardinalDirections:false", "frameDescriptions:openMouth,closeMouth"],
+      "24": ["action:sneaking", "frames:6", "cardinalDirections:true", "frameDescriptions:start,advance,peek,return"],
+      "25": ["action:falling", "frames:3", "cardinalDirections:false", "frameDescriptions:stumble,fall,recover"]
+    };
+
+    const generatePrompt = (actionDetails) => {
+      const action = actionDetails.find(detail => detail.startsWith('action:')).split(':')[1];
+      const frames = actionDetails.find(detail => detail.startsWith('frames:')).split(':')[1];
+      const frameDescriptions = actionDetails.find(detail => detail.startsWith('frameDescriptions:')).split(':')[1].split(',');
+      const cardinalDirections = actionDetails.find(detail => detail.startsWith('cardinalDirections:')).split(':')[1] === 'true';
+      const directions = cardinalDirections ? ['front', 'left', 'back', 'right'] : ['front'];
+      return directions.map(dir => `Sprite sheet: ${characterAttributes.name}, ${characterAttributes.age}, ${characterAttributes.hairColor} hair, ${characterAttributes.eyeColor} eyes, wearing ${characterAttributes.outfit}, ${action} ${dir}, ${frames} frames (${frameDescriptions.join(', ')}), ${characterAttributes.spriteHeight}x${characterAttributes.spriteWidth}px, 2.5D RPG style.`).join('\n');
+    };
+
+    window.onload = () => {
+      const promptsContainer = document.getElementById('promptOutput');
+      Object.values(characterSpritesheetSpecification).forEach(actionDetails => {
+        const promptElement = document.createElement('div');
+        promptElement.innerText = generatePrompt(actionDetails);
+        promptsContainer.appendChild(promptElement);
+      });
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body style="margin: 0; overflow: hidden;">
+<script>
+const canvas = Object.assign(document.createElement('canvas'), {width: window.innerWidth, height: window.innerHeight, style: 'position: absolute; top: 0; left: 0; background: black;'}); 
+document.body.appendChild(canvas); 
+const ctx = canvas.getContext('2d'), retroWidth = 256, retroHeight = 224, scaleX = canvas.width / retroWidth, scaleY = canvas.height / retroHeight, playerSize = 2; 
+let playerX = retroWidth / 2, playerY = retroHeight / 2, enemyX = Math.random() * retroWidth, enemyY = Math.random() * retroHeight, enemySize = 2; 
+const drawRetroFrame = () => {ctx.fillStyle = 'black'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.save(); ctx.scale(scaleX, scaleY); ctx.fillStyle = 'white'; ctx.fillRect(playerX, playerY, playerSize, playerSize); ctx.fillStyle = 'red'; ctx.fillRect(enemyX, enemyY, enemySize, enemySize); ctx.restore();}; 
+const update = () => {drawRetroFrame(); moveEnemy(); checkCollision(); requestAnimationFrame(update);}; 
+window.addEventListener('keydown', (e) => {if (e.key === 'ArrowUp') playerY = Math.max(0, playerY - 1); else if (e.key === 'ArrowDown') playerY = Math.min(retroHeight - playerSize, playerY + 1); else if (e.key === 'ArrowLeft') playerX = Math.max(0, playerX - 1); else if (e.key === 'ArrowRight') playerX = Math.min(retroWidth - playerSize, playerX + 1);}); 
+const createButton = (x, y, size, label, onClick) => {const button = Object.assign(document.createElement('div'), {style: `position: absolute; left: ${x}px; top: ${y}px; width: ${size}px; height: ${size}px; background-color: rgba(255, 255, 255, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; user-select: none;`, innerText: label}); button.addEventListener('touchstart', onClick); button.addEventListener('click', onClick); document.body.appendChild(button);}; 
+const dpadSize = 50, buttonSize = 50; 
+createButton(20, canvas.height - dpadSize * 3 - 20, dpadSize, '↑', () => playerY = Math.max(0, playerY - 1)); 
+createButton(20, canvas.height - dpadSize - 20, dpadSize, '↓', () => playerY = Math.min(retroHeight - playerSize, playerY + 1)); 
+createButton(20 - dpadSize, canvas.height - dpadSize * 2 - 20, dpadSize, '←', () => playerX = Math.max(0, playerX - 1)); 
+createButton(20 + dpadSize, canvas.height - dpadSize * 2 - 20, dpadSize, '→', () => playerX = Math.min(retroWidth - playerSize, playerX + 1)); 
+createButton(canvas.width - buttonSize * 2 - 20, canvas.height - buttonSize * 2 - 20, buttonSize, 'A', () => console.log('Button A pressed')); 
+createButton(canvas.width - buttonSize - 20, canvas.height - buttonSize - 20, buttonSize, 'B', () => console.log('Button B pressed')); 
+const moveEnemy = () => {enemyX += (Math.random() - 0.5) * 2; enemyY += (Math.random() - 0.5) * 2; enemyX = Math.max(0, Math.min(retroWidth - enemySize, enemyX)); enemyY = Math.max(0, Math.min(retroHeight - enemySize, enemyY));}; 
+const checkCollision = () => {if (playerX < enemyX + enemySize && playerX + playerSize > enemyX && playerY < enemyY + enemySize && playerY + playerSize > enemyY) console.log('Collision detected!');}; 
+update();
+</script>
+</body>
+</html>

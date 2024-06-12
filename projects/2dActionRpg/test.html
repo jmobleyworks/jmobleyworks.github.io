@@ -14,16 +14,8 @@ const movePlayer = (dx, dy) => { px = Math.max(0, Math.min(rw - ps, px + dx)); p
 window.addEventListener('keydown', (e) => { if (e.key === 'ArrowUp' || e.key === 'w') movePlayer(0, -ms); else if (e.key === 'ArrowDown' || e.key === 's') movePlayer(0, ms); else if (e.key === 'ArrowLeft' || e.key === 'a') movePlayer(-ms, 0); else if (e.key === 'ArrowRight' || e.key === 'd') movePlayer(ms, 0); else if (['h', 'z'].includes(e.key)) attack(2); else if (['j', 'x'].includes(e.key)) attack(3); else if (['k', 'c'].includes(e.key)) attack(4); else if (['l', 'v'].includes(e.key)) attack(5); });
 
 const createButton = (x, y, size, label, onStart, onEnd) => { const btn = Object.assign(document.createElement('div'), {style: `position: absolute; left: ${x}px; top: ${y}px; width: ${size}px; height: ${size}px; background-color: rgba(255, 255, 255, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; user-select: none;`, innerText: label}); let lt = 0; const handlerStart = (e) => { e.preventDefault(); const ct = new Date().getTime(), tl = ct - lt; lt = ct; ir = tl < 300; onStart(); mi = setInterval(onStart, ir ? 50 : 100); }; const handlerEnd = (e) => { e.preventDefault(); clearInterval(mi); onEnd(); }; btn.addEventListener('touchstart', handlerStart); btn.addEventListener('touchend', handlerEnd); btn.addEventListener('mousedown', handlerStart); btn.addEventListener('mouseup', handlerEnd); document.body.appendChild(btn); };
-
 const ds = 50, bs = 50;
-createButton(60, c.height - ds * 3 - 60, ds, '↑', () => movePlayer(0, -ms), () => {});
-createButton(60, c.height - ds - 60, ds, '↓', () => movePlayer(0, ms), () => {});
-createButton(10, c.height - ds * 2 - 60, ds, '←', () => movePlayer(-ms, 0), () => {});
-createButton(110, c.height - ds * 2 - 60, ds, '→', () => movePlayer(ms, 0), () => {});
-createButton(c.width - bs * 4 - 60, c.height - bs - 60, bs, 'H', () => attack(2), () => {});
-createButton(c.width - bs * 3 - 40, c.height - bs - 60, bs, 'J', () => attack(3), () => {});
-createButton(c.width - bs * 2 - 20, c.height - bs - 60, bs, 'K', () => attack(4), () => {});
-createButton(c.width - bs - 10, c.height - bs - 60, bs, 'L', () => attack(5), () => {});
+[['↑', 60, c.height - 150, ds, () => movePlayer(0, -ms)], ['↓', 60, c.height - 60, ds, () => movePlayer(0, ms)], ['←', 10, c.height - 105, ds, () => movePlayer(-ms, 0)], ['→', 110, c.height - 105, ds, () => movePlayer(ms, 0)], ['H', c.width - 210, c.height - 60, bs, () => attack(2)], ['J', c.width - 160, c.height - 60, bs, () => attack(3)], ['K', c.width - 110, c.height - 60, bs, () => attack(4)], ['L', c.width - 60, c.height - 60, bs, () => attack(5)]].forEach(([label, x, y, size, onStart]) => createButton(x, y, size, label, onStart, () => {}));
 
 const attack = (multiplier) => { if (sm >= multiplier) { as = {multiplier, start: Date.now()}; sm -= multiplier; if (checkHit(ex, ey, px, py, ps, multiplier)) el--; if (el <= 0) console.log('Enemy defeated!'); if (checkHit(px, py, ex, ey, es, multiplier)) pl--; if (pl <= 0) console.log('Player defeated!'); } };
 

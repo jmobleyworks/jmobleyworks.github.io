@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-</head>
+<head><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"></head>
 <body style="margin: 0; overflow: hidden;">
 <script>
-const canvas = Object.assign(document.createElement('canvas'), {width: window.innerWidth, height: window.innerHeight, style: 'position: absolute; top: 0; left: 0; background: black;'});
+const canvas = Object.assign(document.createElement('canvas'), {width: window.innerWidth, height: window.innerHeight, style: 'position: absolute; top: 0; left: 0; background: black;'}), ctx = canvas.getContext('2d'), retroWidth = 256, retroHeight = 224, scaleX = canvas.width / retroWidth, scaleY = canvas.height / retroHeight, playerSize = 2, staminaMax = 100, staminaRegen = 0.1;
 document.body.appendChild(canvas);
-const ctx = canvas.getContext('2d'), retroWidth = 256, retroHeight = 224, scaleX = canvas.width / retroWidth, scaleY = canvas.height / retroHeight, playerSize = 2, staminaMax = 100, staminaRegen = 0.1;
-let playerX = retroWidth / 2, playerY = retroHeight / 2, enemyX = Math.random() * retroWidth, enemyY = Math.random() * retroHeight, enemySize = 2, moveSpeed = 1, runSpeed = 3, isRunning = false, moveInterval, stamina = staminaMax, attackState = null;
-const drawRetroFrame = () => {
-  ctx.fillStyle = 'black'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.save(); ctx.scale(scaleX, scaleY); ctx.fillStyle = 'white'; ctx.fillRect(playerX, playerY, playerSize, playerSize); ctx.fillStyle = 'red'; ctx.fillRect(enemyX, enemyY, enemySize, enemySize); ctx.restore();
-  if (attackState) {
-    ctx.save(); ctx.scale(scaleX, scaleY); ctx.fillStyle = 'yellow';
-    ctx.fillRect(attackState.x, attackState.y, playerSize * attackState.multiplier, playerSize); ctx.restore();
-    if (Date.now() - attackState.start > 200) attackState = null; // Reset attack after 200ms
-  }
-};
-const update = () => {stamina = Math.min(stamina + staminaRegen, staminaMax); drawRetroFrame(); moveEnemy(); checkCollision(); requestAnimationFrame(update);};
-const movePlayer = (dx, dy) => {playerX = Math.max(0, Math.min(retroWidth - playerSize, playerX + dx)); playerY = Math.max(0, Math.min(retroHeight - playerSize, playerY + dy));};
-window.addEventListener('keydown', (e) => {if (e.key === 'ArrowUp' || e.key === 'w') movePlayer(0, -moveSpeed); else if (e.key === 'ArrowDown' || e.key === 's') movePlayer(0, moveSpeed); else if (e.key === 'ArrowLeft' || e.key === 'a') movePlayer(-moveSpeed, 0); else if (e.key === 'ArrowRight' || e.key === 'd') movePlayer(moveSpeed, 0); else if (['h', 'z'].includes(e.key)) attack(2); else if (['j', 'x'].includes(e.key)) attack(3); else if (['k', 'c'].includes(e.key)) attack(4); else if (['l', 'v'].includes(e.key)) attack(5);});
-const createButton = (x, y, size, label, onStart, onEnd) => {const button = Object.assign(document.createElement('div'), {style: `position: absolute; left: ${x}px; top: ${y}px; width: ${size}px; height: ${size}px; background-color: rgba(255, 255, 255, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; user-select: none;`, innerText: label}); let lastTap = 0; const handlerStart = (e) => {e.preventDefault(); const currentTime = new Date().getTime(); const tapLength = currentTime - lastTap; lastTap = currentTime; isRunning = tapLength < 300; onStart(); moveInterval = setInterval(onStart, isRunning ? 50 : 100);}; const handlerEnd = (e) => {e.preventDefault(); clearInterval(moveInterval); onEnd();}; button.addEventListener('touchstart', handlerStart); button.addEventListener('touchend', handlerEnd); button.addEventListener('mousedown', handlerStart); button.addEventListener('mouseup', handlerEnd); document.body.appendChild(button);};
+let playerX = retroWidth / 2, playerY = retroHeight / 2, enemyX = Math.random() * retroWidth, enemyY = Math.random() * retroHeight, enemySize = 2, moveSpeed = 1, runSpeed = 3, isRunning = false, moveInterval, stamina = staminaMax, attackState = null, direction = 'right';
+
+const drawRetroFrame = () => { ctx.fillStyle = 'black'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.save(); ctx.scale(scaleX, scaleY); ctx.fillStyle = 'white'; ctx.fillRect(playerX, playerY, playerSize, playerSize); ctx.fillStyle = 'red'; ctx.fillRect(enemyX, enemyY, enemySize, enemySize); if (attackState) { ctx.fillStyle = 'yellow'; switch (direction) { case 'up': ctx.fillRect(playerX, playerY - playerSize * attackState.multiplier, playerSize, playerSize * attackState.multiplier); break; case 'down': ctx.fillRect(playerX, playerY, playerSize, playerSize * attackState.multiplier); break; case 'left': ctx.fillRect(playerX - playerSize * attackState.multiplier, playerY, playerSize * attackState.multiplier, playerSize); break; case 'right': ctx.fillRect(playerX, playerY, playerSize * attackState.multiplier, playerSize); break; } } ctx.restore(); };
+
+const update = () => { stamina = Math.min(stamina + staminaRegen, staminaMax); drawRetroFrame(); moveEnemy(); checkCollision(); requestAnimationFrame(update); if (attackState && Date.now() - attackState.start > 200) attackState = null; };
+const movePlayer = (dx, dy) => { playerX = Math.max(0, Math.min(retroWidth - playerSize, playerX + dx)); playerY = Math.max(0, Math.min(retroHeight - playerSize, playerY + dy)); if (dx > 0) direction = 'right'; else if (dx < 0) direction = 'left'; else if (dy > 0) direction = 'down'; else if (dy < 0) direction = 'up'; };
+window.addEventListener('keydown', (e) => { if (e.key === 'ArrowUp' || e.key === 'w') movePlayer(0, -moveSpeed); else if (e.key === 'ArrowDown' || e.key === 's') movePlayer(0, moveSpeed); else if (e.key === 'ArrowLeft' || e.key === 'a') movePlayer(-moveSpeed, 0); else if (e.key === 'ArrowRight' || e.key === 'd') movePlayer(moveSpeed, 0); else if (['h', 'z'].includes(e.key)) attack(2); else if (['j', 'x'].includes(e.key)) attack(3); else if (['k', 'c'].includes(e.key)) attack(4); else if (['l', 'v'].includes(e.key)) attack(5); });
+
+const createButton = (x, y, size, label, onStart, onEnd) => { const button = Object.assign(document.createElement('div'), {style: `position: absolute; left: ${x}px; top: ${y}px; width: ${size}px; height: ${size}px; background-color: rgba(255, 255, 255, 0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; user-select: none;`, innerText: label}); let lastTap = 0; const handlerStart = (e) => { e.preventDefault(); const currentTime = new Date().getTime(); const tapLength = currentTime - lastTap; lastTap = currentTime; isRunning = tapLength < 300; onStart(); moveInterval = setInterval(onStart, isRunning ? 50 : 100); }; const handlerEnd = (e) => { e.preventDefault(); clearInterval(moveInterval); onEnd(); }; button.addEventListener('touchstart', handlerStart); button.addEventListener('touchend', handlerEnd); button.addEventListener('mousedown', handlerStart); button.addEventListener('mouseup', handlerEnd); document.body.appendChild(button); };
+
 const dpadSize = 50, buttonSize = 50;
 createButton(60, canvas.height - dpadSize * 3 - 60, dpadSize, '↑', () => movePlayer(0, -moveSpeed), () => {});
 createButton(60, canvas.height - dpadSize - 60, dpadSize, '↓', () => movePlayer(0, moveSpeed), () => {});
@@ -30,9 +24,11 @@ createButton(canvas.width - buttonSize * 4 - 60, canvas.height - buttonSize - 60
 createButton(canvas.width - buttonSize * 3 - 40, canvas.height - buttonSize - 60, buttonSize, 'J', () => attack(3), () => {});
 createButton(canvas.width - buttonSize * 2 - 20, canvas.height - buttonSize - 60, buttonSize, 'K', () => attack(4), () => {});
 createButton(canvas.width - buttonSize - 10, canvas.height - buttonSize - 60, buttonSize, 'L', () => attack(5), () => {});
-const attack = (multiplier) => {if (stamina >= multiplier) {attackState = {x: playerX, y: playerY, multiplier, start: Date.now()}; stamina -= multiplier;}};
-const moveEnemy = () => {enemyX += (Math.random() - 0.5) * 2; enemyY += (Math.random() - 0.5) * 2; enemyX = Math.max(0, Math.min(retroWidth - enemySize, enemyX)); enemyY = Math.max(0, Math.min(retroHeight - enemySize, enemyY));};
-const checkCollision = () => {if (playerX < enemyX + enemySize && playerX + playerSize > enemyX && playerY < enemyY + enemySize && playerY + playerSize > enemyY) console.log('Collision detected!');};
+
+const attack = (multiplier) => { if (stamina >= multiplier) { attackState = {multiplier, start: Date.now()}; stamina -= multiplier; } };
+const moveEnemy = () => { enemyX += (Math.random() - 0.5) * 2; enemyY += (Math.random() - 0.5) * 2; enemyX = Math.max(0, Math.min(retroWidth - enemySize, enemyX)); enemyY = Math.max(0, Math.min(retroHeight - enemySize, enemyY)); };
+const checkCollision = () => { if (playerX < enemyX + enemySize && playerX + playerSize > enemyX && playerY < enemyY + enemySize && playerY + playerSize > enemyY) console.log('Collision detected!'); };
+
 update();
 </script>
 </body>

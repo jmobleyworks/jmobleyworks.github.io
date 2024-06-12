@@ -8,8 +8,15 @@
 const canvas = Object.assign(document.createElement('canvas'), {width: window.innerWidth, height: window.innerHeight, style: 'position: absolute; top: 0; left: 0; background: black;'});
 document.body.appendChild(canvas);
 const ctx = canvas.getContext('2d'), retroWidth = 256, retroHeight = 224, scaleX = canvas.width / retroWidth, scaleY = canvas.height / retroHeight, playerSize = 2, staminaMax = 100, staminaRegen = 0.1;
-let playerX = retroWidth / 2, playerY = retroHeight / 2, enemyX = Math.random() * retroWidth, enemyY = Math.random() * retroHeight, enemySize = 2, moveSpeed = 1, runSpeed = 3, isRunning = false, moveInterval, stamina = staminaMax;
-const drawRetroFrame = () => {ctx.fillStyle = 'black'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.save(); ctx.scale(scaleX, scaleY); ctx.fillStyle = 'white'; ctx.fillRect(playerX, playerY, playerSize, playerSize); ctx.fillStyle = 'red'; ctx.fillRect(enemyX, enemyY, enemySize, enemySize); ctx.restore();};
+let playerX = retroWidth / 2, playerY = retroHeight / 2, enemyX = Math.random() * retroWidth, enemyY = Math.random() * retroHeight, enemySize = 2, moveSpeed = 1, runSpeed = 3, isRunning = false, moveInterval, stamina = staminaMax, attackState = null;
+const drawRetroFrame = () => {
+  ctx.fillStyle = 'black'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.save(); ctx.scale(scaleX, scaleY); ctx.fillStyle = 'white'; ctx.fillRect(playerX, playerY, playerSize, playerSize); ctx.fillStyle = 'red'; ctx.fillRect(enemyX, enemyY, enemySize, enemySize); ctx.restore();
+  if (attackState) {
+    ctx.save(); ctx.scale(scaleX, scaleY); ctx.fillStyle = 'yellow';
+    ctx.fillRect(attackState.x, attackState.y, playerSize * attackState.multiplier, playerSize); ctx.restore();
+    if (Date.now() - attackState.start > 200) attackState = null; // Reset attack after 200ms
+  }
+};
 const update = () => {stamina = Math.min(stamina + staminaRegen, staminaMax); drawRetroFrame(); moveEnemy(); checkCollision(); requestAnimationFrame(update);};
 const movePlayer = (dx, dy) => {playerX = Math.max(0, Math.min(retroWidth - playerSize, playerX + dx)); playerY = Math.max(0, Math.min(retroHeight - playerSize, playerY + dy));};
 window.addEventListener('keydown', (e) => {if (e.key === 'ArrowUp' || e.key === 'w') movePlayer(0, -moveSpeed); else if (e.key === 'ArrowDown' || e.key === 's') movePlayer(0, moveSpeed); else if (e.key === 'ArrowLeft' || e.key === 'a') movePlayer(-moveSpeed, 0); else if (e.key === 'ArrowRight' || e.key === 'd') movePlayer(moveSpeed, 0); else if (['h', 'z'].includes(e.key)) attack(2); else if (['j', 'x'].includes(e.key)) attack(3); else if (['k', 'c'].includes(e.key)) attack(4); else if (['l', 'v'].includes(e.key)) attack(5);});
@@ -23,7 +30,7 @@ createButton(canvas.width - buttonSize * 4 - 60, canvas.height - buttonSize - 60
 createButton(canvas.width - buttonSize * 3 - 40, canvas.height - buttonSize - 60, buttonSize, 'J', () => attack(3), () => {});
 createButton(canvas.width - buttonSize * 2 - 20, canvas.height - buttonSize - 60, buttonSize, 'K', () => attack(4), () => {});
 createButton(canvas.width - buttonSize - 10, canvas.height - buttonSize - 60, buttonSize, 'L', () => attack(5), () => {});
-const attack = (multiplier) => {if (stamina >= multiplier) {const attackLength = playerSize * multiplier; ctx.save(); ctx.scale(scaleX, scaleY); ctx.fillStyle = 'yellow'; ctx.fillRect(playerX, playerY, attackLength, playerSize); ctx.restore(); stamina -= multiplier; setTimeout(drawRetroFrame, 200);}};
+const attack = (multiplier) => {if (stamina >= multiplier) {attackState = {x: playerX, y: playerY, multiplier, start: Date.now()}; stamina -= multiplier;}};
 const moveEnemy = () => {enemyX += (Math.random() - 0.5) * 2; enemyY += (Math.random() - 0.5) * 2; enemyX = Math.max(0, Math.min(retroWidth - enemySize, enemyX)); enemyY = Math.max(0, Math.min(retroHeight - enemySize, enemyY));};
 const checkCollision = () => {if (playerX < enemyX + enemySize && playerX + playerSize > enemyX && playerY < enemyY + enemySize && playerY + playerSize > enemyY) console.log('Collision detected!');};
 update();

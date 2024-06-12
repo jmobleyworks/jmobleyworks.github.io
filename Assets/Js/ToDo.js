@@ -1,4 +1,8 @@
 export const ToDo = {
+    "links":[
+        "http://petesqbsite.com/sections/tutorials/tuts/tsugumo/default.htm",
+        "https://www.redblobgames.com/x/1939-planetary-dungeon/planetary-dungeon.js"
+    ],
     "Eisenhower Matrix" : [
         "Urgent and Important: Do, Do it now",
         "Not Urgent, But Important: Decide, Schedule Time To Do It",

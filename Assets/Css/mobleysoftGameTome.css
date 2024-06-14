@@ -1,23 +1,136 @@
-body { margin: 0; overflow: hidden; background: black; display: flex; justify-content: center; align-items: center; height: 100vh; }
-#device { position: relative; background: linear-gradient(to bottom, #222, #444); border: 15px solid #666; border-radius: 20px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); width: 80vmin; height: 110vmin; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-#screen { position: relative; width: 90%; height: 50%; background: black; display: flex; justify-content: center; align-items: center; }
-#gameCanvas { width: 100%; height: 100%; image-rendering: pixelated; }
-.button { width: 50px; height: 50px; background: radial-gradient(circle, #999, #555); border-radius: 50%; display: flex; align-items: center; justify-content: center; user-select: none; position: absolute; }
-#dpad { width: 150px; height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: absolute; bottom: 20px; left: 20px; }
-#up { position: absolute; top: -50px; }
-#down { position: absolute; top: 50px; }
-#left { position: absolute; left: -50px; }
-#right { position: absolute; left: 50px; }
-.actions { position: absolute; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; }
+body { 
+    margin: 0; 
+    overflow: hidden; 
+    background: black; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+}
+#device { 
+    position: relative; 
+    background: linear-gradient(to bottom, #222, #444); 
+    border: 15px solid #666; 
+    border-radius: 20px; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+}
+#screen { 
+    position: relative; 
+    background: black; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+}
+#gameCanvas { 
+    image-rendering: pixelated; 
+}
+.button { 
+    width: 50px; 
+    height: 50px; 
+    background: radial-gradient(circle, #999, #555); 
+    border-radius: 50%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    user-select: none; 
+    position: absolute; 
+}
+#dpad { 
+    width: 150px; 
+    height: 150px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    position: absolute; 
+}
+#up { 
+    position: absolute; 
+    top: -50px; 
+}
+#down { 
+    position: absolute; 
+    top: 50px; 
+}
+#left { 
+    position: absolute; 
+    left: -50px; 
+}
+#right { 
+    position: absolute; 
+    left: 50px; 
+}
+.actions { 
+    display: flex; 
+    gap: 10px; 
+    position: absolute; 
+}
+.actions .button { 
+    width: 40px; 
+    height: 40px; 
+}
 @media (orientation: portrait) {
-    #device { width: 90vw; height: 90vh; }
-    #screen { width: 80%; height: 60%; }
-    #dpad { bottom: 10%; left: 10%; }
-    .actions { bottom: 10%; right: 10%; flex-direction: row; gap: 10px; }
+    #device { 
+        width: 80vmin; 
+        height: 110vmin; 
+    }
+    #screen { 
+        width: 90%; 
+        height: 50%; 
+    }
+    #dpad { 
+        bottom: 10%; 
+        left: 10%; 
+    }
+    .actions { 
+        right: 10%; 
+        bottom: 10%; 
+        flex-direction: row; 
+    }
 }
 @media (orientation: landscape) {
-    #device { width: 100vh; height: 100vw; flex-direction: row; }
-    #screen { width: 60%; height: 80%; }
-    #dpad { bottom: 10%; left: 10%; }
-    .actions { bottom: 10%; right: 10%; flex-direction: column; gap: 10px; }
+    #device { 
+        width: 110vmin; 
+        height: 80vmin; 
+        flex-direction: row; 
+    }
+    #screen { 
+        width: 60%; 
+        height: 80%; 
+    }
+    #dpad { 
+        bottom: 10%; 
+        left: 10%; 
+    }
+    .actions { 
+        bottom: 10%; 
+        right: 10%; 
+        flex-direction: column; 
+    }
+}
+@media (min-width: 768px) {
+    body { 
+        background: url('path/to/woodgrain.jpg') center center / cover no-repeat; 
+    }
+    #device { 
+        width: 60vmin; 
+        height: 80vmin; 
+        background: none; 
+        border: none; 
+        box-shadow: none; 
+    }
+    #screen { 
+        width: 100%; 
+        height: 100%; 
+        border: 15px solid #666; 
+        border-radius: 20px; 
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5); 
+    }
+    #dpad, .actions { 
+        display: none; 
+    }
 }

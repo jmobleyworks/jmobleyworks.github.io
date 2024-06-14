@@ -1,36 +1,32 @@
 body { margin: 0; overflow: hidden; background: black; display: flex; justify-content: center; align-items: center; height: 100vh; }
 #device { position: relative; background: linear-gradient(to bottom, #222, #444); border: 15px solid #666; border-radius: 20px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); width: 80vmin; height: 110vmin; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-#screen { position: relative; width: 90%; height: 50%; background: black; display: flex; justify-content: center; align-items: center; }
+#screen { width: 90%; height: 50%; background: black; display: flex; justify-content: center; align-items: center; }
 #gameCanvas { width: 100%; height: 100%; image-rendering: pixelated; }
-.button { position: absolute; width: 50px; height: 50px; background: radial-gradient(circle, #999, #555); border-radius: 50%; display: flex; align-items: center; justify-content: center; user-select: none; }
-#dpad { position: absolute; width: 150px; height: 150px; bottom: 20px; left: 20px; }
+.button { width: 50px; height: 50px; background: radial-gradient(circle, #999, #555); border-radius: 50%; display: flex; align-items: center; justify-content: center; user-select: none; position: absolute; }
+#dpad { width: 150px; height: 150px; }
 #up { left: 50px; top: -50px; }
 #down { left: 50px; top: 50px; }
 #left { left: 0; top: 0; }
 #right { left: 100px; top: 0; }
-.actions { position: absolute; right: 20px; bottom: 20px; display: flex; gap: 10px; }
-.actions .button { width: 40px; height: 40px; }
-
+.actions { display: flex; flex-direction: column; gap: 10px; position: absolute; }
+.actions .button { width: 50px; height: 50px; }
 @media (orientation: portrait) {
     #device { width: 100vw; height: 100vh; }
-    #screen { top: 10%; left: 10%; width: 80%; height: 50%; }
-    #dpad { left: 20px; bottom: 20px; width: 150px; height: 150px; }
+    #screen { width: 80%; height: 60%; }
+    #dpad { left: 20px; bottom: 20px; }
     #up { left: 50px; top: -50px; }
     #down { left: 50px; top: 50px; }
     #left { left: 0; top: 0; }
     #right { left: 100px; top: 0; }
-    .actions { flex-direction: column; right: 20px; bottom: 20px; }
-    .actions .button { margin-bottom: 10px; }
+    .actions { right: 20px; bottom: 20px; flex-direction: row; gap: 10px; }
 }
-
 @media (orientation: landscape) {
     #device { width: 100vh; height: 100vw; flex-direction: row; }
-    #screen { top: 10%; width: 60%; height: 80%; left: calc(20% + 100px); }
-    #dpad { left: 20px; top: calc(50% - 75px); width: 150px; height: 150px; }
+    #screen { width: 60%; height: 80%; }
+    #dpad { left: 20px; top: calc(50% - 75px); }
     #up { left: 50px; top: -50px; }
     #down { left: 50px; top: 50px; }
     #left { left: 0; top: 0; }
     #right { left: 100px; top: 0; }
-    .actions { flex-direction: row; right: 20px; bottom: 20px; }
-    .actions .button { margin-right: 10px; }
+    .actions { right: 20px; top: calc(50% - 105px); flex-direction: column; gap: 10px; }
 }

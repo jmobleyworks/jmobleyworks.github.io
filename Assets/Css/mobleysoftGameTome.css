@@ -8,36 +8,29 @@ body { margin: 0; overflow: hidden; background: black; display: flex; justify-co
 #down { left: 50px; top: 50px; }
 #left { left: 0; top: 0; }
 #right { left: 100px; top: 0; }
-.actions { position: absolute; right: 20px; bottom: 20px; }
-#h { left: calc(100% - 210px); top: calc(100% - 70px); }
-#j { left: calc(100% - 160px); top: calc(100% - 70px); }
-#k { left: calc(100% - 110px); top: calc(100% - 70px); }
-#l { left: calc(100% - 60px); top: calc(100% - 70px); }
+.actions { position: absolute; right: 20px; bottom: 20px; display: flex; gap: 10px; }
+.actions .button { width: 40px; height: 40px; }
 
 @media (orientation: portrait) {
     #device { width: 100vw; height: 100vh; }
-    #screen { position: absolute; top: 10%; left: 10%; width: 80%; height: 50%; }
+    #screen { top: 10%; left: 10%; width: 80%; height: 50%; }
     #dpad { left: 20px; bottom: 20px; width: 150px; height: 150px; }
     #up { left: 50px; top: -50px; }
     #down { left: 50px; top: 50px; }
     #left { left: 0; top: 0; }
     #right { left: 100px; top: 0; }
-    #h { right: 80px; bottom: 130px; }
-    #j { right: 130px; bottom: 80px; }
-    #k { right: 80px; bottom: 80px; }
-    #l { right: 30px; bottom: 80px; }
+    .actions { flex-direction: column; right: 20px; bottom: 20px; }
+    .actions .button { margin-bottom: 10px; }
 }
 
 @media (orientation: landscape) {
     #device { width: 100vh; height: 100vw; flex-direction: row; }
-    #screen { position: absolute; top: 10%; width: 60%; height: 80%; left: calc(20% + 100px); }
+    #screen { top: 10%; width: 60%; height: 80%; left: calc(20% + 100px); }
     #dpad { left: 20px; top: calc(50% - 75px); width: 150px; height: 150px; }
     #up { left: 50px; top: -50px; }
     #down { left: 50px; top: 50px; }
     #left { left: 0; top: 0; }
     #right { left: 100px; top: 0; }
-    #h { left: calc(100% - 160px); top: calc(50% - 105px); }
-    #j { left: calc(100% - 110px); top: calc(50% - 155px); }
-    #k { left: calc(100% - 110px); top: calc(50% - 55px); }
-    #l { left: calc(100% - 60px); top: calc(50% - 105px); }
+    .actions { flex-direction: row; right: 20px; bottom: 20px; }
+    .actions .button { margin-right: 10px; }
 }

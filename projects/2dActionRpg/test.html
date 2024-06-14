@@ -1,15 +1,35 @@
-<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><link rel="stylesheet" href="https://jmobleyworks.github.io/Assets/Css/mobleysoftGameTome.css"></head><body><div id="device"><div id="screen"><canvas id="gameCanvas" width="256" height="224"></canvas></div><div id="dpad"><div id="up" class="button">↑</div><div id="down" class="button">↓</div><div id="left" class="button">←</div><div id="right" class="button">→</div></div><div id="h" class="button">H</div><div id="j" class="button">J</div><div id="k" class="button">K</div><div id="l" class="button">L</div></div><script>
-    const c=document.getElementById('gameCanvas'),ctx=c.getContext('2d'),ps=2,smMax=100,smRegen=0.5,lifeMax=3;let px=128,py=112,ex=Math.random()*256,ey=Math.random()*224,es=2,ms=2,sm=smMax,pl=lifeMax,el=lifeMax,as=null,dir='right',playerColor='white',enemyColor='red',enemySpeed=0.5;
+<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><link rel="stylesheet" href="https://jmobleyworks.github.io/Assets/Css/mobleysoftGameTome.css"></head><body><script>
+    const createElement=(type,props={},parent=document.body)=>{const el=document.createElement(type);Object.assign(el,props);parent.appendChild(el);return el;};
+    const device=createElement('div',{id:'device',style:'position:relative;width:80vmin;height:110vmin;background:linear-gradient(to bottom,#222,#444);border:15px solid #666;border-radius:20px;box-shadow:0 0 20px rgba(0,0,0,0.5);'});
+    const screen=createElement('div',{id:'screen',style:'position:absolute;top:10%;left:10%;width:80%;height:50%;background:black;display:flex;justify-content:center;align-items:center;'},device);
+    const canvas=createElement('canvas',{id:'gameCanvas',width:256,height:224,style:'width:100%;height:100%;image-rendering:pixelated;'},screen);
+    
+    const c=document.getElementById('gameCanvas'),ctx=c.getContext('2d'),ps=2,smMax=100,smRegen=0.5,lifeMax=3;
+    let px=128,py=112,ex=Math.random()*256,ey=Math.random()*224,es=2,ms=2,sm=smMax,pl=lifeMax,el=lifeMax,as=null,dir='right',playerColor='white',enemyColor='red',enemySpeed=0.5;
+    
     const draw=()=>{ctx.fillStyle='black';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle=playerColor;ctx.fillRect(px,py,ps,ps);ctx.fillStyle=enemyColor;ctx.fillRect(ex,ey,es,es);ctx.fillStyle='yellow';ctx.fillRect(10,10,sm,5);ctx.fillStyle='green';ctx.fillRect(10,20,pl*30,5);ctx.fillStyle='green';ctx.fillRect(246-el*30,20,el*30,5);if(as){ctx.fillStyle='yellow';switch(dir){case'up':ctx.fillRect(px,py-ps*as.multiplier,ps,ps*as.multiplier);break;case'down':ctx.fillRect(px,py,ps,ps*as.multiplier);break;case'left':ctx.fillRect(px-ps*as.multiplier,py,ps*as.multiplier,ps);break;case'right':ctx.fillRect(px,py,ps*as.multiplier,ps);break;}}};
+    
     const update=()=>{sm=Math.min(sm+smRegen,smMax);draw();moveEnemy();checkCollision();requestAnimationFrame(update);if(as&&Date.now()-as.start>200)as=null;playerColor='white';enemyColor='red';};
+    
     const movePlayer=(dx,dy)=>{px=Math.max(0,Math.min(256-ps,px+dx));py=Math.max(0,Math.min(224-ps,py+dy));if(dx>0)dir='right';else if(dx<0)dir='left';else if(dy>0)dir='down';else if(dy<0)dir='up';};
+    
     window.addEventListener('keydown',(e)=>{if(e.key==='ArrowUp'||e.key==='w')movePlayer(0,-ms);else if(e.key==='ArrowDown'||e.key==='s')movePlayer(0,ms);else if(e.key==='ArrowLeft'||e.key==='a')movePlayer(-ms,0);else if(e.key==='ArrowRight'||e.key==='d')movePlayer(ms,0);else if(['h','z'].includes(e.key))attack(2,'thrust');else if(['j','x'].includes(e.key))attack(3,'quarter');else if(['k','c'].includes(e.key))attack(4,'half');else if(['l','v'].includes(e.key))attack(5,'full');});
-    const createButton=(id,x,y,onStart,onEnd)=>{const btn=Object.assign(document.createElement('div'),{style:`position:absolute;left:${x};top:${y};width:50px;height:50px;background-color:rgba(255,255,255,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;user-select:none;`,innerText:id.toUpperCase()});let lt=0;const handlerStart=(e)=>{e.preventDefault();const ct=new Date().getTime(),tl=ct-lt;lt=ct;ir=tl<300;onStart();mi=setInterval(onStart,ir?50:100);};const handlerEnd=(e)=>{e.preventDefault();clearInterval(mi);onEnd();};btn.addEventListener('touchstart',handlerStart);btn.addEventListener('touchend',handlerEnd);btn.addEventListener('mousedown',handlerStart);btn.addEventListener('mouseup',handlerEnd);document.body.appendChild(btn);};
-    [['↑','20px','calc(100% - 140px)',()=>movePlayer(0,-ms)],['↓','20px','calc(100% - 70px)',()=>movePlayer(0,ms)],['←','-30px','calc(100% - 105px)',()=>movePlayer(-ms,0)],['→','70px','calc(100% - 105px)',()=>movePlayer(ms,0)],['H','calc(100% - 210px)','calc(100% - 70px)',()=>attack(2,'thrust')],['J','calc(100% - 160px)','calc(100% - 70px)',()=>attack(3,'quarter')],['K','calc(100% - 110px)','calc(100% - 70px)',()=>attack(4,'half')],['L','calc(100% - 60px)','calc(100% - 70px)',()=>attack(5,'full')]].forEach(([id,x,y,onStart])=>createButton(id,x,y,onStart,()=>{}));
+    
+    const createButton=(id,x,y,onStart,onEnd)=>{const btn=createElement('div',{className:'button',style:`left:${x};top:${y};`,innerText:id.toUpperCase()});let lt=0;const handlerStart=(e)=>{e.preventDefault();const ct=new Date().getTime(),tl=ct-lt;lt=ct;ir=tl<300;onStart();mi=setInterval(onStart,ir?50:100);};const handlerEnd=(e)=>{e.preventDefault();clearInterval(mi);onEnd();};btn.addEventListener('touchstart',handlerStart);btn.addEventListener('touchend',handlerEnd);btn.addEventListener('mousedown',handlerStart);btn.addEventListener('mouseup',handlerEnd);};
+    
+    [['↑','20px','calc(100% - 140px)',()=>movePlayer(0,-ms)],['↓','20px','calc(100% - 70px)',()=>movePlayer(0,ms)],['←','-30px','calc(100% - 105px)',()=>movePlayer(-ms,0)],['→','70px','calc(100% - 105px)',()=>movePlayer(ms,0)],
+    ['H','calc(100% - 210px)','calc(100% - 70px)',()=>attack(2,'thrust')],['J','calc(100% - 160px)','calc(100% - 70px)',()=>attack(3,'quarter')],['K','calc(100% - 110px)','calc(100% - 70px)',()=>attack(4,'half')],['L','calc(100% - 60px)','calc(100% - 70px)',()=>attack(5,'full')]].forEach(([id,x,y,onStart])=>createButton(id,x,y,onStart,()=>{}));
+    
     const attack=(multiplier,type)=>{if(sm>=multiplier){as={multiplier,start:Date.now(),type};sm-=multiplier;const knockback=()=>{let dx=0,dy=0;if(dir==='up')dy=-20;else if(dir==='down')dy=20;else if(dir==='left')dx=-20;else if(dir==='right')dx=20;ex=Math.max(0,Math.min(256-es,ex+dx));ey=Math.max(0,Math.min(224-es,ey+dy));};if(checkHit(ex,ey,px,py,ps,multiplier)){el--;enemyColor='blue';knockback();if(el<=0)console.log('Enemy defeated!');}if(checkHit(px,py,ex,ey,es,multiplier)){pl--;playerColor='blue';if(pl<=0)console.log('Player defeated!');}}};
+    
     const checkHit=(tx,ty,x,y,size,multiplier)=>{switch(dir){case'up':return x<tx+size&&x+size>tx&&y-size*multiplier<ty+size&&y>ty;case'down':return x<tx+size&&x+size>tx&&y<ty+size&&y+size*multiplier>ty;case'left':return x-size*multiplier<tx+size&&x>tx&&y<ty+size&&y+size>ty;case'right':return x<tx+size&&x+size*multiplier>tx&&y<ty+size&&y+size>ty;}};
+    
     const moveEnemy=()=>{let dx=px-ex,dy=py-ey,dist=Math.sqrt(dx*dx+dy*dy);if(dist>0){dx/=dist;dy/=dist;}ex=Math.max(0,Math.min(256-es,ex+dx*enemySpeed));ey=Math.max(0,Math.min(224-es,ey+dy*enemySpeed));};
+    
     const checkCollision=()=>{if(px<ex+es&&px+ps>ex&&py<ey+es&&py+ps>ey){pl--;playerColor='red';if(pl<=0)console.log('Player defeated!');}};
+    
     update();
-    </script></body></html>
+    </script>
+    </body>
+    </html>
     

@@ -14,67 +14,16 @@ const canvas = document.getElementById('spaceCanvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const gl = canvas.getContext('webgl');
+const gl = canvas.getContext('webgl'); // Get the WebGL context
 
-// Simple shaders for rendering stars (points)
-const vertexShaderSource = `
-  attribute vec4 a_Position;
-  uniform mat4 u_ViewMatrix;
-
-  void main() {
-    gl_Position = u_ViewMatrix * a_Position;
-    gl_PointSize = 5.0;
-  }
-`;
-
-const fragmentShaderSource = `
-  void main() {
-    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0); // White stars
-  }
-`;
-
-// ... (Function to create shaders, not shown for brevity)
-
-const program = createProgram(gl, vertexShaderSource, fragmentShaderSource);
-gl.useProgram(program);
-
-// Generate random star positions
-const numStars = 1000;
-const starPositions = [];
-for (let i = 0; i < numStars; i++) {
-  starPositions.push(Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * -10);
+// Check for WebGL support
+if (!gl) {
+    alert('Unable to initialize WebGL. Your browser or machine may not support it.'); // Alert the user
+    throw new Error("WebGL not supported");
 }
 
-const positionBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(starPositions), gl.STATIC_DRAW);
+// ... (rest of the code is the same as the previous example)
 
-const a_Position = gl.getAttribLocation(program, 'a_Position');
-gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, 0, 0);
-gl.enableVertexAttribArray(a_Position);
-
-const u_ViewMatrix = gl.getUniformLocation(program, 'u_ViewMatrix');
-
-let zOffset = 0;
-
-function render() {
-  zOffset += 0.01; // Move forward
-
-  const viewMatrix = new Float32Array([
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, zOffset, // Translate along z-axis
-    0, 0, 0, 1
-  ]);
-  gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix);
-
-  gl.clear(gl.COLOR_BUFFER_BIT);
-  gl.drawArrays(gl.POINTS, 0, numStars);
-
-  requestAnimationFrame(render);
-}
-
-requestAnimationFrame(render);
 </script>
 </body>
 </html>

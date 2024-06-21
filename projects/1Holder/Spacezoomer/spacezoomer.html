@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Canvas Hyperspace with Fading</title>
+<title>Canvas Space Zoom (Towards with Original Style)</title>
 <style>
   body { margin: 0; }
   canvas { display: block; }
@@ -16,20 +16,18 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const numStars = 1000; // More stars for a denser field
+const numStars = 1000;
 const stars = [];
 const focalLength = canvas.width * 0.8;
 
-// Create stars with adjusted speeds and fade values
+// Create stars
 for (let i = 0; i < numStars; i++) {
   stars.push({
     x: Math.random() * canvas.width * 2 - canvas.width,
     y: Math.random() * canvas.height * 2 - canvas.height,
     z: Math.random() * focalLength * 2,
     size: Math.random() * 3 + 1,
-    speed: (Math.random() * 0.2 + 0.1) * (focalLength / 1000),
-    hue: Math.random() * 360,
-    opacity: 1 // Initial opacity
+    speed: (Math.random() * 0.1 + 0.01) * (focalLength / 1000)
   });
 }
 
@@ -38,38 +36,31 @@ function render() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   for (const star of stars) {
-    star.z -= star.speed;
+    star.z += star.speed; // Move star towards the camera
 
     const perspective = focalLength / (focalLength + star.z);
-    const x = canvas.width / 2 + star.x * perspective;
-    const y = canvas.height / 2 + star.y * perspective;
+    const x = canvas.width / 2 + (star.x - canvas.width / 2) * perspective;
+    const y = canvas.height / 2 + (star.y - canvas.height / 2) * perspective;
 
     const radius = star.size * perspective;
 
-    // Fade out as star gets closer
-    if (star.z < focalLength) {
-      star.opacity = star.z / focalLength;
-    }
-
-    if (radius <= 0) {
+    // Fade out and reset when star gets too close
+    if (perspective >= 1) {
       star.z = Math.random() * focalLength * 2;
       star.x = Math.random() * canvas.width * 2 - canvas.width;
       star.y = Math.random() * canvas.height * 2 - canvas.height;
-      star.hue = Math.random() * 360;
-      star.opacity = 1; // Reset opacity
+    } else {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, 2 * Math.PI);
+      ctx.fillStyle = 'white'; // White stars
+      ctx.fill();
     }
-
-    // Draw star with color variation and opacity
-    ctx.beginPath();
-    ctx.arc(x, y, radius, 0, 2 * Math.PI);
-    ctx.fillStyle = `hsla(${star.hue}, 100%, 50%, ${star.opacity})`;
-    ctx.fill();
   }
 
-  requestAnimationFrame(render);
+  requestAnimationFrame(render); 
 }
 
-render();
+render(); // Start the animation
 </script>
 </body>
 </html>

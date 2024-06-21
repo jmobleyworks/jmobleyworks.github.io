@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Canvas Space Zoom</title>
+<title>Canvas Space Zoom (Towards)</title>
 <style>
   body { margin: 0; }
   canvas { display: block; } 
@@ -24,19 +24,19 @@ for (let i = 0; i < numStars; i++) {
   stars.push({
     x: Math.random() * canvas.width,
     y: Math.random() * canvas.height,
-    size: Math.random() * 3 + 1, // Varying star sizes
-    z: Math.random() * 10,      // Depth for zooming effect
-    speed: Math.random() * 0.1 + 0.01  // Varying star speeds
+    size: Math.random() * 3 + 1,
+    z: Math.random() * 10 + 1,  // Start closer to create the incoming effect
+    speed: Math.random() * 0.1 + 0.05  // Slightly faster for more dramatic effect
   });
 }
 
 function render() {
   ctx.fillStyle = 'black';
-  ctx.fillRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   for (const star of stars) {
     ctx.beginPath();
-    const scale = star.z / 10; // Scale size based on depth
+    const scale = 10 / star.z; // Inverse scale for incoming effect
     const x = (star.x - canvas.width / 2) * scale + canvas.width / 2;
     const y = (star.y - canvas.height / 2) * scale + canvas.height / 2;
 
@@ -44,10 +44,10 @@ function render() {
     ctx.fillStyle = 'white';
     ctx.fill();
 
-    star.z -= star.speed; // Move closer (zoom effect)
-    if (star.z < 0) {
-      // Reset star when it goes behind the camera
-      star.z = 10; 
+    star.z += star.speed; // Move farther away (zoom out effect)
+    if (star.z > 20) {
+      // Reset star when it's too far
+      star.z = 1;
       star.x = Math.random() * canvas.width;
       star.y = Math.random() * canvas.height;
     }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Canvas Hyperspace (Moderate Speed)</title>
+<title>Canvas Hyperspace with Fading</title>
 <style>
   body { margin: 0; }
   canvas { display: block; }
@@ -16,19 +16,20 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const numStars = 200;
+const numStars = 1000; // More stars for a denser field
 const stars = [];
-const focalLength = 50;
+const focalLength = canvas.width * 0.8;
 
-// Create stars with adjusted speeds
+// Create stars with adjusted speeds and fade values
 for (let i = 0; i < numStars; i++) {
   stars.push({
     x: Math.random() * canvas.width * 2 - canvas.width,
     y: Math.random() * canvas.height * 2 - canvas.height,
-    z: Math.random() * 1000 + focalLength,
-    size: Math.random() * 2 + 1,
-    speed: Math.random() * 2 + 1,   // Moderate speed
-    hue: Math.random() * 360
+    z: Math.random() * focalLength * 2,
+    size: Math.random() * 3 + 1,
+    speed: (Math.random() * 0.2 + 0.1) * (focalLength / 1000),
+    hue: Math.random() * 360,
+    opacity: 1 // Initial opacity
   });
 }
 
@@ -45,16 +46,23 @@ function render() {
 
     const radius = star.size * perspective;
 
-    if (star.z < 0) {
-      star.z += 1000;
+    // Fade out as star gets closer
+    if (star.z < focalLength) {
+      star.opacity = star.z / focalLength;
+    }
+
+    if (radius <= 0) {
+      star.z = Math.random() * focalLength * 2;
       star.x = Math.random() * canvas.width * 2 - canvas.width;
       star.y = Math.random() * canvas.height * 2 - canvas.height;
       star.hue = Math.random() * 360;
+      star.opacity = 1; // Reset opacity
     }
 
+    // Draw star with color variation and opacity
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, 2 * Math.PI);
-    ctx.fillStyle = `hsl(${star.hue}, 100%, 50%)`;
+    ctx.fillStyle = `hsla(${star.hue}, 100%, 50%, ${star.opacity})`;
     ctx.fill();
   }
 

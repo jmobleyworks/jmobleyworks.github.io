@@ -18,14 +18,14 @@ canvas.height = window.innerHeight;
 
 const numStars = 1000;
 const stars = [];
-const focalLength = canvas.width; // Define focal length for perspective
+const focalLength = canvas.width; 
 
 // Create stars
 for (let i = 0; i < numStars; i++) {
   stars.push({
-    x: Math.random() * canvas.width * 2 - canvas.width, // Random x within a larger range
-    y: Math.random() * canvas.height * 2 - canvas.height, // Random y within a larger range
-    z: Math.random() * canvas.width,  // Random initial z (depth)
+    x: Math.random() * canvas.width * 2 - canvas.width, 
+    y: Math.random() * canvas.height * 2 - canvas.height, 
+    z: Math.random() * focalLength * 2, // Increased initial z for smoother zoom 
     size: Math.random() * 3 + 1,
     speed: Math.random() * 0.05 + 0.01
   });
@@ -36,22 +36,19 @@ function render() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   for (const star of stars) {
-    // Update star position based on speed and perspective
-    star.z -= star.speed;
+    star.z -= star.speed; // Move star closer to the camera
 
-    // Calculate 2D projection on canvas
+    // Perspective projection
     const scale = focalLength / (focalLength + star.z);
     const x = canvas.width / 2 + (star.x - canvas.width / 2) * scale;
     const y = canvas.height / 2 + (star.y - canvas.height / 2) * scale;
 
-    // Check if star is out of bounds (behind camera)
     if (star.z < 0) {
-      star.z = Math.random() * canvas.width; // Reset z
+      star.z += focalLength * 2;  // Reset z, but keep the effect of coming from the distance
       star.x = Math.random() * canvas.width * 2 - canvas.width;
       star.y = Math.random() * canvas.height * 2 - canvas.height;
     }
 
-    // Draw the star
     ctx.beginPath();
     ctx.arc(x, y, star.size * scale, 0, 2 * Math.PI);
     ctx.fillStyle = 'white';

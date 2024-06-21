@@ -43,8 +43,7 @@ function render() {
     const x = canvas.width / 2 + (star.x - canvas.width / 2) * scale;
     const y = canvas.height / 2 + (star.y - canvas.height / 2) * scale;
 
-    // Corrected reset condition:
-    if (scale <= 0) { // Check if star is behind the camera using scale
+    if (scale <= 0) { 
       star.z = Math.random() * focalLength * 2;
       star.x = Math.random() * canvas.width * 2 - canvas.width;
       star.y = Math.random() * canvas.height * 2 - canvas.height;
@@ -56,10 +55,12 @@ function render() {
     ctx.fill();
   }
 
-  requestAnimationFrame(render);
+  requestAnimationFrame(render); 
 }
 
-requestAnimationFrame(render);
+// Ensure render is called on page load
+render(); // Start the animation immediately
+
 </script>
 </body>
 </html>

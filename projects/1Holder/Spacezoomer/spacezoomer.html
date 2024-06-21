@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Canvas Space Zoom (Towards with Original Style)</title>
+<title>Canvas Space Zoom</title>
 <style>
   body { margin: 0; }
-  canvas { display: block; }
+  canvas { display: block; } 
 </style>
 </head>
 <body>
@@ -18,49 +18,45 @@ canvas.height = window.innerHeight;
 
 const numStars = 1000;
 const stars = [];
-const focalLength = canvas.width * 0.8;
 
-// Create stars
+// Create stars with random positions, sizes, and speeds
 for (let i = 0; i < numStars; i++) {
   stars.push({
-    x: Math.random() * canvas.width * 2 - canvas.width,
-    y: Math.random() * canvas.height * 2 - canvas.height,
-    z: Math.random() * focalLength * 2,
-    size: Math.random() * 3 + 1,
-    speed: (Math.random() * 0.1 + 0.01) * (focalLength / 1000)
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 3 + 1, // Varying star sizes
+    z: Math.random() * 10,      // Depth for zooming effect
+    speed: Math.random() * 0.1 + 0.01  // Varying star speeds
   });
 }
 
 function render() {
   ctx.fillStyle = 'black';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, canvas.width, canvas.height); // Clear the canvas
 
   for (const star of stars) {
-    star.z += star.speed; // Move star towards the camera
+    ctx.beginPath();
+    const scale = star.z / 10; // Scale size based on depth
+    const x = (star.x - canvas.width / 2) * scale + canvas.width / 2;
+    const y = (star.y - canvas.height / 2) * scale + canvas.height / 2;
 
-    const perspective = focalLength / (focalLength + star.z);
-    const x = canvas.width / 2 + (star.x - canvas.width / 2) * perspective;
-    const y = canvas.height / 2 + (star.y - canvas.height / 2) * perspective;
+    ctx.arc(x, y, star.size * scale, 0, Math.PI * 2);
+    ctx.fillStyle = 'white';
+    ctx.fill();
 
-    const radius = star.size * perspective;
-
-    // Fade out and reset when star gets too close
-    if (perspective >= 1) {
-      star.z = Math.random() * focalLength * 2;
-      star.x = Math.random() * canvas.width * 2 - canvas.width;
-      star.y = Math.random() * canvas.height * 2 - canvas.height;
-    } else {
-      ctx.beginPath();
-      ctx.arc(x, y, radius, 0, 2 * Math.PI);
-      ctx.fillStyle = 'white'; // White stars
-      ctx.fill();
+    star.z -= star.speed; // Move closer (zoom effect)
+    if (star.z < 0) {
+      // Reset star when it goes behind the camera
+      star.z = 10; 
+      star.x = Math.random() * canvas.width;
+      star.y = Math.random() * canvas.height;
     }
   }
 
-  requestAnimationFrame(render); 
+  requestAnimationFrame(render);
 }
 
-render(); // Start the animation
+requestAnimationFrame(render);
 </script>
 </body>
 </html>

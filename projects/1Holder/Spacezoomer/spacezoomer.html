@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Canvas Space Zoom (Faster)</title>
+<title>Canvas Hyperspace</title>
 <style>
   body { margin: 0; }
   canvas { display: block; }
@@ -16,18 +16,19 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const numStars = 1000;
+const numStars = 200; // Fewer stars for hyperspace
 const stars = [];
-const focalLength = canvas.width * 0.8;
+const focalLength = 50; // Short focal length for exaggerated perspective
 
-// Create stars with adjusted speeds
+// Create stars with adjusted speeds and colors
 for (let i = 0; i < numStars; i++) {
   stars.push({
     x: Math.random() * canvas.width * 2 - canvas.width,
     y: Math.random() * canvas.height * 2 - canvas.height,
-    z: Math.random() * focalLength * 2,
-    size: Math.random() * 3 + 1,
-    speed: (Math.random() * 0.2 + 0.1) * (focalLength / 1000)  // Increased base speed and scaling
+    z: Math.random() * 1000 + focalLength, // Start farther away
+    size: Math.random() * 2 + 1,
+    speed: Math.random() * 20 + 10,      // Much faster speed
+    hue: Math.random() * 360            // Random hue for color variation
   });
 }
 
@@ -44,22 +45,24 @@ function render() {
 
     const radius = star.size * perspective;
 
-    if (radius <= 0) {
-      star.z = Math.random() * focalLength * 2;
+    if (star.z < 0) {
+      star.z += 1000;
       star.x = Math.random() * canvas.width * 2 - canvas.width;
       star.y = Math.random() * canvas.height * 2 - canvas.height;
+      star.hue = Math.random() * 360; // Change hue when resetting
     }
 
+    // Draw star with color variation
     ctx.beginPath();
     ctx.arc(x, y, radius, 0, 2 * Math.PI);
-    ctx.fillStyle = 'white';
+    ctx.fillStyle = `hsl(${star.hue}, 100%, 50%)`; 
     ctx.fill();
   }
 
-  requestAnimationFrame(render); 
+  requestAnimationFrame(render);
 }
 
-render(); // Start the animation
+render();
 </script>
 </body>
 </html>

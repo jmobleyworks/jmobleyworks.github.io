@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Canvas Space Zoom (Towards)</title>
+<title>Canvas Space Zoom (Towards Fixed)</title>
 <style>
   body { margin: 0; }
-  canvas { display: block; } 
+  canvas { display: block; }
 </style>
 </head>
 <body>
@@ -18,15 +18,16 @@ canvas.height = window.innerHeight;
 
 const numStars = 1000;
 const stars = [];
+const focalLength = canvas.width; // Define focal length for perspective
 
-// Create stars with random positions, sizes, and speeds
+// Create stars
 for (let i = 0; i < numStars; i++) {
   stars.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
+    x: Math.random() * canvas.width * 2 - canvas.width, // Random x within a larger range
+    y: Math.random() * canvas.height * 2 - canvas.height, // Random y within a larger range
+    z: Math.random() * canvas.width,  // Random initial z (depth)
     size: Math.random() * 3 + 1,
-    z: Math.random() * 10 + 1,  // Start closer to create the incoming effect
-    speed: Math.random() * 0.1 + 0.05  // Slightly faster for more dramatic effect
+    speed: Math.random() * 0.05 + 0.01
   });
 }
 
@@ -35,22 +36,26 @@ function render() {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   for (const star of stars) {
-    ctx.beginPath();
-    const scale = 10 / star.z; // Inverse scale for incoming effect
-    const x = (star.x - canvas.width / 2) * scale + canvas.width / 2;
-    const y = (star.y - canvas.height / 2) * scale + canvas.height / 2;
+    // Update star position based on speed and perspective
+    star.z -= star.speed;
 
-    ctx.arc(x, y, star.size * scale, 0, Math.PI * 2);
+    // Calculate 2D projection on canvas
+    const scale = focalLength / (focalLength + star.z);
+    const x = canvas.width / 2 + (star.x - canvas.width / 2) * scale;
+    const y = canvas.height / 2 + (star.y - canvas.height / 2) * scale;
+
+    // Check if star is out of bounds (behind camera)
+    if (star.z < 0) {
+      star.z = Math.random() * canvas.width; // Reset z
+      star.x = Math.random() * canvas.width * 2 - canvas.width;
+      star.y = Math.random() * canvas.height * 2 - canvas.height;
+    }
+
+    // Draw the star
+    ctx.beginPath();
+    ctx.arc(x, y, star.size * scale, 0, 2 * Math.PI);
     ctx.fillStyle = 'white';
     ctx.fill();
-
-    star.z += star.speed; // Move farther away (zoom out effect)
-    if (star.z > 20) {
-      // Reset star when it's too far
-      star.z = 1;
-      star.x = Math.random() * canvas.width;
-      star.y = Math.random() * canvas.height;
-    }
   }
 
   requestAnimationFrame(render);

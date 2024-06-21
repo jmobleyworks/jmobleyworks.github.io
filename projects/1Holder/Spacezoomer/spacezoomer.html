@@ -18,7 +18,7 @@ canvas.height = window.innerHeight;
 
 const numStars = 1000;
 const stars = [];
-const focalLength = canvas.width;
+const focalLength = canvas.width * 0.8; // Adjust focal length for better effect
 
 // Create stars
 for (let i = 0; i < numStars; i++) {
@@ -27,7 +27,7 @@ for (let i = 0; i < numStars; i++) {
     y: Math.random() * canvas.height * 2 - canvas.height,
     z: Math.random() * focalLength * 2,
     size: Math.random() * 3 + 1,
-    speed: Math.random() * 0.05 + 0.01
+    speed: (Math.random() * 0.05 + 0.01) * (focalLength / 1000) // Scale speed based on focal length
   });
 }
 
@@ -38,19 +38,21 @@ function render() {
   for (const star of stars) {
     star.z -= star.speed;
 
-    // Perspective projection
-    const scale = focalLength / (focalLength + star.z);
-    const x = canvas.width / 2 + (star.x - canvas.width / 2) * scale;
-    const y = canvas.height / 2 + (star.y - canvas.height / 2) * scale;
+    // Perspective projection (Corrected Calculation)
+    const perspective = focalLength / (focalLength + star.z);
+    const x = canvas.width / 2 + star.x * perspective;
+    const y = canvas.height / 2 + star.y * perspective;
 
-    if (scale <= 0) { 
+    const radius = star.size * perspective; // Adjust radius based on perspective
+
+    if (radius <= 0) { 
       star.z = Math.random() * focalLength * 2;
       star.x = Math.random() * canvas.width * 2 - canvas.width;
       star.y = Math.random() * canvas.height * 2 - canvas.height;
     }
 
     ctx.beginPath();
-    ctx.arc(x, y, star.size * scale, 0, 2 * Math.PI);
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
     ctx.fillStyle = 'white';
     ctx.fill();
   }
@@ -58,9 +60,7 @@ function render() {
   requestAnimationFrame(render); 
 }
 
-// Ensure render is called on page load
-render(); // Start the animation immediately
-
+render(); // Start the animation
 </script>
 </body>
 </html>

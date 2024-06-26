@@ -75,8 +75,8 @@ export const ToDo = {
     "chatGpT": [
         "You subscribe to GPT-4 on johnmobley99 apple acount and login through apple",
         "You subscribe to GeminiAdvanced on alexander.mobley account.",
-        "You subscribe to Claude Opus on jmobleyworks account.",
-        "Consider Copilot Pro.",
+        "You subscribe to Claude Opus on jmobleyworks  google account.",
+        "You subscribe to Msft Copilot on jmobleyworks email account.",
         "Switch to johnmobley99 account and add the last conversation and to-do list for text2game to this to-do list."
     ],
     "Meranda": [

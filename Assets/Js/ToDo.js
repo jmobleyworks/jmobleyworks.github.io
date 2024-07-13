@@ -1,4 +1,31 @@
 export const ToDo = {
+    "scripts(novelAI)":["(function() {
+  var timeoutId;
+
+  function clickSendButton() {
+    var sendButton = document.querySelector('[aria-label="Send"]');
+    if (sendButton) {
+      sendButton.click();
+    }
+
+    // Generate a random delay between 10 and 30 seconds (10000 to 30000 milliseconds)
+    var randomDelay = Math.random() * (30000 - 10000) + 10000;
+
+    // Schedule the next click
+    timeoutId = setTimeout(clickSendButton, randomDelay);
+  }
+
+  // Initial call to start the process
+  clickSendButton();
+
+  // Function to stop the script
+  window.stopClickingSendButton = function() {
+    clearTimeout(timeoutId);
+    console.log("Stopped clicking the send button.");
+  };
+})();
+//To stop the script, you can call the stopClickingSendButton function from the console:
+stopClickingSendButton();"]
     "links":[
         "http://petesqbsite.com/sections/tutorials/tuts/tsugumo/default.htm",
         "https://www.redblobgames.com/x/1939-planetary-dungeon/planetary-dungeon.js"
